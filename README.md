@@ -15,7 +15,8 @@
   <a href="i18n/hi/README.md">हिन्दी</a> ·
   <a href="i18n/ar/README.md">العربية</a> ·
   <a href="i18n/ru/README.md">Русский</a> ·
-  <a href="i18n/tr/README.md">Türkçe</a>
+  <a href="i18n/tr/README.md">Türkçe</a> ·
+  <a href="i18n/id/README.md">Bahasa Indonesia</a>
 </p>
 
 <p align="center">

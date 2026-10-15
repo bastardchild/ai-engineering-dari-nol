@@ -64,6 +64,7 @@ README_NOTE = {
     "ar": '<p align="center" dir="rtl"><sub>ترجمة مجتمعية. النسخة <a href="../../README.md">الإنجليزية هي المرجعية</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
     "ru": '<p align="center"><sub>Перевод сообщества. Каноничной является <a href="../../README.md">английская версия</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
     "tr": '<p align="center"><sub>Topluluk çevirisi. Esas alınan sürüm <a href="../../README.md">İngilizce</a>dir · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
+    "id": '<p align="center"><sub>Terjemahan komunitas. <a href="../../README.md">Versi Inggris adalah yang kanonis</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>',
 }
 
 TRANSLATIONS = {
@@ -271,6 +272,19 @@ TRANSLATIONS = {
         H_WHERE: "Nereden başlamalı", H_WHY: "Bu neden şimdi önemli", H_CONTRIB: "Katkıda bulunma",
         H_SPONSOR: "Projeye sponsor olun", H_STAR: "Yıldız geçmişi", H_LICENSE: "Lisans",
     },
+    "id": {
+        HERO1: "**84% siswa sudah memakai perangkat AI. Hanya 18% yang merasa siap memakainya secara profesional.** Kurikulum ini menutup kesenjangan itu.",
+        HERO2: "523 pelajaran. 20 fase. ~342 jam. Python, TypeScript, Rust, Julia. Setiap pelajaran menghasilkan satu artefak yang bisa dipakai ulang: prompt, skill, agen, server MCP. Gratis, open source, MIT.",
+        HERO3: "Kamu tidak sekadar belajar AI. Kamu membangunnya. Ujung ke ujung. Dengan tangan sendiri.",
+        WAYS: "Tiga cara memulai. Pilih satu.",
+        LICENSE_LINE: "MIT. Pakai sesukamu — fork, ajarkan, jual, publikasikan. Atribusi dihargai, tidak wajib.",
+        MAINTAINED: "Dikelola oleh [Rohit Ghumare](https://github.com/rohitg00) dan komunitas.",
+        H_HOW: "Cara kerja", H_CURR: "Bentuk kurikulum", H_LESSON: "Bentuk sebuah pelajaran",
+        H_START: "Memulai", H_PREREQ: "Prasyarat", H_BOOK: "Baca sebagai buku",
+        H_SHIPS: "Setiap pelajaran menghasilkan sesuatu", H_CONTENTS: "Daftar isi", H_TOOLKIT: "Perangkat",
+        H_WHERE: "Mulai dari mana", H_WHY: "Mengapa ini penting sekarang", H_CONTRIB: "Berkontribusi",
+        H_SPONSOR: "Dukung kerja ini", H_STAR: "Riwayat star", H_LICENSE: "Lisensi",
+    },
 }
 
 SPONSOR_TRANSLATIONS = {
@@ -381,6 +395,15 @@ SPONSOR_TRANSLATIONS = {
         SEE_SUPPORTERS: "Tüm destekçileri görüntüle",
         SPONSOR_CLOSING: "Ücretsiz, MIT lisanslı, 523 ders. Bu çalışmayı mümkün kılan sponsorlara ve destekçilere teşekkür ederiz. [Tüm sponsorları ve destekçileri görüntüle](BACKERS.md).",
         SPONSOR_INVITE: "Çalışmayı desteklemek ister misiniz? [Sponsorluk seçeneklerini](SPONSORS.md), [donanım sponsorluğunu](SPONSORS.md#hardware-lab-partner) inceleyin veya [GitHub üzerinden sponsor olun](https://github.com/sponsors/rohitg00).",
+    },
+    "id": {
+        H_SPONSORS: "Sponsor",
+        SPONSOR_ALT: "SerpApi. API pencarian web untuk aplikasi AI-mu. Tersedia dalam Markdown dan JSON untuk semua integrasi.",
+        SPONSOR_THANKS: "Terima kasih kepada para sponsor kami.",
+        SPONSOR_SUPPORT: "Dukunganmu membuat setiap pelajaran tetap gratis dan open source.",
+        SEE_SUPPORTERS: "Lihat semua pendukung",
+        SPONSOR_CLOSING: "Gratis, berlisensi MIT, 523 pelajaran. Terima kasih kepada para sponsor dan pendukung yang memungkinkan kerja ini. [Lihat semua sponsor dan pendukung](BACKERS.md).",
+        SPONSOR_INVITE: "Ingin mendukung kerja ini? Lihat [opsi sponsorship](SPONSORS.md), termasuk [sponsorship perangkat keras](SPONSORS.md#hardware-lab-partner), atau [beri sponsor via GitHub](https://github.com/sponsors/rohitg00).",
     },
 }
 
