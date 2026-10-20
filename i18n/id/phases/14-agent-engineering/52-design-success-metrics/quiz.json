@@ -1,0 +1,48 @@
+{
+  "lesson": "52-design-success-metrics",
+  "title": "Rancang Metrik Keberhasilan",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa urutan pengukuran yang benar?",
+      "options": ["Data, model, fitur", "Metrik, pertanyaan, goal", "Dashboard, metrik, goal", "Goal, pertanyaan, metrik"],
+      "correct": 3,
+      "explanation": "Goal mendefinisikan kebutuhan informasi, pertanyaan memperjelasnya, dan metrik mengoperasionalkan jawabannya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menetapkan threshold sebelum melihat hasil?",
+      "options": ["Untuk menghindari pertanyaan", "Untuk mengurangi penyimpanan", "Untuk mencegah aturan keputusan digeser demi melindungi build", "Untuk menjamin lulus"],
+      "correct": 2,
+      "explanation": "Threshold yang ditetapkan lebih dulu mengurangi rasionalisasi setelah hasil keluar."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilindungi guardrail metric?",
+      "options": ["Batasan yang dipatok atau bahaya yang tidak dapat diterima", "Hanya kecepatan", "Nama rilis", "Gaya visual"],
+      "correct": 0,
+      "explanation": "Guardrail memastikan perbaikan tidak melanggar keselamatan atau kebijakan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu counter-metric?",
+      "options": ["Pendapat yang tidak diukur", "Ukuran yang menangkap biaya atau bahaya yang bergeser ke tempat lain", "Salinan kedua metrik outcome", "Skor model"],
+      "correct": 1,
+      "explanation": "Keuntungan lokal dapat menciptakan beban hilir yang diungkap counter-metric."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa metrik harus menyebut sumber dan jendelanya?",
+      "options": ["Untuk branding", "Untuk menggantikan threshold", "Untuk menghindari pengguna", "Untuk reproduktifitas dan interpretasi"],
+      "correct": 3,
+      "explanation": "Angka tanpa provenance dan batas waktu atau sampel tidak dapat mendukung keputusan yang andal."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan replay offline tidak cukup?",
+      "options": ["Saat keputusan bergantung pada perilaku pengguna nyata atau efek alur kerja", "Saat test cepat", "Jangan pernah", "Selalu"],
+      "correct": 0,
+      "explanation": "Replay dapat diulang tetapi tidak dapat sepenuhnya mereproduksi kepercayaan, koordinasi, dan perilaku langsung."
+    }
+  ]
+}

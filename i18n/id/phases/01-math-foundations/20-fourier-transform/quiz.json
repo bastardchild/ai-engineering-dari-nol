@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan Fourier transform pada sebuah sinyal?",
+      "options": [
+        "Menguraikan sinyal menjadi gelombang sinus dengan frekuensi, amplitudo, dan fase berbeda",
+        "Menghilangkan noise dari sinyal",
+        "Mengonversi sinyal dari analog ke digital",
+        "Mengompresi sinyal agar memakai lebih sedikit penyimpanan"
+      ],
+      "correct": 0,
+      "explanation": "Fourier transform mengonversi sinyal dari domain waktu ke domain frekuensi. Setiap koefisien frekuensi X[k] memberi tahu amplitudo dan fase gelombang sinus pada frekuensi k. Sinyal dinyatakan ulang sebagai jumlah gelombang sinus tersebut."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kompleksitas waktu Fast Fourier Transform (FFT) dibanding DFT langsung?",
+      "options": [
+        "FFT is O(log N), DFT is O(N)",
+        "FFT is O(N), DFT is O(N log N)",
+        "Both are O(N^2)",
+        "FFT is O(N log N), DFT is O(N^2)"
+      ],
+      "correct": 3,
+      "explanation": "DFT langsung menghitung N output, masing-masing menjumlahkan N input: O(N^2). FFT Cooley-Tukey membagi sinyal menjadi separuh genap/ganjil secara rekursif, melakukan O(N) kerja di setiap dari log2(N) level, memberi O(N log N). Untuk N = 1 juta, ini 20 juta vs 1 triliun operasi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dinyatakan teorema konvolusi?",
+      "options": [
+        "Konvolusi di domain waktu sama dengan penjumlahan di domain frekuensi",
+        "Konvolusi selalu menambah panjang sinyal",
+        "Konvolusi dan korelasi adalah operasi identik",
+        "Konvolusi di domain waktu sama dengan perkalian pointwise di domain frekuensi"
+      ],
+      "correct": 3,
+      "explanation": "Teorema konvolusi menyatakan bahwa konvolusi di domain waktu sama dengan perkalian pointwise di domain frekuensi: x * h = IFFT(FFT(x) . FFT(h)). Inilah sebabnya konvolusi berbasis FFT adalah O(N log N) alih-alih O(N*M) untuk kernel besar."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa zero-padding sinyal sebelum FFT TIDAK menambah resolusi frekuensi sebenarnya?",
+      "options": [
+        "Zero-padding menginterpolasi antar bin frekuensi yang ada tetapi tidak dapat mengungkap detail frekuensi yang tidak ada pada sampel asli",
+        "Zero-padding memasukkan noise yang meniadakan peningkatan",
+        "Zero-padding hanya bekerja untuk panjang sinyal pangkat 2",
+        "Algoritma FFT mengabaikan sampel yang di-zero-pad"
+      ],
+      "correct": 0,
+      "explanation": "Resolusi frekuensi sebenarnya bergantung pada waktu observasi T = N/fs. Zero-padding menambah lebih banyak bin frekuensi (grid lebih halus) tetapi hanya menginterpolasi spektrum yang ada -- ia memberi hasil yang tampak lebih halus tanpa memisahkan frekuensi yang berjarak kurang dari 1/T Hz."
+    },
+    {
+      "stage": "post",
+      "question": "Pada sinusoidal positional encoding Transformer asli, mengapa pasangan dimensi berbeda diberi frekuensi berjarak geometris?",
+      "options": [
+        "Ia memastikan semua nilai encoding antara 0 dan 1",
+        "Setiap frekuensi memberi resolusi berbeda -- frekuensi tinggi mengodekan posisi halus, frekuensi rendah mengodekan posisi kasar, memberi setiap posisi sidik jari unik",
+        "Jarak geometris diwajibkan oleh algoritma FFT",
+        "Ia mengurangi biaya komputasi attention"
+      ],
+      "correct": 1,
+      "explanation": "Dimensi frekuensi tinggi berubah cepat terhadap posisi (resolusi halus), sedangkan dimensi frekuensi rendah berubah lambat (resolusi kasar). Bersama-sama, encoding multi-frekuensi memberi setiap posisi pola unik -- mirip bagaimana koefisien Fourier mengidentifikasi sinyal secara unik."
+    }
+  ]
+}

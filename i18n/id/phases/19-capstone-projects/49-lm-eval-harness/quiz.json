@@ -1,0 +1,78 @@
+{
+  "lesson": "49-lm-eval-harness",
+  "title": "Harness Evaluasi Language Model",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Empat field apa yang mendefinisikan contoh task dalam format JSONL harness?",
+      "options": [
+        "id, prompt, targets, metric, dan dict extras opsional untuk data sampingan yang dibutuhkan metrik",
+        "name, score, payload, vendor",
+        "weights dan bias",
+        "input dan output"
+      ],
+      "correct": 0,
+      "explanation": "Baris JSONL adalah kontraknya. Field extras memungkinkan metrik code_exec mengirim io_pairs tanpa mengotori prompt."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa tanda tangan fungsi metrik (prediction, targets, extras) -> float?",
+      "options": [
+        "Mengembalikan integer",
+        "Butuh objek model",
+        "Itu tanda tangan terkecil yang menangani string match target tunggal, rouge-l multi-referensi, dan code_exec dengan data sampingan, sambil menjaga skor di rentang [0.0, 1.0] yang dapat dibandingkan",
+        "Pilihan acak"
+      ],
+      "correct": 2,
+      "explanation": "Float di [0,1] berarti skor per task dan keseluruhan adalah rata-rata yang dapat diinterpretasikan. Slot extras adalah cara code_exec mendapat io_pairs."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana metrik code_exec menahan prediksi berbahaya?",
+      "options": [
+        "Memakai container sandbox",
+        "Menjalankan prediksi dengan dict __builtins__ yang dilucuti sehingga namespace hanya mengekspos beberapa nama aman; pernyataan import gagal karena importer tidak ada di scope",
+        "Tidak menahannya",
+        "Menolak apa pun yang mengandung def"
+      ],
+      "correct": 1,
+      "explanation": "Namespace aman lesson melucuti builtins menjadi segelintir nama. Test menegaskan bahwa import os mengembalikan skor 0.0 alih-alih mengeksekusi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dibeli abstraksi adapter model?",
+      "options": [
+        "Itu satu-satunya kode spesifik model di harness; tukar adapter untuk menunjuk vendor baru, dan task, metrik, runner, serta format leaderboard tetap sama",
+        "Diwajibkan torch",
+        "Tidak ada",
+        "Membuat model lebih cepat"
+      ],
+      "correct": 0,
+      "explanation": "ToyAdapter di lesson adalah pattern matcher deterministik. HttpAdapter untuk vendor nyata punya permukaan generate(prompts) -> list[str] yang sama."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa leaderboard JSON membawa string schema seperti leaderboard.v1?",
+      "options": [
+        "Agar perubahan format di masa depan menaikkan versi dan dashboard hilir dapat melakukan dispatch padanya alih-alih rusak diam-diam",
+        "Mengompres file",
+        "Untuk SEO",
+        "Acak"
+      ],
+      "correct": 0,
+      "explanation": "Trik yang sama dengan payload checkpoint dari lesson 47. Field schema adalah hook migrasi."
+    },
+    {
+      "stage": "post",
+      "question": "Membaca leaderboard, bagaimana overall_score dihitung, dan apa yang harus kamu perhatikan saat membandingkan dua run?",
+      "options": [
+        "Sampel acak",
+        "Jumlah hitungan benar",
+        "Rata-rata skor per task (masing-masing di [0,1]); saat membandingkan, diff juga prediksi per contoh untuk task yang skornya bergeser, karena skor saja menyembunyikan contoh mana yang regresi",
+        "Skor task terbaik"
+      ],
+      "correct": 2,
+      "explanation": "Rata-rata dari mean per task memberi bobot sama pada setiap task. Gunakan --include-per-example untuk menyimpan bukti tingkat prediksi di samping skor agar regresi terlihat."
+    }
+  ]
+}

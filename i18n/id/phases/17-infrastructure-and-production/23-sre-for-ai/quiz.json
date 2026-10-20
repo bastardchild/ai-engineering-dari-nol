@@ -1,0 +1,78 @@
+{
+  "lesson": "23-sre-for-ai",
+  "title": "SRE untuk AI — Respons Insiden Multi-Agent, Runbook, Deteksi Prediktif",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bentuk multi-agent apa yang direkomendasikan pelajaran ini untuk AI SRE?",
+      "options": [
+        "Agent supervisor yang memecah insiden menjadi sub-query untuk agent log, metrik, dan runbook khusus, lalu menyintesis dan menyajikannya ke manusia",
+        "Satu agent monolitik yang memiliki segalanya",
+        "Pemilihan acak salah satu dari tiga agent",
+        "Dua agent berurutan tanpa supervisor"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Set auto-remediasi mana yang disebut pelajaran ini aman?",
+      "options": [
+        "Mengubah kebijakan IAM",
+        "Mengubah database",
+        "Merancang ulang topologi layanan",
+        "Restart pod, kembalikan deploy tertentu, scale pool dalam batas yang sudah disetujui, aktifkan feature flag yang sudah disetujui"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana NeuBird Hawkeye memakai evaluasi adversarial untuk menyaring akar masalah yang halusinasi?",
+      "options": [
+        "Selalu memilih jawaban model dengan keyakinan lebih tinggi",
+        "Menjalankan model yang sama dua kali pada input yang sama",
+        "Dua model menganalisis insiden yang sama secara independen; sepakat = keyakinan tinggi, tidak sepakat = eskalasi ke manusia dengan kedua hipotesis",
+        "Memakai pelatihan gaya GAN"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diselesaikan operational memory di AI SRE?",
+      "options": [
+        "Hilangnya pengetahuan tribal saat tim berganti — runbook dan post-mortem hidup di DB vektor yang diambil agent pada setiap insiden",
+        "Penyaringan egress jaringan",
+        "Cold start pod inferensi",
+        "Atribusi biaya token"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Hasil MIT 2025 apa yang dikutip pelajaran ini untuk prediksi pra-insiden?",
+      "options": [
+        "Prediksi masih belum terpecahkan",
+        "Prediksi 100% dengan lead 1 detik",
+        "89% gangguan diprediksi 10-15 menit lebih awal memakai log + suhu GPU + pola error API",
+        "10% tanpa lead time"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Batasan operasional apa yang ditekankan pelajaran ini tentang deteksi prediktif?",
+      "options": [
+        "Prediksi menggantikan runbook",
+        "Prediksi tanpa actuation hanyalah dashboard — pertanyaan operasionalnya adalah aksi apa (pre-drain, page, auto-scale) yang dipicu prediksi",
+        "Prediksi tidak boleh dihubungkan ke aksi",
+        "Prediksi selalu akurat"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

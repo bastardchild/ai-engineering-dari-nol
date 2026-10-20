@@ -1,0 +1,102 @@
+{
+  "lesson": "02-bag-of-words-tfidf",
+  "title": "Bag of Words, TF-IDF, dan Representasi Teks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dibuang oleh Bag of Words?",
+      "options": [
+        "Tanda baca",
+        "Urutan token",
+        "Ukuran kosakata",
+        "Panjang dokumen"
+      ],
+      "correct": 1,
+      "explanation": "BoW menghitung token per dokumen tetapi membuang urutannya."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa TF diskalakan dengan faktor IDF?",
+      "options": [
+        "Untuk menormalisasi panjang dokumen",
+        "Kata yang muncul di setiap dokumen membawa sedikit sinyal diskriminatif dan harus diberi bobot lebih rendah",
+        "Untuk menghapus tanda baca",
+        "Untuk mempercepat training"
+      ],
+      "correct": 1,
+      "explanation": "IDF menghukum kata yang ada di mana-mana dan menaikkan kata langka."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam rumus IDF halus log((N+1)/(df+1)) + 1, apa yang dijamin oleh +1 di akhir?",
+      "options": [
+        "Stabilitas numerik untuk N besar",
+        "Kompatibilitas dengan hitungan mentah",
+        "Kata yang muncul di setiap dokumen tetap memiliki IDF 1 alih-alih 0",
+        "Komputasi lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "+1 menjaga kata yang ada di mana-mana pada IDF=1 agar tidak dinolkan, sesuai default scikit-learn."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa baris TF-IDF dinormalisasi L2 sebelum cosine similarity?",
+      "options": [
+        "Untuk mengonversi vektor sparse ke dense",
+        "Dokumen lebih panjang jika tidak akan mendominasi skor kemiripan; normalisasi menempatkan semua dokumen pada hipersfer satuan",
+        "Untuk menghapus entri nol",
+        "Untuk mengompresi kosakata"
+      ],
+      "correct": 1,
+      "explanation": "Normalisasi L2 menghilangkan bias panjang dokumen dan mengubah cosine similarity menjadi dot product."
+    },
+    {
+      "stage": "check",
+      "question": "Pengaturan TfidfVectorizer mana yang berisiko diaktifkan untuk analisis sentimen?",
+      "options": [
+        "sublinear_tf=True",
+        "ngram_range=(1, 2)",
+        "min_df=2",
+        "stop_words='english'"
+      ],
+      "correct": 3,
+      "explanation": "Daftar stopword bahasa Inggris membuang negasi seperti 'not', yang membawa sinyal sentimen."
+    },
+    {
+      "stage": "post",
+      "question": "Tugas mana yang masih dimenangkan TF-IDF pada 2026?",
+      "options": [
+        "Machine translation",
+        "Dialog terbuka",
+        "Image captioning",
+        "Deteksi spam, penandaan anomali log, dan klasifikasi sempit berlatensi rendah"
+      ],
+      "correct": 3,
+      "explanation": "TF-IDF mengalahkan embedding ketika keberadaan kata adalah sinyalnya dan kemampuan jelaskan atau kecepatan penting."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa TF-IDF gagal pada pasangan 'The movie was not good' vs 'The movie was excellent'?",
+      "options": [
+        "TF-IDF memerlukan bigram agar bekerja",
+        "Kedua dokumen berbagi sebagian besar token; bag-of-words tidak memiliki gagasan negasi atau urutan kata",
+        "TF-IDF tidak dapat menangani stopword",
+        "Overlap embedding terlalu tinggi"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa urutan kata atau konteks sintaksis, BoW tidak dapat memodelkan bahwa 'not' membalik sentimen 'good'."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu hybrid embedding berbobot TF-IDF?",
+      "options": [
+        "Menggabungkan BoW dan embedding dense",
+        "Menjalankan PCA pada TF-IDF lalu melakukan embedding ulang",
+        "Memakai bobot TF-IDF sebagai bobot pooling atas embedding per token sebelum perata-rataan",
+        "Melatih BERT pada fitur TF-IDF"
+      ],
+      "correct": 2,
+      "explanation": "Hybrid itu membobot embedding setiap token dengan skor TF-IDF lalu merata-ratakannya, memadukan kapasitas semantik dengan penekanan kata langka."
+    }
+  ]
+}

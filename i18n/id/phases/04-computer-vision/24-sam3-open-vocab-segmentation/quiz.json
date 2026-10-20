@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu Promptable Concept Segmentation (PCS) yang diperkenalkan SAM 3?",
+      "options": [
+        "Rangkaian multi-langkah detektor yang diikuti SAM",
+        "Mensegmentasi semua instance dari konsep yang dijelaskan oleh frasa nomina pendek atau contoh gambar dalam satu forward pass, mengembalikan mask plus ID instance unik",
+        "Segmentasi prompt visual (titik/box) seperti SAM klasik",
+        "Mode khusus tracking"
+      ],
+      "correct": 1,
+      "explanation": "PCS adalah kemampuan khas SAM 3. Kamu memberikan 'bus sekolah kuning' atau contoh gambar bus; SAM 3 mengembalikan setiap instance yang cocok dengan mask dan ID uniknya sendiri, plus skor keberadaan. SAM klasik memerlukan satu prompt per instance; PCS menghasilkan semua kecocokan secara end-to-end."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa mempertahankan pipeline detektor + SAM 2 terpisah (Grounded SAM 2) pada 2026 jika SAM 3 sudah melakukan segmentasi dengan prompt teks?",
+      "options": [
+        "SAM 3 hanya tersedia di cloud",
+        "Grounded SAM 2 selalu lebih akurat",
+        "Modularitas — kamu dapat menukar detektor open-vocabulary berbeda (DINO-X, Florence-2, Grounding DINO 1.5) untuk domain, batasan lisensi, atau perilaku ambang yang berbeda; arsitektur SAM 3 monolitik",
+        "SAM 3 tidak mendukung video"
+      ],
+      "correct": 2,
+      "explanation": "Grounded SAM 2 adalah komposisi detektor dan SAM 2 dengan bobot beku. Modularitas itu kadang justru yang kamu butuhkan — detektor pencitraan medis, detektor ramah lisensi, atau kontrol ambang yang ketat. SAM 3 lebih akurat end-to-end untuk penggunaan umum tetapi lebih sulit disesuaikan. Keduanya memiliki peran produksi pada 2026."
+    },
+    {
+      "stage": "post",
+      "question": "Presence head SAM 3 menghasilkan apa?",
+      "options": [
+        "Probabilitas skalar bahwa konsep yang dikueri ada dalam gambar, dipisahkan dari lokalisasi; memungkinkan model mengatakan 'tidak ada' dengan bersih dan mengurangi false positive pada konsep yang tidak hadir",
+        "Daftar bounding box kandidat",
+        "Bank memori tracking",
+        "Mask akhir"
+      ],
+      "correct": 0,
+      "explanation": "Presence head memisahkan keputusan 'apakah ini ada di sini?' dari keputusan 'di mana itu?'. Model yang harus menghasilkan box setiap kali diminta cenderung berhalusinasi kecocokan untuk konsep yang tidak hadir. Dengan presence head, SAM 3 dapat mengembalikan nol deteksi dengan bersih. Ini juga meningkatkan diskriminasi antara prompt yang berdekatan (misalnya 'pemain berbaju putih' vs 'pemain berbaju merah')."
+    },
+    {
+      "stage": "post",
+      "question": "SAM 3.1 Object Multiplex (Maret 2026) memperkenalkan mekanisme memori bersama untuk tracking. Apa yang digantikannya?",
+      "options": [
+        "Bank memori terpisah per instance; Multiplex meruntuhkannya menjadi satu memori bersama dengan kueri per instance sehingga tracking N objek berjalan jauh lebih cepat dengan akurasi tetap terjaga",
+        "Seluruh presence head",
+        "SAM 2 sepenuhnya",
+        "Backbone ViT"
+      ],
+      "correct": 0,
+      "explanation": "Tracking SAM 2 / SAM 3 sebelumnya memelihara satu bank memori per instance yang dilacak, sehingga biayanya tumbuh linear dengan jumlah objek. Object Multiplex memperkenalkan satu memori bersama plus kueri per instance yang mengambil fitur spesifik instance. Tracking banyak instance kini efisien — penting untuk kerumunan dan adegan multi-objek padat."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu membutuhkan DETEKSI open-vocabulary real-time (hanya box, tanpa mask) pada perangkat edge. Keluarga model 2026 mana yang tepat?",
+      "options": [
+        "Rangkaian CLIP + detektor kustom",
+        "SAM 3",
+        "Grounded SAM 2",
+        "YOLO-World (dan detektor open-vocab real-time terkait); SAM 3 menghasilkan mask dan lebih berat, sedangkan YOLO-World dirancang khusus untuk box pada fps tinggi di perangkat edge"
+      ],
+      "correct": 3,
+      "explanation": "YOLO-World dan model serupa (OV-DINO, LLMDet) adalah detektor open-vocabulary real-time. Mereka tidak menghasilkan mask tetapi mencapai 30-60 fps pada 640x640 di GPU kelas menengah. SAM 3 adalah pilihan tepat ketika mask dan tracking penting. Selalu cocokkan bobot alat dengan tugas: deteksi saja tidak masalah tanpa overhead mask."
+    }
+  ]
+}

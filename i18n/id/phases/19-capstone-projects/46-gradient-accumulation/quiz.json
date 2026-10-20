@@ -1,0 +1,78 @@
+{
+  "lesson": "46-gradient-accumulation",
+  "title": "Gradient Accumulation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Identitas batch efektif apa yang diekspresikan gradient accumulation?",
+      "options": [
+        "effective_batch = micro_batch / accum_steps",
+        "effective_batch = world_size saja",
+        "effective_batch = micro_batch + accum_steps",
+        "effective_batch = micro_batch * accum_steps"
+      ],
+      "correct": 3,
+      "explanation": "Micro batch adalah yang muat di memori; accumulation step adalah berapa banyak forward + backward menumpuk gradien ke buffer yang sama sebelum satu langkah optimizer."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa loss harus dibagi accum_steps sebelum backward pada setiap micro batch?",
+      "options": [
+        "Itu membuat kurva loss lebih cantik",
+        "Itu menghindari NaN",
+        "Itu hanya diperlukan untuk mixed precision",
+        "PyTorch menjumlahkan gradien ke param.grad secara default, jadi tanpa pembagian gradien terakumulasi N kali terlalu besar dan langkah optimizer N kali terlalu agresif"
+      ],
+      "correct": 3,
+      "explanation": "Buffer akumulasi adalah jumlah. Penskalaan per micro batch dengan 1/N mendorong jumlah itu kembali ke skala yang akan dihasilkan backward full-batch tunggal."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan langkah optimizer berjalan di dalam loop akumulasi?",
+      "options": [
+        "Tidak pernah; optimizer diganti",
+        "Dua kali per jendela demi keamanan",
+        "Setelah setiap micro batch",
+        "Hanya setelah micro batch terakhir di jendela akumulasi"
+      ],
+      "correct": 3,
+      "explanation": "Melangkah di tengah akumulasi mengontaminasi setiap parameter yang diandalkan sisa run. Langkah optimizer menyala sekali per batch efektif."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dibungkus konteks no_sync pada run multi-GPU nyata?",
+      "options": [
+        "Data loader",
+        "Micro batch non-final, sehingga all-reduce gradien hanya menyala setelah backward terakhir alih-alih N kali",
+        "Langkah optimizer",
+        "Forward pass"
+      ],
+      "correct": 1,
+      "explanation": "no_sync DDP melewati kolektif gradien. Membungkus semua kecuali micro batch terakhir mengubah N kolektif per langkah efektif menjadi satu."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditegaskan fungsi equivalence_check di main.py?",
+      "options": [
+        "Bahwa loss konvergen",
+        "Bahwa gradien nol",
+        "Bahwa backward full-batch tunggal dan backward chunked accum_steps dengan loss / N menghasilkan buffer gradien sama dan parameter pasca-step sama hingga toleransi kecil",
+        "Bahwa throughput konstan"
+      ],
+      "correct": 2,
+      "explanation": "Batas penegasan adalah max-abs-diff di bawah 1e-4. Tanpa penskalaan loss diff meledak; dengan penskalaan ia berada di noise floating point."
+    },
+    {
+      "stage": "post",
+      "question": "Membaca kurva throughput terhadap batch efektif, apa yang kira-kira tetap konstan dan apa yang diskalakan?",
+      "options": [
+        "Throughput naik karena model menjadi lebih cepat",
+        "Kedua metrik diskalakan linear dengan accum",
+        "Sampel per detik saturasi mendekati batas hardware sementara wall time per langkah optimizer diskalakan linear dengan accum_steps; langkah optimizer per detik itulah yang turun",
+        "Sampel per detik turun dengan batch efektif lebih besar"
+      ],
+      "correct": 2,
+      "explanation": "Setiap micro batch membutuhkan forward + backward yang sama. Akumulasi membeli penghalusan statistik per langkah optimizer, bukan throughput mentah; kurvanya adalah pemeriksaan realitas berguna terhadap folklore."
+    }
+  ]
+}

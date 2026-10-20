@@ -1,0 +1,90 @@
+{
+  "lesson": "21-computer-use-agents",
+  "title": "Computer Use: Claude, OpenAI CUA, Gemini",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Input apa yang diterima Claude computer use, dan apa yang dikeluarkannya?",
+      "options": [
+        "Screenshot masuk (berbasis vision), perintah keyboard/mouse keluar",
+        "Accessibility tree masuk, perintah keyboard/mouse keluar",
+        "DOM XML masuk, JavaScript keluar",
+        "JSON masuk, SQL keluar"
+      ],
+      "correct": 0,
+      "explanation": "Claude membaca piksel dan mengeluarkan aksi keyboard/mouse; tidak ada accessibility API OS yang dipakai."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa fitur keamanan pembeda Gemini 2.5 Computer Use?",
+      "options": [
+        "Layanan keamanan per langkah yang menilai setiap aksi sebelum eksekusi dan menolak yang tidak aman",
+        "Mode read-only secara default",
+        "Aturan WAF yang di-hard-code",
+        "CAPTCHA wajib"
+      ],
+      "correct": 0,
+      "explanation": "Gemini 2.5 Computer Use menyertakan classifier keamanan per langkah sebagai fitur penentu."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diidentifikasi pelajaran sebagai input tidak dipercaya pada ketiga model?",
+      "options": [
+        "Tidak ada; semuanya dipercaya",
+        "Hanya respons HTTPS",
+        "Screenshot, teks DOM, output tool, konten PDF, apa pun yang di-retrieve",
+        "Hanya konten PDF"
+      ],
+      "correct": 2,
+      "explanation": "Hanya instruksi pengguna langsung yang dihitung sebagai izin; sisanya tidak dipercaya."
+    },
+    {
+      "stage": "check",
+      "question": "Angka OSWorld / WebArena mana yang dikutip pelajaran untuk OpenAI CUA saat peluncuran?",
+      "options": [
+        "Angka tidak dilaporkan",
+        "OSWorld 99%, WebArena 99%",
+        "OSWorld 0%, WebArena 0%",
+        "OSWorld 38,1%, WebArena 58,1%, WebVoyager 87%"
+      ],
+      "correct": 3,
+      "explanation": "Itulah angka peluncuran yang dikutip."
+    },
+    {
+      "stage": "check",
+      "question": "Pola pertahanan mana yang TIDAK ada dalam daftar konvergensi 2026?",
+      "options": [
+        "Allowlist/blocklist target navigasi",
+        "Classifier keamanan per langkah",
+        "Human-in-the-loop untuk aksi sensitif",
+        "Auto-klik dialog agar hemat waktu"
+      ],
+      "correct": 3,
+      "explanation": "Auto-klik dialog adalah kebalikan dari aman; pelajaran menyarankan konfirmasi eksplisit."
+    },
+    {
+      "stage": "post",
+      "question": "Serangan utama apa yang disorot pelajaran terhadap agent computer-use?",
+      "options": [
+        "Gangguan jaringan",
+        "Keterlambatan update OS",
+        "Rendering lambat",
+        "Halaman atau PDF berbahaya yang menyematkan instruksi dalam konten hasil retrieval yang dianggap model sebagai niat pengguna"
+      ],
+      "correct": 3,
+      "explanation": "Mempercayai screenshot atau teks DOM sebagai izin adalah kegagalan indirect-prompt-injection kanonis."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan konfirmasi human-in-the-loop secara khusus disarankan?",
+      "options": [
+        "Jangan pernah",
+        "Pada aksi sensitif seperti login, pembelian, penghapusan file",
+        "Hanya saat model bertanya",
+        "Pada navigasi read-only"
+      ],
+      "correct": 1,
+      "explanation": "Aksi sensitif (uang, paparan data, login baru) membutuhkan konfirmasi manusia eksplisit."
+    }
+  ]
+}

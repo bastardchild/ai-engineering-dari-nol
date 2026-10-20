@@ -1,0 +1,78 @@
+{
+  "lesson": "27-finops-llms",
+  "title": "FinOps untuk LLM — Unit Economics dan Atribusi Multi-Tenant",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa FinOps tradisional rusak pada belanja LLM?",
+      "options": [
+        "LLM tidak memakan biaya",
+        "Provider cloud menolak membuat rincian",
+        "Tagihan LLM selalu gratis",
+        "Biaya berupa transaksi token, bukan uptime sumber daya; tag tidak menyebar otomatis dari panggilan API dan kamu harus menandai pengguna/tugas/tenant di titik panggilan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Tiga dimensi atribusi mana yang diwajibkan pelajaran ini untuk diinstrumentasi sejak hari pertama?",
+      "options": [
+        "Provider, model, versi API",
+        "Region, AZ, datacenter",
+        "Per pengguna (user_id), per tugas (task_id + rute), per tenant (tenant_id)",
+        "GPU, CPU, RAM"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Empat lapisan token mana yang harus dipisah dalam atribusi biaya?",
+      "options": [
+        "GPU, CPU, RAM, penyimpanan",
+        "Cache, model, gateway, observability",
+        "Input, output, jaringan, disk",
+        "Prompt, tool, memori, respons"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa pemicu kill switch dalam tangga penegakan?",
+      "options": [
+        "Belanja melebihi $1 dalam semenit",
+        "Respons 5xx apa pun",
+        "Z-score belanja tenant > 4 relatif terhadap baseline; otomatis jeda tenant dan panggil on-call",
+        "Latensi P50 > 2 detik"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Metrik unit mana yang direkomendasikan pelajaran ini alih-alih $/M token?",
+      "options": [
+        "Biaya per detik",
+        "Biaya per GPU-jam",
+        "Biaya per hasil produk (misalnya biaya per tiket dukungan yang selesai, biaya per artikel yang dihasilkan, biaya per tugas agent yang berhasil)",
+        "Biaya per gateway"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pola atribusi mana yang disebut pelajaran ini paling akurat dan dipakai tim matang?",
+      "options": [
+        "Hanya tag-dan-agregat",
+        "Alokasi berbasis model",
+        "Telemetry joiner — gabungkan trace ke billing lewat trace ID",
+        "Sampling dan ekstrapolasi"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

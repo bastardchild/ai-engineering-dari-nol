@@ -1,0 +1,78 @@
+{
+  "lesson": "66-reranker-cross-encoder",
+  "title": "Reranker Cross-Encoder",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan arsitektur antara bi-encoder dan cross-encoder?",
+      "options": [
+        "Bi-encoder menyematkan query dan dokumen secara independen; cross-encoder membaca urutan (query, document) terkatenasi dengan attention penuh lintas keduanya",
+        "Bi-encoder dilatih; cross-encoder tidak",
+        "Bi-encoder memakai cosine; cross-encoder memakai dot product",
+        "Cross-encoder hanya berjalan di GPU"
+      ],
+      "correct": 0,
+      "explanation": "Cross attention lintas sambungan adalah yang memberi cross-encoder presisinya; bi-encoder tidak pernah melihat query dan dokumen bersamaan."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa cross-encoder tidak bisa dipakai sebagai retriever utama pada korpus 10M dokumen?",
+      "options": [
+        "Itu tidak bisa menyematkan teks",
+        "Itu membutuhkan satu forward pass per pasangan (query, document), yaitu 10M pass per query",
+        "Itu tidak mendukung skor negatif",
+        "Itu membutuhkan token CLS di akhir urutan"
+      ],
+      "correct": 1,
+      "explanation": "Throughput runtuh pada skala korpus; cross-encoder berjalan sekali per pasangan alih-alih sekali per dokumen saat index time."
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran parameter N dalam pipeline retrieve-then-rerank dua tahap?",
+      "options": [
+        "Itu ukuran kosakata",
+        "Itu dimensi hidden cross-encoder",
+        "Itu jumlah layer cross-encoder",
+        "Itu jumlah kandidat yang dikembalikan bi-encoder untuk dinilai ulang cross-encoder"
+      ],
+      "correct": 3,
+      "explanation": "N adalah pool rerank; ia membatasi kualitas (cross-encoder tidak dapat melebihi recall bi-encoder pada N) dan latensi (cross-encoder menjalankan N forward pass)."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa kamu harus memilih N lebih besar dari K (biasanya 3x atau lebih)?",
+      "options": [
+        "BM25 mewajibkannya untuk perhitungan IDF",
+        "N lebih kecil mengurangi dimensi embedding",
+        "Cross-encoder mewajibkan N kelipatan K",
+        "Jika N sama dengan K cross-encoder tidak dapat mengurutkan ulang, hanya memberi bobot ulang; lift rerank runtuh ke nol"
+      ],
+      "correct": 3,
+      "explanation": "Dengan N = K tidak ada yang bisa diurutkan ulang; satu-satunya tugas cross-encoder adalah memilih K yang tepat dari N, yang membutuhkan N > K."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan head mean-pooling cross-encoder dalam lesson ini?",
+      "options": [
+        "Pooling atas distribusi kosakata",
+        "Menghitung softmax atas posisi dokumen",
+        "Merata-ratakan output layer terakhir di posisi non-pad dan memberi satu head linear untuk menghasilkan satu skalar relevansi",
+        "Menjumlahkan indeks embedding"
+      ],
+      "correct": 2,
+      "explanation": "Mean-pool di posisi non-pad, lalu satu layer linear mengeluarkan skor relevansi; CLS-pooling adalah alternatif dengan kualitas serupa."
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan produksi mana yang dibantu dideteksi dengan mencatat skor cross-encoder peringkat-1?",
+      "options": [
+        "Query out-of-domain: saat skor reranker top-1 di bawah ambang spesifik korpus, model memberi sinyal bahwa tidak ada di korpus yang benar-benar menjawab query",
+        "Gangguan jaringan",
+        "Vocabulary drift di tokenizer",
+        "Korupsi indeks di bi-encoder"
+      ],
+      "correct": 0,
+      "explanation": "Skor peringkat-1 yang konsisten rendah adalah cross-encoder memberi tahu bahwa pool yang diambil tidak memuat jawaban; munculkan itu ke LLM sebagai keyakinan rendah."
+    }
+  ]
+}

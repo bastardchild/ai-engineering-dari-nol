@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Mengapa debugging neural network lebih sulit daripada debugging software tradisional?",
+      "options": ["Tidak ada alat debugging untuk neural network", "Jaringan bisa menghasilkan output salah tanpa pesan error atau crash -- kodenya jalan tetapi hasilnya diam-diam keliru", "Neural network memakai bahasa pemrograman berbeda", "Neural network tidak bisa diuji"],
+      "correct": 1,
+      "explanation": "Bug tradisional crash atau melempar exception. Bug neural network menghasilkan angka yang sekadar salah -- loss yang tidak turun, akurasi yang mandek, atau output yang sedikit meleset. Tidak ada pesan error yang memberi tahu apa yang salah.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa teknik debugging 'overfit one batch'?",
+      "options": ["Melatih pada seluruh dataset sampai overfitting", "Meng-overfit set validasi", "Memakai batch size sangat besar", "Melatih pada satu batch kecil sampai loss mendekati nol, memverifikasi model bisa menghafal setidaknya beberapa contoh"],
+      "correct": 3,
+      "explanation": "Jika modelmu tak bisa menghafal batch kecil (misalnya 4-8 sampel) sampai loss mendekati nol, ada yang mendasar rusak: arsitektur salah, fungsi loss rusak, atau training loop keliru. Ini diagnostik pertama yang harus dijalankan.",
+      "stage": "pre"
+    },
+    {
+      "question": "Loss-mu menjadi NaN setelah beberapa langkah training. Apa penyebab paling mungkin?",
+      "options": ["Model punya parameter terlalu sedikit", "Activation function-nya salah", "Exploding gradient atau overflow numerik, sering dari learning rate terlalu tinggi atau gradient clipping yang tidak ada", "Dataset terlalu kecil"],
+      "correct": 2,
+      "explanation": "Loss NaN biasanya berasal dari overflow numerik: gradient meledak, bobot tumbuh tak terbatas, dan operasi seperti log(0) atau exp(1000) menghasilkan infinity/NaN. Turunkan learning rate atau tambahkan gradient clipping.",
+      "stage": "post"
+    },
+    {
+      "question": "Training loss-mu turun tetapi validation loss datar sejak awal. Apa artinya?",
+      "options": ["Model mempelajari pola data training tetapi pola itu tidak generalisasi -- kemungkinan masalah pipeline data (data train/val tak cocok) atau overfitting parah", "Learning rate terlalu rendah", "Model butuh lebih banyak layer", "Model overfitting"],
+      "correct": 0,
+      "explanation": "Jika validation loss tidak pernah membaik, model entah menghafal noise training (overfitting), atau ada bug pipeline data di mana distribusi train dan validasi mendasar berbeda.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa yang harus kamu cek lebih dulu saat kurva loss benar-benar datar (loss tidak turun sama sekali)?",
+      "options": ["Coba arsitektur berbeda", "Ganti ke optimizer lain", "Pastikan gradient tidak nol, learning rate cukup besar, dan fungsi loss benar-benar bergantung pada prediksi model", "Tambahkan lebih banyak data training"],
+      "correct": 2,
+      "explanation": "Loss yang datar berarti model tidak memperbarui diri. Penyebab umum: gradient nol (dead neuron, tensor terlepas), learning rate terlalu kecil, atau fungsi loss yang tidak mengalirkan gradient ke model (misalnya memakai .item() sebelum .backward()).",
+      "stage": "post"
+    }
+  ]
+}

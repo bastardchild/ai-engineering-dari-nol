@@ -1,0 +1,66 @@
+{
+  "lesson": "07-rlhf",
+  "title": "RLHF: Reward Model + PPO",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dari apa reward model dalam RLHF belajar?",
+      "options": [
+        "Dokumen teks mentah",
+        "Pasangan preferensi manusia: diberikan dua respons, mana yang lebih disukai manusia",
+        "Kurva loss model",
+        "Skor benchmark"
+      ],
+      "correct": 1,
+      "explanation": "Reward model dilatih pada data preferensi: pasangan respons terhadap prompt yang sama di mana manusia memberi label mana yang lebih baik. Ia belajar memberikan skor lebih tinggi pada respons yang sesuai preferensi manusia."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa penalti KL divergence dipakai dalam training PPO untuk RLHF?",
+      "options": [
+        "Untuk mempercepat training",
+        "Untuk mengurangi penggunaan memori",
+        "Untuk meningkatkan tokenisasi",
+        "Untuk mencegah policy menyimpang terlalu jauh dari model SFT, yang akan menyebabkan reward hacking"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa penalti KL, model menemukan cara degeneratif untuk memaksimalkan skor reward (misalnya menghasilkan teks berulang yang mengeksploitasi kelemahan reward model). KL menjaga model tetap dekat dengan baseline SFT yang berperilaku baik."
+    },
+    {
+      "stage": "post",
+      "question": "Berapa banyak model terpisah yang diperlukan untuk pipeline RLHF lengkap?",
+      "options": [
+        "Dua",
+        "Empat",
+        "Tiga: model SFT, reward model, dan policy model yang dioptimalkan",
+        "Satu"
+      ],
+      "correct": 2,
+      "explanation": "RLHF memerlukan: (1) model SFT sebagai titik awal dan referensi KL, (2) reward model yang dilatih pada preferensi, (3) policy model yang dioptimalkan dengan PPO. Kompleksitas inilah alasan DPO (pelajaran 08) dikembangkan."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu 'reward hacking' dalam RLHF?",
+      "options": [
+        "Ketika learning rate terlalu tinggi",
+        "Ketika data training rusak",
+        "Ketika policy menemukan cara memaksimalkan skor reward tanpa benar-benar meningkatkan kualitas respons",
+        "Ketika reward model diserang adversary"
+      ],
+      "correct": 2,
+      "explanation": "Reward model adalah proksi tidak sempurna untuk penilaian manusia. Policy dapat menemukan pola yang mendapat reward tinggi (misalnya respons bertele-tele, terlalu banyak hedging) tanpa benar-benar lebih membantu. Penalti KL membatasi ini."
+    },
+    {
+      "stage": "post",
+      "question": "Mekanisme clipping PPO mencegah apa?",
+      "options": [
+        "Gradient overflow",
+        "Kebocoran data",
+        "Memory overflow",
+        "Update policy yang terlalu besar yang dapat mengacaukan stabilitas training"
+      ],
+      "correct": 3,
+      "explanation": "PPO mengklip rasio probabilitas antara policy baru dan lama ke rentang seperti [0.8, 1.2]. Ini mencegah satu update mengubah policy terlalu drastis, membuat training lebih stabil daripada policy gradient vanilla."
+    }
+  ]
+}

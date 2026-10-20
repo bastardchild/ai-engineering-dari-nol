@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang direpresentasikan A[i][j] = 1 pada adjacency matrix?",
+      "options": [
+        "Node i memiliki derajat j",
+        "Node i dan node j memiliki label sama",
+        "Jalur terpendek dari i ke j memiliki panjang 1",
+        "Ada edge dari node i ke node j"
+      ],
+      "correct": 3,
+      "explanation": "Adjacency matrix adalah representasi inti sebuah graf. A[i][j] = 1 berarti ada edge yang menghubungkan node i ke node j. Untuk graf tak berarah, matriksnya simetris (A[i][j] = A[j][i])."
+    },
+    {
+      "stage": "pre",
+      "question": "Struktur data apa yang dipakai BFS dan apa yang ditemukannya?",
+      "options": [
+        "Stack; menemukan komponen terhubung",
+        "Queue; menemukan jalur terpendek pada graf tanpa bobot",
+        "Priority queue; menemukan minimum spanning tree",
+        "Hash map; menemukan node duplikat"
+      ],
+      "correct": 1,
+      "explanation": "BFS memakai queue (FIFO) untuk menjelajahi semua tetangga pada jarak k sebelum bergerak ke jarak k+1. Ini menjamin bahwa saat pertama kali sebuah node ditemukan, ia ditemukan melalui jalur terpendek dari sumber."
+    },
+    {
+      "stage": "post",
+      "question": "Graf Laplacian L = D - A dari graf terhubung memiliki berapa eigenvalue nol?",
+      "options": [
+        "Nol",
+        "Sama dengan jumlah node",
+        "Sama dengan jumlah edge",
+        "Tepat satu"
+      ],
+      "correct": 3,
+      "explanation": "Jumlah eigenvalue nol dari Laplacian sama dengan jumlah komponen terhubung. Graf terhubung memiliki tepat satu komponen terhubung, jadi tepat satu eigenvalue nol. Graf dengan k bagian terputus memiliki k eigenvalue nol."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam message passing GNN, apa yang dihitung h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)}))?",
+      "options": [
+        "Skor PageRank node v",
+        "Jalur terpendek dari v ke semua node lain",
+        "Vektor fitur baru untuk node v dengan mengagregasi fitur tetangga, mentransformasi dengan bobot yang dipelajari, dan menerapkan non-linearitas",
+        "Derajat node v pada lapisan k+1"
+      ],
+      "correct": 2,
+      "explanation": "Setiap node mengumpulkan fitur dari tetangganya (agregasi mean), mengalikannya dengan matriks bobot W yang dipelajari, dan menerapkan fungsi aktivasi sigma. Setelah k putaran, setiap node memiliki informasi dari lingkungan k-hop-nya."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana spectral clustering memakai Fiedler vector (eigenvector dari eigenvalue terkecil kedua dari L)?",
+      "options": [
+        "Node dengan entri Fiedler vector terbesar membentuk satu cluster",
+        "Fiedler vector dipakai sebagai bobot edge",
+        "Node dengan nilai Fiedler vector positif masuk satu kelompok, node dengan nilai negatif masuk kelompok lain",
+        "Fiedler vector menentukan jumlah cluster"
+      ],
+      "correct": 2,
+      "explanation": "Fiedler vector mengodekan fungsi non-trivial paling halus pada graf. Node dalam cluster yang terhubung erat mendapat nilai serupa, sedangkan node yang dipisahkan bottleneck mendapat nilai dengan tanda berlawanan. Pemisahan berdasarkan tanda membagi graf menjadi dua cluster."
+    }
+  ]
+}

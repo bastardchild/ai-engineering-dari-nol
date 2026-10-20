@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "biasvar-pre-1",
+      "stage": "pre",
+      "question": "Sebuah model linear dipakai untuk mencocokkan hubungan yang jelas melengkung (kuadratik). Komponen error mana yang mendominasi?",
+      "options": [
+        "Bias: model terlalu kaku untuk menangkap pola nonlinier yang sebenarnya",
+        "Variance: model berubah terlalu banyak dengan data training berbeda",
+        "Irreducible noise: datanya terlalu berisik",
+        "Tidak ada: model seharusnya sudah pas sempurna"
+      ],
+      "correct": 0,
+      "explanation": "Model linear tidak bisa menangkap kurva kuadratik, berapa pun data yang dilihatnya. Error sistematis akibat asumsi model yang salah inilah bias. Model mengalami underfitting."
+    },
+    {
+      "id": "biasvar-pre-2",
+      "stage": "pre",
+      "question": "Dekomposisi bias-variance dari expected error punya tiga suku. Suku mana yang tidak bisa dikurangi model apa pun?",
+      "options": [
+        "Ketiganya bisa dikurangi sampai nol",
+        "Variance",
+        "Irreducible noise (sigma kuadrat)",
+        "Bias kuadrat"
+      ],
+      "correct": 2,
+      "explanation": "Irreducible noise berasal dari keacakan di data itu sendiri (galat pengukuran, variabel yang hilang). Tidak ada model yang bisa memprediksi noise. Expected error = bias^2 + variance + irreducible noise."
+    },
+    {
+      "id": "biasvar-post-1",
+      "stage": "post",
+      "question": "Menambahkan regularisasi L2 pada model menaikkan bias dan menurunkan variance. Mengapa ini berguna?",
+      "options": [
+        "Penurunan variance bisa lebih besar daripada kenaikan bias sehingga total error turun",
+        "Ini membuat model lebih cepat dilatih",
+        "Regularisasi L2 menghapus irreducible noise",
+        "Ini selalu memperbaiki akurasi training maupun test"
+      ],
+      "correct": 0,
+      "explanation": "Regularisasi menukar kenaikan bias yang kecil dengan penurunan variance yang lebih besar. Saat model overfitting (variance tinggi), pertukaran ini menurunkan total error walau bias naik sedikit."
+    },
+    {
+      "id": "biasvar-post-2",
+      "stage": "post",
+      "question": "Sebuah model punya error training = 2% dan error test = 25%. Apa diagnosis paling mungkin?",
+      "options": [
+        "Irreducible noise tinggi: datanya terlalu berisik",
+        "Bias tinggi (underfitting): model terlalu sederhana",
+        "Variance tinggi (overfitting): model menghafal data training dan gagal generalisasi",
+        "Model terkalibrasi dengan sempurna"
+      ],
+      "correct": 2,
+      "explanation": "Error training rendah + error test tinggi + jarak besar = variance tinggi (overfitting). Model mencocokkan noise spesifik data training. Obatnya: regularisasi, kurangi kompleksitas, tambah data."
+    },
+    {
+      "id": "biasvar-post-3",
+      "stage": "post",
+      "question": "Kamu melatih arsitektur model yang sama pada 50 subset data training acak yang berbeda dan melihat prediksinya berbeda jauh. Apa artinya?",
+      "options": [
+        "Irreducible noise tinggi: variabel target bersifat acak",
+        "Bias tinggi: model selalu melewatkan pola yang sebenarnya",
+        "Learning rate terlalu tinggi",
+        "Variance tinggi: model sensitif terhadap data training spesifik yang dilihatnya"
+      ],
+      "correct": 3,
+      "explanation": "Variance mengukur seberapa besar prediksi berubah saat dilatih pada subset data berbeda. Prediksi yang sangat berbeda antar subset adalah definisi variance tinggi."
+    }
+  ]
+}

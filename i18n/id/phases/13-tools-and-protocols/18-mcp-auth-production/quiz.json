@@ -1,0 +1,78 @@
+{
+  "lesson": "18-mcp-auth-production",
+  "title": "Auth MCP di Produksi: Enrollment dan Token Terikat Issuer",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Klien MCP menemukan issuer authorization server yang berbeda untuk resource yang sama. Apa yang harus dilakukannya dengan registrasi dan token akses yang ada?",
+      "options": [
+        "Menggunakan ulang hanya token akses setelah mengubah audiensnya secara lokal",
+        "Enrollment untuk issuer baru dan menjaga kredensial terisolasi per issuer",
+        "Menggunakan ulang keduanya karena URL resource MCP tidak berubah",
+        "Menyimpan keduanya di bawah nama tool alih-alih issuer"
+      ],
+      "correct": 1,
+      "explanation": "Identifier klien dan kredensial registrasi milik issuer authorization server yang membuatnya. Perubahan issuer memerlukan enrollment independen, dan setiap token akses di-cache di bawah issuer tersebut serta audiens resource-nya."
+    },
+    {
+      "stage": "check",
+      "question": "Pendekatan enrollment mana yang disarankan profil otorisasi MCP 2026-07-28?",
+      "options": [
+        "RFC 7591 Dynamic Client Registration untuk setiap request",
+        "Client ID Metadata Document yang disajikan dari URL HTTPS klien",
+        "Sesi protokol yang menyimpan satu identifier klien global",
+        "Client secret bersama yang disematkan di setiap klien desktop"
+      ],
+      "correct": 1,
+      "explanation": "CIMD memungkinkan authorization server menyelesaikan metadata klien dari identifier klien HTTPS. DCR deprecated dan hanya dipertahankan untuk kompatibilitas."
+    },
+    {
+      "stage": "check",
+      "question": "Request DCR yang deprecated mendeskripsikan klien desktop loopback. Metadata mana yang penting agar klasifikasinya benar?",
+      "options": [
+        "Mcp-Session-Id",
+        "Redirect URI wildcard",
+        "application_type diset ke native",
+        "Bearer token yang dapat digunakan ulang"
+      ],
+      "correct": 2,
+      "explanation": "Panduan kompatibilitas saat ini mewajibkan application type yang benar. Klien desktop loopback bersifat native; klien web memakai redirect URI HTTPS."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa klien memvalidasi nilai iss RFC 9207 sebelum menukarkan authorization code?",
+      "options": [
+        "Untuk mencegah penukaran kode issuer yang jujur di token endpoint yang salah",
+        "Untuk menghindari penyegaran cache JWKS",
+        "Untuk menggantikan PKCE dengan discovery issuer",
+        "Untuk memilih tool dari server/discover"
+      ],
+      "correct": 0,
+      "explanation": "Pemeriksaan issuer bertahan terhadap mix-up authorization server. Ini melengkapi PKCE dengan memastikan respons berasal dari issuer yang dicatat sebelum redirect."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana resource server MCP sebaiknya meng-cache otorisasi untuk transport stateless saat ini?",
+      "options": [
+        "Di bawah Mcp-Session-Id sampai klien mengirim DELETE",
+        "Di dalam hasil server/discover untuk semua panggilan berikutnya",
+        "Di koneksi SSE sampai tersambung ulang",
+        "Tidak di mana pun sebagai keputusan sesi protokol; validasi bearer token pada setiap request"
+      ],
+      "correct": 3,
+      "explanation": "MCP 2026-07-28 menghapus sesi protokol. Setiap request melintasi batas otorisasi secara independen, jadi identitas, audiens, masa berlaku, dan scope diperiksa setiap kali."
+    },
+    {
+      "stage": "post",
+      "question": "Bukti deployment mana yang paling kuat sebelum mempercayai authorization server?",
+      "options": [
+        "Metadata server target yang ditemukan dan diperiksa terhadap persyaratan PKCE, issuer, enrollment, dan resource binding",
+        "Tabel kategori vendor yang disalin dari lesson lama",
+        "Halaman produk yang menyatakan OAuth didukung",
+        "Login sukses yang tidak memeriksa audiens token"
+      ],
+      "correct": 0,
+      "explanation": "Kemampuan berubah menurut deployment dan versi. Dokumen discovery live adalah kontrak konkret yang harus diperiksa, diikuti validasi issuer dan audiens end-to-end."
+    }
+  ]
+}

@@ -190,7 +190,7 @@
         _index.push({
           kind:     'certification-track',
           id:       'ct:' + trackId,
-          name:     track.credential || track.name || track.shortName || track.examCode || 'Certification track',
+          name:     track.credential || track.name || track.shortName || track.examCode || 'Jalur sertifikasi',
           summary:  track.summary || track.audience || '',
           keywords: [track.shortName, track.examCode, track.level, track.audience, domainNames].filter(Boolean).join(' '),
           examCode: track.examCode || '',
@@ -215,7 +215,7 @@
         _index.push({
           kind:       'certification-lesson',
           id:         'cl:' + certPath,
-          name:       certLesson.name || certLesson.title || certLesson.slug || 'Certification lesson',
+          name:       certLesson.name || certLesson.title || certLesson.slug || 'Pelajaran sertifikasi',
           summary:    certLesson.summary || '',
           keywords:   certLesson.keywords || '',
           type:       certLesson.type || '',
@@ -372,7 +372,7 @@
     el.id = PALETTE_ID;
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
-    el.setAttribute('aria-label', 'Search learning paths, lessons, and glossary');
+    el.setAttribute('aria-label', 'Cari jalur belajar, pelajaran, dan glosarium');
     el.setAttribute('aria-hidden', 'true');
     el.inert = true;
 
@@ -387,29 +387,29 @@
             '<line x1="21" y1="21" x2="16.65" y2="16.65"/>' +
           '</svg>' +
           '<input class="cp-input" id="cpInput" type="search"' +
-          ' placeholder="Search paths, lessons, and glossary…"' +
+          ' placeholder="Cari jalur, pelajaran, dan glosarium…"' +
           ' autocomplete="off" autocorrect="off"' +
           ' autocapitalize="off" spellcheck="false"' +
-          ' role="combobox" aria-label="Search" aria-autocomplete="list"' +
+          ' role="combobox" aria-label="Cari" aria-autocomplete="list"' +
           ' aria-haspopup="listbox" aria-expanded="false"' +
           ' aria-controls="cpResults">' +
           '<button class="cp-kbd-esc" id="cpClose" type="button"' +
-          ' aria-label="Close search">Esc</button>' +
+          ' aria-label="Tutup pencarian">Esc</button>' +
         '</div>' +
         '<ul class="cp-results" id="cpResults"' +
-        ' role="listbox" aria-label="Search results"></ul>' +
+        ' role="listbox" aria-label="Hasil pencarian"></ul>' +
         '<div class="cp-footer">' +
           '<span class="cp-footer-group">' +
             '<kbd>↑</kbd><kbd>↓</kbd>' +
-            '<span class="cp-footer-label">navigate</span>' +
+            '<span class="cp-footer-label">navigasi</span>' +
           '</span>' +
           '<span class="cp-footer-group">' +
             '<kbd>↵</kbd>' +
-            '<span class="cp-footer-label">open</span>' +
+            '<span class="cp-footer-label">buka</span>' +
           '</span>' +
           '<span class="cp-footer-group">' +
             '<kbd>Esc</kbd>' +
-            '<span class="cp-footer-label">close</span>' +
+            '<span class="cp-footer-label">tutup</span>' +
           '</span>' +
           '<span class="cp-footer-shortcut">' + shortcutLabel + '</span>' +
         '</div>' +
@@ -508,18 +508,18 @@
       var learningPathCount = inventory.filter(function (item) { return item.kind === 'learning-path'; }).length;
       var artifactCount = inventory.filter(function (item) { return item.kind === 'artifact'; }).length;
       var glossaryCount = inventory.filter(function (item) { return item.kind === 'glossary'; }).length;
-      var inventoryParts = [lessonCount + ' lessons'];
+      var inventoryParts = [lessonCount + ' pelajaran'];
       if (learningPathCount) {
-        inventoryParts.push(learningPathCount + ' focused learning ' + (learningPathCount === 1 ? 'path' : 'paths'));
+        inventoryParts.push(learningPathCount + ' jalur belajar terfokus');
       }
       if (certificationLessonCount) {
-        inventoryParts.push(certificationLessonCount + ' certification lessons');
+        inventoryParts.push(certificationLessonCount + ' pelajaran sertifikasi');
       }
-      inventoryParts.push(artifactCount + ' outputs');
-      inventoryParts.push(glossaryCount + ' glossary terms');
+      inventoryParts.push(artifactCount + ' artefak');
+      inventoryParts.push(glossaryCount + ' istilah glosarium');
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Search ' + inventoryParts.slice(0, -1).join(', ') + ', and ' +
+        'Cari ' + inventoryParts.slice(0, -1).join(', ') + ', dan ' +
         inventoryParts[inventoryParts.length - 1] +
         '</li>';
       _activeIdx = -1;
@@ -530,7 +530,7 @@
     if (results.length === 0) {
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'No results for <em>' + escHtml(query) + '</em>' +
+        'Tidak ada hasil untuk <em>' + escHtml(query) + '</em>' +
         '</li>';
       _activeIdx = -1;
       _clearActiveDescendant();
@@ -546,21 +546,21 @@
 
       if (r.kind === 'learning-path') {
         dest = r.url;
-        chip = 'Learning path';
+        chip = 'Jalur belajar';
         chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'lesson') {
         // Prefer the in-site reader; fall back to GitHub URL
         dest = r.lessonPath
           ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
-        chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
+        chip = 'Fase ' + String(r.phaseId).padStart(2, '0');
       } else if (r.kind === 'certification-lesson') {
         dest = 'lesson?path=' + encodeURIComponent(r.lessonPath);
-        chip = 'Certification';
+        chip = 'Sertifikasi';
         chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'certification-track') {
         dest = r.url;
-        chip = r.examCode || 'Certification';
+        chip = r.examCode || 'Sertifikasi';
         chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'artifact') {
         // Jump to the lesson that produced this artifact
@@ -576,18 +576,18 @@
         dest      = r.slug
           ? 'glossary.html#' + encodeURIComponent(r.slug)
           : 'glossary.html?q=' + encodeURIComponent(r.name);
-        chip      = 'Glossary';
+        chip      = 'Glosarium';
         chipClass += ' cp-item-chip--alt';
       }
 
       var snippet = r.summary ? truncate(r.summary, 110) : '';
       var metaParts = [];
       if (r.kind === 'learning-path') {
-        if (r.lessonCount) metaParts.push(r.lessonCount + ' lessons');
+        if (r.lessonCount) metaParts.push(r.lessonCount + ' pelajaran');
         if (r.minutes) {
           var hours = Math.floor(r.minutes / 60);
           var minutes = r.minutes % 60;
-          metaParts.push(((hours ? hours + 'h' : '') + (minutes ? ' ' + minutes + 'm' : '')).trim());
+          metaParts.push(((hours ? hours + 'j' : '') + (minutes ? ' ' + minutes + 'm' : '')).trim());
         }
       } else if (r.kind === 'lesson' || r.kind === 'certification-lesson') {
         if (r.type && r.type !== '—') metaParts.push(r.type);
@@ -596,7 +596,7 @@
         if (r.level) metaParts.push(r.level);
       } else if (r.kind === 'artifact') {
         if (r.phaseId !== undefined && r.phaseId !== null) {
-          metaParts.push('Phase ' + String(r.phaseId).padStart(2, '0'));
+          metaParts.push('Fase ' + String(r.phaseId).padStart(2, '0'));
         }
       }
       var meta = metaParts.join(' · '); // ·

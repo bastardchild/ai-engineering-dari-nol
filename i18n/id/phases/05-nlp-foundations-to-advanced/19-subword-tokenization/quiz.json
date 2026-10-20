@@ -1,0 +1,102 @@
+{
+  "lesson": "19-subword-tokenization",
+  "title": "Subword Tokenization — BPE, WordPiece, Unigram, SentencePiece",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diberikan subword tokenization dibanding kosakata tingkat kata?",
+      "options": [
+        "Training lebih cepat",
+        "Model lebih kecil",
+        "Embedding lebih baik",
+        "Kata langka terurai menjadi potongan subword yang diketahui, menghilangkan OOV sambil menjaga kosakata tetap terbatas"
+      ],
+      "correct": 3,
+      "explanation": "Token subword mencakup input apa pun melalui dekomposisi, menghilangkan masalah OOV pada kosakata tingkat kata."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa GPT-2 memakai BPE tingkat byte alih-alih BPE tingkat karakter?",
+      "options": [
+        "Diwajibkan oleh transformers",
+        "Kosakata dasar 256 byte mencakup input UTF-8 apa pun, menjamin tidak ada token [UNK]",
+        "Byte lebih kecil",
+        "Byte BPE melewati merge"
+      ],
+      "correct": 1,
+      "explanation": "BPE tingkat byte dimulai dari 256 byte sehingga setiap input dapat disandikan; tidak ada yang OOV."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana tokenizer Unigram membangun kosakatanya?",
+      "options": [
+        "Penggabungan pasangan sering secara greedy",
+        "Sampling acak",
+        "Mulai dari set kandidat besar, lalu secara iteratif memangkas token yang penghapusannya paling sedikit merugikan log-likelihood korpus",
+        "Pembobotan IDF greedy"
+      ],
+      "correct": 2,
+      "explanation": "Unigram mencocokkan LM unigram dan secara iteratif menghapus token paling tidak berguna untuk mencapai ukuran kosakata target."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang membedakan kriteria merge WordPiece dari BPE?",
+      "options": [
+        "WordPiece memakai byte",
+        "WordPiece melewati merge",
+        "WordPiece tidak diawasi",
+        "WordPiece menggabungkan pasangan yang memaksimalkan likelihood korpus training, sedangkan BPE menggabungkan pasangan paling sering"
+      ],
+      "correct": 3,
+      "explanation": "WordPiece memilih merge berdasarkan likelihood; BPE memilih berdasarkan frekuensi mentah."
+    },
+    {
+      "stage": "check",
+      "question": "Alat mana yang melatih tokenizer langsung pada teks Unicode multibahasa mentah?",
+      "options": [
+        "spaCy",
+        "tiktoken",
+        "tokenizers-lite",
+        "SentencePiece (menyandikan spasi sebagai penanda khusus dan melatih BPE atau Unigram)"
+      ],
+      "correct": 3,
+      "explanation": "SentencePiece melatih BPE/Unigram pada teks mentah tanpa pre-tokenization; tiktoken hanya menyandikan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa CI produksi harus memeriksa hash tokenizer.json yang digunakan?",
+      "options": [
+        "Pergeseran tokenizer menghasilkan ID token berbeda dari yang dipakai saat model dilatih, diam-diam merusak output",
+        "Untuk mengompresi penyimpanan",
+        "Ini mengurangi ukuran kosakata",
+        "Diwajibkan oleh Hugging Face"
+      ],
+      "correct": 0,
+      "explanation": "Bahkan perubahan tokenizer kecil menggeser ID; pemeriksaan hash menangkap pergeseran sebelum mencapai pengguna."
+    },
+    {
+      "stage": "post",
+      "question": "Apa alasan umum satu emoji memakan banyak token?",
+      "options": [
+        "Emoji adalah karakter stop",
+        "Emoji dicadangkan",
+        "Emoji multi-codepoint disandikan menjadi beberapa byte UTF-8; tanpa token khusus setiap byte menjadi subword sendiri",
+        "Emoji disimpan sebagai float"
+      ],
+      "correct": 2,
+      "explanation": "Emoji komposit disandikan sebagai beberapa byte; tokenizer tingkat byte mungkin memakai beberapa token per glyph."
+    },
+    {
+      "stage": "post",
+      "question": "Heuristik apa yang memandu ukuran kosakata untuk transformer monolingual baru?",
+      "options": [
+        "Sesuaikan dengan ukuran korpus training",
+        "Sekitar 32k untuk model di bawah 1B parameter; 50-100k untuk 1-10B; 200k+ untuk model multibahasa atau frontier",
+        "Selalu 1M",
+        "Selalu 8000"
+      ],
+      "correct": 1,
+      "explanation": "Ukuran kosakata berskala dengan model dan cakupan bahasa; ini adalah default komunitas yang kasar."
+    }
+  ]
+}

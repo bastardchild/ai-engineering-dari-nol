@@ -1,0 +1,102 @@
+{
+  "lesson": "08-cnns-rnns-for-text",
+  "title": "CNN dan RNN untuk Teks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang sebenarnya dipelajari filter convolutional 1D selebar 3 atas word embedding?",
+      "options": [
+        "Detektor bigram yang dapat dipelajari",
+        "Detektor trigram (n-gram) yang dapat dipelajari",
+        "Position embedding",
+        "Hitungan unigram"
+      ],
+      "correct": 1,
+      "explanation": "Filter selebar 3 mencakup tiga token berurutan, bertindak sebagai detektor trigram yang dapat dipelajari."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa LSTM memakai cell state dengan interaksi yang sebagian besar aditif?",
+      "options": [
+        "Softmax lebih cepat",
+        "Untuk menghindari inversi matriks",
+        "Aliran aditif memungkinkan gradien menjalar melalui urutan panjang tanpa menghilang atau meledak",
+        "Untuk menghemat memori"
+      ],
+      "correct": 2,
+      "explanation": "Jalan raya cell-state menjaga gradien stabil melintasi ratusan langkah, memperbaiki masalah gradien menghilang."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa TextCNN memakai global max-pooling setelah layer convolutional?",
+      "options": [
+        "Untuk mengurangi kosakata",
+        "Max-pool memberikan representasi berukuran tetap dan invarian posisi dengan memilih aktivasi terkuat per filter",
+        "Untuk mengaktifkan backpropagation",
+        "Untuk menghapus embedding"
+      ],
+      "correct": 1,
+      "explanation": "Global max-pool menghasilkan vektor fitur berukuran tetap terlepas dari panjang input, dengan invariansi posisi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa keunggulan utama RNN bidirectional dibanding RNN satu arah untuk sequence labeling?",
+      "options": [
+        "Memori lebih murah",
+        "Menghindari embedding",
+        "Representasi setiap token melihat konteks kiri dan kanan, yang penting untuk tagging",
+        "Training lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "Jaringan bidirectional menggabungkan hidden state maju + mundur sehingga label dapat memakai konteks penuh."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa max-pooling atas output LSTM sering mengalahkan penggunaan hanya hidden state terakhir untuk klasifikasi?",
+      "options": [
+        "Max-pool menghapus kapitalisasi",
+        "Pooling state terakhir mengabaikan padding",
+        "Max-pool dapat diturunkan; state terakhir tidak",
+        "Informasi di akhir urutan panjang cenderung mendominasi state terakhir, menyembunyikan bukti sebelumnya"
+      ],
+      "correct": 3,
+      "explanation": "Max-pool mengagregasi sinyal terkuat di seluruh posisi; state terakhir dapat kehilangan bukti sebelumnya."
+    },
+    {
+      "stage": "post",
+      "question": "Keterbatasan encoder-decoder LSTM/RNN mana yang memotivasi attention?",
+      "options": [
+        "Mereka memerlukan tokenizer subword",
+        "Decoder hanya melihat state encoder berukuran tetap, kehilangan detail pada input panjang; rekurensi juga menyerialkan training",
+        "Mereka tidak dapat menempelkan token",
+        "Mereka tidak dapat memakai embedding"
+      ],
+      "correct": 1,
+      "explanation": "Ringkasan berukuran tetap plus training serial adalah dua kegagalan yang dihapus attention."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan TextCNN atau BiLSTM masih mengalahkan transformer pada 2026?",
+      "options": [
+        "Setiap kali dataset multibahasa",
+        "Edge / on-device, input streaming token demi token, atau baseline data sangat kecil",
+        "Ketika persyaratan latensi sangat longgar",
+        "Pada input gambar"
+      ],
+      "correct": 1,
+      "explanation": "Arsitektur kecil masih menang pada inferensi edge, input streaming, dan baseline cepat."
+    },
+    {
+      "stage": "post",
+      "question": "Apa masalah gradien menghilang pada RNN biasa?",
+      "options": [
+        "Input menjadi nol",
+        "Perkalian berulang dengan bobot rekuren lebih kecil dari 1 membuat gradien menuju langkah awal menyusut ke nol",
+        "Loss menjadi negatif",
+        "Matriks embedding menjadi singular"
+      ],
+      "correct": 1,
+      "explanation": "Gradien produk panjang menghilang (atau meledak) tanpa gating; inilah sebabnya LSTM dan GRU ada."
+    }
+  ]
+}

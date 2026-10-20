@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur 'entropy' dalam teori informasi?",
+      "options": ["Jumlah bit dalam pesan biner", "Tingkat error sebuah kanal komunikasi", "Energi suatu sistem fisik", "Rata-rata kejutan atau ketidakpastian dalam distribusi probabilitas"],
+      "correct": 3,
+      "explanation": "Entropy H(P) = -sum(p(x) * log(p(x))) mengukur rata-rata kejutan di semua hasil. Entropy tinggi berarti ketidakpastian tinggi (distribusi seragam). Entropy rendah berarti hasilnya dapat diprediksi."
+    },
+    {
+      "stage": "pre",
+      "question": "Untuk apa cross-entropy loss umumnya dipakai dalam neural network?",
+      "options": ["Menghasilkan sampel data baru", "Meregularisasi bobot model untuk mencegah overfitting", "Tugas klasifikasi, mengukur seberapa jauh probabilitas prediksi dari label sebenarnya", "Tugas regresi dengan output kontinu"],
+      "correct": 2,
+      "explanation": "Cross-entropy loss H(P,Q) = -sum(p(x)*log(q(x))) mengukur perbedaan antara distribusi sebenarnya (label) dan distribusi prediksi model. Ini loss standar untuk klasifikasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa meminimalkan cross-entropy setara dengan meminimalkan KL divergence selama pelatihan?",
+      "options": ["Karena cross-entropy dan KL divergence adalah rumus yang sama", "Karena cross-entropy = entropy + KL divergence, dan entropy label sebenarnya konstan, jadi meminimalkan cross-entropy berarti meminimalkan KL divergence", "Karena KL divergence selalu nol selama pelatihan", "Karena entropy model sama dengan nol saat konvergen"],
+      "correct": 1,
+      "explanation": "H(P,Q) = H(P) + D_KL(P||Q). Karena distribusi sebenarnya P tidak berubah selama pelatihan, H(P) konstan. Meminimalkan H(P,Q) sama dengan meminimalkan D_KL(P||Q) -- mendorong model mendekati distribusi sebenarnya."
+    },
+    {
+      "stage": "post",
+      "question": "Model bahasa memiliki perplexity 50 pada set pengujian. Apa artinya?",
+      "options": ["Model memiliki 50 lapisan", "Model membuat 50 error per kalimat", "Rata-rata model sama tidak pastinya dengan memilih secara seragam dari 50 token berikutnya yang mungkin di setiap langkah", "Model dilatih selama 50 epoch"],
+      "correct": 2,
+      "explanation": "Perplexity = e^(cross-entropy). Perplexity 50 berarti ketidakpastian model pada setiap token setara dengan memilih acak dari 50 opsi yang sama mungkin. Perplexity lebih rendah berarti prediksi lebih baik."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana mutual information berbeda dari korelasi Pearson untuk pemilihan fitur?",
+      "options": ["Mutual information lebih cepat dihitung", "Keduanya selalu memberi peringkat fitur yang sama", "Korelasi Pearson bekerja untuk tipe data apa pun sedangkan mutual information hanya untuk data kontinu", "Mutual information mendeteksi dependensi statistik apa pun (linear atau non-linear) sedangkan korelasi hanya mendeteksi hubungan linear"],
+      "correct": 3,
+      "explanation": "Mutual information I(X;Y) menangkap semua dependensi statistik antar variabel, termasuk yang non-linear dan non-monotonik. Korelasi Pearson hanya mengukur asosiasi linear, melewatkan banyak hubungan penting."
+    }
+  ]
+}

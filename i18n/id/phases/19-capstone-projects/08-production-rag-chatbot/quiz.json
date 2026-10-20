@@ -1,0 +1,90 @@
+{
+  "lesson": "08-production-rag-chatbot",
+  "title": "Capstone 08 — Chatbot RAG Produksi untuk Vertikal Teregulasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa prompt caching sangat penting dalam chatbot RAG domain teregulasi?",
+      "options": [
+        "Itu menghilangkan halusinasi",
+        "Pada hit rate 60-80% itu memangkas biaya per query 3-5x dengan mendiskon token prefix stabil",
+        "Itu menghapus kebutuhan database vektor",
+        "Itu meningkatkan recall pada tahap rerank"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang masuk ke header cache versus suffix tak-ter-cache dari setiap permintaan?",
+      "options": [
+        "Padding teks acak untuk mencapai ukuran cache",
+        "Hanya dokumen yang diambil",
+        "Pertanyaan pengguna dulu, system prompt terakhir",
+        "System prompt dan kebijakan statis di header cache, konteks hasil rerank sebagai ekstensi cache, pertanyaan pengguna sebagai suffix tak-ter-cache"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana lapisan retrieval menghormati tag yurisdiksi seperti GDPR atau HIPAA?",
+      "options": [
+        "Ia menulis ulang pertanyaan pengguna per wilayah",
+        "Ia memblokir respons hanya setelah generasi",
+        "Ia menjalankan indeks terpisah per negara",
+        "Filter role dan yurisdiksi diterapkan sebelum merge hybrid search sehingga chunk di luar cakupan pengguna tidak pernah direrank"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kombinasi guardrail berlapis mana yang dilewati output tahap sintesis?",
+      "options": [
+        "Hanya regex PII output",
+        "Hanya Llama Guard 4 pada input",
+        "Llama Guard 4, policy rail NeMo Guardrails, dan scrub PII Presidio, plus penegakan sitasi",
+        "Satu pemeriksaan faithfulness LLM-judge"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang memicu alert di dashboard drift?",
+      "options": [
+        "Perubahan penyedia LLM dasar",
+        "Latensi di atas 200ms",
+        "Penurunan kualitas retrieval, misalnya nDCG atau skor sitasi turun 5% minggu ke minggu",
+        "Setiap dokumen baru yang ditambahkan ke indeks"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Berapa besar golden set yang dipakai untuk menggerbang rubrik kebenaran deliverable?",
+      "options": [
+        "200 pasangan pertanyaan/jawaban berlabel ahli dengan sitasi",
+        "5 query demo",
+        "2000 pertanyaan sintetis",
+        "20 pertanyaan"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Skor RAGAS mana yang dilacak online per giliran?",
+      "options": [
+        "BLEU, ROUGE, dan METEOR",
+        "Jumlah token dan biaya dolar",
+        "Faithfulness, answer relevance, dan context precision",
+        "Throughput, utilisasi GPU, dan kedalaman antrean"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

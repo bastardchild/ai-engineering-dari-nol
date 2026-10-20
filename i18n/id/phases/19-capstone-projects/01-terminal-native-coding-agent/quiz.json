@@ -1,0 +1,90 @@
+{
+  "lesson": "01-terminal-native-coding-agent",
+  "title": "Capstone 01 — Agen Coding Native Terminal",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bentuk loop apa yang dipakai bersama oleh agen coding terminal pada 2026?",
+      "options": [
+        "Ambil, embed, ranking, sintesis",
+        "Rencanakan, bertindak, amati, pulihkan",
+        "Latih, evaluasi, deploy, pantau",
+        "Encode, decode, sample, stream"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa harness menjalankan setiap tugas di dalam sandbox E2B atau Daytona?",
+      "options": [
+        "Untuk memberi agen akses GPU pada loop-nya",
+        "Untuk melewati batas laju dari penyedia model",
+        "Untuk mengisolasi filesystem dan eksekusi tool dari host agar worktree bisa dihapus saat selesai",
+        "Untuk mengukur throughput token pada cache dingin"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Hook bawaan mana yang menjadi tempat alami untuk memblokir perintah shell destruktif sebelum dieksekusi?",
+      "options": [
+        "Stop",
+        "PostToolUse",
+        "PreToolUse",
+        "SessionStart"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Capstone membatasi setiap hasil tool sekitar 4k token. Mode kegagalan apa yang terutama dicegahnya?",
+      "options": [
+        "Model overfitting pada jejak tool-call",
+        "Escape sandbox lewat metakarakter shell berbahaya",
+        "State rencana basi antar sesi yang dilanjutkan",
+        "Context poisoning dan biaya membengkak saat tool mengembalikan dump besar"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan hook PreCompact pada tanda 150k token?",
+      "options": [
+        "Membatalkan run dan mengembalikan anggaran pengguna",
+        "Force-push branch saat ini untuk mencadangkan progres",
+        "Meringkas giliran lama menjadi blok prior-state agar rencana dan observasi baru tetap muat",
+        "Mengganti model dasar ke model draft yang lebih kecil"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Baseline mana yang dibandingkan capstone dengan harness-nya pada subset SWE-bench Pro berisi 30 issue?",
+      "options": [
+        "Aider",
+        "mini-swe-agent",
+        "Live-SWE-agent",
+        "OpenCode"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Set metrik mana yang diukur oleh deliverable?",
+      "options": [
+        "WER, MOS, dan first-audio-out",
+        "MRR@10 dan nDCG@10",
+        "Perplexity, BLEU, dan ROUGE",
+        "pass@1, turns-per-task, dan dollar-per-task"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "29-moderation-systems-openai-perspective-llamaguard",
+  "title": "Sistem Moderasi - OpenAI, Perspective, Llama Guard",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu omni-moderation-latest (2024) dari OpenAI?",
+      "options": [
+        "Endpoint watermarking C2PA",
+        "Classifier moderasi berbasis GPT-4o yang menangani teks dan gambar dalam satu panggilan, mengembalikan skema respons 13 kategori (harassment, hate, self-harm, sexual, violence, illicit, dengan sub-kategori), gratis untuk sebagian besar pengembang",
+        "Reward model RLHF",
+        "Model frontier yang fokus pada reasoning"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang BUKAN salah satu kategori top-level utama OpenAI Moderation?",
+      "options": [
+        "election-interference",
+        "violence",
+        "self-harm",
+        "harassment"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa tiga lapisan pola moderasi standar 2026?",
+      "options": [
+        "Moderasi input (pra-generasi), moderasi output (pasca-generasi), moderasi kustom (aturan domain)",
+        "Telescopic / periscopic / microscopic",
+        "Probe / detector / harness",
+        "Tokenizer / model / detokenizer"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Perspective API (Google Jigsaw) terutama dirancang untuk menilai apa?",
+      "options": [
+        "Reward atas kepuasan pengguna",
+        "Kualitas reasoning",
+        "Kekuatan watermark",
+        "Toksisitas (dengan sub-dimensi severe-toxicity, insult, profanity, threat, identity-attack) sebagai baseline moderasi konten era pra-LLM"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa salah satu mode kegagalan moderasi input saja?",
+      "options": [
+        "Itu tidak menangkap kegagalan output model atau halusinasi; serangan encoding (Pelajaran 12-14) bisa melewati classifier input sepenuhnya",
+        "Itu tidak bisa berjalan di GPU",
+        "Itu selalu memblokir konten yang sah",
+        "Itu menghilangkan kebutuhan classifier output"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa deprecation dan target migrasi Azure Content Moderator?",
+      "options": [
+        "Digabung ke Llama Guard 4",
+        "Diganti Perspective API",
+        "Deprecated Februari 2024, dihentikan 15 Maret 2027; target migrasinya Azure AI Content Safety (berbasis LLM, terintegrasi dengan Azure OpenAI)",
+        "Deprecated segera tanpa pengganti"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

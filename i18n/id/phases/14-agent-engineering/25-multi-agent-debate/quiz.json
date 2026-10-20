@@ -1,0 +1,90 @@
+{
+  "lesson": "25-multi-agent-debate",
+  "title": "Debat dan Kolaborasi Multi-Agent",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan protokol Society of Minds dengan N instance model?",
+      "options": [
+        "Mengusulkan jawaban secara independen, lalu selama R putaran saling membaca dan mengkritik usulan hingga konvergen",
+        "Melatih pada dataset bersama",
+        "Masing-masing menjalankan benchmark berbeda",
+        "Menegosiasikan harga"
+      ],
+      "correct": 0,
+      "explanation": "N proposer, R putaran, kritik silang, konvergensi adalah debat kanonis Du et al."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa debat lintas model (misalnya ChatGPT + Bard) mengalahkan debat satu model?",
+      "options": [
+        "Ia lebih murah",
+        "Vendor berbeda menegosiasikan harga",
+        "Vendor berbagi bobot",
+        "Heterogenitas mengurangi blind spot bersama sehingga kritik silang menangkap lebih banyak error"
+      ],
+      "correct": 3,
+      "explanation": "Mencampur model membawa distribusi error independen, yang menaikkan plafon debat."
+    },
+    {
+      "stage": "check",
+      "question": "Apa keuntungan biaya token utama topologi sparse dibanding full mesh?",
+      "options": [
+        "Setiap debater hanya membaca sebagian peer, sehingga jumlah operasi kritik turun sementara akurasi sering tetap setara",
+        "Ia menghapus LLM",
+        "Topologi sparse menggandakan putaran",
+        "Topologi sparse tidak membutuhkan model"
+      ],
+      "correct": 0,
+      "explanation": "Sparse (star, ring, hub-and-spoke) mengurangi operasi kritik tanpa kehilangan akurasi pada banyak tugas."
+    },
+    {
+      "stage": "check",
+      "question": "Kasus mana yang didaftar pelajaran sebagai tempat debat merugikan?",
+      "options": [
+        "Pencarian fakta sederhana, karena satu pencarian lebih murah daripada lima debat",
+        "Penalaran terbuka",
+        "Validitas langkah catur",
+        "Pembuatan biografi"
+      ],
+      "correct": 0,
+      "explanation": "Pencarian sepele yang sensitif latency dan biaya tidak mendapat manfaat dari debat N x R."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu convergence collapse?",
+      "options": [
+        "Proses crash",
+        "Kegagalan handshake TLS",
+        "Gangguan jaringan",
+        "Semua agent konvergen ke jawaban salah pertama; mitigasi dengan putaran ketidaksepakatan wajib"
+      ],
+      "correct": 3,
+      "explanation": "Kesepakatan dini pada jawaban salah dimitigasi dengan memaksa usulan putaran-1 yang berbeda."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa homogenisasi prompt merusak debat?",
+      "options": [
+        "Ia melanggar Apache 2.0",
+        "Ia melewati supervisor",
+        "Prompt identik menghasilkan jawaban yang nyaris identik, menghilangkan sinyal kritik silang",
+        "Ia memakai terlalu banyak token"
+      ],
+      "correct": 2,
+      "explanation": "Prompt yang beragam (dan idealnya model beragam) menjaga distribusi usulan tetap lebar."
+    },
+    {
+      "stage": "post",
+      "question": "Pola produksi mana yang merupakan varian debat menurut pelajaran?",
+      "options": [
+        "RAG single-shot murni",
+        "Pengindeksan vector",
+        "Orchestrator-workers Anthropic dengan langkah sintesis",
+        "Jadwal khusus cron"
+      ],
+      "correct": 2,
+      "explanation": "Orchestrator-workers dengan sintesis adalah pola berbentuk debat di produksi."
+    }
+  ]
+}

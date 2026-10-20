@@ -1,0 +1,78 @@
+{
+  "lesson": "07-tensorrt-llm-blackwell",
+  "title": "Kompilasi Inferensi Khusus Hardware — FP8 dan NVFP4 di Blackwell",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kira-kira berapa selisih biaya per juta token yang dilaporkan pelajaran ini antara Blackwell + TRT-LLM + Dynamo dan H100 + vLLM pada beban kerja kelas 120B yang sebanding?",
+      "options": [
+        "Sekitar 2x",
+        "Sekitar 7x",
+        "Sekitar 1.1x",
+        "Sekitar 100x"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pelajaran ini merekomendasikan menyimpan KV cache dalam FP8, bukan NVFP4, di Blackwell?",
+      "options": [
+        "KV cache NVFP4 belum didukung di engine mana pun",
+        "KV cache mencakup rentang dinamis lebar; kuantisasi FP4 menyebabkan kehilangan akurasi katastrofik pada skor attention",
+        "FP8 memakai memori lebih sedikit daripada FP4",
+        "FP8 adalah satu-satunya presisi yang didukung NVLink 5"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Fitur Blackwell mana yang dimanfaatkan TRT-LLM agar model bisa dimuat tanpa langkah konversi pasca-training?",
+      "options": [
+        "KV cache BF16",
+        "Attention FP64",
+        "Bobot INT2 lewat bitsandbytes",
+        "Bobot FP4 day-0 yang dikirim provider model"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa tradeoff dominan saat memilih stack TRT-LLM menurut pelajaran ini?",
+      "options": [
+        "Itu memerlukan remediasi yang sepenuhnya otonom",
+        "Itu tidak bisa melayani model MoE",
+        "Itu hanya berjalan pada skala kecil",
+        "Itu mengunci kamu ke hardware NVIDIA — tanpa AMD, tanpa Intel, tanpa ARM"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Kombinasi presisi mana yang digambarkan pelajaran ini sebagai konfigurasi Blackwell tipikal?",
+      "options": [
+        "Semuanya BF16",
+        "Bobot NVFP4, aktivasi NVFP4, KV cache FP8, akumulator attention FP32",
+        "Bobot INT8, aktivasi FP32, KV cache INT4",
+        "Bobot FP4, KV cache FP4, attention INT8"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Untuk beban kerja berat reasoning saat konversi bobot NVFP4 menurunkan akurasi MATH beberapa poin, apa yang disarankan pelajaran ini?",
+      "options": [
+        "Pindah ke AMD MI300X",
+        "Nonaktifkan speculative decoding",
+        "Validasi kualitas tugas pada eval set-mu per model; tim sering memakai bobot FP8 + aktivasi FP4 atau tetap di H200 dengan FP8 untuk semuanya",
+        "Tetap kirim NVFP4 karena kemenangan biaya lebih dominan"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

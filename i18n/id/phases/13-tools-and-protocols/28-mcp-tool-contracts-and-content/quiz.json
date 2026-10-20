@@ -1,0 +1,78 @@
+{
+  "lesson": "28-mcp-tool-contracts-and-content",
+  "title": "Kontrak dan Konten Tool MCP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tool mempublikasikan outputSchema dengan type array. Nilai structuredContent mana yang valid?",
+      "options": [
+        "Nilai JSON apa pun karena outputSchema hanya dokumentasi",
+        "Hanya objek karena hasil terstruktur MCP hanya objek",
+        "Array yang item-nya memenuhi schema yang dipublikasikan",
+        "Blok teks tanpa structuredContent"
+      ],
+      "correct": 2,
+      "explanation": "structuredContent dapat berupa nilai JSON apa pun, termasuk array, tetapi harus sesuai dengan outputSchema ketika tool mempublikasikannya."
+    },
+    {
+      "stage": "check",
+      "question": "Hasil tools/list memuat nextCursor berupa string kosong. Apa yang harus dilakukan klien?",
+      "options": [
+        "Menganggap string kosong sebagai akhir pagination",
+        "Mengirim request list lain dengan cursor string kosong persis",
+        "Menggantinya dengan cursor nol",
+        "Mendekodenya untuk menemukan nomor halaman berikutnya"
+      ],
+      "correct": 1,
+      "explanation": "Nilai cursor bersifat opaque. String kosong adalah cursor non-null yang valid dan harus dikirim balik persis."
+    },
+    {
+      "stage": "check",
+      "question": "Parameter mana yang harus ditolak kebijakan deployment ketat ketika ditandai dengan x-mcp-header?",
+      "options": [
+        "Field token string yang dicerminkan sebagai Token",
+        "Field shard integer yang dicerminkan sebagai Shard",
+        "Field region string yang dicerminkan sebagai Region",
+        "Field dry_run boolean yang dicerminkan sebagai Dry-Run"
+      ],
+      "correct": 0,
+      "explanation": "Protokol menyarankan agar nilai sensitif tidak dicerminkan. Kebijakan admission klien yang ketat harus menolak field token, password, secret, credential, dan PII."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan utama antara blok resource_link dan blok resource tersemat?",
+      "options": [
+        "Resource link menunjuk ke data yang diambil nanti, sedangkan resource tersemat membawa data sekarang",
+        "Resource link otomatis diotorisasi selamanya",
+        "Resource tersemat juga harus muncul di resources/list",
+        "Hanya resource link yang dapat menyertakan URI"
+      ],
+      "correct": 0,
+      "explanation": "Link menunda pengambilan dan memerlukan otorisasi saat diikuti. Resource tersemat menempatkan data di hasil saat ini."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana klien menangani satu deskriptor tool cacat dalam satu halaman tools/list?",
+      "options": [
+        "Menolak tool itu sambil terus mengevaluasi tool lain yang tidak terkait",
+        "Memperbaiki deskriptor secara diam-diam",
+        "Mengeksposnya tetapi menambahkan peringatan ke prompt model",
+        "Memperlakukan setiap eksekusi tool sebagai notifikasi JSON-RPC"
+      ],
+      "correct": 0,
+      "explanation": "Admission deskriptor bersifat per tool. Satu definisi cacat harus dikecualikan tanpa membuat tool yang valid tidak tersedia."
+    },
+    {
+      "stage": "post",
+      "question": "Kegagalan mana yang termasuk error JSON-RPC alih-alih hasil tool dengan isError true?",
+      "options": [
+        "Sumber laporan sementara tidak tersedia",
+        "API hilir mengembalikan error spesifik tool yang dapat ditindaklanjuti",
+        "Aturan bisnis menolak tanggal yang diminta",
+        "Nama tool yang diminta tidak ada"
+      ],
+      "correct": 3,
+      "explanation": "Tool yang tidak dikenal menghalangi dispatch protokol dan termasuk error JSON-RPC. Kegagalan eksekusi yang dapat ditindaklanjuti model memakai isError true."
+    }
+  ]
+}

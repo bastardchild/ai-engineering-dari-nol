@@ -1,0 +1,78 @@
+{
+  "lesson": "13-mcp-async-tasks",
+  "title": "Ekstensi MCP Tasks: Pekerjaan Durable di Inti Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana server MCP stateless dapat mendukung pekerjaan yang berlangsung sepuluh menit?",
+      "options": [
+        "Menjaga koneksi Mcp-Session-Id tetap terbuka selama sepuluh menit",
+        "Menyimpan progres hanya di state initialize",
+        "Mewajibkan setiap klien memakai load balancing sticky",
+        "Mengembalikan handle task durable eksplisit yang didukung penyimpanan aplikasi"
+      ],
+      "correct": 3,
+      "explanation": "Stateless menjelaskan model request protokol. State aplikasi durable direpresentasikan oleh ID task eksplisit dan penyimpanan bersama."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan server boleh mengembalikan resultType task dari tools/call?",
+      "options": [
+        "Setelah request saat ini mengumumkan ekstensi dan task dapat dibaca secara durable",
+        "Setiap kali sesi sebelumnya mengumumkan Tasks",
+        "Sebelum persistensi agar klien dapat melakukan polling optimistis",
+        "Hanya ketika params._meta.task.required bernilai true"
+      ],
+      "correct": 0,
+      "explanation": "Pembuatan task diarahkan server, tetapi dukungan kemampuan pada request saat ini dan pembuatan durable-sebelum-kembali bersifat wajib. Dukungan yang tidak ada mengembalikan -32021 dengan data.requiredCapabilities."
+    },
+    {
+      "stage": "check",
+      "question": "Respons tasks/get memiliki resultType complete dan status working. Apa artinya?",
+      "options": [
+        "Respons itu melanggar ekstensi",
+        "Pekerjaan yang mendasarinya telah selesai",
+        "Task telah dibatalkan",
+        "RPC polling selesai tetapi pekerjaannya masih berjalan"
+      ],
+      "correct": 3,
+      "explanation": "resultType menjelaskan RPC tasks/get. Status task secara independen menjelaskan pekerjaan durable. Ketika status bernilai completed, CallToolResult bersarang memiliki resultType complete sendiri dan metadata serverInfo."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien menjawab input_required setelah task sudah ada?",
+      "options": [
+        "Memanggil tasks/result dengan field answer",
+        "Membuka sesi initialize baru",
+        "Mengulang tools/call asli dengan id yang sama",
+        "Mengirim tasks/update dengan inputResponses untuk kunci task yang belum terpenuhi"
+      ],
+      "correct": 3,
+      "explanation": "Input task setelah pembuatan dimunculkan oleh tasks/get dan dipenuhi melalui tasks/update, bukan dengan mengulang panggilan asli."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dijamin oleh respons tasks/cancel yang sukses?",
+      "options": [
+        "Server mengakui niat pembatalan",
+        "Hasilnya telah dihapus",
+        "Status task akhir akan cancelled",
+        "Worker sudah berhenti"
+      ],
+      "correct": 0,
+      "explanation": "Pembatalan bersifat kooperatif dan eventually consistent. Pekerjaan dapat selesai atau mengabaikan pembatalan setelah pengakuan."
+    },
+    {
+      "stage": "post",
+      "question": "Set method mana yang sesuai dengan ekstensi Tasks resmi saat ini?",
+      "options": [
+        "tools/task, notifications/task_result, dan roots/list",
+        "tasks/get, tasks/update, dan tasks/cancel",
+        "tasks/create, tasks/subscribe, dan tasks/delete",
+        "tasks/status, tasks/result, dan tasks/list"
+      ],
+      "correct": 1,
+      "explanation": "Ekstensi memakai tasks/get, tasks/update, dan tasks/cancel. Setiap request HTTP menetapkan Mcp-Name ke params.taskId. Method status, result, dan list yang lebih lama hanya untuk migrasi."
+    }
+  ]
+}

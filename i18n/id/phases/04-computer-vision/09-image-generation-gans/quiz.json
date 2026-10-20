@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa training GAN memakai loss generator non-saturating -log(D(G(z))) alih-alih log(1 - D(G(z)))?",
+      "options": ["Keduanya berbeda secara matematis dan menghasilkan ekuilibria yang lebih baik", "Itu diwajibkan oleh PyTorch", "Itu mempercepat discriminator", "Di awal training D(G(z)) mendekati nol, sehingga log(1 - D(G(z))) memiliki gradien yang menghilang; -log(D(G(z))) memiliki gradien besar di sana sehingga G menerima sinyal yang berguna"],
+      "correct": 3,
+      "explanation": "Kedua loss berbagi arah gradien yang sama tetapi besarnya sangat berbeda ketika D(G(z)) kecil. log(1 - D(G(z))) mendatar pada gradien nol di sana. Bentuk non-saturating tetap informatif di seluruh rentang. Goodfellow mencatat penyesuaian ini dalam makalah aslinya dan setiap GAN modern memakainya."
+    },
+    {
+      "stage": "pre",
+      "question": "Aturan DCGAN menyebutkan untuk memakai strided convolution alih-alih pooling. Mengapa?",
+      "options": ["Pooling tidak dapat dipelajari dan membuang informasi yang mungkin dibutuhkan generator; strided conv memungkinkan jaringan mempelajari downsampling-nya sendiri, yang secara empiris menghasilkan gambar yang lebih tajam", "Pooling tidak kompatibel dengan batch norm", "Pooling lebih lambat di GPU", "Pooling merusak aliran gradien"],
+      "correct": 0,
+      "explanation": "Max-pool adalah downsampling yang dipilih manual dan membuang semua kecuali nilai maksimum. Dalam pengaturan generatif, model diuntungkan oleh downsampling yang dipelajari dan dapat mempertahankan informasi melewati stride. Strided convolution di D dan strided transposed convolution di G adalah perubahan arsitektural yang membuat DCGAN dapat dilatih."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melatih GAN dan melihat G menghasilkan sampel yang hampir identik terlepas dari noise input. Kegagalan apa ini?",
+      "options": ["Osilasi", "Gradien yang menghilang", "Mode collapse — G telah menemukan wilayah sempit distribusi data yang konsisten menipu D dan tidak memiliki insentif untuk menjelajah; perbaikannya mencakup spectral norm, minibatch discrimination, atau batch lebih besar", "Datasetnya terlalu kecil"],
+      "correct": 2,
+      "explanation": "Mode collapse adalah kegagalan khas GAN ketika sampel kehilangan keragaman. Diagnostiknya jelas: noise masuk, gambar sama keluar. Semua perbaikan menyasar kemampuan discriminator menghukum kurangnya keragaman, baik dengan membuat D lebih ekspresif (spectral norm, minibatch discrimination) atau memberi G lebih sedikit ruang untuk kolaps (batch lebih besar, label kondisional)."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa skrip training DCGAN memakai Adam dengan betas=(0.5, 0.999) alih-alih default (0.9, 0.999)?",
+      "options": ["Itu salah ketik yang menyebar lewat tutorial", "beta1 yang lebih rendah mengurangi momentum; dalam permainan adversarial, momentum besar membuat setiap optimizer bertahan terlalu lama di arah yang salah ketika perilaku jaringan lain berubah, yang menyebabkan ketidakstabilan", "Default-nya rusak", "Adam hanya didukung dengan beta1=0.5 pada CUDA"],
+      "correct": 1,
+      "explanation": "beta1 default Adam=0.9 merata-ratakan gradien selama sekitar 10 langkah. Pada objektif stasioner itu membantu. Dalam permainan adversarial di mana lanskap loss bergeser setiap pembaruan D dan G, perata-rataan itu menunda respons optimizer dan menyebabkan osilasi. Radford dkk. menemukan beta1=0.5 jauh lebih stabil, dan kini itu menjadi default GAN."
+    },
+    {
+      "stage": "post",
+      "question": "Rekanmu melaporkan GAN dengan loss D mendekati nol dan loss G meningkat selama training. Apa yang terjadi dan bagaimana memperbaikinya?",
+      "options": ["Generator dengan benar mengalami overfitting", "Tidak ada apa-apa — ini ekuilibriumnya", "Discriminator menjadi terlalu kuat dan mendorong gradien G ke nol; perbaikannya mencakup D lebih kecil, spectral norm, label smoothing pada label asli (0.9 alih-alih 1.0), atau beralih ke WGAN-GP", "Kedua jaringan meningkat dengan benar"],
+      "correct": 2,
+      "explanation": "Loss D mendekati nol berarti D sempurna pada data asli maupun palsu. Pada titik itu gradien BCE ke G menghilang: G melihat sinyal mendekati nol apa pun yang dihasilkannya. Perbaikannya adalah melemahkan D atau memakai loss yang tidak saturasi. Spectral norm (membatasi konstanta Lipschitz D) dan WGAN-GP (memakai jarak Earth-Mover alih-alih BCE) adalah dua penyelamat standar."
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "lesson": "27-llm-evaluation-frameworks",
+  "title": "Evaluasi LLM — RAGAS, DeepEval, G-Eval",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa Exact Match dan token-F1 tidak cukup untuk mengevaluasi output LLM modern?",
+      "options": [
+        "Keduanya tidak dapat diturunkan",
+        "Keduanya melewatkan kesetaraan semantik; 'June 29th, 2007' vs 'June 29, 2007' mendapat EM 0 padahal benar",
+        "Keduanya memerlukan GPU",
+        "Keduanya terlalu lambat"
+      ],
+      "correct": 1,
+      "explanation": "Exact-match/F1 tidak dapat mengenali parafrase atau perbedaan format yang akan dinilai benar oleh manusia."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur metrik faithfulness RAGAS?",
+      "options": [
+        "Latensi",
+        "Token per detik",
+        "Apakah setiap klaim dalam jawaban dientail oleh konteks yang diambil, melalui NLI",
+        "Retrieval recall"
+      ],
+      "correct": 2,
+      "explanation": "Faithfulness memeriksa setiap klaim jawaban terhadap konteks yang diambil memakai entailment NLI."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa kalibrasi model judge terhadap label manusia diperlukan sebelum mempercayai skor?",
+      "options": [
+        "Diwajibkan GDPR",
+        "Jika korelasi Spearman antara judge dan label manusia terlalu rendah (misalnya di bawah 0,7), skornya adalah noise, bukan sinyal",
+        "Kalibrasi mempercepat judge",
+        "Kalibrasi adalah masalah tokenization"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa kalibrasi, kamu tidak dapat membedakan apakah skor judge mencerminkan kualitas atau bias model."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu bias self-evaluation dalam pengaturan LLM-as-judge?",
+      "options": [
+        "Judge berjalan lebih cepat pada output yang di-cache",
+        "Judge mengabaikan system prompt",
+        "Latensi lebih rendah",
+        "Memakai keluarga LLM yang sama untuk menghasilkan dan menilai menggelembungkan skor 10-20% dibandingkan judge independen"
+      ],
+      "correct": 3,
+      "explanation": "Generator+judge dari keluarga yang sama membiaskan skor ke atas; gunakan keluarga model berbeda untuk menilai."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang secara khusus ditambahkan G-Eval dibanding prompt 'skor 0-1' naif?",
+      "options": [
+        "Konteks lebih besar",
+        "Rubrik chain-of-thought eksplisit dengan langkah evaluasi bernama, yang menghasilkan skor lebih stabil",
+        "Penilaian multibahasa",
+        "Biaya lebih rendah"
+      ],
+      "correct": 1,
+      "explanation": "Langkah eval terstruktur G-Eval menghasilkan skor lebih andal daripada prompt 'nilai ini' bebas."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa hanya melaporkan skor rata-rata agregat berbahaya?",
+      "options": [
+        "Agregat memerlukan GPU",
+        "Agregat mengabaikan judge",
+        "Agregat terlalu besar",
+        "Rata-rata 0,85 dapat menyembunyikan 5% kegagalan katastrofik; selalu periksa kuantil bawah"
+      ],
+      "correct": 3,
+      "explanation": "Rata-rata menyembunyikan kegagalan ekor; tampilkan 10% terbawah untuk menangkap masalah berseveritas tinggi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menyematkan model judge + versi di CI?",
+      "options": [
+        "Diwajibkan Anthropic",
+        "Meningkatkan versi judge mengubah setiap metrik; perbandingan longitudinal rusak tanpa judge yang dibekukan",
+        "Pergeseran tokenizer",
+        "Biaya lebih rendah"
+      ],
+      "correct": 1,
+      "explanation": "Peningkatan judge diam-diam menggeser baseline metrik; penyematan mempertahankan komparabilitas lintas percobaan."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana posisi DeepEval relatif terhadap RAGAS?",
+      "options": [
+        "Menggantikan RAGAS sepenuhnya",
+        "DeepEval adalah tokenizer",
+        "DeepEval adalah pytest-untuk-LLM (gate CI, G-Eval, metrik halusinasi); RAGAS berspesialisasi dalam pemantauan RAG tanpa referensi",
+        "DeepEval hanya hosted"
+      ],
+      "correct": 2,
+      "explanation": "DeepEval menjadi jangkar pengujian regresi CI/CD; RAGAS menangani pemantauan RAG tanpa referensi."
+    }
+  ]
+}

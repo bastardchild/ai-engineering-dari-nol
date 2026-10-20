@@ -1,0 +1,78 @@
+{
+  "lesson": "23-capstone-tool-ecosystem",
+  "title": "Capstone: Ekosistem Tool Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dibuktikan oleh keberhasilan menjalankan harness stdlib lesson ini?",
+      "options": [
+        "Kebijakan dan alur data in-process berperilaku sesuai asersi",
+        "Transport MCP nyata menyelesaikan inisialisasi",
+        "Authorization server OAuth menerbitkan token yang valid",
+        "Collector menerima setiap span OpenTelemetry"
+      ],
+      "correct": 0,
+      "explanation": "Harness memakai fungsi Python, token statis, fixture, dan span in-memory. Itu memvalidasi batas lokal tersebut sementara integrasi protokol, otorisasi, ekspor, browser, dan sandbox diserahkan ke pengujian berikutnya."
+    },
+    {
+      "stage": "check",
+      "question": "Alur mana yang sesuai revisi MCP 2026-07-28 untuk menemukan server dan melakukan polling pekerjaan berdurasi panjang?",
+      "options": [
+        "server/connect, tools/poll, tasks/status",
+        "server/discover, tools/call yang mengembalikan handle task, tasks/get",
+        "initialize, tools/call, tasks/result",
+        "GET /mcp, tools/call, tasks/list"
+      ],
+      "correct": 1,
+      "explanation": "Revisi stateless memakai `server/discover` yang wajib. Ekstensi opsional `io.modelcontextprotocol/tasks` mengembalikan handle task dan memakai `tasks/get`; task terminal membawa hasil akhirnya. Handshake lama, endpoint GET, `tasks/result`, dan `tasks/list` tidak ada dalam alur ini."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana A2A v1 menamai operasi send-message pada binding gRPC dan JSON-RPC-nya?",
+      "options": [
+        "AgentMessage",
+        "message/create",
+        "tasks/send",
+        "SendMessage"
+      ],
+      "correct": 3,
+      "explanation": "A2A v1 memakai `SendMessage` untuk gRPC dan JSON-RPC. Binding HTTP+JSON-nya mengekspos `POST /message:send`."
+    },
+    {
+      "stage": "check",
+      "question": "Panggilan MCP Apps SDK mana yang memungkinkan App meminta tool pada server asalnya?",
+      "options": [
+        "host.callTool(name, args)",
+        "app.callServerTool({ name, arguments })",
+        "app.invoke(name, args)",
+        "server.tools.call(args)"
+      ],
+      "correct": 1,
+      "explanation": "Instance App memanggil `callServerTool` dengan objek berisi `name` dan `arguments` opsional; host mem-proxy request `tools/call` yang mendasarinya."
+    },
+    {
+      "stage": "post",
+      "question": "Otoritas apa yang diberikan Agent Skill capstone atas tool MCP dan sandbox?",
+      "options": [
+        "Itu melewati persetujuan setelah invocation eksplisit",
+        "Itu memberikan setiap tool yang disebut di body",
+        "Itu memberikan akses jaringan hanya-baca",
+        "Tidak ada; adapter host dan kebijakan tetap mengotorisasi setiap kemampuan"
+      ],
+      "correct": 3,
+      "explanation": "Skill menyediakan prosedur. Discovery, invocation, eksposur tool, otorisasi, kredensial, dan isolasi ditegakkan oleh host dan batas runtime eksternal."
+    },
+    {
+      "stage": "post",
+      "question": "Bukti mana yang paling baik membuktikan bahwa telemetri melewati batas ekspor produksi?",
+      "options": [
+        "Instruksi skill yang menyuruh memancarkan span",
+        "Dictionary lokal yang berisi kunci traceId",
+        "Diagram hierarki span yang dimaksudkan",
+        "Data collector di sisi penerima dengan asersi trace dan parent"
+      ],
+      "correct": 3,
+      "explanation": "Observasi di sisi penerima membuktikan SDK, propagator, exporter, transport, dan jalur collector bekerja. Data lokal dan diagram hanya membuktikan konstruksi atau niat lokal."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "51-literature-retrieval",
+  "title": "Retrieval Literatur",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa klien retrieval menjalankan pass BM25 dan pass citation graph?",
+      "options": [
+        "Karena mock API mewajibkannya",
+        "Karena parser gagal jika tidak",
+        "Karena BM25 butuh graph untuk membangun indeks",
+        "Karena hit leksikal melewatkan paper fondasional dengan kosakata berbeda, dan hit graph melewatkan paper yang tidak berbagi sitasi dengan seed"
+      ],
+      "correct": 3,
+      "explanation": "Setiap pass menangkap yang dilewatkan pass lain. Leksikal mencakup kosakata bersama; graph mencakup paper leluhur dan turunan tanpa peduli kosakata."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa traversal citation graph dibatasi dua hop?",
+      "options": [
+        "Karena batas rekursi Python melarang tiga hop",
+        "Karena di luar dua hop result set cenderung menyimpang dari topik dan membanjiri ranking hilir",
+        "Karena BM25 hanya memberi skor dua hop",
+        "Karena korpus hanya menyimpan dua lapis sitasi"
+      ],
+      "correct": 1,
+      "explanation": "Dua hop adalah plafon praktis. Tiga hop meledakkan result set pada graph terhubung dan jarang mengembalikan lebih banyak paper sesuai topik."
+    },
+    {
+      "stage": "check",
+      "question": "Berapa nilai idf untuk term yang muncul di setiap dokumen?",
+      "options": [
+        "Negatif tak hingga",
+        "Nilai positif besar",
+        "Tidak terdefinisi; implementasi BM25 melewatinya",
+        "Nilai mendekati nol"
+      ],
+      "correct": 3,
+      "explanation": "Saat df sama dengan N, pembilang dan penyebut di dalam log berdekatan, dan +1 menjaga term non-negatif tetapi kecil. Kontribusi term yang umum di mana-mana mendekati nol."
+    },
+    {
+      "stage": "check",
+      "question": "Key apa yang dipakai langkah merge untuk men-dedup hit dari dua pass?",
+      "options": [
+        "Bucket skor BM25",
+        "Paper id stabil",
+        "Tahun dan penulis pertama",
+        "Teks judul"
+      ],
+      "correct": 1,
+      "explanation": "Paper id adalah pegangan stabil. Judul dan penulis terduplikasi antar versi, tahun saja ambigu."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikembalikan graph_score untuk paper dua hop dari seed set?",
+      "options": [
+        "Skor BM25 dibagi sepuluh",
+        "0.3 secara default",
+        "1.0 secara default",
+        "Nol"
+      ],
+      "correct": 1,
+      "explanation": "Jadwal skor graph default adalah 1.0 di nol hop, 0.6 di satu hop, 0.3 di dua hop, dan nol di luar itu."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa korpus dimuat sekali ke RetrievalClient alih-alih diambil ulang per query?",
+      "options": [
+        "Karena skor recency membutuhkannya",
+        "Karena indeks BM25 dan citation graph dibangun sekali saat konstruksi dan dipakai ulang lintas query",
+        "Karena mock API lambat di setiap panggilan",
+        "Karena parser bersifat global"
+      ],
+      "correct": 1,
+      "explanation": "Konstruksi indeks adalah langkah mahal. Memakai ulang indeks mengamortisasi biaya itu lintas setiap query yang ditangani klien."
+    }
+  ]
+}

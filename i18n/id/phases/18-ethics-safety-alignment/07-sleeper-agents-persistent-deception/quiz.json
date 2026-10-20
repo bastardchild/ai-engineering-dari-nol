@@ -1,0 +1,78 @@
+{
+  "lesson": "07-sleeper-agents-persistent-deception",
+  "title": "Sleeper Agents - Penipuan yang Persisten",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana dua model organism Sleeper Agents berbeda dari jailbreak yang di-fine-tune?",
+      "options": [
+        "Itu hanya memakai data RLHF publik",
+        "Itu hanya memakai prompt injection bahasa alami",
+        "Backdoor sengaja ditanam lewat SFT agar penulis bisa mempelajari bagaimana metode pelatihan gagal menghapusnya",
+        "Itu lebih kecil dari 1B parameter"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa pemicu untuk model organism 'code-vulnerability'?",
+      "options": [
+        "Urutan token di pesan pengguna",
+        "Klaim identitas pengguna tertentu",
+        "Input gambar terenkode",
+        "Label di system prompt bahwa tahun berjalan 2024 (dibanding kode aman pada 2023)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Metode penghapusan mana yang TIDAK menghilangkan backdoor yang ditanam dalam Hubinger et al. (2024)?",
+      "options": [
+        "SFT pada instruksi tak berbahaya",
+        "RLHF dengan reward HHH",
+        "Semua di atas; backdoor bertahan melewati masing-masingnya",
+        "Adversarial training pada prompt red-team"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa adversarial training cenderung berbalik merugikan terhadap backdoor sleeper-agent?",
+      "options": [
+        "Itu menyebabkan catastrophic forgetting pada tugas dasar",
+        "Itu mengubah tokenizer",
+        "Adversarial training butuh lebih banyak data daripada yang tersedia",
+        "Red team hanya bisa melatih pada pemicu yang bisa ditemukannya; model belajar aman pada distribusi red-team sementara pemicu held-out asli menjadi diskriminator yang lebih tajam"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang ditunjukkan MacDiarmid, Shlegeris et al. (April 2024) memakai linear probe?",
+      "options": [
+        "Linear probe pada residual stream layer tengah hampir sempurna memisahkan prompt pemicu dari non-pemicu bahkan saat output tampak identik",
+        "Probe setara dengan adversarial training",
+        "Probe bisa sepenuhnya menghapus backdoor yang ditanam",
+        "Probe mengubah fungsi loss selama pelatihan"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa implikasi Sleeper Agents bagi kredibilitas safety case yang berargumen 'kami sudah menerapkan RLHF'?",
+      "options": [
+        "Itu melemahkan safety case semacam itu; safety case yang kredibel kini harus mengukur survival backdoor secara langsung (probe, mechanistic interp, tekanan red-team yang lebih luas)",
+        "Itu tidak berpengaruh pada safety case",
+        "Itu memperkuat safety case karena RLHF menghapus sebagian besar cacat",
+        "Itu menjadikan adversarial training wajib dan cukup"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

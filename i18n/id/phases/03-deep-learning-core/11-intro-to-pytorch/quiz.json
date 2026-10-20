@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa itu autograd di PyTorch?",
+      "options": ["Alat kompresi model", "Mesin diferensiasi otomatis yang mencatat operasi dan menghitung gradient tanpa implementasi backward manual", "Framework penyetelan hyperparameter", "Pustaka pemuatan data"],
+      "correct": 1,
+      "explanation": "Autograd PyTorch membangun computational graph saat komputasi forward dan otomatis menghitung gradient ketika kamu memanggil .backward(). Ini menghapus kebutuhan mengimplementasikan backward() manual di tiap modul.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa yang dilakukan torch.no_grad() dan kapan kamu memakainya?",
+      "options": ["Ia mencegah overfitting", "Ia mengaktifkan akselerasi GPU", "Ia menonaktifkan pelacakan gradient saat inferensi, menghemat memori dan komputasi saat kamu tidak perlu training", "Ia membekukan semua bobot model"],
+      "correct": 2,
+      "explanation": "Saat inferensi, kamu tidak butuh gradient. torch.no_grad() menonaktifkan pelacakan gradient sehingga memori yang biasanya dipakai menyimpan computational graph bisa dihemat dan komputasi lebih cepat.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa yang dibuat nn.Linear(784, 256) di PyTorch?",
+      "options": ["Layer batch normalization", "Layer aktivasi ReLU", "Layer dropout dengan p=784/256", "Layer fully connected dengan matriks bobot (256, 784) dan vektor bias (256,)"],
+      "correct": 3,
+      "explanation": "nn.Linear(in_features, out_features) membuat layer yang menghitung y = x @ W^T + b, dengan W berbentuk (256, 784) dan b berbentuk (256,). Ini padanan PyTorch dari kelas Layer yang kamu bangun dari nol.",
+      "stage": "post"
+    },
+    {
+      "question": "Metode PyTorch mana yang menghitung gradient untuk semua parameter di computational graph?",
+      "options": ["optimizer.step()", "loss.backward()", "model.forward()", "optimizer.zero_grad()"],
+      "correct": 1,
+      "explanation": "loss.backward() menelusuri computational graph secara terbalik, menghitung dL/dp untuk setiap parameter p yang butuh gradient. optimizer.step() lalu memakai gradient ini untuk memperbarui parameter.",
+      "stage": "post"
+    },
+    {
+      "question": "Mengapa training loop PyTorch jauh lebih cepat daripada mini framework Python murni?",
+      "options": ["PyTorch memakai tipe data lebih kecil", "PyTorch memakai algoritma berbeda", "PyTorch melewati backward pass", "PyTorch menjalankan operasi sebagai kernel C++/CUDA teroptimasi di GPU, sedangkan loop Python murni diinterpretasi satu operasi demi satu"],
+      "correct": 3,
+      "explanation": "PyTorch menyerahkan operasi matriks ke kernel C++ dan CUDA yang sangat teroptimasi dan berjalan di GPU dengan paralelisme besar. Python murni mengeksekusi loop secara sekuensial dengan overhead interpreter di tiap operasi.",
+      "stage": "post"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "phase": {
+    "0": {
+      "name": "Persiapan & Tooling",
+      "desc": "Siapkan environment kamu untuk semua yang akan mengikuti."
+    }
+  },
+  "lessons": {
+    "phases/00-setup-and-tooling/01-dev-environment": {
+      "name": "Lingkungan Pengembangan",
+      "summary": "Tool yang kamu pakai membentuk cara berpikirmu. Siapkan sekali, siapkan dengan benar.",
+      "keywords": "Langkah 1: Fondasi Sistem · Langkah 2: Python dengan uv · Langkah 3: Node.js dengan pnpm · Langkah 4: Rust · Langkah 5: Julia (Opsional) · Langkah 6: Setup GPU (Jika Kamu Punya) · Langkah 7: Verifikasi jalur yang ingin kamu mulai"
+    },
+    "phases/00-setup-and-tooling/02-git-and-collaboration": {
+      "name": "Git & Kolaborasi",
+      "summary": "Version control bukan pilihan. Setiap eksperimen, setiap model, setiap pelajaran yang kamu bangun di sini akan terlacak.",
+      "keywords": "Langkah 1: Konfigurasi git · Langkah 2: Alur kerja harian · Langkah 3: Branching untuk eksperimen · Langkah 4: Bekerja dengan repo kursus ini"
+    },
+    "phases/00-setup-and-tooling/03-gpu-setup-and-cloud": {
+      "name": "Setup GPU & Cloud",
+      "summary": "Training di CPU cukup untuk belajar. Training sungguhan butuh GPU.",
+      "keywords": "Opsi 1: GPU NVIDIA Lokal · Opsi 2: Google Colab · Opsi 3: GPU Cloud · Tidak Punya GPU? Tidak masalah."
+    },
+    "phases/00-setup-and-tooling/04-apis-and-keys": {
+      "name": "API & Key",
+      "summary": "Setiap API AI bekerja dengan cara yang sama: kirim request, terima response. Detailnya berubah, polanya tetap.",
+      "keywords": "Langkah 1: Simpan API key dengan aman · Langkah 2: Panggilan API pertama (Python) · Langkah 3: Panggilan API pertama (TypeScript) · Langkah 4: HTTP mentah (tanpa SDK)"
+    },
+    "phases/00-setup-and-tooling/05-jupyter-notebooks": {
+      "name": "Jupyter Notebook",
+      "summary": "Notebook adalah meja lab seorang AI engineer. Kamu membuat prototipe di sini, lalu memindahkan yang berhasil ke production.",
+      "keywords": "Langkah 1: Pilih antarmuka kamu · Langkah 2: Keyboard shortcut yang penting · Langkah 3: Jenis cell · Langkah 4: Magic command · Langkah 5: Tampilkan output kaya secara inline · Langkah 6: Google Colab · Notebook vs Script: Kapan pakai yang mana · Jebakan umum"
+    },
+    "phases/00-setup-and-tooling/06-python-environments": {
+      "name": "Environment Python",
+      "summary": "Dependency hell itu nyata. Virtual environment adalah obatnya.",
+      "keywords": "Opsi 1: uv venv (Direkomendasikan) · Opsi 2: venv (Bawaan) · Opsi 3: conda (Saat Kamu Butuh) · Untuk Kursus Ini: Strategi per Fase · 1. Install secara global · 2. Mencampur pip dan conda · 3. Lupa mengaktifkan · 4. Commit .venv ke git · 5. Ketidakcocokan versi CUDA"
+    },
+    "phases/00-setup-and-tooling/07-docker-for-ai": {
+      "name": "Docker untuk AI",
+      "summary": "Container membuat \"works on my machine\" jadi masa lalu.",
+      "keywords": "Mengapa proyek AI lebih butuh Docker dibanding kebanyakan proyek lain · Kosakata kunci · Pola container umum di AI · Langkah 1: Install Docker · Langkah 2: Install NVIDIA Container Toolkit (Linux dengan GPU NVIDIA) · Langkah 3: Memahami base image · Langkah 4: Menulis Dockerfile untuk pengembangan AI · Langkah 5: Volume mount untuk data dan model · Langkah 6: Docker Compose untuk aplikasi AI multi-service · Langkah 7: Perintah Docker yang berguna untuk pekerjaan AI · Tanpa GPU?"
+    },
+    "phases/00-setup-and-tooling/08-editor-setup": {
+      "name": "Setup Editor",
+      "summary": "Editor adalah co-pilot kamu. Konfigurasikan sekali agar ia tidak menghalangi dan mulai membantu.",
+      "keywords": "Langkah 1: Install VS Code · Langkah 2: Install Extension Penting · Langkah 3: Konfigurasi Settings · Langkah 4: Integrasi Terminal · Langkah 5: Remote Development (SSH ke GPU Box) · Cursor · Windsurf · Vim/Neovim"
+    },
+    "phases/00-setup-and-tooling/09-data-management": {
+      "name": "Manajemen Data",
+      "summary": "Data adalah bahan bakar. Cara kamu mengelolanya menentukan seberapa cepat kamu bergerak.",
+      "keywords": "Langkah 1: Install library datasets · Langkah 2: Muat sebuah dataset · Langkah 3: Streaming dataset besar · Langkah 4: Format dataset · Langkah 5: Split data · Langkah 6: Unduh dan cache model · Langkah 7: Tangani file besar · Langkah 8: Pola penyimpanan"
+    },
+    "phases/00-setup-and-tooling/10-terminal-and-shell": {
+      "name": "Terminal & Shell",
+      "summary": "Terminal adalah tempat AI engineer berkarya. Biasakan dirimu di sini.",
+      "keywords": "Langkah 1: Kenali shell kamu · Langkah 2: Piping dan redirect · Langkah 3: Proses background · Langkah 4: tmux · Langkah 5: Monitoring dengan htop dan nvtop · Langkah 6: SSH untuk GPU box jarak jauh · Langkah 7: Alias berguna untuk pekerjaan AI · Langkah 8: Pola terminal AI yang umum"
+    },
+    "phases/00-setup-and-tooling/11-linux-for-ai": {
+      "name": "Linux untuk AI",
+      "summary": "Sebagian besar AI berjalan di Linux. Kamu perlu tahu cukup banyak agar tidak macet.",
+      "keywords": "Berpindah Direktori · File dan Direktori · Membaca File · Pencarian"
+    },
+    "phases/00-setup-and-tooling/12-debugging-and-profiling": {
+      "name": "Debugging & Profiling",
+      "summary": "Bug AI terburuk tidak crash. Mereka diam-diam melakukan training pada sampah dan melaporkan kurva loss yang indah.",
+      "keywords": "Bagian 1: Debugging dengan Print (Ya, Ini Bekerja) · Bagian 2: Python Debugger (pdb dan breakpoint) · Bagian 3: Logging Python · Bagian 4: Mengukur Waktu Bagian Kode · Bagian 5: cProfile dan line_profiler · Bagian 6: Profiling Memori · Bagian 7: Bug AI Umum dan Cara Menangkapnya · Bagian 8: Dasar TensorBoard · Bagian 9: Debugger VS Code"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "06-tool-use-and-function-calling",
+  "title": "Tool Use dan Function Calling",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sinyal apa yang dipakai Toolformer untuk memutuskan apakah anotasi tool kandidat dipertahankan?",
+      "options": [
+        "Apakah tool kembali dalam 100 ms",
+        "Kesesuaian label manusia",
+        "Apakah menyertakan hasil tool menurunkan loss next-token pada teks sekitarnya",
+        "Apakah tool menghasilkan JSON yang valid"
+      ],
+      "correct": 2,
+      "explanation": "Sinyal self-supervised Toolformer mempertahankan anotasi yang hasil tool-nya menurunkan loss next-token."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa pembagian BFCL V4 yang dilaporkan pelajaran?",
+      "options": [
+        "100% single-turn",
+        "50% live, 50% synthetic",
+        "33% agentic, 33% planning, 33% reflection",
+        "40% agentic, 30% multi-turn, 10% live, 10% non-live, 10% hallucination"
+      ],
+      "correct": 3,
+      "explanation": "Bobot BFCL V4 adalah 40 agentic / 30 multi-turn / 10 live / 10 non-live / 10 hallucination."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa deskripsi tool berperan krusial?",
+      "options": [
+        "Itulah yang dilihat pengguna di UI",
+        "Model membacanya untuk memilih tool yang tepat; deskripsi buruk adalah penyebab utama kegagalan salah-tool",
+        "Itu diwajibkan oleh JSON Schema",
+        "Itu mengatur bucket penagihan"
+      ],
+      "correct": 1,
+      "explanation": "Deskripsi tool adalah sinyal utama model untuk memilih tool; deskripsi buruk menyebabkan routing ke tool yang salah."
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran tool_use_id dalam parallel tool calling?",
+      "options": [
+        "Ia mengorelasikan setiap hasil tool dengan panggilan asalnya sehingga hasil yang kembali tidak berurutan tetap dirutekan dengan benar",
+        "Ia mengotorisasi panggilan terhadap API key",
+        "Ia memampatkan payload JSON",
+        "Ia mengaktifkan caching"
+      ],
+      "correct": 0,
+      "explanation": "tool_use_id adalah token korelasi; menukarnya membuat hasil dirutekan ke panggilan yang salah."
+    },
+    {
+      "stage": "check",
+      "question": "Kelas kegagalan apa yang coba ditangkap evaluasi berbasis state V3?",
+      "options": [
+        "Kebocoran token",
+        "Pergeseran versi skema",
+        "Eksekusi tool yang lambat",
+        "Panggilan tool yang cocok secara AST tetapi meninggalkan API dalam state yang salah"
+      ],
+      "correct": 3,
+      "explanation": "Evaluasi berbasis state memeriksa state API yang dihasilkan (misalnya file benar-benar dibuat) alih-alih pencocokan panggilan sintaktis."
+    },
+    {
+      "stage": "post",
+      "question": "Masalah 2026 mana yang TIDAK didaftar pelajaran sebagai masalah terbuka untuk function calling?",
+      "options": [
+        "Rantai tool berhorizon panjang",
+        "Kecepatan decoding tingkat token",
+        "Pengambilan keputusan dinamis di banyak tool",
+        "Memori antar giliran"
+      ],
+      "correct": 1,
+      "explanation": "Masalah terbukanya adalah memori, pengambilan keputusan dinamis, rantai berhorizon panjang, dan deteksi halusinasi; kecepatan decoding tidak ada dalam daftar."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa tool generik run_shell(cmd) disebut red flag dalam pelajaran ini?",
+      "options": [
+        "Ia tidak bisa dipanggil secara paralel",
+        "Ia melebarkan batas sandbox; tool spesifik seperti git_status() membatasi permukaan baca/tulis dan risiko",
+        "Ia lambat",
+        "Penyedia menolaknya"
+      ],
+      "correct": 1,
+      "explanation": "Tool sempit membatasi permukaan sandbox; tool shell generik memberikan seluruh permukaan host."
+    }
+  ]
+}

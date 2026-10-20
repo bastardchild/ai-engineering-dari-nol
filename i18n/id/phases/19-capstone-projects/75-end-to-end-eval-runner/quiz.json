@@ -1,0 +1,78 @@
+{
+  "lesson": "75-end-to-end-eval-runner",
+  "title": "Runner Eval End-to-End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa permukaan terkecil yang mungkin untuk antarmuka ModelAdapter?",
+      "options": [
+        "complete, embed, classify, summarise",
+        "init, login, generate, close",
+        "generate(prompt, task) mengembalikan teks plus confidence opsional dan nll per token",
+        "load_weights, generate, save_weights"
+      ],
+      "correct": 2,
+      "explanation": "Satu metode mencakup adapter apa pun. Sisanya dekorasi opsional. Runner tidak membutuhkan permukaan lebih kaya."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa runner menerima flag parallel alih-alih selalu berjalan paralel?",
+      "options": [
+        "Test membutuhkan urutan eksekusi deterministik; flag memungkinkan beralih ke sekuensial",
+        "Eksekusi paralel tidak aman di CPython",
+        "Eksekusi paralel membutuhkan GPU",
+        "ThreadPoolExecutor bukan stdlib"
+      ],
+      "correct": 0,
+      "explanation": "Test menginginkan reproducibility. Produksi menginginkan throughput. Flag memisahkan concerns itu tanpa dua jalur kode."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana runner menentukan flag yang benar untuk buffer kalibrasi?",
+      "options": [
+        "Itu memakai metrik bergaya exact_match pada ambang 1.0 dan metrik bertingkat pada ambang 0.5 secara default",
+        "Itu memanggil adapter dua kali dan membandingkan output",
+        "Itu memakai keyakinan bin rata-rata",
+        "Itu memakai dekomposisi Brier"
+      ],
+      "correct": 0,
+      "explanation": "Ambang sadar metrik: metrik bergaya exact_match memakai cutoff mendekati 1.0, sedangkan metrik bertingkat memakai 0.5 secara default."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa runner membangun record EvalRun dan menyerahkannya ke agregator alih-alih menghitung leaderboard inline?",
+      "options": [
+        "Itu menjaga runner agnostik terhadap agregator dan memungkinkan lapisan leaderboard berkembang tanpa menyentuh runner",
+        "Agregator lebih cepat pada array numpy daripada dataclass",
+        "EvalRun diwajibkan JSON Schema",
+        "EvalRun lebih hemat memori"
+      ],
+      "correct": 0,
+      "explanation": "Komposisi alih-alih inline. Runner menghasilkan record; agregator memiliki matematika leaderboard. Setiap lesson memiliki satu concern."
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran blok perplexity dalam envelope JSON final?",
+      "options": [
+        "Itu dihitung dari CI bootstrap",
+        "Itu membawa angka language modelling held-out per model, independen dari scoring task",
+        "Itu input laporan kalibrasi",
+        "Itu diwajibkan untuk peringkat leaderboard"
+      ],
+      "correct": 1,
+      "explanation": "Perplexity berada di samping leaderboard, bukan di dalamnya. Itu memakai NLL token per panggilan dan jumlah token dari adapter."
+    },
+    {
+      "stage": "post",
+      "question": "Apa kriteria exit clean-run demo yang berhenti sendiri?",
+      "options": [
+        "Setiap task tervalidasi, setiap task diskor, kalibrasi diagregasi, dan adapter berbasis aturan strictly di atas adapter acak di leaderboard",
+        "Setiap task diskor di atas 0.9",
+        "ECE di bawah 0.05 untuk setiap model",
+        "CI bootstrap mengecualikan nol untuk setiap pasangan"
+      ],
+      "correct": 0,
+      "explanation": "Demo menegakkan kontrak end to end: setiap lapisan berjalan dan adapter paling akurat diperingkat sesuai."
+    }
+  ]
+}

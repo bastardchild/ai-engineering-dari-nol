@@ -1,0 +1,102 @@
+{
+  "lesson": "21-nli-textual-entailment",
+  "title": "Natural Language Inference — Textual Entailment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tiga label apa yang diberikan NLI pada pasangan (premis, hipotesis)?",
+      "options": [
+        "True / false / unknown",
+        "Sebab / akibat / tidak terkait",
+        "Entailment / contradiction / neutral",
+        "Positif / negatif / netral"
+      ],
+      "correct": 2,
+      "explanation": "NLI adalah klasifikasi 3 arah atas entailment, contradiction, dan neutral."
+    },
+    {
+      "stage": "pre",
+      "question": "Bagaimana NLI dipakai sebagai classifier teks zero-shot?",
+      "options": [
+        "Dengan memberi prompt ke LLM",
+        "Verbalisasikan setiap label kandidat sebagai hipotesis (misalnya 'Teks ini tentang olahraga') dan pilih label dengan skor entailment tertinggi",
+        "Dengan menghitung TF-IDF",
+        "Dengan merata-ratakan embedding"
+      ],
+      "correct": 1,
+      "explanation": "NLI-sebagai-classifier mengubah label menjadi hipotesis; model memilih label dengan entailment maksimum."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa NLI menjadi pemeriksaan faithfulness untuk output RAG?",
+      "options": [
+        "Ia murah",
+        "Memeriksa apakah konteks yang diambil mengentail setiap klaim jawaban adalah tepat formulasi tempat NLI dilatih",
+        "Ia multibahasa",
+        "Ia memakai tokenizer"
+      ],
+      "correct": 1,
+      "explanation": "Halusinasi = klaim jawaban tidak dientail oleh konteks yang diambil; NLI langsung mengukur entailment."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diungkap baseline hypothesis-only?",
+      "options": [
+        "Pergeseran tokenizer",
+        "Inferensi lambat",
+        "Jurang multibahasa",
+        "Dataset di mana hipotesis saja (tanpa premis) prediktif terhadap label, menandakan kebocoran label"
+      ],
+      "correct": 3,
+      "explanation": "Skor hypothesis-only tinggi pada SNLI mengungkap artefak anotasi; berguna untuk debugging data."
+    },
+    {
+      "stage": "check",
+      "question": "Keluarga model NLI mana yang memuncaki papan peringkat 2026 sebagai pekerja keras standar?",
+      "options": [
+        "Varian DeBERTa-v3 yang di-fine-tune pada MNLI/FEVER/ANLI",
+        "Word2Vec biasa",
+        "GPT-2",
+        "fastText"
+      ],
+      "correct": 0,
+      "explanation": "DeBERTa-v3 yang di-fine-tune pada MNLI dan korpus terkait adalah pekerja keras NLI terbuka pada 2026."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa model NLI tingkat kalimat kehilangan akurasi pada premis sepanjang dokumen?",
+      "options": [
+        "Mereka dilatih pada premis pendek dan gagal pada inferensi multi-kalimat dan multi-hop; model yang disetel DocNLI menangani input lebih panjang",
+        "Input lebih besar berjalan lebih lambat",
+        "Cosine similarity meluruh",
+        "Dokumen memicu pergeseran tokenizer"
+      ],
+      "correct": 0,
+      "explanation": "Ketidakcocokan distribusi training: model NLI satu kalimat kehilangan 20+ F1 pada input sepanjang dokumen."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa akurasi zero-shot dapat berayun 10+ poin berdasarkan template hipotesis?",
+      "options": [
+        "Template mengubah set label",
+        "Model sensitif terhadap frasa; misalnya 'Teks ini tentang {label}' vs '{label}' saja menggeser probabilitas entailment",
+        "Template mengubah perilaku tokenizer",
+        "Template memengaruhi bobot model"
+      ],
+      "correct": 1,
+      "explanation": "Kata-kata template secara material menggeser skor entailment; setel pada set held-out kecil."
+    },
+    {
+      "stage": "post",
+      "question": "Apa klaim aman yang dapat dibuat tentang NLI untuk deteksi halusinasi?",
+      "options": [
+        "Ia mengurangi halusinasi sebagai sinyal faithfulness tetapi tidak menghilangkannya; kombinasikan dengan retrieval recall dan tinjauan manusia",
+        "Ia hanya bekerja pada bahasa Inggris",
+        "Ia menghilangkan halusinasi",
+        "Ia memerlukan LLM"
+      ],
+      "correct": 0,
+      "explanation": "NLI adalah sinyal berguna tetapi bukan solusi lengkap; pasangkan dengan metrik retrieval dan pemeriksaan sampel manusia."
+    }
+  ]
+}

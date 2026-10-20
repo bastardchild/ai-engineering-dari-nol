@@ -1,0 +1,90 @@
+{
+  "lesson": "19-benchmarks-swebench-gaia",
+  "title": "Benchmark: SWE-bench, GAIA, AgentBench",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diperiksa evaluator SWE-bench pada patch kandidat?",
+      "options": [
+        "Panjang patch di bawah 200 baris",
+        "Test yang sebelumnya gagal kini lulus (FAIL_TO_PASS) dan test yang sebelumnya lulus tetap lulus (PASS_TO_PASS)",
+        "Skor BLEU terhadap perbaikan referensi",
+        "Patch lulus LLM judge terpisah"
+      ],
+      "correct": 1,
+      "explanation": "Harness menyaring berdasarkan transisi test: test pengungkap bug harus berbalik sementara test regresi harus tetap hijau."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa SWE-bench Verified ada?",
+      "options": [
+        "Ia mencakup lebih banyak bahasa",
+        "Ia berjalan lebih cepat",
+        "Subset 500 tugas pilihan manusia dari OpenAI menghapus issue ambigu dan test yang tidak andal",
+        "Ia memakai format patch berbeda"
+      ],
+      "correct": 2,
+      "explanation": "Verified adalah subset yang lebih bersih untuk pelaporan yang kredibel."
+    },
+    {
+      "stage": "check",
+      "question": "Apa temuan SWE-bench+ tentang patch yang berhasil?",
+      "options": [
+        "32,67% membocorkan teks solusi di issue dan 31,08% punya cakupan test yang mencurigakan lemah",
+        "Patch selalu melebihi 1000 baris",
+        "Tidak ada kontaminasi",
+        "Semua patch dihafal"
+      ],
+      "correct": 0,
+      "explanation": "SWE-bench+ menandai kebocoran solusi dan cakupan lemah pada sebagian besar patch yang berhasil."
+    },
+    {
+      "stage": "check",
+      "question": "Apa filosofi desain GAIA?",
+      "options": [
+        "Sulit bagi manusia, mudah bagi AI",
+        "Benchmark murni untuk retrieval vector",
+        "Hanya pertanyaan satu giliran",
+        "Sederhana secara konseptual bagi manusia (sekitar 92%) tetapi sulit bagi AI (GPT-4 awal dengan plugin: sekitar 15%)"
+      ],
+      "correct": 3,
+      "explanation": "GAIA sengaja mudah-bagi-manusia, sulit-bagi-AI, menguji penalaran + tool + modalitas."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu kategori lingkungan AgentBench?",
+      "options": [
+        "Games (Alfworld, LTP)",
+        "Web (WebShop, Mind2Web)",
+        "Gradient (RL, IRL)",
+        "Code (Bash, DB, KG)"
+      ],
+      "correct": 2,
+      "explanation": "AgentBench mencakup code, games, web, dan generasi terbuka. Tidak ada kategori gradient."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diidentifikasi pelajaran sebagai cara salah melaporkan angka SWE-bench?",
+      "options": [
+        "Melaporkan rincian per-repo",
+        "Melaporkan satu angka agregat tanpa menyebut konteks Verified atau SWE-bench+",
+        "Melaporkan jumlah langkah",
+        "Melaporkan wall-clock"
+      ],
+      "correct": 1,
+      "explanation": "Fiksasi pada satu angka menyembunyikan kontaminasi dan biaya; selalu laporkan Verified dan konteks per-distribusi."
+    },
+    {
+      "stage": "post",
+      "question": "Dimensi mana yang TIDAK diukur benchmark ini?",
+      "options": [
+        "Transisi test",
+        "Jumlah langkah",
+        "Keberhasilan per tugas",
+        "Biaya operasional dunia nyata (token, wall-clock), keamanan adversarial, dan domainmu sendiri"
+      ],
+      "correct": 3,
+      "explanation": "Benchmark mengagregasi; ia tidak menangkap biaya, ketahanan adversarial, atau domainmu."
+    }
+  ]
+}

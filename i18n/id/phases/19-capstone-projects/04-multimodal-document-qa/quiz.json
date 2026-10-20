@@ -1,0 +1,90 @@
+{
+  "lesson": "04-multimodal-document-qa",
+  "title": "Capstone 04 — QA Dokumen Multimodal (PDF Vision-First, Tabel, Grafik)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa frontier 2026 lebih memilih vision-first late interaction daripada OCR-lalu-teks pada PDF keuangan dan paper ilmiah?",
+      "options": [
+        "Pipeline OCR merusak tabel yang diputar, persamaan padat, dan citra grafik, sehingga separuh sinyal hilang",
+        "OCR tidak bisa berjalan di GPU",
+        "Model vision lebih murah per halaman",
+        "OCR lebih lambat daripada rendering"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa arti late interaction dalam retrieval gaya ColPali?",
+      "options": [
+        "Setiap token query dinilai terhadap setiap token patch, lalu maksimum per token dijumlahkan lewat MaxSim",
+        "Embedding dihitung setelah pengguna mengklik hasil",
+        "Reranker hanya berjalan pada kandidat akhir",
+        "Embedding ditunda sampai waktu eval"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa vektor patch yang dihasilkan embedding ColQwen per halaman, dan masalah penyimpanan apa yang muncul?",
+      "options": [
+        "Tepat 128 vektor, pas di semua vector DB",
+        "Sekitar 2048 vektor patch per halaman, sehingga penyimpanan mentah membengkak dibanding indeks satu vektor",
+        "1 vektor per halaman, tanpa masalah penyimpanan",
+        "16 vektor dengan overhead penyimpanan yang dapat diabaikan"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan DocPruner dalam pipeline ini?",
+      "options": [
+        "Menghapus halaman PDF duplikat sebelum ingestion",
+        "Mengompres indeks multi-vektor dengan menyimpan patch bersinyal tinggi sekitar 50% dengan kehilangan akurasi yang dapat diabaikan",
+        "Memotong bounding box di sekitar wilayah bukti",
+        "Menulis ulang embedding query menjadi vektor lebih pendek"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa kanal teks OCR masih disisipkan untuk sebagian halaman?",
+      "options": [
+        "VLM tidak bisa membaca gambar pada 180 DPI",
+        "OCR adalah modalitas retrieval utama",
+        "Itu meningkatkan kualitas rendering PDF",
+        "Halaman padat persamaan dan tabel mendapat manfaat dari fallback teks di samping gambar"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Benchmark mana yang ditargetkan capstone ini untuk evaluasi retrieval vision-first?",
+      "options": [
+        "ViDoRe v3",
+        "RewardBench-2",
+        "MMLU-Pro",
+        "SWE-bench Pro"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dimaksud rubrik dengan evidence-region grounding?",
+      "options": [
+        "Latensi re-ranker pada ekor p99",
+        "Jumlah total halaman yang diambil per query",
+        "Fraksi bounding box yang dikutip yang benar-benar memuat span jawaban",
+        "Rasio kompresi yang dicapai DocPruner"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

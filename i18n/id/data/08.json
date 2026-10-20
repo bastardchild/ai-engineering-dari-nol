@@ -1,0 +1,85 @@
+{
+  "phase": {
+    "8": {
+      "name": "AI Generatif",
+      "desc": "Buat gambar, video, audio, 3D, dan lainnya."
+    }
+  },
+  "lessons": {
+    "phases/08-generative-ai/01-generative-models-taxonomy-history": {
+      "name": "Model Generatif: Taksonomi & Sejarah",
+      "summary": "Setiap model gambar, model teks, model video, dan model 3D masuk ke salah satu dari lima keranjang. Pilih keranjang yang salah dan kamu akan bergulat dengan matematikanya selama berminggu-minggu. Pilih yang benar dan dua belas tahun terakhir kemajuan bidang ini tersusun rapi di kepalamu.",
+      "keywords": "Lima keluarga model generatif · Explicit vs implicit density · Sejarah singkat · Triage lima pertanyaan · Langkah 1: densitas eksplisit via histogram · Langkah 2: densitas aproksimatif via KDE · Langkah 3: generator implicit"
+    },
+    "phases/08-generative-ai/02-autoencoders-vae": {
+      "name": "Autoencoder & VAE",
+      "summary": "Autoencoder biasa memampatkan lalu merekonstruksi. Ia menghafal. Ia tidak menghasilkan. Tambahkan satu trik — paksa kodenya tampak Gaussian — dan kamu mendapat sampler. Trik tunggal itu,…",
+      "keywords": "Langkah 1: forward encoder · Langkah 2: reparameterize dan decode · Langkah 3: ELBO · Langkah 4: generate"
+    },
+    "phases/08-generative-ai/03-gans-generator-discriminator": {
+      "name": "GAN: Generator vs Discriminator",
+      "summary": "Trik Goodfellow pada 2014 adalah melewati densitas sepenuhnya. Dua jaringan. Satu membuat palsu. Satu menangkapnya. Mereka bertarung sampai yang palsu tak bisa dibedakan dari asli. Seharusnya tidak…",
+      "keywords": "Langkah 1: non-saturating loss · Langkah 2: satu langkah discriminator per langkah generator · Langkah 3: awasi mode collapse"
+    },
+    "phases/08-generative-ai/04-conditional-gans-pix2pix": {
+      "name": "Conditional GAN & Pix2Pix",
+      "summary": "Terobosan besar pertama 2014-2017 adalah mengendalikan apa yang dibuat GAN. Tempelkan label, atau gambar, atau kalimat. Pix2Pix melakukan versi gambarnya dan masih mengalahkan setiap model teks generik…",
+      "keywords": "Langkah 1: tambahkan kondisi ke input G dan D · Langkah 2: latih conditional · Langkah 3: verifikasi output per kelas"
+    },
+    "phases/08-generative-ai/05-stylegan": {
+      "name": "StyleGAN",
+      "summary": "Sebagian besar generator mengaduk `z` ke setiap lapisan pada saat yang sama. StyleGAN memisahkannya: pertama petakan `z` ke `w` perantara, lalu *suntikkan* `w` di setiap tingkat resolusi melalui Ad…",
+      "keywords": "Langkah 1: mapping network · Langkah 2: adaptive instance normalization · Langkah 3: noise per lapisan"
+    },
+    "phases/08-generative-ai/06-diffusion-ddpm-from-scratch": {
+      "name": "Model Difusi — DDPM dari Nol",
+      "summary": "Ho, Jain, Abbeel (2020) memberi bidang ini resep yang tak bisa ditinggalkan. Hancurkan data dengan noise selama seribu langkah kecil. Latih satu neural net untuk memprediksi noise. Balik prose…",
+      "keywords": "Langkah 1: jadwal forward (closed form) · Langkah 2: sampling `x_t` dalam satu tembakan · Langkah 3: satu langkah pelatihan · Langkah 4: reverse sampling"
+    },
+    "phases/08-generative-ai/07-latent-diffusion-stable-diffusion": {
+      "name": "Latent Diffusion & Stable Diffusion",
+      "summary": "Difusi di ruang piksel pada gambar 512×512 adalah kejahatan komputasi. Rombach dkk. (2022) menyadari kamu tidak perlu semua 786k dimensi untuk menghasilkan gambar — kamu perlu cukup…",
+      "keywords": "Langkah 1: encoder/decoder · Langkah 2: difusi di ruang `z` · Langkah 3: classifier-free guidance · Langkah 4: text conditioning (konsep, bukan kode)"
+    },
+    "phases/08-generative-ai/08-controlnet-lora-conditioning": {
+      "name": "ControlNet, LoRA & Conditioning",
+      "summary": "Teks saja adalah sinyal kontrol yang canggung. ControlNet memungkinkanmu mengkloning model difusi terlatih dan mengarahkannya dengan depth map, pose skeleton, coretan, atau gambar edge. LoRA memungkinkanmu…",
+      "keywords": "ControlNet (Zhang dkk., 2023) · LoRA (Hu dkk., 2021) · IP-Adapter (Ye dkk., 2023) · Langkah 1: matematika LoRA · Langkah 2: side network zero-init"
+    },
+    "phases/08-generative-ai/09-inpainting-outpainting-editing": {
+      "name": "Inpainting, Outpainting & Editing",
+      "summary": "Text-to-image membuat hal baru. Inpainting memperbaiki yang lama. Di produksi, 70% pekerjaan gambar berbayar adalah editing — ganti latar, hapus logo, perluas kanvas, regenerasi…",
+      "keywords": "Pendekatan naif (dan mengapa salah) · Model inpainting yang tepat · SDEdit (Meng dkk., 2022) — editing gratis · InstructPix2Pix (Brooks dkk., 2023) · RePaint (Lugmayr dkk., 2022) · Langkah 1: data DDPM 5-D · Langkah 2: latih denoiser pada semua 5 dimensi · Langkah 3: saat inferensi, reverse yang sadar mask · Langkah 4: outpainting"
+    },
+    "phases/08-generative-ai/10-video-generation": {
+      "name": "Generasi Video",
+      "summary": "Gambar adalah tensor 2-D. Video adalah tensor 3-D. Teorinya sama; komputasinya 10-100x lebih berat. Sora dari OpenAI (Feb 2024) membuktikan itu mungkin. Pada 2026 Veo 2, Kling 1.5,…",
+      "keywords": "Patchify · DiT spatiotemporal · Text conditioning · Pelatihan · Langkah 1: patchify \"video\" 1-D sintetis · Langkah 2: position embedding per frame · Langkah 3: denoiser melihat seluruh sekuens · Langkah 4: uji koherensi temporal"
+    },
+    "phases/08-generative-ai/11-audio-generation": {
+      "name": "Generasi Audio",
+      "summary": "Audio adalah sinyal 1-D pada 16-48 kHz. Klip lima detik adalah 80-240k sampel. Tidak ada transformer yang menangani sekuens itu secara langsung. Solusi untuk setiap model audio produksi pada 202…",
+      "keywords": "Codec audio neural · Dua paradigma generatif di atasnya · Langkah 1: token audio sintetis · Langkah 2: latih prediktor token kecil · Langkah 3: sampling secara kondisional"
+    },
+    "phases/08-generative-ai/12-3d-generation": {
+      "name": "Generasi 3D",
+      "summary": "3D adalah modalitas dengan leverage 2D-ke-3D terkuat. Terobosan 2023 adalah 3D Gaussian Splatting. Dorongan generatif 2024-2026 melapisi difusi multi-view + rekonstruksi 3D…",
+      "keywords": "Representasi: 3D Gaussian Splatting (Kerbl dkk., 2023) · Difusi multi-view · Pipeline text-to-3D · NeRF (untuk konteks) · Langkah 1: splat Gaussian 2D · Langkah 2: render dengan menjumlahkan splat · Langkah 3: fit dengan gradient descent"
+    },
+    "phases/08-generative-ai/13-flow-matching-rectified-flows": {
+      "name": "Flow Matching & Rectified Flow",
+      "summary": "Model difusi membutuhkan 20-50 langkah sampling karena menempuh jalur melengkung dari noise ke data. Flow matching (Lipman dkk., 2023) dan rectified flow (Liu dkk., 2022) melatih…",
+      "keywords": "Aliran garis lurus · Sampling · Rectified flow (Liu 2022) · Mengapa ini menang untuk gambar pada 2024 · Langkah 1: loss pelatihan · Langkah 2: inferensi multi-langkah · Langkah 3: bandingkan jumlah langkah"
+    },
+    "phases/08-generative-ai/14-evaluation-fid-clip-score": {
+      "name": "Evaluasi: FID, CLIP Score",
+      "summary": "Setiap leaderboard model generatif mengutip FID, CLIP score, dan win rate dari arena preferensi manusia. Setiap angka punya mode kegagalan yang bisa dimanipulasi peneliti gigih. Jika kamu…",
+      "keywords": "FID — kualitas sampel · CLIP score — kepatuhan pada prompt · Preferensi manusia — ground truth · Langkah 1: FID dalam empat baris · Langkah 2: cosine similarity ala CLIP · Langkah 3: agregasi Elo"
+    },
+    "phases/08-generative-ai/19-visual-autoregressive-var": {
+      "name": "Visual Autoregressive Modeling (VAR): Prediksi Next-Scale",
+      "summary": "Model difusi melakukan sampling iteratif dalam waktu (langkah denoising). VAR melakukan sampling iteratif dalam skala — ia memprediksi token 1x1, lalu 2x2, lalu 4x4, hingga resolusi akhir, setiap…",
+      "keywords": "Tokenizer Multi-Skala VQ-VAE · Prediksi Next-Scale · Generasi · Mengapa Next-Scale Menang atas Next-Token · Scaling Law · Hubungan dengan Difusi"
+    }
+  }
+}

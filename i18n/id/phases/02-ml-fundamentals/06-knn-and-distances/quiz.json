@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "knn-pre-1",
+      "stage": "pre",
+      "question": "KNN disebut 'lazy learner'. Apa artinya?",
+      "options": [
+        "Konvergensinya lambat selama training",
+        "Ia memakai versi sederhana dari fungsi loss",
+        "Ia tidak melakukan komputasi saat training dan menghitung semuanya saat prediksi",
+        "Ia hanya bekerja pada dataset kecil"
+      ],
+      "correct": 2,
+      "explanation": "Lazy learning berarti KNN menyimpan data training dan tidak melakukan apa pun saat 'training'. Semua komputasi (perhitungan jarak, voting) terjadi saat prediksi diminta."
+    },
+    {
+      "id": "knn-pre-2",
+      "stage": "pre",
+      "question": "Mengapa feature scaling sangat penting untuk KNN?",
+      "options": [
+        "KNN tidak bisa menangani angka negatif tanpa scaling",
+        "KNN memakai gradient descent yang butuh input ternormalisasi",
+        "Feature scaling mengurangi jumlah tetangga yang dibutuhkan",
+        "Perhitungan jarak didominasi fitur dengan rentang lebih besar sehingga scaling diperlukan agar perbandingan adil"
+      ],
+      "correct": 3,
+      "explanation": "KNN bergantung pada jarak. Fitur dengan rentang 0-1000 akan mendominasi fitur dengan rentang 0-1 dalam perhitungan jarak. Scaling menyamakan rentang semua fitur."
+    },
+    {
+      "id": "knn-post-1",
+      "stage": "post",
+      "question": "Pada 100 dimensi dengan titik acak yang seragam, apa yang terjadi pada rasio jarak maksimum terhadap jarak minimum?",
+      "options": [
+        "Rasio itu naik drastis sehingga tetangga jadi lebih mudah dibedakan",
+        "Rasio itu mendekati 1 sehingga semua titik hampir berjarak sama satu sama lain",
+        "Rasio itu tetap sama seperti pada 2 dimensi",
+        "Rasio itu menjadi negatif karena overflow numerik"
+      ],
+      "correct": 1,
+      "explanation": "Inilah curse of dimensionality. Di dimensi tinggi, jarak-jarak saling mendekat: max_dist / min_dist mendekati 1. Saat semua titik berjarak hampir sama, 'terdekat' menjadi tak bermakna."
+    },
+    {
+      "id": "knn-post-2",
+      "stage": "post",
+      "question": "Metrik jarak mana yang paling tepat untuk membandingkan dokumen teks yang direpresentasikan sebagai vektor TF-IDF?",
+      "options": [
+        "Jarak Chebyshev",
+        "Cosine distance",
+        "Jarak L2 (Euclidean)",
+        "Jarak L1 (Manhattan)"
+      ],
+      "correct": 1,
+      "explanation": "Cosine distance mengukur sudut antara vektor dan mengabaikan besarannya. Untuk teks, panjang dokumen (magnitude) hanyalah noise -- arahnya yang menangkap makna. Cosine secara konsisten mengungguli L1/L2 untuk teks."
+    },
+    {
+      "id": "knn-post-3",
+      "stage": "post",
+      "question": "Apa yang terjadi pada decision boundary KNN saat K naik dari 1 sampai N (ukuran dataset penuh)?",
+      "options": [
+        "Batasnya menjadi lebih kompleks dan rinci",
+        "Batasnya tetap sama berapa pun nilai K",
+        "Batasnya menjadi berbentuk lingkaran",
+        "Batasnya menghalus, akhirnya memprediksi kelas mayoritas untuk setiap titik"
+      ],
+      "correct": 3,
+      "explanation": "K=1 menghasilkan batas bergerigi yang mengikuti setiap titik (overfitting). Semakin besar K, batasnya semakin halus. K=N berarti setiap query mempertimbangkan semua titik, selalu memprediksi kelas mayoritas (bias maksimum)."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "14-ascii-art-visual-jailbreaks",
+  "title": "ASCII Art dan Jailbreak Visual",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa filter keselamatan tingkat token dan semantik melewatkan serangan gaya ArtPrompt?",
+      "options": [
+        "ArtPrompt selalu memakai encoding base64",
+        "ArtPrompt memerlukan fine-tuning model",
+        "ArtPrompt beroperasi pada level pengenalan visual: filter melihat tanda baca tak berbahaya sementara model membaca huruf yang dirender sebagai kata",
+        "ArtPrompt hanya efektif pada model multimodal"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa dua langkah ArtPrompt seperti dijelaskan Jiang et al. (ACL 2024)?",
+      "options": [
+        "Ketidakcocokan tokenizer, lalu pemotongan konteks",
+        "Pencarian acak, lalu boosting perplexity",
+        "Terjemahan ke Prancis, lalu back-translation",
+        "Identifikasi kata dari token relevan keselamatan, lalu substitusi ASCII art dan pembuatan cloaked prompt"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pertahanan filter perplexity (PPL) gagal pada ArtPrompt?",
+      "options": [
+        "Filter perplexity nonaktif secara default",
+        "Perplexity tidak bisa diukur pada ASCII art",
+        "Perplexity selalu nol pada input cloaked",
+        "ASCII art punya perplexity tinggi, tetapi input terstruktur yang sah juga; ambang yang memblokir serangan juga memblokir konten yang sah"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur benchmark ViTC?",
+      "options": [
+        "Toksisitas data pelatihan model",
+        "Akurasi tool calling model",
+        "Kemampuan model membaca prompt visual non-semantik (ASCII art, wingdings, teks terenkode serupa)",
+        "Kemampuan model mengompresi data vision"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Ke apa StructuralSleight menggeneralisasi ArtPrompt?",
+      "options": [
+        "Hanya input gambar",
+        "Penjejalan shot konteks panjang",
+        "Sufiks token adversarial lewat pencarian gradien",
+        "Uncommon Text-Encoded Structures (UTES): tree, graph, JSON bersarang, CSV-dalam-JSON, kode gaya diff, dan sebagainya"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa tradeoff kapabilitas-keselamatan yang tersirat dari hasil ViTC?",
+      "options": [
+        "Context window lebih besar menurunkan keberhasilan ArtPrompt",
+        "Pengenalan visual tidak berkaitan dengan keberhasilan ArtPrompt",
+        "Semakin baik model membaca teks visual non-semantik, semakin efektif serangan gaya ArtPrompt padanya",
+        "Model yang lebih kecil selalu lebih aman"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

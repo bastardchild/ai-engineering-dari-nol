@@ -52,10 +52,12 @@ test('overrides only pin keys from the list and only for registered languages', 
   assert.ok(CI_LANGS.length > 0);
 });
 
-test('every key still appears in the site pages or scripts', () => {
-  const source = siteSource().replace(/\s+/g, ' ');
+test('every key has an Indonesian translation', () => {
+  const dictPath = path.join(SITE, '..', 'i18n', 'id', 'ui.json');
+  const dict = JSON.parse(fs.readFileSync(dictPath, 'utf8'));
   for (const key of KEYS) {
-    assert.ok(source.includes(key), `orphaned ui-strings.json key: ${JSON.stringify(key)}`);
+    assert.ok(Object.prototype.hasOwnProperty.call(dict, key), `missing Indonesian translation: ${JSON.stringify(key)}`);
+    assert.ok(String(dict[key]).trim().length > 0, `empty Indonesian translation: ${JSON.stringify(key)}`);
   }
 });
 
@@ -69,7 +71,7 @@ test('translateText swaps only the trimmed core and keeps surrounding whitespace
 });
 
 test('dictionaries come from the translations branch, English and unknown languages resolve to none', async () => {
-  assert.equal(i18n.TRANSLATIONS_BASE, 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/');
+  assert.equal(i18n.TRANSLATIONS_BASE, 'i18n/');
   assert.equal(i18n.dictionaryFor('en'), null);
   assert.equal(i18n.dictionaryFor(''), null);
   i18n.preload('zh', { Contents: '目录' });

@@ -1,0 +1,78 @@
+{
+  "lesson": "45-gradient-clipping-amp",
+  "title": "Gradient Clipping dan Mixed Precision",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang dipecahkan global L2 gradient clipping?",
+      "options": [
+        "Satu batch buruk dapat melonjakkan norm gradien beberapa orde besaran; clipping membatasi langkah optimizer kasus terburuk agar satu batch tidak mereset jam-jam pembelajaran",
+        "Vocabulary drift",
+        "Training lambat",
+        "Restart acak"
+      ],
+      "correct": 0,
+      "explanation": "Clipping adalah sabuk pengaman yang menjaga batch berisik dari merusak kurva loss."
+    },
+    {
+      "stage": "check",
+      "question": "Apa urutan operasi GradScaler yang benar dalam satu step?",
+      "options": [
+        "scaler.scale(loss).backward(); scaler.unscale_(optimizer); clip_grad_norm_; scaler.step(optimizer); scaler.update()",
+        "backward, step, scale, update",
+        "Urutan apa pun; scaler mengurutkan ulang secara internal",
+        "step, scale, unscale, backward, update"
+      ],
+      "correct": 0,
+      "explanation": "Clip pada gradien tak terskala antara unscale_ dan step; update selalu berjalan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan scaler.update() pada langkah yang dilewati?",
+      "options": [
+        "Menutup run",
+        "Tidak ada",
+        "Membagi dua faktor skala dan mereset counter no-inf; lupa memanggilnya di jalur skip adalah bug yang menghasilkan 'faktor skala tidak pernah berubah'",
+        "Menggandakan faktor skala"
+      ],
+      "correct": 2,
+      "explanation": "Scaler menyetel faktornya berdasarkan rasio skip/bersih di langkah-langkah terakhir."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pemeriksaan finiteness loss diperlukan bahkan dengan GradScaler?",
+      "options": [
+        "Karena GradScaler lambat",
+        "Itu dekoratif",
+        "PyTorch mewajibkannya",
+        "GradScaler menangani overflow backward-pass tetapi loss non-finite tidak menghasilkan gradien berguna; skip sebelum backward menghemat komputasi dan menghindari mengotori state scaler"
+      ],
+      "correct": 3,
+      "explanation": "Pemeriksaan loss mencakup kegagalan forward-pass; scaler mencakup kegagalan backward-pass."
+    },
+    {
+      "stage": "post",
+      "question": "Apa sinyal produksi dalam rolling skip rate?",
+      "options": [
+        "Selalu page pada skip apa pun",
+        "Beberapa skip per run itu sehat; ratusan skip per epoch (di atas sekitar 5 persen rolling rate) adalah alert keras bahwa model berada di rezim yang tidak bisa ditahan FP16",
+        "Skip rate tidak relevan",
+        "Page hanya pada skip berurutan"
+      ],
+      "correct": 1,
+      "explanation": "Alert berbasis rate menangkap mode kegagalan senyap yang tidak ditangkap page skip sesekali."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa beralih dari FP16 ke autocast BF16 saat skip sering?",
+      "options": [
+        "BF16 punya rentang eksponen lebih lebar daripada FP16 dan jarang membutuhkan loss scaling; skip rate biasanya turun ke nol pada model yang sama",
+        "BF16 lebih lambat jadi lebih jarang skip",
+        "BF16 lebih baru",
+        "Tradisi acak"
+      ],
+      "correct": 0,
+      "explanation": "FP16 mengutamakan presisi mantissa daripada rentang; BF16 bertukar sebaliknya, menghapus kelas overflow sepenuhnya."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "10-skill-libraries-voyager",
+  "title": "Skill Library dan Lifelong Learning (Voyager)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diperlakukan Voyager sebagai ruang aksi?",
+      "options": [
+        "Perintah Minecraft primitif",
+        "Q-value reinforcement learning",
+        "Prompt teks saja",
+        "Kode yang dapat dieksekusi (fungsi JavaScript) yang disimpan, diambil, dan dikomposisi"
+      ],
+      "correct": 3,
+      "explanation": "Kontribusi Voyager adalah menjadikan kode sebagai aksi: skill adalah program, bukan perintah mentah."
+    },
+    {
+      "stage": "pre",
+      "question": "Tiga komponen apa yang mendefinisikan agent Voyager?",
+      "options": [
+        "Retriever, generator, ranker",
+        "Encoder, decoder, value head",
+        "Automatic curriculum, skill library, iterative prompting",
+        "Planner, executor, judge"
+      ],
+      "correct": 2,
+      "explanation": "Voyager menyusun agent di sekitar curriculum, skill library, dan iterative prompting."
+    },
+    {
+      "stage": "check",
+      "question": "Tiga sinyal apa yang bisa kembali dari percobaan eksekusi skill?",
+      "options": [
+        "Success, error (dengan stack trace), kegagalan self-verification",
+        "Pass, fail, retry",
+        "Heartbeat, ack, nack",
+        "Green, yellow, red"
+      ],
+      "correct": 0,
+      "explanation": "Mekanisme iterative prompting Voyager digerakkan oleh ketiga sinyal ini yang dilipat kembali ke versi berikutnya."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana automatic curriculum memilih tugas berikutnya?",
+      "options": [
+        "Acak seragam atas ruang aksi",
+        "Sedikit di atas kemampuan saat ini, berdasarkan state lingkungan dan inventaris skill (titik manis eksplorasi)",
+        "Selalu tugas tersulit yang tersedia",
+        "Hanya daftar dari pengguna"
+      ],
+      "correct": 1,
+      "explanation": "Proposer menyasar tugas yang sedikit di atas kemampuan saat ini agar kemajuan stabil."
+    },
+    {
+      "stage": "check",
+      "question": "Produk 2026 mana yang paling jelas cocok dengan skill ala Voyager menurut pelajaran?",
+      "options": [
+        "Skill Claude Agent SDK: kode bernama yang dapat diambil plus instruksi yang dimuat sesuai kebutuhan",
+        "Layer AWS Lambda",
+        "Indeks Pinecone",
+        "Fine-tuning OpenAI"
+      ],
+      "correct": 0,
+      "explanation": "Skill Agent SDK cocok dengan pola kode bernama-dapat-diambil-dapat-dikomposisi milik Voyager."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran menyarankan dedup saat menulis ke skill library?",
+      "options": [
+        "Tanpa dedup, skill yang sama ditambahkan berkali-kali dengan deskripsi sedikit berbeda; retrieval harus mengembalikan satu versi kanonis",
+        "Penyedia menolak duplikat",
+        "Git memblokir duplikat",
+        "Disk mahal"
+      ],
+      "correct": 0,
+      "explanation": "Deskripsi yang nyaris duplikat disatukan menjadi satu skill kanonis agar retrieval tetap bersih."
+    },
+    {
+      "stage": "post",
+      "question": "Masalah apa yang digambarkan composed-skill drift?",
+      "options": [
+        "Skill berhenti dikompilasi setelah upgrade Python",
+        "Skill induk diam-diam memakai versi anak yang dihaluskan dan belum pernah diuji dengannya; perbaiki dengan mem-pin versi skill",
+        "Skill dienkripsi di penyimpanan",
+        "Retrieval tidak mengembalikan apa pun"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa pinning versi, penyempurnaan pada anak diam-diam mengubah perilaku induk."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "19-ai-gateways",
+  "title": "AI Gateway — LiteLLM, Portkey, Kong AI Gateway, Bifrost",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa peran inti AI gateway dalam pelajaran ini?",
+      "options": [
+        "Database vektor untuk retrieval",
+        "Layanan fine-tuning model",
+        "Proses yang berada di antara aplikasi dan provider model yang menyatukan routing, fallback, retry, rate limit, referensi secret, observability, dan guardrail di balik satu API",
+        "Sidecar yang hanya melakukan logging"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Batas skala apa yang dilaporkan benchmark Kong untuk LiteLLM?",
+      "options": [
+        "LiteLLM tidak bisa di-benchmark",
+        "Itu berskala linear melewati 10k RPS",
+        "Itu runtuh sekitar ~2000 RPS dengan memori 8 GB dan kegagalan beruntun pada beban berkelanjutan",
+        "Puncaknya 50 RPS"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Menurut benchmark Kong pada CPU setara, seberapa cepat Kong AI Gateway dibanding Portkey dan LiteLLM?",
+      "options": [
+        "Identik",
+        "Sekitar 10% dan 20% lebih cepat",
+        "228% lebih cepat daripada Portkey dan 859% lebih cepat daripada LiteLLM",
+        "Lebih lambat dari keduanya"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Gateway mana yang diposisikan pelajaran ini dengan overhead latensi 20-40 ms dan fokus guardrail / redaksi PII / deteksi jailbreak?",
+      "options": [
+        "Cloudflare AI Gateway",
+        "Portkey",
+        "Kong AI Gateway",
+        "LiteLLM"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang disebut pelajaran ini sebagai faktor penentu keputusan gateway self-hosted vs terkelola?",
+      "options": [
+        "Jumlah provider yang didukung",
+        "Biaya per permintaan",
+        "Persyaratan residensi data",
+        "Apakah gateway open source"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Gateway mana yang tetap dalam anggaran saat SLA-nya TTFT P99 < 100 ms?",
+      "options": [
+        "Hanya Portkey",
+        "Gateway apa pun",
+        "Hanya LiteLLM",
+        "Kong (~3-8 ms) atau gateway edge Cloudflare/Vercel (~1-3 ms); Portkey pada 20-40 ms terlalu berat"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

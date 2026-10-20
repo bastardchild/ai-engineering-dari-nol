@@ -1,0 +1,48 @@
+{
+  "lesson": "45-delegate-with-isolation",
+  "title": "Delegasikan dengan Isolasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kapan delegasi paralel terjustifikasi?",
+      "options": ["Saat pekerjaan punya independensi nyata dalam keputusan, path, atau waktu tunggu", "Untuk setiap tugas di atas sepuluh menit", "Kapan pun lebih banyak agent tersedia", "Hanya untuk dokumentasi"],
+      "correct": 0,
+      "explanation": "Paralelisme membantu hanya saat unit dapat maju tanpa keputusan atau kepemilikan mutable bersama."
+    },
+    {
+      "stage": "check",
+      "question": "Jaminan mana yang TIDAK diberikan isolasi filesystem?",
+      "options": ["Kepemilikan desain dan path eksklusif", "Eksekusi perintah yang independen", "Branch yang dapat dipulihkan", "Direktori terpisah"],
+      "correct": 0,
+      "explanation": "Dua worktree terisolasi tetap bisa mengimplementasikan desain yang bertentangan."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa setiap unit kerja harus menyebut pembuktian?",
+      "options": ["Untuk menghindari handoff", "Untuk menaikkan konkurensi", "Agar integrator menerima bukti yang dapat direproduksi", "Agar worker bisa mengklaim sukses"],
+      "correct": 2,
+      "explanation": "Integrator harus memverifikasi hasil, bukan memercayai ringkasan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus terjadi saat dua unit memiliki path yang tumpang tindih?",
+      "options": ["Biarkan worker terakhir menang", "Merge tanpa review", "Jalankan lebih cepat", "Blokir dan desain ulang pembagiannya"],
+      "correct": 3,
+      "explanation": "Kepemilikan tulis yang tumpang tindih menciptakan konflik dan ambiguitas yang dapat dihindari."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu calibrated autonomy?",
+      "options": ["Hanya kerja manual", "Kebebasan saat bukti dan rollback kuat, checkpoint saat konsekuensinya tinggi", "Otomasi penuh", "Approval acak"],
+      "correct": 1,
+      "explanation": "Otoritas harus mengikuti konsekuensi dan reversibilitas."
+    },
+    {
+      "stage": "post",
+      "question": "Apa tanggung jawab akhir integrator?",
+      "options": ["Menghapus handoff", "Memilih model lebih besar", "Menulis ulang setiap unit", "Menjalankan gerbang verifikasi lintas-unit penuh dan menegakkan scope"],
+      "correct": 3,
+      "explanation": "Pembuktian unit tidak menggantikan bukti integrasi end-to-end."
+    }
+  ]
+}

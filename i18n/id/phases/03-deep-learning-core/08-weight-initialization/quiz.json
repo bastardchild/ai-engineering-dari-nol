@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa yang terjadi jika kamu menginisialisasi semua bobot di neural network dengan nol?",
+      "options": ["Jaringan divergen", "Inisialisasi nol adalah default yang direkomendasikan", "Jaringan berlatih normal tetapi lambat", "Semua neuron menghitung output identik dan menerima gradient identik, jadi jaringan hanya punya 1 neuron efektif per layer"],
+      "correct": 3,
+      "explanation": "Dengan bobot nol, setiap neuron di satu layer menghitung fungsi yang sama, menerima gradient yang sama, dan diperbarui secara identik. 'Simetri' ini membuat ratusan parameter berperilaku seperti satu.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa skala inisialisasi bobot acak itu penting?",
+      "options": ["Skala hanya penting untuk output layer", "Jika variance terlalu tinggi, aktivasi meledak; jika terlalu rendah, aktivasi hilang -- keduanya menghalangi training", "Bobot lebih besar berlatih lebih cepat", "Tidak penting asalkan bobotnya bukan nol"],
+      "correct": 1,
+      "explanation": "Tiap layer mengalikan variance dengan fan_in * Var(w). Jika hasil kalinya > 1, sinyal meledak eksponensial melewati layer. Jika < 1, sinyal menghilang. Inisialisasi yang tepat menjaga hasil kali ini tepat di 1.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa rumus variance inisialisasi Kaiming/He?",
+      "options": ["Var(w) = 1/fan_in", "Var(w) = 2/fan_in", "Var(w) = 1/(fan_in + fan_out)", "Var(w) = 2/(fan_in + fan_out)"],
+      "correct": 1,
+      "explanation": "Inisialisasi Kaiming memakai Var(w) = 2/fan_in. Faktor 2 mengompensasi ReLU yang membuat setengah aktivasi menjadi nol (nilai negatif jadi 0), sehingga efektif membagi dua fan_in.",
+      "stage": "post"
+    },
+    {
+      "question": "Kapan kamu memakai inisialisasi Xavier/Glorot alih-alih Kaiming/He?",
+      "options": ["Saat memakai optimizer Adam", "Saat melatih pada dataset kecil", "Saat memakai aktivasi sigmoid atau tanh, yang tidak membuat setengah output jadi nol seperti ReLU", "Selalu -- Xavier selalu lebih baik"],
+      "correct": 2,
+      "explanation": "Inisialisasi Xavier memakai Var(w) = 2/(fan_in + fan_out), dirancang untuk aktivasi yang mendekati linear di dekat nol (sigmoid, tanh). Faktor 2 tambahan pada Kaiming mengompensasi ReLU yang membuat setengah nilai nol, yang tak dibutuhkan Xavier.",
+      "stage": "post"
+    },
+    {
+      "question": "Mengapa GPT-2 menskalakan bobot layer residual dengan 1/sqrt(2N)?",
+      "options": ["Untuk memperbaiki tokenisasi", "Untuk mempercepat training", "Tiap penambahan residual menaikkan variance, jadi penskalaan mencegah sinyal terakumulasi tumbuh tak terbatas melewati N layer", "Untuk mengurangi jumlah parameter"],
+      "correct": 2,
+      "explanation": "Koneksi residual menambahkan output sublayer ke input: x = x + sublayer(x). Tiap penambahan menaikkan variance. Dengan N layer residual, variance tumbuh sebanding N. Penskalaan 1/sqrt(2N) menjaga sinyal tetap stabil.",
+      "stage": "post"
+    }
+  ]
+}

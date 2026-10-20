@@ -1,0 +1,78 @@
+{
+  "lesson": "67-query-rewriting-hyde",
+  "title": "Query Rewriting: HyDE, Multi-Query, dan Dekomposisi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa mekanisme inti HyDE (Hypothetical Document Embeddings)?",
+      "options": [
+        "Menyematkan query pengguna lewat model lebih besar",
+        "Men-hash query dan mencarinya di cache",
+        "Menjalankan query lewat beberapa retriever lalu memilih yang terbaik",
+        "Menghasilkan jawaban palsu dengan LLM, menyematkan dokumen hipotetis itu, dan mengambil terhadap vektornya alih-alih vektor query"
+      ],
+      "correct": 3,
+      "explanation": "HyDE menulis passage berbentuk dokumen dalam suara korpus dan mengambil pada embedding itu; vektor query diganti."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa dokumen hipotetis hasil LLM di HyDE boleh salah secara faktual?",
+      "options": [
+        "Reranker memperbaiki error faktual",
+        "Panggilan LLM di-rollback saat salah",
+        "Retriever peduli pada distribusi token, bukan kebenaran faktual; vektor hipotetis mendarat dekat passage nyata",
+        "Pengguna tidak pernah melihat hipotetisnya"
+      ],
+      "correct": 2,
+      "explanation": "Retrieval adalah similarity di ruang embedding; jika kosakata hipotetis cocok dengan korpus, vektor mendarat di wilayah yang benar."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan antara multi-query expansion dan query decomposition?",
+      "options": [
+        "Multi-query menghasilkan N parafrase dari pertanyaan yang sama; decomposition menghasilkan sub-pertanyaan yang bersama-sama mencakup pertanyaan multi-topik",
+        "Decomposition berjalan lokal; multi-query membutuhkan model remote",
+        "Keduanya identik",
+        "Multi-query memakai cosine; decomposition memakai BM25"
+      ],
+      "correct": 0,
+      "explanation": "Parafrase mempertahankan niat; sub-pertanyaan memecah query multi-topik menjadi bagian yang dapat dijawab independen."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan query decomposition over-split dan merusak retrieval?",
+      "options": [
+        "Saat BM25 dinonaktifkan",
+        "Saat korpus terlalu kecil",
+        "Saat query atomik (satu topik), decomposer mengarang sub-pertanyaan palsu dan retrieval semuanya mengembalikan dokumen sama dengan peringkat turun",
+        "Saat query terlalu panjang untuk LLM"
+      ],
+      "correct": 2,
+      "explanation": "Mendekomposisi query atomik memecahnya menjadi sub-pertanyaan palsu; retrieval mereka mengencerkan merge sehingga dokumen yang benar berperingkat lebih rendah."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa tiga strategi rewriting berfusi dengan RRF alih-alih interpolasi skor?",
+      "options": [
+        "Interpolasi skor membutuhkan kalibrasi per korpus; RRF menggabungkan kontribusi berbasis peringkat tanpa kalibrasi, yang diperlukan saat menggabungkan N retrieval dari rewrite berbeda",
+        "Interpolasi skor tidak bisa menangani lebih dari dua daftar",
+        "RRF berjalan di GPU dan interpolasi skor tidak",
+        "RRF satu-satunya operasi yang didukung Python"
+      ],
+      "correct": 0,
+      "explanation": "Argumen sama dengan lesson 65; fusion berbasis peringkat tidak membutuhkan tuning alpha per korpus dan tetap stabil lintas output rewriter."
+    },
+    {
+      "stage": "post",
+      "question": "Apa lantai latensi saat menjalankan ketiga rewriter secara paralel?",
+      "options": [
+        "Tiga panggilan LLM berseri",
+        "Retrieval tunggal terlambat",
+        "Satu panggilan LLM (rewriter dan retrieval berjalan paralel; panggilan LLM adalah lantainya)",
+        "Nol, karena rewriter men-cache semuanya"
+      ],
+      "correct": 2,
+      "explanation": "Ketiga rewriter memfan-out ke panggilan model; jika berjalan paralel lantainya adalah latensi satu panggilan model, lalu retrieval berjalan paralel setelahnya."
+    }
+  ]
+}

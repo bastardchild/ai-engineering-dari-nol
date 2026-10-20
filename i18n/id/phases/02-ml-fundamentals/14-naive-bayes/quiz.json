@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "nb-pre-1",
+      "stage": "pre",
+      "question": "Apa asumsi 'naive' pada Naive Bayes?",
+      "options": [
+        "Probabilitas prior tiap kelas sama besar",
+        "Semua fitur independen secara kondisional jika diketahui label kelasnya",
+        "Data berdistribusi normal",
+        "Model tidak punya parameter untuk dipelajari"
+      ],
+      "correct": 1,
+      "explanation": "Naive Bayes mengasumsikan setiap fitur independen dari fitur lain, dengan syarat kelasnya. Secara matematis ini salah (misalnya 'machine' dan 'learning' sering muncul bersamaan), tetapi bekerja baik dalam praktik."
+    },
+    {
+      "id": "nb-pre-2",
+      "stage": "pre",
+      "question": "Apa yang dicegah Laplace smoothing pada Naive Bayes?",
+      "options": [
+        "Probabilitas nol untuk kata yang belum pernah terlihat di suatu kelas selama training",
+        "Ketidakseimbangan kelas di dalam dataset",
+        "Training lambat pada data berdimensi tinggi",
+        "Overfitting pada dataset besar"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa smoothing, kata yang tak pernah muncul di email 'spam' saat training akan mendapat P(kata|spam) = 0, membuat seluruh hasil perkalian jadi nol apa pun bukti kuat lainnya. Laplace smoothing menambahkan 1 pada setiap hitungan."
+    },
+    {
+      "id": "nb-post-1",
+      "stage": "post",
+      "question": "Asumsi independensi naive jelas salah untuk teks. Mengapa Naive Bayes tetap mengklasifikasi dengan baik?",
+      "options": [
+        "Ia hanya bekerja pada kosakata sangat kecil tempat independensi berlaku",
+        "Ia hanya bekerja kalau fitur benar-benar independen",
+        "Implementasi modern diam-diam menghapus asumsi independensinya",
+        "Klasifikasi hanya butuh peringkat kelas yang benar, bukan estimasi probabilitas yang tepat, dan asumsi itu memunculkan error stabil yang memengaruhi semua kelas serupa"
+      ],
+      "correct": 3,
+      "explanation": "NB hanya perlu memeringkat kelas dengan benar, bukan mengestimasi probabilitas persis. Asumsi independensi ber-bias tinggi tetapi variance rendah, sehingga stabil dengan data terbatas. Fitur yang berkorelasi juga menghitung ganda bukti untuk kelas yang benar."
+    },
+    {
+      "id": "nb-post-2",
+      "stage": "post",
+      "question": "Kapan kamu memakai Multinomial NB dan kapan Gaussian NB?",
+      "options": [
+        "Multinomial untuk fitur hitungan/frekuensi kata, Gaussian untuk fitur kontinu bernilai riil",
+        "Keduanya bisa saling tukar -- selalu pakai yang lebih cepat",
+        "Multinomial untuk data biner, Gaussian untuk masalah multi-kelas",
+        "Multinomial untuk regresi, Gaussian untuk klasifikasi"
+      ],
+      "correct": 0,
+      "explanation": "Multinomial NB memodelkan hitungan fitur (frekuensi kata dalam teks). Gaussian NB mengasumsikan fitur berdistribusi normal, cocok untuk fitur kontinu seperti hasil pengukuran atau bacaan sensor."
+    },
+    {
+      "id": "nb-post-3",
+      "stage": "post",
+      "question": "Sebuah email memuat 'free' dua kali dan 'money' sekali. Pada Multinomial NB dengan log probabilitas, bagaimana skor spam dihitung?",
+      "options": [
+        "P(spam) * P(free|spam) * P(money|spam)",
+        "log P(spam) * 2 * log P(free|spam)",
+        "log P(spam) + log P(free|spam) + log P(money|spam)",
+        "log P(spam) + 2 * log P(free|spam) + 1 * log P(money|spam)"
+      ],
+      "correct": 3,
+      "explanation": "Multinomial NB mengalikan likelihood kata yang dipangkatkan dengan hitungannya. Dalam ruang log: log P(spam) + 2*log P(free|spam) + 1*log P(money|spam). Hitungan kata berperan sebagai eksponen."
+    }
+  ]
+}

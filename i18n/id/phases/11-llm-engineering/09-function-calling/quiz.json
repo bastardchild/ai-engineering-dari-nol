@@ -1,0 +1,66 @@
+{
+  "lesson": "09-function-calling",
+  "title": "Function Calling & Penggunaan Tool",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bisakah LLM benar-benar mengeksekusi fungsi atau mengakses sistem eksternal?",
+      "options": [
+        "Tidak -- LLM hanya menghasilkan teks (biasanya JSON) yang mendeskripsikan fungsi mana yang harus dipanggil; kode kamu yang harus mengeksekusinya",
+        "LLM mengeksekusi fungsi melalui embedding",
+        "Hanya GPT-4 yang dapat mengeksekusi fungsi",
+        "Ya, LLM dapat memanggil API secara langsung"
+      ],
+      "correct": 0,
+      "explanation": "LLM menghasilkan token. Saat 'memanggil fungsi,' model mengeluarkan JSON yang menentukan nama fungsi dan argumen. Kode aplikasimu mem-parse JSON ini, mengeksekusi fungsi sebenarnya, dan mengirim hasilnya kembali ke model."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu tool schema dalam konteks function calling?",
+      "options": [
+        "URL endpoint API",
+        "Schema database",
+        "Diagram arsitektur model",
+        "Deskripsi JSON tentang nama fungsi, parameter, tipe, dan tujuannya yang memberi tahu model tool apa yang tersedia"
+      ],
+      "correct": 3,
+      "explanation": "Tool schema mendeskripsikan fungsi yang tersedia kepada model: nama fungsi, nama dan tipe parameter, deskripsi setiap parameter, dan apa yang dikembalikan fungsi. Model memakainya untuk memutuskan kapan dan bagaimana memanggil tool."
+    },
+    {
+      "stage": "post",
+      "question": "Apa pola standar untuk loop function calling multi-giliran?",
+      "options": [
+        "Panggil semua fungsi sekaligus",
+        "Model mengeksekusi fungsi secara internal",
+        "Kirim pesan -> model meminta pemanggilan tool -> eksekusi fungsi -> kirim hasil kembali -> model menghasilkan respons akhir (ulangi jika perlu)",
+        "Parse seluruh percakapan sebagai satu batch"
+      ],
+      "correct": 2,
+      "explanation": "Loop: (1) kirim pesan user + tool schema, (2) model merespons dengan permintaan pemanggilan tool, (3) eksekusi fungsi, (4) kirim hasil kembali sebagai respons tool, (5) model menghasilkan respons berikutnya atau pemanggilan tool lain."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu mencegah loop pemanggilan tool tanpa henti?",
+      "options": [
+        "Memakai model lebih cepat",
+        "Menetapkan jumlah maksimum iterasi pemanggilan tool dan menerapkan timeout, menghentikan loop jika batas tercapai",
+        "Menghapus semua tool schema setelah panggilan pertama",
+        "Loop tak terbatas tidak dapat terjadi dengan function calling"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa batas, model bisa berulang kali memanggil tool (misalnya mencari informasi yang tidak pernah ditemukan). Jumlah iterasi maksimum (misalnya 10 putaran) dan timeout total mencegah loop kabur di produksi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa nama dan deskripsi parameter yang jelas dan deskriptif penting dalam tool schema?",
+      "options": [
+        "Model memakai deskripsi untuk memutuskan tool mana yang dipanggil dan bagaimana mengisi parameter -- deskripsi kabur menyebabkan pemilihan tool salah dan argumen tidak tepat",
+        "Mereka meningkatkan waktu respons",
+        "Mereka diwajibkan API",
+        "Mereka membuat kode lebih mudah dibaca"
+      ],
+      "correct": 0,
+      "explanation": "Model membaca deskripsi tool untuk memutuskan apa yang dipanggil dan bagaimana. Parameter yang dideskripsikan sebagai 'q' vs 'search_query: Istilah pencarian pengguna untuk dicari di basis pengetahuan' memberi hasil yang sangat berbeda."
+    }
+  ]
+}

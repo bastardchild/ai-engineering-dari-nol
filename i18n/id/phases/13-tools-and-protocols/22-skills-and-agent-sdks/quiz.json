@@ -1,0 +1,78 @@
+{
+  "lesson": "22-skills-and-agent-sdks",
+  "title": "Agent Skills: Kontrak Portabel dan Batas Runtime",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tim memiliki metode review yang dapat digunakan ulang dan API yang sudah ada untuk menyuplai data pull request. Desain mana yang menempatkan setiap urusan pada primitive yang tepat menurut kebijakan runtime?",
+      "options": [
+        "Menaruh metode review di Agent Skill dan mengekspos API melalui tool MCP",
+        "Mengganti API dengan prompt pengguna yang lebih panjang",
+        "Menaruh metode maupun implementasi API di AGENTS.md",
+        "Memakai lifecycle hook sebagai satu-satunya sumber instruksi review"
+      ],
+      "correct": 0,
+      "explanation": "Skill membawa pengetahuan prosedural yang dapat digunakan ulang, sedangkan MCP mengekspos kemampuan eksternal. Keduanya dapat dikomposisikan. AGENTS.md lebih cocok untuk default seluruh repositori, dan hook merespons event lifecycle, bukan menggantikan salah satu lapisan."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa validator harus mewajibkan nama SKILL.md cocok dengan direktori yang memuatnya?",
+      "options": [
+        "Itu menjamin setiap host mendukung sintaks invocation yang sama",
+        "Itu memberi discovery dan packaging satu identitas stabil alih-alih dua nama yang bertentangan",
+        "Itu membuat heading Markdown dirender dengan benar",
+        "Itu memungkinkan skill melewati izin host"
+      ],
+      "correct": 1,
+      "explanation": "Tool discovery sering mengindeks skill berdasarkan folder dan frontmatter. Mencocokkannya mencegah entri katalog ambigu dan path instalasi rusak. Itu tidak memberi otoritas atau menyeragamkan UI invocation host."
+    },
+    {
+      "stage": "check",
+      "question": "Sebuah SKILL.md memuat field yang hanya dipahami satu runtime. Apa interpretasi portabelnya?",
+      "options": [
+        "Memindahkan field ke nama skill",
+        "Memperlakukannya sebagai ekstensi host dan memvalidasinya hanya di bawah kebijakan host yang eksplisit",
+        "Field itu diam-diam menjadi bagian standar inti",
+        "Setiap runtime wajib mengimplementasikannya sebelum memuat skill"
+      ],
+      "correct": 1,
+      "explanation": "Metadata inti portabel dan ekstensi runtime host adalah kontrak terpisah. Adapter dapat mengenali ekstensi, tetapi validator inti tidak boleh mengklaim bahwa field itu memiliki semantik universal."
+    },
+    {
+      "stage": "check",
+      "question": "Primitive mana yang paling merepresentasikan pemeriksaan yang harus berjalan setelah setiap panggilan tool?",
+      "options": [
+        "Resource MCP",
+        "Prompt sekali jalan",
+        "Glosarium repositori",
+        "Lifecycle hook"
+      ],
+      "correct": 3,
+      "explanation": "Persyaratan yang menentukan adalah waktu event, jadi lifecycle hook adalah mekanisme yang tepat. Skill dapat menjelaskan alur kerja dan MCP dapat mengekspos kemampuan, tetapi keduanya tidak secara inheren terpicu setelah setiap panggilan tool."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan AGENTS.md menjadi tempat yang lebih baik daripada Agent Skill?",
+      "options": [
+        "Ketika layanan eksternal memerlukan panggilan API terautentikasi",
+        "Ketika skrip perlu dieksekusi di luar jail workspace",
+        "Ketika konvensi harus berlaku sepanjang pekerjaan di sebuah repositori",
+        "Ketika instruksi hanya boleh dimuat untuk tugas spesialis yang jarang"
+      ],
+      "correct": 2,
+      "explanation": "AGENTS.md menyampaikan konteks repositori yang awet seperti perintah build dan konvensi coding. Prosedur spesifik tugas cocok untuk skill, operasi eksternal cocok untuk tool, dan file instruksi tidak boleh dipakai untuk keluar dari sandbox."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diberikan Agent Skill yang valid dengan sendirinya?",
+      "options": [
+        "Slash command universal di setiap host agent",
+        "Instruksi prosedural yang dapat ditemukan, tunduk pada kebijakan runtime host",
+        "Izin mengeksekusi setiap skrip yang dibundel",
+        "Akses jaringan otomatis"
+      ],
+      "correct": 1,
+      "explanation": "Artefak portabel menyediakan metadata dan instruksi. Discovery, UI invocation, akses tool, persetujuan, dan eksekusi skrip tetap menjadi tanggung jawab runtime, jadi validitas tidak setara dengan otoritas."
+    }
+  ]
+}

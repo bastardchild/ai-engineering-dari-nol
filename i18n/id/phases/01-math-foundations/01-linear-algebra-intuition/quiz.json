@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur oleh dot product dua vektor?",
+      "options": ["Jumlah dimensi yang dimiliki bersama oleh kedua vektor", "Seberapa mirip atau sejajar kedua vektor", "Jarak antara kedua vektor", "Sudut antara kedua vektor dalam derajat"],
+      "correct": 1,
+      "explanation": "Dot product mengukur kesejajaran: positif berarti arah sama (mirip), nol berarti tegak lurus (tidak terkait), negatif berarti arah berlawanan (tidak mirip). Ini dasar pencarian kemiripan di AI."
+    },
+    {
+      "stage": "pre",
+      "question": "Dalam AI, apa yang dimaksud dengan 'embedding'?",
+      "options": ["Proses mengubah kode menjadi instruksi mesin", "Teknik untuk mengompresi bobot model", "Menyisipkan satu model ke dalam model lain", "Representasi vektor yang menangkap makna sesuatu (kata, gambar, pengguna)"],
+      "correct": 3,
+      "explanation": "Embedding memetakan objek diskret (kata, gambar, pengguna) ke vektor kontinu dalam ruang berdimensi tinggi tempat item serupa berdekatan. Ini jembatan antara konsep dunia nyata dan operasi matematika."
+    },
+    {
+      "stage": "post",
+      "question": "Diberikan tiga vektor v1=[1,0,0], v2=[0,1,0], v3=[2,1,0]. Apakah mereka bebas linear?",
+      "options": ["Ya, karena ada tiga vektor dalam ruang 3D", "Tidak, karena v3 = 2*v1 + v2, jadi v3 adalah kombinasi linear dari yang lain", "Ya, karena tidak ada vektor yang identik", "Tidak, karena semuanya memiliki komponen nol"],
+      "correct": 1,
+      "explanation": "v3 = 2*v1 + v2, membuat himpunan tersebut bergantung linear. Ketiga vektor terletak di bidang xy dan tidak dapat mencapai [0,0,1]. Meski ada 3 vektor di ruang 3D, mereka hanya merentang subruang 2D."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diberitahukan rank sebuah matriks dalam konteks machine learning?",
+      "options": ["Jumlah kolom bebas linear, menunjukkan berapa dimensi informasi berguna yang dikandungnya", "Nilai maksimum dalam matriks", "Seberapa cepat matriks dapat dikalikan", "Jumlah entri bukan nol dalam matriks"],
+      "correct": 0,
+      "explanation": "Rank sama dengan jumlah kolom bebas linear. Dalam ML, matriks fitur yang kekurangan rank berarti fitur redundan, solusi bobot tak terhingga, dan perlunya regularisasi."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana LoRA (Low-Rank Adaptation) memakai aljabar linear untuk fine-tuning model bahasa besar secara efisien?",
+      "options": ["Ia menguraikan pembaruan bobot menjadi dua matriks low-rank kecil alih-alih memperbarui matriks bobot penuh", "Ia menghapus baris yang tidak terpakai dari matriks bobot untuk memperkecil model", "Ia membekukan lapisan embedding dan hanya melatih output head", "Ia mengonversi semua bobot dari float32 ke int8"],
+      "correct": 0,
+      "explanation": "LoRA menguraikan pembaruan bobot 4096x4096 menjadi dua matriks berukuran 4096x16 dan 16x4096 (rank-16), mengurangi parameter yang dapat dilatih dari 16M menjadi 131K dengan asumsi pembaruan berada di subruang berdimensi rendah."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "35-initialization-scripts",
+  "title": "Skrip Inisialisasi untuk Agent",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dihilangkan skrip init?",
+      "options": [
+        "Token authn",
+        "Rate limit penyedia",
+        "Latency dari inferensi",
+        "Pajak setup per sesi: menyelidiki runtime, mendaftar repo, mengulang pemeriksaan yang sama setiap sesi baru"
+      ],
+      "correct": 3,
+      "explanation": "Skrip membayar pajak sekali dan menulis jawabannya ke init_report.json yang dibaca agent."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kontrak mode kegagalan skrip init?",
+      "options": [
+        "Gagal keras, gagal cepat, gagal di satu tempat; menolak start saat workbench rusak",
+        "Selalu berhasil",
+        "Ulangi selamanya",
+        "Gagal lunak dan lanjut"
+      ],
+      "correct": 0,
+      "explanation": "Intinya adalah menolak start saat workbench rusak; fallback diam-diam mengalahkan tujuannya."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu probe yang didaftar pelajaran?",
+      "options": [
+        "Temperature sampling token-demi-token",
+        "Keterpecahan perintah test",
+        "Ketersediaan dependency",
+        "Versi runtime"
+      ],
+      "correct": 0,
+      "explanation": "Probe mencakup versi runtime, dep, perintah test, path, env var, kesegaran state, dan commit last-known-good."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pelajaran menyebut init harus idempoten?",
+      "options": [
+        "Itu memenuhi SOC 2",
+        "Itu diwajibkan JSON Schema",
+        "Idempotensi menghemat biaya",
+        "Menjalankannya dua kali harus no-op kecuali timestamp baru, sehingga bisa dipasang ke CI, hook, atau slash command pra-tugas"
+      ],
+      "correct": 3,
+      "explanation": "Idempotensi membuat init aman dipanggil dari banyak titik masuk (hook, CI, slash command)."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu last-known-good commit anchoring?",
+      "options": [
+        "Commit paling awal di repo",
+        "Probe commit saat ini terhadap file LKG; menolak start jika diff melebihi budget tanpa ratifikasi manusia",
+        "Commit terbaru dari team lead",
+        "Merge base HEAD dan main"
+      ],
+      "correct": 1,
+      "explanation": "AI Code Review Cloudflare membatasi reviewer terhadap LKG untuk mencegah drift menumpuk antar sesi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan pola lock file dengan TTL?",
+      "options": [
+        "Menulis prereqs.lock setelah probe pass; run berikutnya memercayai lock selama 24 jam dan melewati probe mahal jika hash manifest cocok",
+        "Mengunci repo dari edit",
+        "Menonaktifkan CI",
+        "Memblokir semua penulisan selama 24 jam"
+      ],
+      "correct": 0,
+      "explanation": "Bentuknya sama dengan cache layer Docker: probe idempoten + hash konten = lewati."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang TIDAK BOLEH muncul di hot path init?",
+      "options": [
+        "Panggilan jaringan, panggilan LLM, pemeriksaan lisensi eksternal; probe adalah plumbing deterministik di bawah tiga detik",
+        "Membaca lockfile",
+        "Membaca filesystem lokal",
+        "Membaca env var"
+      ],
+      "correct": 0,
+      "explanation": "Probe yang memanggil LLM adalah workflow, bukan probe; jaga init tetap deterministik."
+    }
+  ]
+}

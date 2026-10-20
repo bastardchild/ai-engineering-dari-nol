@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diberitahukan turunan sebuah fungsi di suatu titik?",
+      "options": ["Nilai maksimum yang dapat dicapai fungsi", "Luas di bawah fungsi hingga titik itu", "Laju perubahan (kemiringan) fungsi di titik itu", "Nilai fungsi di titik itu"],
+      "correct": 2,
+      "explanation": "Turunan f'(x) mengukur seberapa besar output berubah per satuan perubahan input. Secara geometris, itu kemiringan garis singgung di titik tersebut."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu gradient dalam konteks machine learning?",
+      "options": ["Selisih antara nilai prediksi dan nilai sebenarnya", "Ukuran akurasi model", "Vektor semua turunan parsial yang menunjuk ke arah kenaikan paling curam", "Learning rate yang dipakai selama pelatihan"],
+      "correct": 2,
+      "explanation": "Gradient mengumpulkan setiap turunan parsial menjadi satu vektor. Ia menunjuk ke arah yang menaikkan fungsi paling cepat. Untuk meminimalkan loss, kamu bergerak berlawanan dengan gradient."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam gradient descent, apa yang dicapai aturan pembaruan 'w = w - lr * dL/dw'?",
+      "options": ["Ia menormalisasi bobot agar bermagnitudo 1", "Ia menaikkan loss untuk menguji ketahanan model", "Ia mengatur ulang bobot ke nilai awalnya dikurangi gradient", "Ia menyesuaikan setiap bobot ke arah yang menurunkan loss, diskalakan oleh learning rate"],
+      "correct": 3,
+      "explanation": "dL/dw memberi tahu arah yang menaikkan loss. Menguranginya (dikali learning rate) menggerakkan bobot ke arah yang menurunkan loss. Ini diulang untuk setiap bobot dalam model."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa metode Newton (yang memakai matriks Hessian) tidak dapat langsung diterapkan pada neural network dengan jutaan parameter?",
+      "options": ["Metode Newton konvergen terlalu lambat untuk jaringan dalam", "Hessian adalah matriks N x N, memerlukan penyimpanan O(N^2) dan komputasi O(N^3) per langkah, yang tidak praktis untuk jutaan parameter", "Metode Newton memerlukan turunan analitik yang tidak dapat dihitung untuk neural network", "Metode Newton hanya bekerja untuk fungsi konveks"],
+      "correct": 1,
+      "explanation": "Untuk N=1 juta parameter, Hessian memiliki 1 triliun entri. Menghitung dan menginversnya mustahil. Inilah sebabnya kita memakai metode orde pertama (SGD, Adam) yang mengaproksimasi informasi orde kedua dengan murah."
+    },
+    {
+      "stage": "post",
+      "question": "Apa aproksimasi numerik (central difference) untuk f'(x)?",
+      "options": ["(f(x+h) - f(x)) / h", "f(x) * h", "(f(x+h) - f(x-h)) / (2*h)", "f(x+h) / h"],
+      "correct": 2,
+      "explanation": "Central difference (f(x+h) - f(x-h)) / (2h) lebih akurat daripada forward difference karena merata-ratakan kemiringan di kedua sisi x, meniadakan suku error utama."
+    }
+  ]
+}

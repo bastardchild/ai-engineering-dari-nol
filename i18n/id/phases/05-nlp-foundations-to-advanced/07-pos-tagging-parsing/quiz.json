@@ -1,0 +1,102 @@
+{
+  "lesson": "07-pos-tagging-parsing",
+  "title": "POS Tagging dan Syntactic Parsing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tujuan POS tagging?",
+      "options": [
+        "Menerjemahkan kalimat",
+        "Mendeteksi sentimen",
+        "Mengekstrak entitas bernama",
+        "Menetapkan kategori gramatikal (kata benda, kata kerja, dsb.) pada setiap token"
+      ],
+      "correct": 3,
+      "explanation": "POS tagging memberi label setiap token dengan kelas katanya."
+    },
+    {
+      "stage": "pre",
+      "question": "Tagset mana yang menjadi default untuk pekerjaan lintas bahasa?",
+      "options": [
+        "Penn Treebank",
+        "CoNLL-2003",
+        "Stanford Dependencies",
+        "Universal Dependencies"
+      ],
+      "correct": 3,
+      "explanation": "Universal Dependencies menyediakan set 17 tag yang lebih kasar dan agnostik bahasa."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dimodelkan oleh POS tagger HMM bigram?",
+      "options": [
+        "Dependency parse",
+        "Hanya P(tags)",
+        "Transisi P(tag | tag sebelumnya) plus emisi P(kata | tag), didekode dengan Viterbi",
+        "Kemiripan embedding"
+      ],
+      "correct": 2,
+      "explanation": "HMM bigram memakai transisi tag dan emisi kata; Viterbi menemukan urutan dengan probabilitas tertinggi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dihitung algoritma Viterbi untuk tagger HMM?",
+      "options": [
+        "Matriks transisi",
+        "Probabilitas marginal setiap tag",
+        "Hanya probabilitas forward",
+        "Satu urutan tag dengan probabilitas tertinggi melalui pemrograman dinamis atas lattice tag"
+      ],
+      "correct": 3,
+      "explanation": "Viterbi menemukan urutan argmax dengan pemrograman dinamis O(n * |T|^2)."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dihasilkan dependency parsing?",
+      "options": [
+        "Pohon konstituen berlabel NP/VP/PP",
+        "Pohon di mana setiap kata memiliki satu head word dan relasi gramatikal berlabel",
+        "Rantai koreferensi",
+        "Urutan BIO datar"
+      ],
+      "correct": 1,
+      "explanation": "Dependency parse memberikan edge (head, relasi) per kata; constituency parse memberikan struktur frasa bersarang."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa plafon akurasi POS tagging PTB sekitar 97-98%?",
+      "options": [
+        "Model tidak dapat melampaui 98% dalam tugas apa pun",
+        "Universal Dependencies dibatasi pada 98%",
+        "Anotator manusia hanya sepakat sekitar 97% dari waktu, sehingga model di atas ~98% mungkin overfitting pada data uji",
+        "Keterbatasan perangkat keras"
+      ],
+      "correct": 2,
+      "explanation": "Ketidaksepakatan anotator membatasi akurasi yang dapat dicapai; angka sangat tinggi sering menandakan overfitting."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa POS tagging masih penting dalam pipeline LLM 2026?",
+      "options": [
+        "Diperlukan untuk tokenization",
+        "Lemmatization, sentimen berbasis aspek, dekomposisi kueri, validasi output terstruktur, dan transfer lintas bahasa semuanya masih mengonsumsi POS atau dependency parse",
+        "Menggantikan transformer",
+        "LLM tidak dapat berjalan tanpanya"
+      ],
+      "correct": 1,
+      "explanation": "POS dan dependency parse memasok banyak tugas hilir terstruktur bahkan ketika LLM menghasilkan prosanya."
+    },
+    {
+      "stage": "post",
+      "question": "Library mana yang harus kamu pakai di sebagian besar tugas POS / parse produksi?",
+      "options": [
+        "scikit-learn",
+        "spaCy (atau stanza/trankit untuk akurasi teratas atau cakupan bahasa lebih luas)",
+        "NumPy",
+        "Menulis parser sendiri"
+      ],
+      "correct": 1,
+      "explanation": "spaCy menyediakan POS + dependency parser cepat kelas produksi; stanza/trankit mencakup lebih banyak bahasa."
+    }
+  ]
+}

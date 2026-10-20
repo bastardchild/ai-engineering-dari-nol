@@ -1,0 +1,66 @@
+{
+  "lesson": "05-context-engineering",
+  "title": "Context Engineering: Window, Budget, Memori, dan Retrieval",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan antara prompt engineering dan context engineering?",
+      "options": [
+        "Context engineering adalah tentang desain database",
+        "Prompt adalah query pengguna; konteks adalah segala sesuatu di window model: system prompt, tool, dokumen terambil, riwayat, dan prompt itu sendiri",
+        "Keduanya sama",
+        "Prompt engineering lebih canggih"
+      ],
+      "correct": 1,
+      "explanation": "Prompt engineering berfokus pada penyusunan instruksi pengguna. Context engineering mengelola seluruh input ke model: apa yang masuk, apa yang tidak, dalam urutan apa, dan bagaimana mengalokasikan context window yang terbatas."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa urutan context window penting untuk performa LLM?",
+      "options": [
+        "Urutan hanya penting untuk kode",
+        "LLM memiliki bias recency dan primacy, lebih memperhatikan awal dan akhir context window",
+        "Urutan alfabet membantu model mencari lebih cepat",
+        "Tidak -- LLM memproses semua token secara setara"
+      ],
+      "correct": 1,
+      "explanation": "Riset menunjukkan LLM lebih memperhatikan awal dan akhir context window (fenomena 'lost in the middle'). Menempatkan informasi terpenting di awal atau akhir konteks meningkatkan pemanfaatan."
+    },
+    {
+      "stage": "post",
+      "question": "Asisten coding memakai 22.700 token dari context window 128K. Mengapa manajemen budget tetap penting?",
+      "options": [
+        "Hanya prompt yang penting",
+        "Penghitungan token tidak akurat",
+        "128K seharusnya cukup untuk kasus apa pun",
+        "Percakapan panjang, file kode besar, dan dokumentasi terambil dapat dengan cepat memenuhi window; tanpa manajemen budget, konteks kritis terpotong"
+      ],
+      "correct": 3,
+      "explanation": "22.700 token adalah baseline. Percakapan 50 giliran menambah 30K+ token. Mengambil codebase besar menambah 50K+. Hasil tool call menambah lebih banyak. Tanpa manajemen aktif, window penuh dan konteks tertua hilang."
+    },
+    {
+      "stage": "post",
+      "question": "Apa strategi sliding window untuk riwayat percakapan?",
+      "options": [
+        "Menyimpan hanya N giliran terbaru dalam konteks dan membuang giliran lama, opsional merangkumnya lebih dulu",
+        "Memperluas context window secara dinamis",
+        "Memindahkan model ke server lain",
+        "Memproses percakapan dalam potongan berukuran tetap"
+      ],
+      "correct": 0,
+      "explanation": "Sliding window menyimpan K giliran percakapan terbaru dalam konteks penuh. Giliran lebih lama dibuang atau diganti ringkasan. Ini membatasi penggunaan memori sambil mempertahankan konteks terbaru yang paling relevan."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana context assembler harus mengalokasikan token antar komponen?",
+      "options": [
+        "Selalu memaksimalkan konteks retrieval",
+        "Alokasi setara untuk setiap komponen",
+        "Meminimalkan token system prompt",
+        "Secara dinamis berdasarkan jenis query: pertanyaan sederhana butuh lebih sedikit konteks retrieval; pertanyaan kompleks butuh lebih banyak, dengan headroom generasi selalu disisihkan"
+      ],
+      "correct": 3,
+      "explanation": "Pertanyaan faktual sederhana mungkin butuh 500 token konteks terambil. Analisis kompleks mungkin butuh 10.000. Context assembler yang baik menyesuaikan alokasi secara dinamis sambil selalu menyisihkan headroom untuk respons model."
+    }
+  ]
+}

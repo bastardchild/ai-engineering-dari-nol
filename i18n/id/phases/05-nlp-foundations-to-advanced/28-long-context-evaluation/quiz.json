@@ -1,0 +1,102 @@
+{
+  "lesson": "28-long-context-evaluation",
+  "title": "Evaluasi Long-Context — NIAH, RULER, LongBench, MRCR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur benchmark NIAH asli?",
+      "options": [
+        "Apakah model dapat mengambil fakta yang ditanam pada kedalaman terkontrol di seluruh konteks panjang",
+        "Fertilitas tokenizer",
+        "Pergeseran cosine embedding",
+        "Hanya penalaran multi-hop"
+      ],
+      "correct": 0,
+      "explanation": "NIAH = needle in a haystack: tanam fakta, minta model mengambilnya, sapu kedalaman dan panjang."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa context window yang diiklankan sering sangat berbeda dari konteks yang dapat dipakai?",
+      "options": [
+        "Embedding meluap",
+        "Tokenizer memotong",
+        "Attention menurun seiring panjang dan tugas; maksimum di lembar spesifikasi jarang bertahan di bawah beban multi-hop atau penalaran",
+        "Beam search melambat"
+      ],
+      "correct": 2,
+      "explanation": "Konteks efektif untuk penalaran biasanya 25-50% dari maksimum yang diiklankan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditambahkan RULER dibanding NIAH?",
+      "options": [
+        "Logprob per token",
+        "Tugas terjemahan",
+        "Inferensi lebih cepat",
+        "Tiga belas jenis tugas mencakup retrieval, penelusuran multi-hop, agregasi, dan QA pada berbagai panjang konteks"
+      ],
+      "correct": 3,
+      "explanation": "RULER memperluas NIAH menjadi benchmark long-context multi-tugas yang menangkap model yang memenuhi NIAH tetapi gagal di tempat lain."
+    },
+    {
+      "stage": "check",
+      "question": "Apa efek 'lost in the middle'?",
+      "options": [
+        "Model kurang memperhatikan konten yang ditempatkan di tengah input panjang; depth=0.5 sering berkinerja lebih buruk daripada depth=0 atau 1",
+        "Model kehilangan tanda baca",
+        "Model melupakan token pertama",
+        "Model mengurutkan ulang token"
+      ],
+      "correct": 0,
+      "explanation": "Konten tengah konteks paling kurang diperhatikan; menyapu kedalaman mengungkap kurva akurasi berbentuk U."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa evaluasi hanya-NIAH harus dilengkapi dengan tes multi-hop?",
+      "options": [
+        "NIAH tidak memiliki ground truth",
+        "Model frontier dapat menaklukkan retrieval satu needle tetapi tetap gagal tugas penelusuran variabel atau agregasi multi-hop",
+        "Multi-hop lebih cepat",
+        "NIAH tidak dapat berjalan pada konteks panjang"
+      ],
+      "correct": 1,
+      "explanation": "Lulus retrieval tidak menyiratkan lulus penalaran; benchmark multi-hop mengungkap plafon sebenarnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang ditekankan NoLiMa?",
+      "options": [
+        "Tokenization",
+        "Needle yang tidak berbagi token literal dengan kueri, sehingga retrieval memerlukan langkah penalaran semantik",
+        "Latensi",
+        "Output streaming"
+      ],
+      "correct": 1,
+      "explanation": "NoLiMa menghilangkan tumpang tindih leksikal sehingga model harus menalar alih-alih mencocokkan kata kunci."
+    },
+    {
+      "stage": "post",
+      "question": "Dua angka apa yang harus dilaporkan lembar spesifikasi long-context?",
+      "options": [
+        "Hanya memori GPU dan latensi",
+        "Hanya token per detik",
+        "Hanya maksimum yang diiklankan",
+        "Panjang retrieval efektif (misalnya 90% lulus NIAH) dan panjang penalaran efektif (misalnya 70% lulus multi-hop)"
+      ],
+      "correct": 3,
+      "explanation": "Membedakan panjang efektif retrieval dari penalaran sangat penting untuk klaim dunia nyata."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mengukur time-to-first-token pada panjang konteks panjang?",
+      "options": [
+        "Diwajibkan RAG",
+        "Beam search bergantung padanya",
+        "Prefill 1 juta token dapat memakan puluhan detik; akurasi saja menyembunyikan latensi yang berdampak pada produk",
+        "Tokenization lambat"
+      ],
+      "correct": 2,
+      "explanation": "Prompt panjang memiliki biaya prefill besar; latensi harus dilacak bersama akurasi."
+    }
+  ]
+}

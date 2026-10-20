@@ -1,0 +1,90 @@
+{
+  "lesson": "31-agent-workbench-why-models-fail",
+  "title": "Agent Workbench Engineering: Mengapa Model Cakap Tetap Gagal",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diidentifikasi pelajaran sebagai akar kegagalan agent pada tugas nyata?",
+      "options": [
+        "Data pelatihan usang",
+        "Kegagalan workbench: permukaan yang hilang di sekitar model, bukan keterbatasan LLM",
+        "Jaringan lambat",
+        "Parameter model tidak memadai"
+      ],
+      "correct": 1,
+      "explanation": "Model tidak salah soal Python; ia salah soal pekerjaannya. Permukaan di sekitar model yang hilang."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tujuh permukaan workbench yang disebut pelajaran?",
+      "options": [
+        "Read, write, exec, fork, exit, wait, kill",
+        "Plan, act, reflect, refine, debate, vote, ship",
+        "Instructions, state, scope, feedback, verification, review, handoff",
+        "Train, eval, deploy, monitor, retrain, scale, retire"
+      ],
+      "correct": 2,
+      "explanation": "Tujuh permukaannya adalah instructions, state, scope, feedback, verification, review, handoff."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu dari delapan primitif sistem terdistribusi yang menjadi pemetaan permukaan?",
+      "options": [
+        "Worker",
+        "Backpropagation",
+        "Function",
+        "Trigger"
+      ],
+      "correct": 1,
+      "explanation": "Delapan primitifnya adalah function, worker, trigger, runtime, HTTP/RPC, queue, session persistence, authorization policy."
+    },
+    {
+      "stage": "check",
+      "question": "Perubahan harness yang dilaporkan Vercel menggeser tingkat keberhasilan dari dan ke berapa?",
+      "options": [
+        "50% ke 70%, dengan menambahkan RAG",
+        "20% ke 60%",
+        "0% ke 100%, dengan mengganti model",
+        "80% ke 100%, dengan menghapus 80% tool agent"
+      ],
+      "correct": 3,
+      "explanation": "Menghapus 80% tool menggeser agent Vercel dari 80% ke 100% keberhasilan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditunjukkan Terminal Bench 2.0 tentang model vs harness?",
+      "options": [
+        "Model yang sama bergerak dari luar 30 besar ke peringkat lima hanya dengan mengubah harness",
+        "Model saja menentukan peringkat",
+        "Hanya GPU yang penting",
+        "Perubahan harness tidak berpengaruh"
+      ],
+      "correct": 0,
+      "explanation": "Anatomy of an Agent Harness dari LangChain: model sama, harness diubah, lonjakan peringkat 25+."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang disarankan pelajaran saat kamu mendengar kosakata harness baru?",
+      "options": [
+        "Tolak",
+        "Tunggu OpenAI menstandardisasinya",
+        "Adopsi kosakatanya mentah-mentah",
+        "Terjemahkan kembali ke primitif (function, worker, trigger, runtime, HTTP/RPC, queue, persistence, policy) sebelum mengadopsi"
+      ],
+      "correct": 3,
+      "explanation": "Beralasanlah dari primitif, bukan taksonomi vendor; kosakatanya berubah tetapi engineering-nya tidak."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana riwayat chat berada relatif terhadap workbench?",
+      "options": [
+        "Chat adalah system of record",
+        "Chat bersifat volatil; repo adalah system of record",
+        "Keduanya setara",
+        "Keduanya tidak penting"
+      ],
+      "correct": 1,
+      "explanation": "Loop menutup pada file state, bukan pada riwayat chat."
+    }
+  ]
+}

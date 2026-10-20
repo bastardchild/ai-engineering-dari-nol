@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan utama antara kedalaman relatif dan kedalaman metrik?",
+      "options": [
+        "Kedalaman relatif hanya memberikan jarak terurut tanpa satuan dunia nyata; kedalaman metrik memberikan jarak dalam meter dan mengharuskan model mempelajari skala absolut dari data training",
+        "Kedalaman metrik memakai output grayscale; relatif memakai warna",
+        "Kedalaman relatif selalu beresolusi lebih rendah",
+        "Tidak ada perbedaan"
+      ],
+      "correct": 0,
+      "explanation": "Kedalaman relatif mempertahankan urutan dan rasio tetapi tidak memiliki jangkar ke satuan dunia nyata — prediksi MiDaS atau Depth Anything memerlukan penyelarasan sebelum kamu dapat membandingkannya dengan pengukuran ground truth dalam meter. Model kedalaman metrik (ZoeDepth, UniDepth, Metric3D) mengeluarkan jarak terkalibrasi dengan biaya sensitivitas terhadap intrinsik kamera dan cakupan data training."
+    },
+    {
+      "stage": "pre",
+      "question": "Depth Anything V3 memakai encoder DINOv2 beku plus decoder bergaya DPT. Mengapa membekukan encoder?",
+      "options": [
+        "DINOv2 jika tidak akan mempelajari fitur buruk",
+        "Pembekuan adalah persyaratan hukum",
+        "Hanya penghematan komputasi saat training",
+        "Fitur self-supervised DINOv2 sudah menyandikan struktur adegan, gradien tekstur, dan semantik objek yang berkorelasi dengan kedalaman; membekukannya memungkinkan decoder dilatih dengan head kecil pada data berlabel kedalaman terbatas sambil mempertahankan generalisasi kuat encoder"
+      ],
+      "correct": 3,
+      "explanation": "ViT self-supervised seperti DINOv2 / DINOv3 sudah memiliki fitur yang bertransfer ke tugas padat dengan fine-tuning minimal. Encoder beku plus decoder kedalaman ringan berarti kamu melatih sejumlah kecil parameter pada data kedalaman, dan kamu mewarisi generalisasi lintas domain DINOv2 (dalam ruangan, luar ruangan, medis, satelit) secara gratis. Fine-tuning backbone kadang merugikan jika dataset kedalaman lebih sempit daripada distribusi pretraining DINOv2."
+    },
+    {
+      "stage": "post",
+      "question": "Untuk mengangkat piksel (u, v) dengan kedalaman prediksi d ke 3D, kamu memakai X = (u - cx) * d / fx, Y = (v - cy) * d / fy, Z = d. Apa itu fx, fy, cx, cy?",
+      "options": [
+        "Bobot loss training",
+        "Konstanta normalisasi",
+        "Intrinsik kamera pinhole — panjang fokus dan principal point dalam piksel, dari metadata EXIF atau kalibrasi kamera",
+        "Bobot yang dipelajari decoder kedalaman"
+      ],
+      "correct": 2,
+      "explanation": "Rumus kamera pinhole membutuhkan intrinsik kamera. fx, fy adalah panjang fokus dalam satuan piksel; cx, cy adalah principal point (biasanya dekat pusat gambar). Tanpa intrinsik kamu hanya dapat mengasumsikan FOV generik (~60 derajat) yang cukup untuk visualisasi tetapi tidak untuk pengukuran. Banyak pipeline 2026 mengestimasi intrinsik secara otomatis dari konten gambar (Perspective Fields, UniDepth)."
+    },
+    {
+      "stage": "post",
+      "question": "Saat mengevaluasi model kedalaman relatif (MiDaS, Depth Anything), mengapa kamu menerapkan penyelarasan scale-and-shift sebelum menghitung AbsRel?",
+      "options": [
+        "Prediksi kedalaman relatif memiliki skala dan offset arbitrer; menyelaraskannya ke ground truth melalui least-squares fit a * pred + b = target memberikan pengukuran adil atas kualitas urutan yang memang dilatih model relatif",
+        "Untuk menggelembungkan skor metrik",
+        "PyTorch tidak dapat menghitung AbsRel tanpa penyelarasan",
+        "Untuk mengaktifkan inferensi GPU"
+      ],
+      "correct": 0,
+      "explanation": "Model bergaya MiDaS menghasilkan output di mana hanya urutan dan rasio yang bermakna. Menghitung AbsRel langsung tanpa penyelarasan mengukur ketidakcocokan skala, bukan kualitas sebenarnya model. Penyelarasan least-squares mencocokkan transformasi linear yang meminimalkan error kuadrat; residu setelah penyelarasan itulah yang kamu laporkan. Setiap makalah MiDaS / Depth Anything memakai protokol ini."
+    },
+    {
+      "stage": "post",
+      "question": "Prediksi Depth Anything-mu pada meja resepsionis berdepan kaca melaporkan kedalaman yang masuk akal tetapi jelas salah untuk area kaca. Mengapa?",
+      "options": [
+        "Resolusi gambarmu salah",
+        "Modelnya rusak",
+        "Model dilatih tanpa data kaca",
+        "Kaca, cermin, dan permukaan sangat reflektif merusak isyarat monokular yang diandalkan model; jaringan melihat tekstur / konten di balik kaca dan melaporkan kedalaman yang masuk akal sesuai itu, bukan jarak permukaan kaca sebenarnya"
+      ],
+      "correct": 3,
+      "explanation": "Kedalaman monokular bergantung pada gradien tekstur, urutan oklusi, dan isyarat perspektif. Permukaan reflektif atau transparan membingungkan semuanya: cermin menunjukkan adegan dengan kedalamannya sendiri; kaca menunjukkan konten di baliknya. Model mengisi kedalaman yang masuk akal dan salah dengan yakin. Ini batas fundamental kedalaman monokular, bukan bug. Perbaiki dengan memfusikan stereo, LiDAR, atau kamera polarisasi ketika material seperti kaca penting."
+    }
+  ]
+}

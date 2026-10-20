@@ -1,0 +1,78 @@
+{
+  "lesson": "72-code-exec-metric",
+  "title": "Metrik Code Exec",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa runner menjalankan subprocess Python baru per kandidat alih-alih memanggil exec inline?",
+      "options": [
+        "Itu menghindari pencemaran builtins",
+        "exec sudah usang di Python modern",
+        "Itu lebih cepat dari exec",
+        "Itu mengisolasi timeout, output berlebih, dan import berbahaya dari proses eval host"
+      ],
+      "correct": 3,
+      "explanation": "Loop tak berujung atau alokasi memori liar di kode kandidat hanya merusak subprocess. Eval host tetap maju."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa skor untuk task dengan tiga assertion saat dua lulus dan satu gagal?",
+      "options": [
+        "0.667",
+        "1.0",
+        "0.0",
+        "0.5"
+      ],
+      "correct": 0,
+      "explanation": "Skor adalah jumlah lulus dibagi total. Dua dari tiga adalah 0.667. Exit code-nya assertion_fail."
+    },
+    {
+      "stage": "check",
+      "question": "Exit code mana yang dikembalikan runner saat kode kandidat tidak dapat di-parse?",
+      "options": [
+        "syntax_error",
+        "error",
+        "timeout",
+        "assertion_fail"
+      ],
+      "correct": 0,
+      "explanation": "compile() memunculkan SyntaxError di dalam runner, skrip dalam menangkapnya dan menulis exit_code=syntax_error."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa timeout wall-clock adalah kontrol penopang alih-alih denylist import?",
+      "options": [
+        "Import tidak dapat dilarang di Python",
+        "subprocess.run tidak mendukung denylist",
+        "Sebagian besar kegagalan adalah loop tak berujung, dan penyerang yang gigih dapat melewati denylist dalam proses apa pun",
+        "Wall-clock diperiksa saat compile"
+      ],
+      "correct": 2,
+      "explanation": "Denylist menangkap kode malas, timeout menangkap loop tak berujung. Denylist adalah cadangan, timeout adalah lantai."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikembalikan pass_at_k(n, c, k) saat n - c < k?",
+      "options": [
+        "Satu, karena sampel pasti memuat setidaknya satu solusi lulus",
+        "c / n, tingkat lulus empiris",
+        "Nol, karena sampel tidak terdefinisi",
+        "Memunculkan ValueError"
+      ],
+      "correct": 0,
+      "explanation": "Jika jumlah gagal lebih sedikit dari ukuran sampel, setiap sampel berukuran k pasti memuat setidaknya satu yang lulus, jadi probabilitasnya 1."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana runner memunculkan output overflow, dan mengapa batasnya 256 KB?",
+      "options": [
+        "Hanya stderr; ukuran mengikuti default pipe OS",
+        "Nilai skor, dinyatakan sebagai persentase dua desimal",
+        "Stdout dari subprocess dialirkan; begitu total berjalan melewati 256 KB child dibunuh dan task dicatat sebagai exit_code=error dengan detail \"output overflow\"",
+        "Ukuran sumber kandidat, dibatasi agar kode yang dihasilkan tetap kecil"
+      ],
+      "correct": 2,
+      "explanation": "Batas melindungi host. Kode kandidat yang membanjiri stdout dibunuh di tengah aliran; runner menormalisasi hasilnya di bawah exit_code=error dengan detail \"output overflow\" alih-alih membuat exit code baru."
+    }
+  ]
+}

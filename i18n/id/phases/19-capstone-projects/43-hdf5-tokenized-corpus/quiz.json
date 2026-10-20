@@ -1,0 +1,78 @@
+{
+  "lesson": "43-hdf5-tokenized-corpus",
+  "title": "Korpus Ter-tokenisasi HDF5",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa menyimpan korpus ter-tokenisasi dalam dataset HDF5 chunked yang dapat di-resize alih-alih JSONL?",
+      "options": [
+        "HDF5 punya logo lebih kecil",
+        "JSONL sudah deprecated",
+        "Alasan acak",
+        "HDF5 menawarkan pembacaan chunked, integer-only, memory-mapped dengan akses acak O(1); JSONL memaksa parser pada setiap pembacaan hot-path"
+      ],
+      "correct": 3,
+      "explanation": "Dataloader menginginkan aliran token datar dengan slice yang dapat dialamatkan; HDF5 menyediakannya secara native."
+    },
+    {
+      "stage": "check",
+      "question": "Aturan yang tepat untuk mengukur chunk HDF5 vs window_size trainer?",
+      "options": [
+        "Pilih chunk terbesar yang muat di RAM",
+        "Selalu pilih chunk=1",
+        "Setel chunk ke kelipatan window_size agar setiap sampel mendarat di dalam satu atau dua chunk dan pembacaan tetap selaras page-cache",
+        "Pilih chunk sama dengan panjang dokumen"
+      ],
+      "correct": 2,
+      "explanation": "Chunk yang tidak cocok memangkas throughput separuh karena setiap sampel melintang dua chunk alih-alih satu."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa token_count disimpan sebagai atribut HDF5 dan tidak disimpulkan dari bentuk dataset?",
+      "options": [
+        "Chunk trailing mungkin terisi sebagian; tanpa atribut eksplisit reader berjalan melewati akhir nyata ke token nol-padded dan model belajar memprediksi nol",
+        "Bentuk lambat dibaca",
+        "Atribut wajib",
+        "Atribut cantik"
+      ],
+      "correct": 0,
+      "explanation": "Tata letak chunked kadang meninggalkan slot trailing; atribut membawa kebenarannya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dicapai writer dengan menampung token ke chunk_size sebelum setiap resize?",
+      "options": [
+        "Penulisan bersifat kontigu dan selaras chunk, menghindari fragmentasi yang mengikuti resize satu token sekaligus",
+        "Mengurangi ukuran kosakata",
+        "Mempercepat sha256",
+        "Menghemat beberapa siklus CPU"
+      ],
+      "correct": 0,
+      "explanation": "Buffer-lalu-extend pada ukuran chunk adalah satu-satunya cara menjaga chunk HDF5 tetap kontigu di disk."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa swmr=True dibuka di sisi reader, bukan writer?",
+      "options": [
+        "Keamanan",
+        "Preferensi acak",
+        "Performa",
+        "Mode Single-Writer-Multiple-Reader memungkinkan worker dataloader berbagi file dengan aman; writer tidak butuh mode khusus karena menulis satu shard per proses"
+      ],
+      "correct": 3,
+      "explanation": "Mencampur kedua mode adalah penyebab paling umum kegagalan 'file is locked'."
+    },
+    {
+      "stage": "post",
+      "question": "Apa tujuan id token boundary dibuat eksplisit?",
+      "options": [
+        "Kompresi",
+        "Batas ukuran kosakata",
+        "Data acak",
+        "Batas dokumen dalam jendela terpadat agar model tidak diam-diam dilatih pada konkatenasi lintas dokumen"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa boundary eksplisit trainer belajar batas sebagai noise; dengan itu boundary menjadi pemisah yang dapat dipakai."
+    }
+  ]
+}

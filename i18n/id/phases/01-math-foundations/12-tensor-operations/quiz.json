@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dijelaskan oleh 'shape' sebuah tensor?",
+      "options": [
+        "Tuple yang mencantumkan ukuran di sepanjang setiap sumbu",
+        "Alamat memori tensor",
+        "Jumlah total elemen dalam tensor",
+        "Tipe data elemen tensor"
+      ],
+      "correct": 0,
+      "explanation": "Shape adalah tuple yang mencantumkan ukuran di sepanjang setiap sumbu. Misalnya, tensor berbentuk (2, 3, 4) memiliki 2 elemen di sumbu 0, 3 di sumbu 1, dan 4 di sumbu 2."
+    },
+    {
+      "stage": "pre",
+      "question": "Di PyTorch, tata letak apa yang dipakai tensor batch gambar secara default?",
+      "options": [
+        "CHWN (channels, height, width, batch)",
+        "NHWC (batch, height, width, channels)",
+        "WHCN (width, height, channels, batch)",
+        "NCHW (batch, channels, height, width)"
+      ],
+      "correct": 3,
+      "explanation": "PyTorch default ke tata letak NCHW (channels-first). TensorFlow default ke NHWC (channels-last). Tata letak yang tidak cocok menyebabkan error senyap atau masalah performa."
+    },
+    {
+      "stage": "post",
+      "question": "Apa bentuk hasil saat melakukan broadcasting tensor berbentuk (8, 1, 6, 1) dan (7, 1, 5)?",
+      "options": [
+        "(8, 7, 6, 5)",
+        "(8, 1, 6, 5)",
+        "(8, 7, 6, 1)",
+        "Broadcasting gagal -- bentuknya tidak kompatibel"
+      ],
+      "correct": 0,
+      "explanation": "Sejajarkan bentuk dari kanan: (8,1,6,1) dan (1,7,1,5). Dimensi kompatibel jika sama atau salah satunya 1. Hasilnya mengambil maksimum di setiap sumbu: (8, 7, 6, 5)."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam ekspresi einsum 'bhtd,bhsd->bhts', apa yang terjadi pada indeks 'd'?",
+      "options": [
+        "Ia ditranspos antara kedua tensor input",
+        "Ia dijumlahkan (dikontraksi) karena muncul di kedua input tetapi tidak di output",
+        "Ia disebarkan (broadcast) melintasi kedua tensor",
+        "Ia dipertahankan di output sebagai sumbu baru"
+      ],
+      "correct": 1,
+      "explanation": "Dalam einsum, indeks apa pun yang muncul di input tetapi tidak di output akan dijumlahkan. Indeks 'd' muncul di 'bhtd' dan 'bhsd' tetapi tidak di output 'bhts', jadi ia dikontraksi (dikalikan lalu dijumlahkan)."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa memanggil .view() gagal pada tensor yang ditranspos di PyTorch?",
+      "options": [
+        "Tensor menjadi non-kontigu di memori setelah transpos, dan view memerlukan data kontigu",
+        "Tensor yang ditranspos memiliki tipe data berbeda",
+        "Transpos mengubah jumlah total elemen",
+        "View hanya bekerja pada tensor 2D"
+      ],
+      "correct": 0,
+      "explanation": "Transpos menukar stride tanpa memindahkan data, membuat tensor non-kontigu. Operasi .view() memerlukan tata letak memori kontigu. Gunakan .reshape() atau panggil .contiguous() lebih dulu."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/29-end-to-end-coding-task-demo",
+  "title": "Agen Coding End-to-End di Atas Harness",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca lesson: mengapa demo end-to-end mengganti LLM dengan policy deterministik?",
+      "options": [
+        "Policy deterministik selalu mengungguli LLM pada tugas coding.",
+        "Lesson tidak mampu membayar biaya inferensi.",
+        "LLM terlalu lambat dijalankan dalam test.",
+        "Harness-lah yang diuji lesson; policy adalah seam yang dapat diganti."
+      ],
+      "correct": 3,
+      "explanation": "Kontrak harness tidak peduli apakah policy adalah LLM atau state machine. Menghapus LLM menghapus jaringan dan varians serta mengubah lesson menjadi integration test yang reproducible."
+    },
+    {
+      "stage": "check",
+      "question": "State machine agen punya lima state. Dalam urutan apa ia mengeksekusinya pada pass normal?",
+      "options": [
+        "RUN_TESTS -> SURVEY -> INSPECT -> FIX -> VERIFY.",
+        "SURVEY -> RUN_TESTS -> INSPECT -> FIX -> VERIFY.",
+        "SURVEY -> FIX -> VERIFY -> RUN_TESTS -> INSPECT.",
+        "SURVEY -> INSPECT -> FIX -> RUN_TESTS -> VERIFY."
+      ],
+      "correct": 1,
+      "explanation": "Agen mensurvei proyek, menjalankan test, memeriksa test yang gagal, memperbaiki bug, lalu memverifikasi. RUN_TESTS sebelum INSPECT karena kegagalan test adalah sinyal yang dibaca policy."
+    },
+    {
+      "stage": "check",
+      "question": "Bug fixture bawaan adalah off-by-one di src/fizz.py: range(1, n) alih-alih range(1, n + 1). Di mana policy memutuskan menerapkan perbaikan?",
+      "options": [
+        "Di dalam state SURVEY, dengan membaca header file.",
+        "Di luar state machine, di rantai gate.",
+        "Di dalam state VERIFY, setelah rerun.",
+        "Di dalam state INSPECT, setelah kegagalan test menyebut output yang diharapkan."
+      ],
+      "correct": 3,
+      "explanation": "INSPECT adalah tempat policy membaca test yang gagal dan mempelajari bentuk yang diharapkan. Perbaikan diidentifikasi di sana dan ditulis di state FIX berikutnya."
+    },
+    {
+      "stage": "check",
+      "question": "Setiap tool call melewati rantai komponen apa secara berurutan?",
+      "options": [
+        "ObservationLedger -> GateChain -> Sandbox -> SpanBuilder.",
+        "SpanBuilder -> GateChain -> Sandbox -> ObservationLedger.",
+        "GateChain -> SpanBuilder -> Sandbox -> ObservationLedger.",
+        "Sandbox -> GateChain -> SpanBuilder -> ObservationLedger."
+      ],
+      "correct": 2,
+      "explanation": "Gate dulu (izinkan/tolak), span berikutnya (agar penolakan juga tertangkap), sandbox ketiga (hanya jika diizinkan), ledger terakhir (hanya saat sukses). Kode lesson merangkainya begitu."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mengganti policy deterministik dengan LLM nyata. Komponen harness mana yang berubah?",
+      "options": [
+        "Sandbox harus dikeraskan dengan seccomp.",
+        "Format eksposisi Prometheus menjadi tidak kompatibel.",
+        "Rantai gate harus ditulis ulang untuk menangani stochasticity LLM.",
+        "Tidak ada yang berubah di harness; policy satu-satunya bagian yang ditukar."
+      ],
+      "correct": 3,
+      "explanation": "Inti lesson: harness agnostik terhadap policy. Seam-nya adalah antarmuka next_action / observe. LLM masuk di sana tanpa menyentuh gate, sandbox, ledger, atau span."
+    },
+    {
+      "stage": "post",
+      "question": "Demo menegaskan agen menyelesaikan fixture dalam kurang dari 12 langkah. Policy deterministik memakai 5. Apa yang mungkin dilakukan agen LLM nyata, dan bagaimana harness menanganinya?",
+      "options": [
+        "LLM tidak bisa berjalan di dalam harness ini.",
+        "LLM juga memakai 5 langkah; harness tidak berubah.",
+        "Harness diam-diam memperpanjang anggaran.",
+        "LLM mungkin memakai lebih banyak langkah; step_budget membatasi loop dan run yang tidak selesai dilaporkan sebagai kegagalan dengan halted_reason."
+      ],
+      "correct": 3,
+      "explanation": "Anggaran langkah adalah kriteria berhenti deterministik yang lantang. LLM yang berkelana akan dibatasi dan laporan memberi tahu kamu persis alasannya."
+    }
+  ]
+}

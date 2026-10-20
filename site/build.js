@@ -27,7 +27,9 @@ const CATALOG_DISCOVERY_START = '<!-- GENERATED:LESSON-DISCOVERY:START -->';
 const CATALOG_DISCOVERY_END = '<!-- GENERATED:LESSON-DISCOVERY:END -->';
 const CERTIFICATION_DISCOVERY_START = '<!-- GENERATED:CERTIFICATION-DISCOVERY:START -->';
 const CERTIFICATION_DISCOVERY_END = '<!-- GENERATED:CERTIFICATION-DISCOVERY:END -->';
-const SPONSORS_SOURCE_PATH = path.join(REPO_ROOT, 'SPONSORS.md');
+const SPONSORS_SOURCE_PATH = fs.existsSync(path.join(REPO_ROOT, 'i18n', 'id', 'SPONSORS.md'))
+  ? path.join(REPO_ROOT, 'i18n', 'id', 'SPONSORS.md')
+  : path.join(REPO_ROOT, 'SPONSORS.md');
 const SPONSORS_PAGE_START = '<!-- GENERATED:SPONSORS:START -->';
 const SPONSORS_PAGE_END = '<!-- GENERATED:SPONSORS:END -->';
 const SPONSOR_TAG_ATTRIBUTES = {
@@ -1148,6 +1150,8 @@ function htmlEscape(value) {
 }
 
 function renderCatalogDiscovery(phases, lessonManifest) {
+  const TYPE_ID = { Build: 'Bangun', Learn: 'Pelajari', Capstone: 'Capstone' };
+  const STATUS_ID = { complete: 'selesai', planned: 'direncanakan', wip: 'sedang dikerjakan' };
   const rows = [];
   for (const phase of phases) {
     for (const lesson of phase.lessons) {
@@ -1157,10 +1161,10 @@ function renderCatalogDiscovery(phases, lessonManifest) {
       rows.push(
         `            <tr data-generated-discovery="lesson">` +
         `<td>${htmlEscape(String(phase.id).padStart(2, '0'))}</td>` +
-        `<td><a href="${htmlEscape(lessonHref(relPath))}">${htmlEscape(seo.title)}</a></td>` +
-        `<td>${htmlEscape(lesson.type || '')}</td>` +
+        `<td><a href="${htmlEscape(lessonHref(relPath))}">${htmlEscape(lesson.name || seo.title)}</a></td>` +
+        `<td>${htmlEscape(TYPE_ID[lesson.type] || lesson.type || '')}</td>` +
         `<td>${htmlEscape(lesson.lang || '')}</td>` +
-        `<td>${htmlEscape(lesson.status || '')}</td></tr>`
+        `<td>${htmlEscape(STATUS_ID[lesson.status] || lesson.status || '')}</td></tr>`
       );
     }
   }
@@ -1395,7 +1399,7 @@ function renderSponsorsMarkdown(markdown) {
 function writeSponsorsPage() {
   const html = renderSponsorsMarkdown(fs.readFileSync(SPONSORS_SOURCE_PATH, 'utf8'));
   replaceGeneratedDiscovery(path.join(__dirname, 'sponsors.html'), SPONSORS_PAGE_START, SPONSORS_PAGE_END, html);
-  console.log('   rendered sponsors.html from SPONSORS.md');
+  console.log(`   rendered sponsors.html from ${path.relative(REPO_ROOT, SPONSORS_SOURCE_PATH).replace(/\\/g, '/')}`);
 }
 
 function writeSeoArtifacts(phases, certifications, learningPaths) {
@@ -2279,6 +2283,7 @@ function build() {
 
   console.log('🔍 Parsing README.md...');
   const phases = parseReadme(readme, roadmapStatuses);
+  applyIndonesianData(phases);
   const roadmapPrereqs = parseCurriculumPrereqs(readme, phases);
 
   console.log('Parsing focused learning paths...');
@@ -2308,6 +2313,7 @@ function build() {
   }
 
   console.log('🔎 Generating lesson and certification SEO manifests...');
+  applyIndonesianData(phases);
   const seoManifests = writeSeoArtifacts(phases, certifications, learningPaths);
   writeSponsorsPage();
 
@@ -2357,6 +2363,48 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
   syncReadme(totalLessons);
   writeSitemap(seoManifests.lessonManifest, glossaryTerms.length, certifications);
   writeLlms(phases, glossaryTerms.length, artifacts.length, certifications);
+  copyIndonesianContent();
+}
+
+// Copy the Indonesian UI dictionary, lessons, and quizzes into the static
+// output so the deployed site is self-contained and serves Bahasa Indonesia
+// without reaching out to GitHub.
+function copyIndonesianContent() {
+  const src = path.join(REPO_ROOT, 'i18n', 'id');
+  const dest = path.join(__dirname, 'i18n', 'id');
+  if (!fs.existsSync(src)) return;
+  fs.rmSync(dest, { recursive: true, force: true });
+  fs.cpSync(src, dest, { recursive: true });
+  console.log('   copied i18n/id into the static output');
+}
+
+// Overlay the hand-translated Indonesian phase and lesson metadata so the
+// generated data.js, catalog discovery table, and SEO manifests never fall
+// back to English.
+function applyIndonesianData(phases) {
+  const file = path.join(__dirname, 'data-id.json');
+  if (!fs.existsSync(file)) return;
+  let map;
+  try { map = JSON.parse(fs.readFileSync(file, 'utf8')); }
+  catch (err) { console.warn(`   data-id.json ignored: ${err.message}`); return; }
+  const phaseMap = map.phases || {};
+  const lessonMap = map.lessons || {};
+  for (const phase of phases) {
+    const translated = phaseMap[String(phase.id)];
+    if (translated) {
+      if (translated.name) phase.name = translated.name;
+      if (translated.desc) phase.desc = translated.desc;
+    }
+    for (const lesson of phase.lessons) {
+      if (!lesson.url) continue;
+      const key = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
+      const item = lessonMap[key];
+      if (!item) continue;
+      if (item.name) lesson.name = item.name;
+      if (item.summary) lesson.summary = item.summary;
+      if (item.keywords) lesson.keywords = item.keywords;
+    }
+  }
 }
 
 // ─── sitemap.xml from the same SEO manifest the lesson route renders ─────

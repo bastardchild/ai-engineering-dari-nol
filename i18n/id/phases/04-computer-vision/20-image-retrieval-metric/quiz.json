@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Untuk produk pencarian visual dengan kueri berupa teks dan item galeri berupa gambar, backbone mana yang kamu pilih pertama?",
+      "options": ["Model CLIP atau SigLIP — keduanya mempelajari ruang embedding teks-gambar bersama sehingga cosine similarity antara kueri teks dan galeri gambar bermakna sejak awal", "ResNet-50 supervised", "Deskriptor ORB buatan tangan", "Model DINOv2 self-supervised"],
+      "correct": 0,
+      "explanation": "Retrieval dengan kueri teks memerlukan embedding di mana teks dan gambar berakhir di ruang yang sama. CLIP/SigLIP dilatih tepat untuk itu dengan loss kontrastif di Lesson 18. Fitur ImageNet supervised hanya untuk gambar. DINOv2 kuat tetapi hanya gambar. Kueri teks menuntut encoder vision-language."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa arti 'semi-hard mining' dalam training triplet loss?",
+      "options": ["Untuk setiap anchor, pilih negatif yang lebih jauh daripada positif tetapi masih dalam margin; negatif mudah tidak menyumbang gradien dan negatif tersulit dapat menggoyahkan training, jadi semi-hard adalah titik manisnya", "Menambang cryptocurrency untuk contoh training", "Hanya memakai negatif tersulit yang mungkin", "Memilih triplet acak"],
+      "correct": 0,
+      "explanation": "Gradien triplet loss tidak nol hanya ketika d(a, n) < d(a, p) + margin. Negatif mudah (sudah jauh) memberi gradien nol. Negatif tersulit dapat membuat training kolaps. Semi-hard — d(a, p) < d(a, n) < d(a, p) + margin — adalah tempat loss informatif tanpa tidak stabil. FaceNet memperkenalkan resep ini pada 2015 dan masih menjadi default untuk fine-tuning triplet."
+    },
+    {
+      "stage": "post",
+      "question": "Sistem retrieval-mu melaporkan recall@10 = 0.95 tetapi recall@1 = 0.42. Apa yang harus kamu simpulkan?",
+      "options": ["Modelnya overfitting", "Data bocor dari galeri ke kueri", "Evaluasinya rusak", "Ruang embedding memiliki struktur yang benar — item relevan biasanya ada di 10 teratas — tetapi pemeringkatan di dalam 10 teratas berisik; model re-ranking (cross-encoder, scorer tahap kedua) atau fine-tuning metric-learning lebih lama akan memperbaiki recall@1 tanpa merusak recall@10"],
+      "correct": 3,
+      "explanation": "recall@K vs @1 menunjukkan di mana informasinya berada. recall@10 tinggi dengan recall@1 rendah berarti retrieval kira-kira benar tetapi model tidak yakin mengurutkan beberapa teratas. Re-ranking — model terpisah yang menilai setiap kandidat top-K terhadap kueri — adalah perbaikan produksi dan dipakai mesin pencari seperti Pinterest dan Google Photos."
+    },
+    {
+      "stage": "post",
+      "question": "Cosine similarity pada embedding yang tidak dinormalisasi bukan cosine similarity — apa yang salah?",
+      "options": ["Matmul-nya meluap", "Ia mencampur arah dengan magnitudo; cos(a, b) hanya benar ketika kedua vektor dinormalisasi L2. Pada embedding tak ternormalisasi, item dengan norm besar mendominasi terlepas dari arahnya, memiringkan peringkat ke vektor dengan magnitudo besar", "PyTorch memunculkan error", "Tidak ada, itu baik-baik saja"],
+      "correct": 1,
+      "explanation": "cos(a, b) = (a . b) / (||a|| * ||b||). Melewati normalisasi memberi inner product mentah, yang memeringkat berdasarkan arah berbobot magnitudo. Pada embedding neural tipikal, magnitudo bervariasi 2-3x antar sampel, dan itu saja mendominasi peringkat. Selalu normalisasi L2 sebelum menghitung cosine atau sebelum mengindeks di FAISS IndexFlatIP."
+    },
+    {
+      "stage": "post",
+      "question": "Antara retrieval tingkat instance (temukan mobil persis ini) dan retrieval tingkat kategori (temukan mobil), mana yang memerlukan fine-tuning metric-learning?",
+      "options": ["Tingkat instance. Embedding DINOv2 dan CLIP siap pakai membedakan kategori dengan baik tetapi tidak antar instance yang mirip secara visual dari kategori yang sama. Fine-tune triplet atau kontrastif pada pasangan (instance sama, instance berbeda) merapatkan embedding di sekitar setiap instance", "Keduanya memerlukan jumlah fine-tuning yang sama", "Tingkat kategori", "Keduanya tidak"],
+      "correct": 0,
+      "explanation": "Retrieval tingkat kategori adalah yang sudah dilakukan model pretrained: kucing berkelompok dekat kucing, anjing dekat anjing. Tingkat instance — mobil sama, wajah sama, SKU produk sama — memerlukan metric learning karena dua instance produk yang sama tampak sangat mirip di ruang embedding umum. Fine-tuning dengan triplet atau InfoNCE pada pasangan berlabel instance memperkecil jarak intra-instance dan memperbesar jarak inter-instance."
+    }
+  ]
+}

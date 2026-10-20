@@ -1,0 +1,78 @@
+{
+  "lesson": "08-inference-metrics-goodput",
+  "title": "Metrik Inferensi — TTFT, TPOT, ITL, Goodput, P99",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Komponen apa yang mendominasi TTFT (time to first token)?",
+      "options": [
+        "I/O disk untuk bobot",
+        "Waktu antrean, waktu permintaan jaringan, dan waktu prefill",
+        "Overhead GIL tokenizer",
+        "Waktu forward hanya decode"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Metrik mana yang disebut pelajaran ini sebagai yang benar-benar penting untuk produk?",
+      "options": [
+        "Goodput — fraksi permintaan yang memenuhi semua batasan SLO secara bersamaan",
+        "Throughput agregat dalam token per detik",
+        "ITL rata-rata",
+        "Duty cycle GPU"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mean adalah statistik yang salah untuk dilaporkan bagi latensi LLM?",
+      "options": [
+        "Distribusi latensi LLM miring ke kanan; pengguna rutin kena outlier P99 yang disembunyikan mean",
+        "Mean tidak pernah bisa dihitung pada respons streaming",
+        "Mean hanya berlaku untuk prefill, bukan decode",
+        "Mean tidak didukung GenAI-Perf"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa GenAI-Perf dan LLMPerf berbeda pendapat soal TPOT untuk run yang sama?",
+      "options": [
+        "Keduanya mengambil sampel permintaan yang berbeda",
+        "GenAI-Perf hanya berjalan di Blackwell",
+        "LLMPerf memakai mikrodetik dan GenAI-Perf memakai milidetik",
+        "GenAI-Perf mengecualikan TTFT dari perhitungan ITL; LLMPerf memasukkannya, jadi pilihan tool mengubah angkanya"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Untuk permintaan output panjang (>500 token), metrik mana yang mendominasi latensi end-to-end?",
+      "options": [
+        "Waktu respons jaringan",
+        "TPOT dikali panjang output",
+        "TTFT",
+        "Waktu cold-start"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Set mana yang paling tepat merangkum SLO menghadap konsumen yang wajar dari pelajaran ini untuk model chat 70B pada 2026?",
+      "options": [
+        "Hanya P50, tanpa persentil di atasnya",
+        "TTFT P99 800 ms, TPOT P99 25 ms, E2E P99 3 s untuk output <300 token, goodput >= 99%",
+        "TTFT P99 8s, TPOT P99 200ms, goodput 50%",
+        "TTFT rata-rata 10 ms, TPOT rata-rata 1 ms"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

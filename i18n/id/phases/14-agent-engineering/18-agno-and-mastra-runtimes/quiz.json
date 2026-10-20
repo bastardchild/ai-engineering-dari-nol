@@ -1,0 +1,90 @@
+{
+  "lesson": "18-agno-and-mastra-runtimes",
+  "title": "Runtime Agent Produksi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Pasangan bahasa mana yang disarankan pelajaran untuk masing-masing runtime?",
+      "options": [
+        "Agno untuk TypeScript, Mastra untuk Python",
+        "Keduanya Go-first",
+        "Agno untuk Python, Mastra untuk TypeScript",
+        "Keduanya Rust-first"
+      ],
+      "correct": 2,
+      "explanation": "Agno adalah Python (berbentuk FastAPI); Mastra adalah TypeScript (berbentuk Vercel AI SDK)."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa bentuk deployment produksi yang disarankan Agno?",
+      "options": [
+        "Daemon stateful berjalan lama",
+        "Hanya worker cron serverless",
+        "Backend FastAPI stateless berlingkup sesi; setiap request memulai agent baru dan state sesi hidup di DB",
+        "Server khusus WebSocket"
+      ],
+      "correct": 2,
+      "explanation": "FastAPI stateless per request; state sesi dieksternalisasi ke DB."
+    },
+    {
+      "stage": "check",
+      "question": "Apa tiga primitif Mastra?",
+      "options": [
+        "Node, Edge, State",
+        "Plan, Worker, Solver",
+        "Agents, Tools, Workflows",
+        "Actor, Message, Inbox"
+      ],
+      "correct": 2,
+      "explanation": "Agents (LLM + peran), Tools (bertipe Zod), dan Workflows adalah tiga primitif Mastra."
+    },
+    {
+      "stage": "check",
+      "question": "Secara kasar berapa biaya instansiasi agent yang disasar Agno menurut dokumentasinya?",
+      "options": [
+        "Sekitar 1 detik dan 1 GiB per agent",
+        "Sekitar 2 mikrodetik dengan sekitar 3,75 KiB per agent",
+        "Sekitar 200 milidetik dan 100 MiB per agent",
+        "Sekitar 10 menit dan 4 GiB per agent"
+      ],
+      "correct": 1,
+      "explanation": "Dokumentasi Agno menyebut sekitar 2 mikrodetik dan sekitar 3,75 KiB per agent."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diberikan Unified Model Router Mastra?",
+      "options": [
+        "Lapisan vector DB",
+        "Satu permukaan klien untuk ribuan model di banyak penyedia",
+        "Checkpointer graph",
+        "Antrean untuk panggilan tool"
+      ],
+      "correct": 1,
+      "explanation": "Unified Model Router Mastra menyebut 3.300+ model di 94 penyedia."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan perf-for-perf's-sake menjadi alasan yang salah untuk memilih Agno?",
+      "options": [
+        "Saat memakai Langfuse",
+        "Saat workload-nya satu panggilan agent lambat per request dan overhead bukan bottleneck",
+        "Saat memakai Python 3.13",
+        "Saat deploy ke AWS"
+      ],
+      "correct": 1,
+      "explanation": "2 mikrodetik penting pada skala fan-in chat, bukan untuk satu panggilan lambat per request."
+    },
+    {
+      "stage": "post",
+      "question": "Permukaan lisensi apa yang harus dibaca cermat sebelum mem-fork Mastra?",
+      "options": [
+        "Tidak ada file lisensi",
+        "Direktori ee/ bersifat source-available, bukan Apache 2.0, dan membatasi penggunaan komersial",
+        "Seluruh Mastra adalah GPL",
+        "Mastra mewajibkan CLA tetapi tanpa tinjauan lisensi"
+      ],
+      "correct": 1,
+      "explanation": "Mastra berlisensi Apache 2.0 kecuali ee/ yang source-available; periksa batasannya sebelum mem-fork."
+    }
+  ]
+}

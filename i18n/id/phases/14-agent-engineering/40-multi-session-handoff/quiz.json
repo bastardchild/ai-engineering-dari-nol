@@ -1,0 +1,90 @@
+{
+  "lesson": "40-multi-session-handoff",
+  "title": "Handoff Multi-Sesi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Field mana yang menjadi penopang utama dalam paket handoff?",
+      "options": [
+        "next_action (tanpanya, dokumen hanyalah laporan status, bukan handoff)",
+        "verdict_pointer",
+        "summary",
+        "commands_run"
+      ],
+      "correct": 0,
+      "explanation": "Handoff yang berisi segalanya kecuali next_action adalah laporan status; langkah konkret berikutnya yang membuat sesi berikutnya produktif."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa handoff dihasilkan, bukan ditulis?",
+      "options": [
+        "Handoff tulisan tangan dilewati saat hari sulit; generator membaca artefak workbench dan mengeluarkan paket, jadi agent cukup meninggalkan workbench dalam keadaan yang bisa diringkas generator",
+        "Apache 2.0 mewajibkannya",
+        "Generator lebih cepat",
+        "Generator lebih baik dalam enkripsi"
+      ],
+      "correct": 0,
+      "explanation": "Otomasi menutup celah antara niat dan konsistensi."
+    },
+    {
+      "stage": "check",
+      "question": "Dua bentuk apa paket dikirimkan?",
+      "options": [
+        "Email dan Slack",
+        "PDF dan PNG",
+        "YAML dan TOML",
+        "handoff.md (dapat dibaca manusia) dan handoff.json (dapat dibaca mesin, keduanya dari artefak sumber yang sama; JSON menang saat berbeda)"
+      ],
+      "correct": 3,
+      "explanation": "Markdown untuk manusia, JSON untuk agent berikutnya; keduanya berasal dari generator yang sama."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana pelajaran membedakan compaction dari handoff?",
+      "options": [
+        "Mereka sama",
+        "Compaction berbayar, handoff gratis",
+        "Handoff butuh GPU",
+        "Compaction memperpanjang sesi; handoff menutup satu sesi dengan bersih dan memulai sesi berikutnya di konteks baru. Paket itulah yang membuat transisi murah"
+      ],
+      "correct": 3,
+      "explanation": "Kerangka Hermes Issue 20372: tulis handoff ringkas sebelum kompresi in-place menurunkan kualitas, lalu lanjutkan di sesi baru."
+    },
+    {
+      "stage": "check",
+      "question": "Apa saran pelajaran tentang kapan menutup sesi?",
+      "options": [
+        "Sebelum 50-75% budget konteks, selagi konteks masih utuh; murah ditulis sebelum artefak kompresi mencemari state",
+        "Pada 100% konteks, lalu panik",
+        "Hanya setelah merge",
+        "Hanya tengah malam"
+      ],
+      "correct": 0,
+      "explanation": "Menutup lebih awal menjaga input generator tetap bersih."
+    },
+    {
+      "stage": "post",
+      "question": "Sampai berapa pelajaran menyarankan memangkas log feedback dalam paket?",
+      "options": [
+        "K entri terakhir plus setiap entri dengan exit tidak nol, agar paket tetap kecil sementara riwayat kegagalan bertahan",
+        "N entri acak",
+        "Hanya K entri pertama",
+        "Hanya entri terbaru"
+      ],
+      "correct": 0,
+      "explanation": "Pemangkasan asimetris: kegagalan harus bertahan; hal sepele di ekor murah untuk disimpan."
+    },
+    {
+      "stage": "post",
+      "question": "Metadata apa yang membuat koordinasi antar sesi multi-agent berjalan?",
+      "options": [
+        "branch, last_known_good_commit, dan status (active | superseded | archived); hanya satu handoff aktif per branch dan topik",
+        "Channel Slack bersama",
+        "Antrean pusat",
+        "Enkripsi sangat rahasia"
+      ],
+      "correct": 0,
+      "explanation": "Handoff basi adalah kegagalan multi-agent yang dominan; status + branch + LKG menjaga set aktif tetap kecil."
+    }
+  ]
+}

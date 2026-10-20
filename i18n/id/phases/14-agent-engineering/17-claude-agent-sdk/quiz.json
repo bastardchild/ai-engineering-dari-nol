@@ -1,0 +1,90 @@
+{
+  "lesson": "17-claude-agent-sdk",
+  "title": "Harness sebagai Library — Subagent dan Session Store",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan Anthropic Client SDK dan Claude Agent SDK?",
+      "options": [
+        "Client SDK adalah Messages API mentah; Agent SDK adalah bentuk harness Claude Code dengan tool bawaan, MCP, hook, subagent, dan session store",
+        "Tidak ada perbedaan",
+        "Client SDK hanya untuk Python",
+        "Client SDK berbayar; Agent SDK gratis"
+      ],
+      "correct": 0,
+      "explanation": "Client SDK memberimu loop-nya; Agent SDK mengirimkan loop yang sudah jadi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa dua tujuan subagent yang didokumentasikan?",
+      "options": [
+        "Authn dan authz",
+        "Logging dan metrik",
+        "Caching dan rate limiting",
+        "Paralelisasi dan isolasi konteks"
+      ],
+      "correct": 3,
+      "explanation": "Subagent menjalankan pekerjaan independen secara bersamaan dan menjaga budget konteks orchestrator dengan mengisolasi konteks."
+    },
+    {
+      "stage": "check",
+      "question": "Method mana yang BUKAN bagian dari permukaan session store?",
+      "options": [
+        "append",
+        "compile_prompt",
+        "load",
+        "list_subkeys"
+      ],
+      "correct": 1,
+      "explanation": "Session store menyediakan append, load, list_sessions, delete, list_subkeys; compile_prompt bukan API session."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN lifecycle hook Claude Agent SDK?",
+      "options": [
+        "PreEmbedding",
+        "PreToolUse",
+        "PostToolUse",
+        "PreCompact"
+      ],
+      "correct": 0,
+      "explanation": "Hook mencakup PreToolUse, PostToolUse, SessionStart/End, UserPromptSubmit, PreCompact, Stop, Notification. PreEmbedding bukan hook."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana konteks trace menyebar melintasi agent dan subproses CLI?",
+      "options": [
+        "Hanya melalui dashboard penyedia",
+        "Melalui sistem file",
+        "Hanya melalui variabel environment",
+        "Melalui header trace context W3C yang diteruskan ke subproses CLI"
+      ],
+      "correct": 3,
+      "explanation": "Span OTel di pemanggil menyebar ke subproses CLI melalui trace context W3C, sehingga seluruh run multi-proses menjadi satu trace."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu subagent over-spawn dan kapan terjadi?",
+      "options": [
+        "Menjalankan lebih banyak subagent daripada core CPU",
+        "Menjalankan sebelum SessionStart",
+        "Menjalankan 100 subagent untuk 100 tugas kecil yang overhead-nya mendominasi; batch saja",
+        "Lupa menutup subagent"
+      ],
+      "correct": 2,
+      "explanation": "Subagent punya overhead; batch tugas kecil alih-alih menjalankan satu per tugas."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang ditukar Claude Managed Agents dibanding SDK yang di-self-host?",
+      "options": [
+        "Tracing untuk streaming",
+        "Tool untuk memori",
+        "Latency untuk biaya",
+        "Kendali untuk infrastruktur terkelola (async berjalan lama, prompt caching bawaan, compaction bawaan)"
+      ],
+      "correct": 3,
+      "explanation": "Managed Agents adalah alternatif terhosting untuk pekerjaan async berjalan lama; kendali lebih sedikit, permukaan ops lebih kecil."
+    }
+  ]
+}

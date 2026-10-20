@@ -1,0 +1,48 @@
+{
+  "lesson": "48-discover-the-real-workflow",
+  "title": "Temukan Alur Kerja yang Sebenarnya",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa mulai dari perilaku saat ini alih-alih fitur yang diminta?",
+      "options": ["Alur kerja nyata mengungkap workaround, handoff, state, dan batasan", "Fitur tidak pernah berguna", "Itu menjamin kesiapan produksi", "Itu menghindari pengguna"],
+      "correct": 0,
+      "explanation": "Kebutuhan muncul dari bagaimana pekerjaan benar-benar terjadi, bukan hanya apa yang diminta orang."
+    },
+    {
+      "stage": "check",
+      "question": "Mana bukti langsung yang paling kuat?",
+      "options": ["Pengguna mengatakan apa yang biasanya terjadi", "Roadmap", "Trace sistem atas aksinya", "Dugaan tim"],
+      "correct": 2,
+      "explanation": "Trace mengamati perilaku secara langsung alih-alih melaporkan atau menyimpulkannya."
+    },
+    {
+      "stage": "check",
+      "question": "Empat permukaan alur kerja apa yang perlu perhatian khusus?",
+      "options": ["Branch, commit, tag, rilis", "Friction, hidden state, otoritas, dan pengecualian", "Warna, font, tata letak, animasi", "Model, token, temperature, prompt"],
+      "correct": 1,
+      "explanation": "Permukaan ini umumnya memuat masalah dan risiko yang sebenarnya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mempertahankan varian alur kerja?",
+      "options": ["Rata-rata mungkin tidak menggambarkan siapa pun dan menghapus perbedaan peran atau risiko yang valid", "Varian lebih mudah dikodekan", "Semua pengguna identik", "Itu menghapus kebutuhan bukti"],
+      "correct": 0,
+      "explanation": "Perbedaan bisa mengodekan peran, kebijakan, keahlian, atau state warisan."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dikomunikasikan rasio bukti langsung?",
+      "options": ["Biaya deployment", "Akurasi model", "Kelengkapan fitur", "Berapa banyak alur kerja yang berpijak pada observasi alih-alih laporan atau inferensi"],
+      "correct": 3,
+      "explanation": "Itu menjaga kekuatan bukti tetap terlihat."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu langkah alur kerja tersembunyi?",
+      "options": ["API publik", "Unit test", "Transisi CSS", "Pekerjaan yang dibawa di memori, chat, atau catatan pribadi di luar proses formal"],
+      "correct": 3,
+      "explanation": "State tersembunyi sering menjelaskan mengapa proses yang terlihat tidak lengkap."
+    }
+  ]
+}

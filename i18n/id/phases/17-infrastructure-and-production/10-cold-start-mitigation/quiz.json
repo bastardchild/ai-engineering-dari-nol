@@ -1,0 +1,78 @@
+{
+  "lesson": "10-cold-start-mitigation",
+  "title": "Mitigasi Cold Start untuk LLM Serverless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kira-kira berapa lama cold start biasanya berlangsung untuk model 70B di node baru tanpa mitigasi?",
+      "options": [
+        "3-8 menit",
+        "Lebih dari 1 jam",
+        "Di bawah 10 detik",
+        "30-60 detik"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Fitur sisi AWS mana yang direkomendasikan pelajaran ini untuk pre-seeding image container agar langkah image pull di tahap kedua hilang?",
+      "options": [
+        "Arsitektur dual-volume Bottlerocket yang dirujuk dari EC2NodeClass",
+        "Penempatan spot fleet",
+        "Hanya snapshot volume EBS",
+        "Definisi task ECS"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Fitur Modal mana yang paling mendekati \"boot GPU hangat dalam hitungan detik\" dengan mendeserialisasi state pasca-load langsung ke HBM?",
+      "options": [
+        "Snapshot memori GPU (checkpoint)",
+        "Pemuatan bertingkat NVMe-ke-DRAM",
+        "Run:ai Model Streamer",
+        "Live migration"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa live migration memindahkan token input, bukan KV cache, antar node?",
+      "options": [
+        "KV cache terenkripsi dan tidak bisa dipindah",
+        "Live migration diwajibkan GDPR",
+        "Token input punya entropi lebih besar",
+        "Menghitung ulang KV di tujuan lebih murah daripada memindahkan GB KV cache lewat jaringan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Lapisan serverless mana yang menukar biaya GPU langsung dengan kesiapan yang terprediksi dengan menjaga minimal satu replika tetap hidup?",
+      "options": [
+        "Pemuatan bertingkat",
+        "Live migration",
+        "Warm pool dengan min_workers >= 1",
+        "Pre-seeding Bottlerocket"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran ini menyatakan mitigasi cold start harus ditumpuk lintas lapisan, bukan dipilih sebagai satu tool tunggal?",
+      "options": [
+        "Modal memiliki seluruh stack",
+        "Kelima lapisan dibundel di vLLM",
+        "Itu persyaratan regulasi",
+        "Tidak ada satu lapisan pun yang menghilangkan setiap langkah (provisioning node, image pull, pemuatan bobot, init engine); menumpuk lapisan memampatkan tiap langkah"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

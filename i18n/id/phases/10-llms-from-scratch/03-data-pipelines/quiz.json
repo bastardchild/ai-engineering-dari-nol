@@ -1,0 +1,66 @@
+{
+  "lesson": "03-data-pipelines",
+  "title": "Pipeline Data untuk Pre-Training",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa kamu tidak bisa begitu saja memuat semua data pre-training ke memori?",
+      "options": [
+        "Korpus pre-training berukuran terabyte, jauh melebihi RAM yang tersedia, sehingga membutuhkan pipeline streaming",
+        "Memuat data ke memori lebih lambat",
+        "Memori hanya dibutuhkan untuk bobot model",
+        "Python tidak mendukung array besar"
+      ],
+      "correct": 0,
+      "explanation": "Data pre-training LLM biasanya 1-15 TB teks. Bahkan dengan RAM 256GB, kamu tidak bisa menampung seluruh dataset. Pipeline streaming memproses data secara on-the-fly, hanya memuat yang dibutuhkan untuk batch saat ini."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa deduplikasi data penting untuk pre-training?",
+      "options": [
+        "Ia menghemat ruang disk",
+        "Dokumen duplikat membuat model menghafal teks tertentu secara verbatim dan membuang komputasi training pada konten berulang",
+        "Ia mengurangi ukuran kosakata",
+        "Ia mempercepat tokenisasi"
+      ],
+      "correct": 1,
+      "explanation": "Konten yang hampir duplikat (boilerplate, duplikat hasil scraping) membuat model menghafal alih-alih menggeneralisasi. Deduplikasi mengurangi pemborosan komputasi training dan meningkatkan kualitas model dengan memastikan sinyal training yang beragam."
+    },
+    {
+      "stage": "post",
+      "question": "Apa tujuan membuat sequence training berpanjang tetap dari dokumen berpanjang variabel?",
+      "options": [
+        "Ia mengurangi jumlah total token",
+        "Ia membuat teks lebih mudah dibaca",
+        "Training GPU memerlukan bentuk tensor yang seragam, sehingga dokumen harus di-pack atau di-pad menjadi sequence berpanjang tetap",
+        "Sequence berpanjang tetap lebih akurat"
+      ],
+      "correct": 2,
+      "explanation": "GPU memproses batch tensor dengan bentuk identik. Dokumen berpanjang variabel harus dipotong menjadi sequence berpanjang tetap (misalnya 2048 atau 4096 token) dengan attention mask yang tepat pada batas dokumen."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang terjadi jika pipeline data lebih lambat daripada kecepatan training GPU?",
+      "options": [
+        "Tidak apa-apa -- pipeline berjalan asinkron",
+        "Training otomatis melambat agar sesuai",
+        "Model berlatih pada batch yang sama berulang kali",
+        "GPU menganggur menunggu batch, membuang waktu komputasi yang mahal"
+      ],
+      "correct": 3,
+      "explanation": "Jika dataloader tidak dapat menyajikan batch cukup cepat, GPU tertahan di antara langkah. Pada cluster A100 yang berbiaya $30+/jam, bottleneck pipeline langsung membuang uang. Profiling throughput pipeline sangat penting."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa penyaringan kualitas data (deteksi bahasa, penyaringan konten) diterapkan sebelum tokenisasi?",
+      "options": [
+        "Ia mengurangi waktu tokenisasi",
+        "Data berkualitas rendah (spam, boilerplate, konten toksik) menurunkan kemampuan model sebanding dengan porsinya di data training",
+        "Penyaringan setelah tokenisasi tidak mungkin dilakukan",
+        "Tokenizer tidak dapat menangani teks berkualitas rendah"
+      ],
+      "correct": 1,
+      "explanation": "Model belajar dari data apa pun yang dilihatnya. Jika 10% data training adalah spam atau konten berkualitas rendah, model mengalokasikan 10% kapasitasnya untuk mereproduksi pola tersebut. Penyaringan sejak awal memastikan hanya sinyal berkualitas tinggi yang mencapai model."
+    }
+  ]
+}

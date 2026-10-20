@@ -1,0 +1,78 @@
+{
+  "lesson": "11-mcp-sampling",
+  "title": "Input Model MCP: Migrasi Sampling dan MRTR Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Server MCP baru memerlukan inferensi model. Apa arsitektur default pada 2026-07-28?",
+      "options": [
+        "Terintegrasi langsung dengan penyedia model",
+        "Mengirim sampling/createMessage sebelum setiap panggilan tool",
+        "Menyimpan kunci model klien di sesi protokol",
+        "Membuka stream SSE permanen untuk Sampling"
+      ],
+      "correct": 0,
+      "explanation": "Sampling sudah deprecated untuk desain baru. Integrasi langsung dengan penyedia adalah default yang disarankan ketika server memerlukan inferensi model."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana server 2026-07-28 meminta Sampling kompatibilitas selama tools/call?",
+      "options": [
+        "Menuliskan prompt ke server/discover",
+        "Menempatkan prompt di header Mcp-Session-Id",
+        "Mengembalikan resultType input_required dengan sampling/createMessage di inputRequests",
+        "Mengirim request JSON-RPC balik pada koneksi yang sama"
+      ],
+      "correct": 2,
+      "explanation": "MRTR membawa request server-ke-klien di dalam hasil input_required, sehingga menghindari kanal request balik. Tool summarize_repo yang diumumkan harus tersedia lebih dulu melalui tools/list yang deterministik dengan inputSchema valid."
+    },
+    {
+      "stage": "check",
+      "question": "Properti mana yang membuktikan percobaan ulang MRTR adalah request JSON-RPC yang independen?",
+      "options": [
+        "Percobaan itu menghilangkan metadata per-request",
+        "Percobaan itu memakai id yang sama dengan request asli",
+        "Percobaan itu memakai id baru sambil mengulang method dan argumen asli",
+        "Percobaan itu menghapus argumen tool asli"
+      ],
+      "correct": 2,
+      "explanation": "Klien mengulang operasi asli dengan id JSON-RPC baru, inputResponses saat ini, dan requestState yang digemakan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus melindungi requestState ketika memengaruhi akses resource?",
+      "options": [
+        "HMAC atau enkripsi terautentikasi yang terikat ke principal, request, dan masa berlaku",
+        "Encoding Base64 saja",
+        "Nama clientInfo",
+        "Sesi transport berumur panjang"
+      ],
+      "correct": 0,
+      "explanation": "requestState melewati klien yang tidak tepercaya. Perlindungan integritas dan binding mencegah manipulasi serta replay antar-request."
+    },
+    {
+      "stage": "post",
+      "question": "Klien tidak mengumumkan Sampling dalam kemampuan per-request-nya. Respons protokol persis apa yang harus dipakai server?",
+      "options": [
+        "Tetap mengirim request sampling yang disematkan",
+        "Mengembalikan -32021 dengan data.requiredCapabilities, atau memilih jalur non-Sampling",
+        "Menambahkan kemampuan itu ke metadata klien",
+        "Mengasumsikan kemampuan dari request sebelumnya"
+      ],
+      "correct": 1,
+      "explanation": "Server tidak boleh mengirim input request yang tidak dideklarasikan dukungannya oleh klien pada request saat ini. Kode kemampuan yang hilang adalah -32021."
+    },
+    {
+      "stage": "post",
+      "question": "Migrasi mana yang menjaga loop kompatibilitas dua putaran tetap stateless di lapisan protokol?",
+      "options": [
+        "Membawa hanya inputResponses putaran saat ini dan state fase bertanda tangan pada setiap percobaan ulang baru",
+        "Menyimpan state fase di bawah Mcp-Session-Id",
+        "Menggunakan ulang id request asli sampai selesai",
+        "Mengakumulasi semua respons model dalam sesi tersembunyi"
+      ],
+      "correct": 0,
+      "explanation": "Setiap percobaan ulang bersifat mandiri. requestState bertanda tangan membawa state perantara yang tervalidasi, dan inputResponses hanya berisi putaran saat ini."
+    }
+  ]
+}

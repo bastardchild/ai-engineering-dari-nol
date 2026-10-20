@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/41-eval-pipeline",
+  "title": "Pipeline Evaluasi Lengkap",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca: kolega melaporkan modelnya punya perplexity 4.2 pada set held-out. Ia bertanya apakah modelnya bagus. Respons paling dapat dipertahankan?",
+      "options": [
+        "Ya: perplexity di bawah 5 berarti model bagus.",
+        "Perplexity memberi tahu seberapa baik model mencocokkan distribusi bahasa. Itu tidak mengatakan apa pun tentang apakah model mengikuti instruksi atau mengembalikan jawaban benar.",
+        "Perplexity tidak bermakna tanpa prompt eksplisit.",
+        "Hanya model juri yang bisa menjawab pertanyaan itu."
+      ],
+      "correct": 1,
+      "explanation": "Perplexity adalah satu dimensi. Model bisa punya perplexity rendah tetapi tetap salah pada tugas faktual, atau perplexity cukup baik tetapi menghasilkan jawaban buruk. Kamu butuh beberapa eval, masing-masing mengukur dimensi berbeda."
+    },
+    {
+      "stage": "check",
+      "question": "Eval perplexity menjumlahkan negative log-likelihood per token di posisi non-pad dan membaginya dengan total token non-pad. Mengapa tidak merata-ratakan perplexity per batch?",
+      "options": [
+        "Perplexity tidak terdefinisi untuk data batch.",
+        "Merata-ratakan perplexity per batch setara secara matematis.",
+        "Batch memuat token padding yang harus selalu dirata-ratakan.",
+        "Merata-ratakan perplexity per batch memberi bobot kurang pada urutan pendek (ppl per batch-nya membawa varians lebih tinggi) dan menghasilkan agregat bias."
+      ],
+      "correct": 3,
+      "explanation": "Agregasi per token adalah definisi buku teks dan menghindari bias ukuran batch dan panjang. Per-batch averaging adalah bug umum; pada fixture dengan panjang sequence bervariasi ia menghasilkan angka berbeda dari yang benar."
+    },
+    {
+      "stage": "check",
+      "question": "Token F1 mengembalikan 1.0 saat prediksi dan referensi sama-sama kosong. Kasus lain mana yang harus mengembalikan nilai spesifik?",
+      "options": [
+        "Saat pred kosong tetapi referensi non-kosong, F1 harus 1.0.",
+        "Saat pred memuat tepat satu token yang cocok, F1 harus 0.5.",
+        "Saat pred non-kosong tetapi referensi kosong, F1 harus tidak terdefinisi.",
+        "Saat hanya salah satu dari pred atau referensi kosong, F1 harus 0.0."
+      ],
+      "correct": 3,
+      "explanation": "Kosong-kosong adalah kecocokan hampa. Campuran kosong-non-kosong adalah kasus meleset yang tidak ambigu: ada konten di satu sisi dan tidak ada di sisi lain. Konvensi SQuAD adalah F1 = 0 dalam kasus itu."
+    },
+    {
+      "stage": "check",
+      "question": "Aggregator menormalisasi perplexity dengan 1 / (1 + log(max(ppl, 1.0))). Apa yang dijaminnya tentang skor ternormalisasi?",
+      "options": [
+        "Selalu di [0, 1] dan menurun monoton saat perplexity mentah tumbuh.",
+        "Selalu di [0, 1] dan naik monoton saat perplexity mentah tumbuh.",
+        "Tidak terbatas di atas.",
+        "Hanya mengembalikan 0 atau 1 (biner)."
+      ],
+      "correct": 0,
+      "explanation": "Perplexity 1 (lantai teoretis) dipetakan ke 1.0. Tak hingga dipetakan ke 0. Skor di [0, 1] dan perplexity lebih rendah lebih baik, cocok dengan arah metrik ternormalisasi lainnya."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu menukar mock judge dengan judge model frontier nyata. Perubahan minimum pada pipeline?",
+      "options": [
+        "Tulis ulang aggregator untuk menerima rentang skor berbeda.",
+        "Tambahkan entri baru ke DEFAULT_WEIGHTS.",
+        "Ganti argumen judge_fn ke judge_eval dengan fungsi yang punya tanda tangan sama: (instruction, prediction, reference) -> JudgeVerdict.",
+        "Migrasikan seluruh suite eval ke async I/O."
+      ],
+      "correct": 2,
+      "explanation": "Antarmuka judge adalah (instruction, prediction, reference) -> JudgeVerdict. Fungsi apa pun dengan tanda tangan itu langsung masuk. Pipeline terlepas dari implementasi judge oleh batas itu, itulah intinya."
+    },
+    {
+      "stage": "post",
+      "question": "Skor agregat kamu 0.72, tetapi exact-match 0.40 dan judge 4.5/5. Trade-off apa yang dibuat model?",
+      "options": [
+        "Agregat salah dihitung.",
+        "Model overfitting pada korpus LM.",
+        "Judge tidak selaras dengan exact-match menurut definisi.",
+        "Model lebih jarang mengenai string emas persis, tetapi judge menganggap jawaban bentuk terbuka cukup baik."
+      ],
+      "correct": 3,
+      "explanation": "EM rendah dengan judge tinggi menyarankan parafrase: jawabannya benar secara substansi tetapi tidak karakter-per-karakter dengan emas. Ini persis dimensi yang dilewatkan EM dan ditangkap judge. Trade-off-nya informatif, bukan bug."
+    }
+  ]
+}

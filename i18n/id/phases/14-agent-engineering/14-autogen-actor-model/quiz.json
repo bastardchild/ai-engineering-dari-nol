@@ -1,0 +1,90 @@
+{
+  "lesson": "14-autogen-actor-model",
+  "title": "Actor Model untuk Agent — Pesan Async dan Runtime Bertipe",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa satu-satunya cara legal actor berinteraksi di AutoGen v0.4?",
+      "options": [
+        "Akses langsung ke dict bersama",
+        "Mengubah prompt satu sama lain",
+        "Transaksi SQL bersama",
+        "Pesan asinkron yang dipertukarkan melalui inbox; tanpa memori bersama"
+      ],
+      "correct": 3,
+      "explanation": "Actor punya state privat dan inbox; pesan adalah satu-satunya interaksi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tiga lapisan API AutoGen v0.4?",
+      "options": [
+        "Core, AgentChat, Extensions",
+        "Frontend, Backend, Database",
+        "Tools, Models, Memory",
+        "Plan, Act, Reflect"
+      ],
+      "correct": 0,
+      "explanation": "Core adalah framework actor tingkat rendah, AgentChat adalah API tingkat tinggi yang digerakkan tugas, Extensions adalah integrasi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa memisahkan pengiriman dari penanganan memberi isolasi kegagalan?",
+      "options": [
+        "Runtime menangkap kegagalan handler di B tanpa membuat A crash; send() milik A langsung kembali dan tidak pernah memblokir",
+        "Setiap actor berjalan di mesin terpisah",
+        "Handler adalah fungsi murni",
+        "Runtime me-restart OS saat gagal"
+      ],
+      "correct": 0,
+      "explanation": "send() menaruh pesan di inbox penerima dan kembali; crash handler bersifat lokal pada actor itu."
+    },
+    {
+      "stage": "check",
+      "question": "Topologi AgentChat mana yang merotasi agent dalam urutan tetap?",
+      "options": [
+        "SelectorGroupChat",
+        "Magentic-One",
+        "RoundRobinGroupChat",
+        "Supervisor"
+      ],
+      "correct": 2,
+      "explanation": "RoundRobinGroupChat adalah rotasi tetap; SelectorGroupChat memakai selector untuk memilih berikutnya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu Magentic-One dalam pelajaran ini?",
+      "options": [
+        "Tim multi-agent referensi untuk browsing web, eksekusi kode, dan penanganan file yang dibangun di atas AgentChat",
+        "Eksportir OTel",
+        "Model LLM baru",
+        "Format serialisasi"
+      ],
+      "correct": 0,
+      "explanation": "Magentic-One adalah tim referensi Microsoft yang mendemonstrasikan API AgentChat."
+    },
+    {
+      "stage": "post",
+      "question": "Apa status AutoGen v0.4 pada awal 2026 menurut pelajaran?",
+      "options": [
+        "Deprecated dan dihapus",
+        "Digantikan LangGraph",
+        "Baru diumumkan",
+        "Stabil tetapi dalam mode maintenance; Microsoft Agent Framework adalah jalur ke depan"
+      ],
+      "correct": 3,
+      "explanation": "AutoGen v0.7.x stabil untuk riset; pengembangan aktif telah bergeser ke Microsoft Agent Framework."
+    },
+    {
+      "stage": "post",
+      "question": "Standar observabilitas mana yang dikeluarkan AutoGen v0.4 secara default?",
+      "options": [
+        "Datadog APM",
+        "Hanya metrik Prometheus",
+        "Span OpenTelemetry dengan atribut gen_ai.* sesuai konvensi semantik OTel GenAI",
+        "StatsD"
+      ],
+      "correct": 2,
+      "explanation": "Setiap pesan mengeluarkan span; panggilan tool membawa atribut gen_ai.* sesuai konvensi OTel GenAI."
+    }
+  ]
+}

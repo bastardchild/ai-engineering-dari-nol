@@ -1,0 +1,90 @@
+{
+  "lesson": "32-minimal-agent-workbench",
+  "title": "Agent Workbench Minimal",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tiga file apa yang membentuk workbench minimal yang berguna?",
+      "options": [
+        "model.py, prompts.py, tools.py",
+        "Dockerfile, Makefile, .gitignore",
+        "AGENTS.md (router), agent_state.json (state), task_board.json (queue)",
+        "README.md, CHANGELOG.md, LICENSE"
+      ],
+      "correct": 2,
+      "explanation": "Router pendek, state durable, dan antrean tugas adalah batas minimalnya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kerangka pelajaran tentang AGENTS.md?",
+      "options": [
+        "Rahasia yang dijauhkan dari repo",
+        "Kunci prompt-cache murni",
+        "Router pendek yang menunjuk ke dokumen lebih dalam serta state dan board",
+        "Manual onboarding 3000 baris"
+      ],
+      "correct": 2,
+      "explanation": "AGENTS.md adalah router, bukan manual; manual panjang diabaikan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa kata data Augment Code tentang AGENTS.md yang baik?",
+      "options": [
+        "AGENTS.md yang baik memberi lonjakan kualitas setara upgrade dari Haiku ke Opus; yang buruk lebih buruk daripada tanpa file",
+        "Panjang selalu membantu",
+        "Hanya Claude yang membacanya",
+        "Tidak ada efek terukur"
+      ],
+      "correct": 0,
+      "explanation": "Pengukuran Augment Code: file terbaik berbentuk upgrade model, yang terburuk lebih buruk daripada tidak ada."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pelajaran menyarankan state berbasis file dibanding state riwayat chat?",
+      "options": [
+        "File lebih kecil",
+        "Disk lebih murah",
+        "Riwayat chat bersifat volatil; file bertahan saat sesi mati, percakapan dipangkas, dan tool di-reset",
+        "Itu diwajibkan SOC 2"
+      ],
+      "correct": 2,
+      "explanation": "Sesi mati dan chat dipangkas; file adalah system of record yang durable."
+    },
+    {
+      "stage": "check",
+      "question": "Apa kata pelajaran yang terjadi saat instruksi bertentangan masuk ke AGENTS.md?",
+      "options": [
+        "Biaya naik sedikit",
+        "Tidak terjadi apa-apa",
+        "Latency turun",
+        "Instruksi yang bertentangan diam-diam menjatuhkan agent dari mode interaktif ke mode greedy (AMBIG-SWE: 48,8% ke 28% resolve rate)"
+      ],
+      "correct": 3,
+      "explanation": "AMBIG-SWE mengukur penurunan resolve rate besar saat kontradiksi muncul; beri nomor prioritas."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran menyarankan symlink lintas tool seperti CLAUDE.md -> AGENTS.md?",
+      "options": [
+        "Untuk memenuhi MIT",
+        "Untuk lulus audit",
+        "Agar satu sumber kebenaran menyebar ke setiap coding agent tanpa fork",
+        "Untuk menghemat byte"
+      ],
+      "correct": 2,
+      "explanation": "Symlink (atau generator gaya Nx) menjaga satu sumber kanonis di Claude Code, Codex, Cursor, Copilot, dll."
+    },
+    {
+      "stage": "post",
+      "question": "Pola apa yang diikuti file AGENTS.md bersarang?",
+      "options": [
+        "Hanya file root yang dibaca",
+        "Berjalan dari file kerja menuju root repo, menggabungkan setiap AGENTS.md yang ditemukan (yang terdekat menang; sub-direktori memperluas root)",
+        "Pemilihan acak",
+        "Merge alfabetis"
+      ],
+      "correct": 1,
+      "explanation": "OpenAI menyertakan 88 file AGENTS.md di repo utamanya; tool menggabungkan dari terdekat ke atas."
+    }
+  ]
+}

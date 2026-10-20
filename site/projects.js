@@ -70,7 +70,7 @@
 
   function levelInfo(level) {
     for (var i = 0; i < DATA.levels.length; i++) if (DATA.levels[i].level === level) return DATA.levels[i];
-    return { level: level, name: 'Level ' + level, summary: '' };
+    return { level: level, name: 'Tingkat ' + level, summary: '' };
   }
 
   function repoFileUrl(path) {
@@ -91,7 +91,7 @@
   }
 
   function copyButton(text, label) {
-    return '<button class="pj-copy" type="button" data-copy="' + esc(text) + '" aria-label="' + esc(label || 'Copy command') + '">Copy</button>';
+    return '<button class="pj-copy" type="button" data-copy="' + esc(text) + '" aria-label="' + esc(label || 'Salin perintah') + '">Salin</button>';
   }
 
   function commandBlock(text, label, copyLabel) {
@@ -150,11 +150,11 @@
         try { copied = fallbackCopy(text); } catch (_) {}
       }
       delete button.dataset.copyPending;
-      button.textContent = copied ? 'Copied' : 'Copy';
+      button.textContent = copied ? 'Tersalin' : 'Salin';
       status.toggleAttribute('data-success', copied);
-      status.textContent = copied ? 'Command copied.' : 'Copy unavailable. Select the command and copy it manually.';
+      status.textContent = copied ? 'Perintah tersalin.' : 'Penyalinan tidak tersedia. Pilih perintah lalu salin secara manual.';
       button.copyTimer = setTimeout(function () {
-        button.textContent = 'Copy';
+        button.textContent = 'Salin';
         if (copied) status.textContent = '';
       }, 1800);
     });
@@ -298,10 +298,10 @@
 
   function sourceBadge(item) {
     if (item.source === 'community') {
-      var handle = item.author && item.author.github ? '@' + item.author.github : 'community';
+      var handle = item.author && item.author.github ? '@' + item.author.github : 'komunitas';
       return '<span class="pj-badge community">' + esc(handle) + '</span>';
     }
-    return '<span class="pj-badge core">core</span>';
+    return '<span class="pj-badge core">inti</span>';
   }
 
   function projectCard(project) {
@@ -309,17 +309,17 @@
     var total = project.stages.length;
     var pct = total ? Math.round((done / total) * 100) : 0;
     return '<a class="pj-card is-ready" href="' + projectHref(project.id) + '">' +
-      '<div class="pj-card-top">' + sourceBadge(project) + '<span class="pj-card-meta">' + total + ' stages · ~' + totalHours(project) + 'h</span></div>' +
+      '<div class="pj-card-top">' + sourceBadge(project) + '<span class="pj-card-meta">' + total + ' tahap · ~' + totalHours(project) + ' jam</span></div>' +
       '<h3>' + esc(project.title) + '</h3>' +
       '<p>' + esc(project.tagline || project.summary || '') + '</p>' +
       languageChips(project.languages) +
       '<div class="pj-card-foot"><div class="pj-bar" aria-hidden="true"><span style="width:' + pct + '%"></span></div>' +
-      '<span>' + (done ? done + ' of ' + total + ' done' : 'Start') + '</span></div></a>';
+      '<span>' + (done ? done + ' dari ' + total + ' selesai' : 'Mulai') + '</span></div></a>';
   }
 
   function plannedCard(item) {
     return '<div class="pj-card is-planned">' +
-      '<div class="pj-card-top"><span class="pj-badge planned">planned</span>' + (item.ours ? '<span class="pj-badge ours">rebuild of our repo</span>' : '') + '</div>' +
+      '<div class="pj-card-top"><span class="pj-badge planned">direncanakan</span>' + (item.ours ? '<span class="pj-badge ours">rekonstruksi repo kami</span>' : '') + '</div>' +
       '<h3>' + esc(item.title) + '</h3><p>' + esc(item.tagline || '') + '</p>' +
       languageChips(item.languages) + '</div>';
   }
@@ -343,11 +343,11 @@
     var media;
     var play = '';
     if (demo.video) {
-      media = '<video controls preload="metadata"' + (demo.poster ? ' poster="' + esc(asset(demo.poster)) + '"' : '') + ' aria-label="' + esc(demo.title || 'Project demo') + '"><source src="' + esc(asset(demo.video)) + '"></video>';
+      media = '<video controls preload="metadata"' + (demo.poster ? ' poster="' + esc(asset(demo.poster)) + '"' : '') + ' aria-label="' + esc(demo.title || 'Demo proyek') + '"><source src="' + esc(asset(demo.video)) + '"></video>';
     } else {
       var src = asset(demo.gif);
-      media = '<img src="' + esc(demo.poster ? asset(demo.poster) : src) + '" data-gif="' + esc(src) + '" alt="' + esc(demo.alt || demo.title || 'Project demo') + '" loading="lazy">';
-      if (demo.poster) play = '<button type="button" class="pj-chip pj-demo-play" data-poster="' + esc(asset(demo.poster)) + '">Play recording</button>';
+      media = '<img src="' + esc(demo.poster ? asset(demo.poster) : src) + '" data-gif="' + esc(src) + '" alt="' + esc(demo.alt || demo.title || 'Demo proyek') + '" loading="lazy">';
+      if (demo.poster) play = '<button type="button" class="pj-chip pj-demo-play" data-poster="' + esc(asset(demo.poster)) + '">Putar rekaman</button>';
     }
     return '<figure class="pj-demo"><div class="pj-demo-frame"><div class="pj-demo-bar"><span></span><span></span><span></span><em>' + esc(demo.title || 'Demo') + '</em></div>' + media + '</div>' + play +
       (demo.caption ? '<figcaption>' + esc(demo.caption) + '</figcaption>' : '') + '</figure>';
@@ -366,17 +366,17 @@
 
     var community = DATA.projects.filter(function (p) { return p.source === 'community'; }).length;
     stats.innerHTML = [
-      [DATA.projects.length, 'ready to build'],
-      [DATA.planned.length, 'on the roadmap'],
-      [DATA.levels.length, 'levels'],
-      [community, 'from the community'],
+      [DATA.projects.length, 'siap dibangun'],
+      [DATA.planned.length, 'di peta jalan'],
+      [DATA.levels.length, 'tingkat'],
+      [community, 'dari komunitas'],
     ].map(function (s) { return '<div><strong>' + s[0] + '</strong><span>' + s[1] + '</span></div>'; }).join('');
 
     var first = DATA.projects[0];
     var start = document.getElementById('pjStartLink');
     if (first && start) start.href = projectHref(first.id);
 
-    var sources = [['all', 'All'], ['core', 'Core'], ['community', 'Community']];
+    var sources = [['all', 'Semua'], ['core', 'Inti'], ['community', 'Komunitas']];
     var current = readStore(SOURCE_KEY, 'all');
     if (!sources.some(function (s) { return s[0] === current; })) current = 'all';
 
@@ -391,10 +391,10 @@
         var cards = ready.map(projectCard).join('') + planned.map(plannedCard).join('');
         if (!cards) {
           cards = current === 'community'
-            ? '<div class="pj-empty">No community projects at this level yet. <a href="#submit">Be the first.</a></div>'
-            : '<div class="pj-empty">Nothing here yet.</div>';
+            ? '<div class="pj-empty">Belum ada proyek komunitas di tingkat ini. <a href="#submit">Jadilah yang pertama.</a></div>'
+            : '<div class="pj-empty">Belum ada apa pun di sini.</div>';
         }
-        return '<section class="pj-level" aria-label="Level ' + level.level + '">' +
+        return '<section class="pj-level" aria-label="Tingkat ' + level.level + '">' +
           '<header class="pj-level-head"><div class="pj-level-n">' + level.level + '</div><div><h3>' + esc(level.name) + '</h3><p>' + esc(level.summary) + '</p></div></header>' +
           '<div class="pj-level-cards">' + cards + '</div></section>';
       }).join('');
@@ -433,11 +433,11 @@
     var project = DATA.projects.filter(function (p) { return p.id === id; })[0];
     var hero = document.getElementById('pjProjectHero');
     if (!project) {
-      hero.innerHTML = '<div class="pj-eyebrow">PROJECT NOT FOUND</div><h1>Pick a project from the ladder.</h1><p><a class="pj-action" href="projects.html">All projects</a></p>';
+      hero.innerHTML = '<div class="pj-eyebrow">PROYEK TIDAK DITEMUKAN</div><h1>Pilih proyek dari tangga.</h1><p><a class="pj-action" href="projects.html">Semua proyek</a></p>';
       return;
     }
     try { await loadFigures(project); } catch (_) { console.warn('Project figures could not load'); }
-    document.title = project.title + ' - Projects - AI Engineering from Scratch';
+    document.title = project.title + ' - Proyek - AI Engineering from Scratch';
     document.getElementById('pjCrumb').textContent = project.title;
     var level = levelInfo(project.level);
 
@@ -454,16 +454,16 @@
 
     hero.innerHTML =
       '<div class="pj-hero-grid"><div>' +
-        '<div class="pj-eyebrow">LEVEL ' + project.level + ' · ' + esc(level.name.toUpperCase()) + '</div>' +
+        '<div class="pj-eyebrow">TINGKAT ' + project.level + ' · ' + esc(level.name.toUpperCase()) + '</div>' +
         '<h1>' + esc(project.title) + '</h1>' +
         '<p class="pj-lede">' + esc(project.summary || project.tagline || '') + '</p>' +
-        '<div class="pj-meta-row"><span>' + project.stages.length + ' stages</span><span>~' + totalHours(project) + ' hours</span><span>' + esc((project.languages || []).join(', ')) + '</span>' + sourceBadge(project) + '</div>' +
+        '<div class="pj-meta-row"><span>' + project.stages.length + ' tahap</span><span>~' + totalHours(project) + ' jam</span><span>' + esc((project.languages || []).join(', ')) + '</span>' + sourceBadge(project) + '</div>' +
         (skills ? '<div class="pj-skills">' + skills + '</div>' : '') +
       '</div><div class="pj-hero-side">' +
-        (project.youWillBuild ? '<div class="pj-side-block"><div class="pj-eyebrow">YOU END UP WITH</div><p>' + esc(project.youWillBuild) + '</p></div>' : '') +
-        (useful ? '<div class="pj-side-block"><div class="pj-eyebrow">USEFUL FOR</div><ul>' + useful + '</ul></div>' : '') +
-        (prereqs ? '<div class="pj-side-block"><div class="pj-eyebrow">LEARN FIRST</div><ul>' + prereqs + '</ul></div>' : '') +
-        (whyHtml ? '<div class="pj-side-block"><div class="pj-eyebrow">WHY THESE LANGUAGES</div><ul class="pj-why">' + whyHtml + '</ul></div>' : '') +
+        (project.youWillBuild ? '<div class="pj-side-block"><div class="pj-eyebrow">YANG AKAN KAMU HASILKAN</div><p>' + esc(project.youWillBuild) + '</p></div>' : '') +
+        (useful ? '<div class="pj-side-block"><div class="pj-eyebrow">BERGUNA UNTUK</div><ul>' + useful + '</ul></div>' : '') +
+        (prereqs ? '<div class="pj-side-block"><div class="pj-eyebrow">PELAJARI DULU</div><ul>' + prereqs + '</ul></div>' : '') +
+        (whyHtml ? '<div class="pj-side-block"><div class="pj-eyebrow">MENGAPA BAHASA INI</div><ul class="pj-why">' + whyHtml + '</ul></div>' : '') +
       '</div></div>';
 
     var overview = document.getElementById('pjOverview');
@@ -471,9 +471,9 @@
     if (overview && (project.overviewFigure || demos)) {
       overview.hidden = false;
       overview.innerHTML =
-        '<details class="pj-context"><summary>Project overview and recordings</summary><div class="pj-context-body">' +
-        (project.overviewFigure ? '<div class="pj-overview-fig"><div class="pj-eyebrow">PROJECT OVERVIEW</div><p class="pj-small">This example introduces the project. The selected lesson has its own mechanism.</p><div class="lesson-figure" data-figure="' + esc(project.overviewFigure) + '"></div></div>' : '') +
-        (demos ? '<div class="pj-demos"><div class="pj-eyebrow">PROJECT RECORDINGS</div><div class="pj-demo-grid">' + demos + '</div></div>' : '') + '</div></details>';
+        '<details class="pj-context"><summary>Ikhtisar dan rekaman proyek</summary><div class="pj-context-body">' +
+        (project.overviewFigure ? '<div class="pj-overview-fig"><div class="pj-eyebrow">IKHTISAR PROYEK</div><p class="pj-small">Contoh ini memperkenalkan proyeknya. Pelajaran yang dipilih punya mekanismenya sendiri.</p><div class="lesson-figure" data-figure="' + esc(project.overviewFigure) + '"></div></div>' : '') +
+        (demos ? '<div class="pj-demos"><div class="pj-eyebrow">REKAMAN PROYEK</div><div class="pj-demo-grid">' + demos + '</div></div>' : '') + '</div></details>';
       document.getElementById('pjWorkspace').insertAdjacentElement('afterend', overview);
       var context = overview.querySelector('details');
       context.addEventListener('toggle', function () { if (context.open) mountFigures(overview); });
@@ -481,9 +481,9 @@
 
     document.getElementById('pjWorkspace').hidden = false;
     document.getElementById('pjTutorCard').innerHTML =
-      '<div class="pj-eyebrow">LEARN WITH THE TUTOR</div><p>In Claude Code, run:</p>' +
+      '<div class="pj-eyebrow">BELAJAR DENGAN TUTOR</div><p>Di Claude Code, jalankan:</p>' +
       commandBlock('/build-project ' + project.id) +
-      '<p class="pj-small">In Codex or another compatible agent, ask it to use the build-project skill for this project. One stage per session: predict, build, test, reflect.</p>';
+      '<p class="pj-small">Di Codex atau agen kompatibel lain, minta agen itu memakai skill build-project untuk proyek ini. Satu tahap per sesi: prediksi, bangun, uji, refleksi.</p>';
 
     var certificateHost = document.getElementById('pjCertificate');
     if (certificateHost && window.AIFSProjectCertificates) window.AIFSProjectCertificates.mount(certificateHost, project);
@@ -501,16 +501,16 @@
       var done = project.stages.filter(function (s) { return progress[s.id]; }).length;
       var pct = Math.round((done / project.stages.length) * 100);
       document.getElementById('pjProgress').innerHTML =
-        '<div class="pj-progress-head"><span>Your progress</span><strong>' + done + ' / ' + project.stages.length + '</strong></div>' +
+        '<div class="pj-progress-head"><span>Kemajuanmu</span><strong>' + done + ' / ' + project.stages.length + '</strong></div>' +
         '<div class="pj-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>' +
-        '<p class="pj-small">Self-reported progress, saved in this browser. Import grader evidence below for a certificate.</p>';
+        '<p class="pj-small">Kemajuan yang kamu laporkan sendiri, tersimpan di browser ini. Impor bukti grader di bawah untuk mendapatkan sertifikat.</p>';
       document.getElementById('pjStageList').innerHTML = project.stages.map(function (stage, index) {
         var isDone = !!progress[stage.id];
         return '<li><a href="' + projectHref(project.id, stage.id) + '" data-stage-index="' + index + '" class="pj-stage-link' +
           (index === stageIndex ? ' is-current' : '') + (isDone ? ' is-done' : '') + '"' + (index === stageIndex ? ' aria-current="step"' : '') + '>' +
           '<span class="pj-stage-n">' + (isDone ? '✓' : stage.number) + '</span>' +
           '<span class="pj-stage-text"><span class="pj-stage-title">' + esc(stage.title) + '</span>' +
-          '<span class="pj-stage-sub">' + esc(stage.difficulty || '') + (stage.hours ? ' · ~' + stage.hours + 'h' : '') + (stageLanguages(stage).length ? ' · ' + esc(stageLanguages(stage).join(' + ')) : '') + '</span></span></a></li>';
+          '<span class="pj-stage-sub">' + esc(stage.difficulty || '') + (stage.hours ? ' · ~' + stage.hours + ' jam' : '') + (stageLanguages(stage).length ? ' · ' + esc(stageLanguages(stage).join(' + ')) : '') + '</span></span></a></li>';
       }).join('');
     }
 
@@ -527,23 +527,23 @@
 
       if (window.AIFSFigureRuntime) window.AIFSFigureRuntime.disposeRoot(mount);
       mount.innerHTML =
-        '<header class="pj-stage-head"><div class="pj-eyebrow">STAGE ' + stage.number + ' OF ' + project.stages.length + ' · ' + esc((stage.difficulty || '').toUpperCase()) + '</div>' +
+        '<header class="pj-stage-head"><div class="pj-eyebrow">TAHAP ' + stage.number + ' DARI ' + project.stages.length + ' · ' + esc((stage.difficulty || '').toUpperCase()) + '</div>' +
         '<h2 id="pjStageTitle">' + esc(stage.title) + '</h2><p class="pj-lede">' + esc(stage.summary || '') + '</p>' +
         languageChips(stageLanguages(stage)) +
         ((stage.concepts || []).length ? '<div class="pj-skills">' + stage.concepts.map(function (c) { return '<span class="pj-skill">' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
         '</header>' +
-        '<div class="pj-run-card"><div><div class="pj-eyebrow">RUN THIS STAGE</div>' +
+        '<div class="pj-run-card"><div><div class="pj-eyebrow">JALANKAN TAHAP INI</div>' +
           (stage.number === 1 ? commandBlock('python3 scripts/project_test.py ' + project.id + ' --init my-' + project.id) : '') +
           commandBlock(testCmd) + '</div></div>' +
-        '<div class="pj-doc" id="pjDoc"><p class="pj-loading">Loading the lesson…</p></div>' +
-        (stage.demo ? '<details class="pj-context pj-stage-recording"><summary>Watch the stage ' + stage.number + ' recording</summary>' + demoFigure(stage.demo, project.contentBase || project.path) + '</details>' : '') +
+        '<div class="pj-doc" id="pjDoc"><p class="pj-loading">Memuat pelajaran…</p></div>' +
+        (stage.demo ? '<details class="pj-context pj-stage-recording"><summary>Tonton rekaman tahap ' + stage.number + '</summary>' + demoFigure(stage.demo, project.contentBase || project.path) + '</details>' : '') +
         '<footer class="pj-stage-foot">' +
-          '<button type="button" class="pj-action' + (isDone ? ' secondary' : '') + '" id="pjToggleDone">' + (isDone ? 'Mark as not done' : 'Mark stage complete') + '</button>' +
+          '<button type="button" class="pj-action' + (isDone ? ' secondary' : '') + '" id="pjToggleDone">' + (isDone ? 'Tandai belum selesai' : 'Tandai tahap selesai') + '</button>' +
           '<div class="pj-stage-nav">' +
             (prev ? '<a class="pj-action secondary" href="' + projectHref(project.id, prev.id) + '" data-stage-index="' + (stageIndex - 1) + '">← ' + esc(prev.title) + '</a>' : '') +
             (next ? '<a class="pj-action secondary" href="' + projectHref(project.id, next.id) + '" data-stage-index="' + (stageIndex + 1) + '">' + esc(next.title) + ' →</a>' : '') +
           '</div>' +
-          '<a class="pj-source-link" href="' + esc(repoFileUrl(stage.doc)) + '" target="_blank" rel="noopener">View this lesson on GitHub</a>' +
+          '<a class="pj-source-link" href="' + esc(repoFileUrl(stage.doc)) + '" target="_blank" rel="noopener">Lihat pelajaran ini di GitHub</a>' +
         '</footer>';
 
       document.getElementById('pjToggleDone').addEventListener('click', function () {
@@ -563,7 +563,7 @@
         mountFigures(docEl);
       }).catch(function () {
         if (version !== requestVersion) return;
-        document.getElementById('pjDoc').innerHTML = '<p>Could not load this lesson. <a href="' + esc(repoFileUrl(stage.doc)) + '" target="_blank" rel="noopener">Read it on GitHub</a>.</p>';
+        document.getElementById('pjDoc').innerHTML = '<p>Pelajaran ini gagal dimuat. <a href="' + esc(repoFileUrl(stage.doc)) + '" target="_blank" rel="noopener">Baca di GitHub</a>.</p>';
       });
     }
 
@@ -598,7 +598,7 @@
     var playing = button.getAttribute('aria-pressed') === 'true';
     img.src = playing ? button.getAttribute('data-poster') : img.getAttribute('data-gif');
     button.setAttribute('aria-pressed', String(!playing));
-    button.textContent = playing ? 'Play recording' : 'Stop recording';
+    button.textContent = playing ? 'Putar rekaman' : 'Hentikan rekaman';
   });
 
   enhanceCommands();

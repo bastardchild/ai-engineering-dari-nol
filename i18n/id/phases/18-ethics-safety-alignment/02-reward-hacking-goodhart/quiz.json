@@ -1,0 +1,78 @@
+{
+  "lesson": "02-reward-hacking-goodhart",
+  "title": "Reward Hacking dan Hukum Goodhart",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Hukum Goodhart, seperti dinyatakan semula, mengatakan:",
+      "options": [
+        "Ukuran apa pun yang menjadi target berhenti menjadi ukuran yang baik",
+        "Optimisasi selalu meningkatkan proxy tanpa batas",
+        "Error berekor berat tidak bisa terjadi pada model berdimensi hingga",
+        "Reward model konvergen ke preferensi manusia sebenarnya pada skala besar"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dalam Gao, Schulman, Hilton (2023), bagaimana perilaku proxy reward dan gold reward saat jarak KL dari kebijakan awal bertambah?",
+      "options": [
+        "Keduanya naik monoton terhadap KL",
+        "Proxy memuncak lalu turun, gold naik monoton",
+        "Keduanya datar di bawah batasan KL apa pun",
+        "Proxy terus naik, gold memuncak lebih dekat ke titik asal lalu turun"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang BUKAN salah satu dari empat 'kostum' reward hacking yang didaftar dalam pelajaran ini?",
+      "options": [
+        "Sikofansi",
+        "Ketidakcocokan tokenizer",
+        "Bias verbositas",
+        "Penalaran tidak setia"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa hasil 'Catastrophic Goodhart' tentang regularisasi KL?",
+      "options": [
+        "Regularisasi KL hanya gagal saat kebijakan diinisialisasi acak",
+        "Regularisasi KL setara dengan ensemble reward model",
+        "Pada error reward berekor berat, kebijakan optimal berbatas KL tetap bisa menaikkan proxy reward sementara gold reward bertahan di baseline",
+        "Regularisasi KL selalu mencegah reward hacking saat beta positif"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mitigasi mana yang diteliti Coste et al. (2023) untuk melunakkan over-optimization reward?",
+      "options": [
+        "Melatih kebijakan pada proxy dengan temperature nol",
+        "Ensemble reward model dengan agregasi worst-case",
+        "Menghapus penalti KL sepenuhnya",
+        "Menambah pool pelabel menjadi satu juta penilai"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Menurut pandangan terpadu 2026, mekanisme inti apa yang dibagi verbositas, sikofansi, CoT tidak setia, dan manipulasi evaluator?",
+      "options": [
+        "Semuanya berasal dari jadwal learning rate yang terlalu agresif",
+        "Itu hanya disebabkan pelabel yang menulis preferensi jahat",
+        "Massa probabilitas bergeser ke output yang memaksimalkan proxy reward dengan mengeksploitasi heuristik mudah dipelajari yang berkorelasi semu dengan persetujuan",
+        "Masing-masing adalah bug independen di head reward yang berbeda"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "34-repo-memory-and-state",
+  "title": "Memori Repo dan State Durable",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa uji durabilitas yang menentukan apakah suatu informasi masuk ke memori repo?",
+      "options": [
+        "Apakah pengguna menandainya penting",
+        "Apakah ia berguna tiga bulan dari sekarang saat CI rerun; jika ya, repo; jika tidak, telemetri",
+        "Apakah ia JSON",
+        "Apakah ia muat dalam 4 kB"
+      ],
+      "correct": 1,
+      "explanation": "Memori repo untuk state durable yang berguna tiga bulan lagi; data transien adalah telemetri."
+    },
+    {
+      "stage": "pre",
+      "question": "Field skema apa yang membawa versi kontrak agent?",
+      "options": [
+        "schema_version",
+        "model_id",
+        "session_uuid",
+        "build_hash"
+      ],
+      "correct": 0,
+      "explanation": "schema_version adalah kontrak integer; manager menolak memuat dari versi yang tidak dikenal."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana atomic write bekerja?",
+      "options": [
+        "tempfile.mkstemp di direktori yang sama, tulis, fsync, os.replace (rename atomik) menimpa target",
+        "Append-only dengan CRC",
+        "Enkripsi dan timpa",
+        "Truncate lalu tulis ke target"
+      ],
+      "correct": 0,
+      "explanation": "Rename atomik di POSIX dan Windows mencegah korupsi akibat penulisan parsial."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa idempotency key diperlukan untuk panggilan tool yang tidak idempoten?",
+      "options": [
+        "Jika agent crash setelah panggilan tool tetapi sebelum checkpoint hasilnya, retry dengan aman; catat ID panggilan sebelum eksekusi dan lewati panggilan saat retry",
+        "Untuk memperpendek output",
+        "Untuk penagihan",
+        "Untuk dedup log"
+      ],
+      "correct": 0,
+      "explanation": "pending_calls.jsonl membawa ID panggilan; pemulihan memeriksa dan melewati pekerjaan yang sudah dieksekusi."
+    },
+    {
+      "stage": "check",
+      "question": "Di mana artefak besar (CSV, transkrip panjang, file hasil) sebaiknya berada relatif terhadap state?",
+      "options": [
+        "Digabung ke satu log raksasa",
+        "Di variabel environment",
+        "Inline di agent_state.json",
+        "Sebagai file terpisah (atau object storage) dengan hanya path yang disimpan di state, agar checkpoint tetap kecil dan cepat"
+      ],
+      "correct": 3,
+      "explanation": "Artefak terpisah tumbuh independen dari state; checkpoint tetap murah dibaca dan ditulis."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang kamu dapat dari event sourcing untuk audit + snapshot untuk resume?",
+      "options": [
+        "Memutar ulang keputusan agent secara verbatim dengan membaca snapshot lalu memutar event setelahnya; bentuk sama dengan WAL Postgres",
+        "Inferensi lebih cepat",
+        "Penggunaan disk lebih rendah",
+        "Dukungan voice native"
+      ],
+      "correct": 0,
+      "explanation": "Append ke state.events.jsonl pada setiap mutasi; snapshot berkala ke state.json; putar event setelah timestamp snapshot."
+    },
+    {
+      "stage": "post",
+      "question": "Apa kata pelajaran yang terjadi saat schema_version tidak cocok?",
+      "options": [
+        "Manager melakukan upgrade diam-diam",
+        "State dihapus",
+        "Agent mengulang",
+        "Manager menolak memuat sampai skrip migrasi di tools/migrate_state.py dijalankan"
+      ],
+      "correct": 3,
+      "explanation": "Migrasi skema atau menolak memuat; jangan pernah upgrade diam-diam."
+    }
+  ]
+}

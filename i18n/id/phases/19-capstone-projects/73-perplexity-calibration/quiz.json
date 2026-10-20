@@ -1,0 +1,78 @@
+{
+  "lesson": "73-perplexity-calibration",
+  "title": "Perplexity dan Kalibrasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa implikasi perplexity 1.0 tentang model bahasa pada korpus uji?",
+      "options": [
+        "Model rusak",
+        "Model memberi probabilitas 1 ke setiap token aktual; itu model sempurna",
+        "Model seragam atas kosakata",
+        "Korpus kosong"
+      ],
+      "correct": 1,
+      "explanation": "Perplexity sama dengan exp(rata-rata negative log-likelihood). Saat setiap token mendapat probabilitas 1, NLL nol, dan exp(0) adalah 1."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa harness mewajibkan log-probabilitas non-negatif dari adapter?",
+      "options": [
+        "Numpy crash pada nilai negatif",
+        "Tepi bin di ECE mengasumsikan positif",
+        "Perplexity tidak terdefinisi untuk nilai negatif",
+        "Negative log-probabilities non-negatif menurut definisi; menerima nilai negatif berarti adapter mengirim log p, bukan -log p"
+      ],
+      "correct": 3,
+      "explanation": "-log p dari probabilitas bersifat non-negatif. Nilai negatif adalah pelanggaran kontrak yang diam-diam memberi perplexity < 1, yang mustahil."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur expected calibration error?",
+      "options": [
+        "Selisih rata-rata antara keyakinan tingkat bin dan akurasi tingkat bin, dibobot ukuran bin",
+        "Cross-entropy prediksi",
+        "Jarak absolut rata-rata antara label prediksi dan label benar",
+        "Varians output softmax"
+      ],
+      "correct": 0,
+      "explanation": "ECE membinning prediksi berdasarkan keyakinan, mengukur selisih antara keyakinan rata-rata dan akurasi rata-rata per bin, dibobot ukuran bin."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa implementasi juga mengembalikan populated_bins bersama nilai ECE?",
+      "options": [
+        "Itu penyebut Brier score",
+        "Itu dibutuhkan numpy",
+        "Itu memberi sinyal saat terlalu sedikit bin terisi agar satu angka dapat dipercaya",
+        "Itu diwajibkan untuk reliability diagram"
+      ],
+      "correct": 2,
+      "explanation": "Dengan sedikit bin terisi ECE didominasi noise. Melaporkan jumlah bin terisi memungkinkan runner menolak menerbitkan satu angka yang menyesatkan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditangkap Brier score yang tidak ditangkap ECE?",
+      "options": [
+        "Itu tidak membutuhkan label ground-truth",
+        "Itu lebih cepat dihitung",
+        "Itu hanya bekerja pada hasil biner",
+        "Itu menghukum miscalibration lokal secara langsung, karena itu squared error per prediksi"
+      ],
+      "correct": 3,
+      "explanation": "ECE hanya melihat rata-rata per bin. Brier mengkuadratkan error per prediksi, jadi menangkap kasus di mana bin saling meniadakan secara rata-rata tetapi masing-masing miscalibrated."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kalibrasi adalah laporan per model alih-alih metrik per task?",
+      "options": [
+        "Kalibrasi terlalu lambat dihitung per task",
+        "Task tidak punya probabilitas",
+        "ECE membutuhkan runner mengetahui arsitektur model",
+        "Task tunggal punya terlalu sedikit prediksi untuk mengestimasi statistik bin; laporan menggabungkan seluruh eval"
+      ],
+      "correct": 3,
+      "explanation": "Kalibrasi per task didominasi noise. Runner mengumpulkan pasangan keyakinan/kebenaran lintas semua task sebelum menghitung ECE, Brier, dan reliability diagram."
+    }
+  ]
+}

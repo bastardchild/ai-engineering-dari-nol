@@ -1,0 +1,78 @@
+{
+  "lesson": "53-result-evaluator",
+  "title": "Evaluator Hasil",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa evaluator memakai paired t test alih-alih membandingkan dua angka tunggal?",
+      "options": [
+        "Karena numpy mewajibkan array berpasangan",
+        "Karena runner tidak bisa mengeluarkan satu angka",
+        "Karena memasangkan seed yang sama antar kandidat dan baseline mengisolasi perubahan konfigurasi dari noise inisialisasi acak",
+        "Karena t test selalu diwajibkan IRB"
+      ],
+      "correct": 2,
+      "explanation": "Pairing berdasarkan seed meniadakan efek inisialisasi acak. Selisih yang tersisa dapat diatribusikan ke perubahan konfigurasi, itulah yang diukur test."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa evaluator membawa field direction pada setiap metrik?",
+      "options": [
+        "Karena numpy butuh direction untuk varians",
+        "Karena accuracy dan loss menunjuk arah berlawanan; tanda peningkatan bergantung pada arah mana yang lebih baik untuk metrik yang dibandingkan",
+        "Karena runner mewajibkannya",
+        "Karena parser mengharapkannya"
+      ],
+      "correct": 1,
+      "explanation": "Metrik higher-is-better membaik saat naik; lower-is-better membaik saat turun. Field direction memberi tahu fungsi improvement konvensi tanda mana yang diterapkan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikembalikan jalur verdict saat |improvement| di bawah ambang meski p value signifikan?",
+      "options": [
+        "noise",
+        "regressed",
+        "failed",
+        "improved"
+      ],
+      "correct": 0,
+      "explanation": "Perubahan signifikan secara statistik yang terlalu kecil untuk ditindaklanjuti tetap noise dari sudut pandang loop. Gate ambang berjalan sebelum gate signifikansi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa evaluator mentransformasi metrik berskala log sebelum menghitung improvement?",
+      "options": [
+        "Karena p value bergantung padanya",
+        "Karena log numpy lebih cepat",
+        "Karena runner hanya mengeluarkan metrik berskala log",
+        "Karena perplexity dan metrik serupa tumbuh eksponensial terhadap loss; transformasi ke ruang log membuat ambang seperti dua persen bermakna lintas metrik linear dan log"
+      ],
+      "correct": 3,
+      "explanation": "Perplexity adalah exp(loss). Perubahan loss kecil adalah perubahan perplexity besar. Mengambil log menjaga peningkatan relatif sebanding dengan metrik linear di bawah satu ambang."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan helper paired t test mengembalikan p_value = None?",
+      "options": [
+        "Saat varians nol",
+        "Saat mean sama",
+        "Saat skala metrik log",
+        "Saat tersedia kurang dari dua sampel berpasangan"
+      ],
+      "correct": 3,
+      "explanation": "Distribusi t membutuhkan setidaknya satu derajat kebebasan. Dengan n kurang dari dua tidak ada estimasi varians dan helper mengembalikan None agar jalur verdict dapat menandai run sebagai noise."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi jika bahkan satu hasil kandidat punya label terminal selain ok?",
+      "options": [
+        "Evaluator mengembalikan verdict failed dan mencatat terminal buruk di rationale",
+        "Evaluator membuang seed itu dan melanjutkan",
+        "Evaluator mencoba ulang run",
+        "Evaluator beralih ke one sided test"
+      ],
+      "correct": 0,
+      "explanation": "Run gagal membatalkan set kandidat. Evaluator short-circuit jalur verdict dan mengembalikan failed dengan terminal pelanggar tercantum, agar orkestrator tidak menarik kesimpulan dari run yang crash."
+    }
+  ]
+}

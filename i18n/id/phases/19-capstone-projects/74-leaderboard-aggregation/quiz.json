@@ -1,0 +1,78 @@
+{
+  "lesson": "74-leaderboard-aggregation",
+  "title": "Agregasi Leaderboard",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa agregator mewajibkan setiap skor input di [0, 1]?",
+      "options": [
+        "Tanpa skala bersama, satu metrik dengan rentang 0-100 mendominasi mean per model",
+        "Numpy mewajibkannya",
+        "Itu rentang bin untuk ECE",
+        "Rendering Markdown mengharapkan dua desimal"
+      ],
+      "correct": 0,
+      "explanation": "Jika pass-rate di [0,1] dan BLEU di [0,100], yang kedua menenggelamkan rata-rata. Normalisasi berada di lapisan metrik dan diperiksa di sini."
+    },
+    {
+      "stage": "pre",
+      "question": "Informasi apa yang disembunyikan mean score yang diungkap win-rate?",
+      "options": [
+        "Interval bootstrap",
+        "Apakah model terkalibrasi baik",
+        "Kemenangan per task menahan outlier dan pergeseran skala; mean sensitif terhadap keduanya",
+        "Jumlah task yang diselesaikan"
+      ],
+      "correct": 2,
+      "explanation": "Win-rate menghitung kemenangan task demi task. Model dapat punya mean tinggi dari satu task mudah dan tetap kalah di sebagian besar perbandingan berpasangan."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana bootstrap_mean_ci mengestimasi interval kepercayaan?",
+      "options": [
+        "Dengan mengasumsikan distribusi normal pada mean",
+        "Dengan meresampel skor task dengan pengembalian, menghitung mean tiap sampel, lalu mengambil persentil alpha/2 dan 1 - alpha/2",
+        "Dengan menghitung standar deviasi secara analitik",
+        "Dengan memanggil scipy.stats.bootstrap"
+      ],
+      "correct": 1,
+      "explanation": "Bootstrap persentil non-parametrik pada skor per task; tanpa asumsi distribusi, tanpa scipy."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan CI diff berpasangan melaporkan `significant`?",
+      "options": [
+        "Saat kedua model punya lebih dari tiga puluh task",
+        "Saat CI tidak memuat nol",
+        "Saat win-rate tidak sama",
+        "Saat selisih mean lebih besar dari 0.1"
+      ],
+      "correct": 1,
+      "explanation": "CI yang secara ketat mengecualikan nol berarti selisih tidak mungkin nol pada tingkat yang dipilih; itu definisi operasional yang dipakai lesson."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa bootstrap berpasangan bersifat paired alih-alih independen?",
+      "options": [
+        "Paired bootstrap menghormati bahwa task yang sama memberi data ke kedua model; selisih dihitung task demi task sebelum resampling",
+        "Paired bootstrap satu-satunya yang didukung numpy",
+        "Paired bootstrap berjalan lebih cepat",
+        "Bootstrap independen ilegal di Python"
+      ],
+      "correct": 0,
+      "explanation": "Paired bootstrap mengurangi noise: kita menyampel task, bukan model, jadi perbandingan berada pada set task yang sama setiap iterasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa agregator mengembalikan mean per kategori bersama angka utama?",
+      "options": [
+        "Mean utama dapat menutupi kelemahan tingkat kategori (bagus keseluruhan, buruk di kode); per kategori mengungkapnya",
+        "Mean per kategori berjalan lebih cepat dari mean keseluruhan",
+        "Itu diwajibkan JSON Schema",
+        "Rendering Markdown membutuhkannya"
+      ],
+      "correct": 0,
+      "explanation": "Model dapat menang secara agregat karena cukup baik di semua tempat atau karena mendominasi satu kategori. Rincian per kategori memungkinkan konsumen melihat yang mana."
+    }
+  ]
+}

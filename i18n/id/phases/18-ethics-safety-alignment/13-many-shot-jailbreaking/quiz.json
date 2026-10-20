@@ -1,0 +1,78 @@
+{
+  "lesson": "13-many-shot-jailbreaking",
+  "title": "Many-Shot Jailbreaking",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Properti context window mana yang dieksploitasi many-shot jailbreaking (MSJ)?",
+      "options": [
+        "Ambiguitas tokenizer pada karakter Unicode",
+        "Context window sangat panjang yang memuat ratusan giliran user-assistant palsu berisi kepatuhan berbahaya sebelum query target",
+        "Position embedding berputar melewati 2048 token",
+        "Attention sliding-window memotong system prompt"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana attack success rate (ASR) berskala dengan jumlah shot pada MSJ?",
+      "options": [
+        "Fungsi tangga pada 100 shot",
+        "Linear dengan kemiringan negatif",
+        "Logistik, mendatar di 50%",
+        "Power-law terhadap jumlah shot; tidak mendatar, terus naik"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa MSJ berbagi mekanisme dengan in-context learning (ICL) yang jinak?",
+      "options": [
+        "Keduanya melewati tokenisasi",
+        "Keduanya bergantung pada RLHF",
+        "Keduanya memerlukan scratchpad tersembunyi",
+        "Keduanya bergantung pada model yang mengekstrak struktur tugas dari contoh in-context lalu mengeksekusinya pada query"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa dilema pertahanan sentral untuk MSJ?",
+      "options": [
+        "Pertahanan harus berjalan pada setiap token respons",
+        "Pertahanan butuh klaster GPU",
+        "Pertahanan harus diterapkan pada temperature sampling nol",
+        "Menekan ekstraksi pola dari konteks panjang juga akan menonaktifkan in-context learning yang jinak; pertahanan harus membedakan pola berbahaya dari yang jinak"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pertahanan modifikasi prompt berbasis classifier Anthropic menurunkan keberhasilan serangan MSJ dari berapa ke berapa pada setelan yang diuji?",
+      "options": [
+        "Dari 30% ke 25%",
+        "Dari 99% ke 50%",
+        "Dari 61% ke 2%",
+        "Itu menaikkan ASR"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana MSJ berinteraksi dengan PAIR (Pelajaran 12)?",
+      "options": [
+        "MSJ bisa dikomposisikan dengan PAIR; memakai PAIR untuk menemukan struktur serangan lalu mengisinya dengan banyak shot bisa mencapai ASR lebih tinggi daripada masing-masing sendiri",
+        "PAIR menetralkan MSJ",
+        "Keduanya saling eksklusif",
+        "PAIR hanya berjalan pada model closed-source"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

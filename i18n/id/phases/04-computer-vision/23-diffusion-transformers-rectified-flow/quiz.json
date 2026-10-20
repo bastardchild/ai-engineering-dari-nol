@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa model text-to-image SOTA 2024+ (SD3, FLUX, Z-Image) mengganti denoiser U-Net dengan Diffusion Transformer (DiT)?",
+      "options": ["U-Net tidak lagi didukung di GPU", "DiT berskala lebih dapat diprediksi daripada U-Net (rezim scaling-law yang sama dengan LLM), menangani dependensi spasial jarak jauh lebih baik untuk generasi yang akurat terhadap prompt, dan berpasangan alami dengan encoder teks melalui cross atau joint attention", "Transformer lebih mudah ditulis", "DiT memiliki parameter lebih sedikit"],
+      "correct": 1,
+      "explanation": "DiT memperlakukan diffusion sebagai tugas pemodelan urutan biasa. Ia berskala seperti model bahasa, menghindari inductive bias tetap dari convolution yang dapat menghambat struktur jarak jauh, dan terintegrasi bersih dengan encoder teks transformer. Setiap model SOTA 2026 — SD3, FLUX.1, FLUX.2, SD4, Z-Image, Qwen-Image — adalah DiT."
+    },
+    {
+      "stage": "pre",
+      "question": "Rectified flow melatih model memprediksi velocity `v = epsilon - x_0` sepanjang interpolasi garis lurus antara data dan noise. Mengapa ini memungkinkan sampling 20 langkah alih-alih 1000?",
+      "options": ["Ini memerlukan model lebih besar", "ODE yang dipelajari lebih dekat ke garis lurus daripada SDE melengkung DDPM, sehingga integrasi Euler beberapa langkah menghasilkan sampel akurat; dikombinasikan dengan distilasi kamu mendapatkan varian 1-4 langkah seperti FLUX schnell", "Euler secara tegas lebih baik daripada DDIM", "Tidak; rectified flow juga memerlukan 1000 langkah"],
+      "correct": 1,
+      "explanation": "Proses balik DDPM adalah jalur melengkung stokastik yang memerlukan banyak langkah kecil. Rectified flow mendefinisikan interpolasi garis lurus; velocity yang dipelajari kira-kira konstan sepanjang lintasan. Mengintegralkan ODE yang hampir lurus memerlukan sedikit langkah. SD3 dan FLUX menyampel pada 20-30 langkah dengan kualitas penuh; schnell/turbo/LCM mendistilasi ini lebih jauh menjadi 1-4 langkah."
+    },
+    {
+      "stage": "post",
+      "question": "MMDiT (SD3) memakai dua set bobot, satu untuk token teks dan satu untuk token gambar, yang berbagi satu layer joint attention. Mengapa?",
+      "options": ["Untuk menghemat memori", "Embedding teks dan gambar adalah distribusi yang secara konseptual berbeda; bobot terpisah memungkinkan setiap modalitas memproses representasinya sendiri sementara joint attention memungkinkan keduanya berinteraksi; hasilnya adalah penyelarasan teks-gambar dan pengikut prompt yang lebih baik daripada satu stream bersama", "Itu desain warisan", "Hanya token gambar yang benar-benar melewati attention"],
+      "correct": 1,
+      "explanation": "MMDiT Stable Diffusion 3 mempertahankan stream bobot per modalitas untuk mempertahankan statistik token teks dan gambar yang berbeda sementara layer joint self-attention memungkinkan keduanya menyatu. Ini secara struktural lebih ekspresif daripada concatenate-and-share (yang dipakai SD1/2), dan secara empiris menaikkan kepatuhan prompt serta rendering teks. FLUX memperluas ini menjadi blok double-stream / single-stream bergantian untuk efisiensi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa arti AdaLN-Zero dalam blok DiT, dan mengapa membantu?",
+      "options": ["LayerNorm yang hanya diterapkan 50% waktu", "Adaptive LayerNorm yang MLP modulasinya diinisialisasi nol sehingga blok dimulai sebagai identitas; training kemudian mempelajari scale/shift/gate, yang menstabilkan diffusion transformer sangat dalam", "Layer norm dengan epsilon nol", "LayerNorm dengan mean nol"],
+      "correct": 1,
+      "explanation": "AdaLN memprediksi scale, shift, dan gate dari vektor conditioning. 'Zero' berarti MLP diinisialisasi nol, sehingga gate dimulai dari 0 dan blok bertindak sebagai identitas. Gradien perlahan mendorong modulasi menjauh dari nol, yang mencegah tumpukan dalam divergen di awal training. Ini adalah padanan DiT dari residual zero-init ResNet dan dipakai di setiap diffusion transformer modern."
+    },
+    {
+      "stage": "post",
+      "question": "FLUX.1-schnell dapat menghasilkan gambar dalam 4 langkah. Teknik mana yang memungkinkannya?",
+      "options": ["Bobot presisi lebih rendah", "Jumlah parameter lebih kecil", "Distilasi — schnell dilatih dari guru lambat banyak langkah memakai objektif adversarial / bergaya consistency sehingga 1-4 langkah denoising cocok dengan output 20-30 langkah guru", "Arsitektur dasar berbeda dari FLUX.1-dev"],
+      "correct": 2,
+      "explanation": "Varian Schnell / Turbo / LCM memakai distilasi langkah. Student langkah kecil belajar mencocokkan output guru banyak langkah. Arsitektur dasar dan jumlah parameter sering identik (FLUX.1-dev dan schnell keduanya 12B). Distilasi inilah yang membuat inferensi di bawah 1 detik praktis. Ini ide yang sama dengan SDXL Turbo, SD Turbo, dan Latent Consistency Models."
+    }
+  ]
+}

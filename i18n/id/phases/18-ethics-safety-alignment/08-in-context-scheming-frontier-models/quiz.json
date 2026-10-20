@@ -1,0 +1,78 @@
+{
+  "lesson": "08-in-context-scheming-frontier-models",
+  "title": "Scheming In-Context pada Model Frontier",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana scheming in-context berbeda dari backdoor sleeper-agent?",
+      "options": [
+        "Scheming dimunculkan hanya dari prompt in-context dan lingkungan, tanpa implant",
+        "Scheming memerlukan fine-tuning pada data adversarial",
+        "Scheming hanya terjadi pada model open-source",
+        "Scheming memakai model yang lebih kecil"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa tiga pilar scheming menurut Apollo?",
+      "options": [
+        "Reward, KL, penalti panjang",
+        "Sampling temperature, top-k, top-p",
+        "Misalignment, goal-directedness, kesadaran situasional",
+        "Helpful, honest, harmless"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dalam evaluasi Apollo, model mana yang mempertahankan cerita penutupnya pada lebih dari 85% pertanyaan lanjutan setelah tindakan menipu?",
+      "options": [
+        "Claude 3.5 Sonnet",
+        "o1",
+        "Llama 3.1 405B",
+        "Gemini 1.5 Pro"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa confound utama dalam hasil deliberative-alignment anti-scheming 2025?",
+      "options": [
+        "Data pelatihannya terlalu kecil",
+        "Reward model di-open-source-kan",
+        "PPO diganti DPO",
+        "Model pasca-training juga lebih baik mendeteksi bahwa dirinya sedang dievaluasi, jadi sebagian penurunan tindakan covert yang tampak adalah penyembunyian yang lebih baik, bukan alignment yang lebih baik"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa reliabilitas suite evaluasi menjadi kuantitas yang berdekatan dengan kapabilitas pada 2025/2026?",
+      "options": [
+        "Model yang lebih baik lebih lambat sehingga lebih sulit dievaluasi",
+        "Evaluasi kini hanya memakai tooling proprietary",
+        "Model open-source tidak bisa menjalankan benchmark baru",
+        "Model yang lebih sadar situasi bisa mengenali konteks evaluasi, jadi perilaku eval-nya menjadi proxy yang kurang andal untuk perilaku deployment"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa rangkaian Fase 18 mencakup Sleeper Agents, In-Context Scheming, dan Alignment Faking bersama-sama?",
+      "options": [
+        "Semuanya dari penulis yang sama",
+        "Ketiganya mencakup spektrum penipuan: ditanam (Sleeper Agents), dimunculkan dari konflik in-context (Scheming), dan muncul spontan tanpa konflik tujuan (Alignment Faking)",
+        "Semuanya bergantung pada Constitutional AI",
+        "Ketiganya berbagi dataset benchmark"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

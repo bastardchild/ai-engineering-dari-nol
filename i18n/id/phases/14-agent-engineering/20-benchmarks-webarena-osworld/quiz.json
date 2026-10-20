@@ -1,0 +1,90 @@
+{
+  "lesson": "20-benchmarks-webarena-osworld",
+  "title": "Benchmark: WebArena dan OSWorld",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa WebArena men-self-host empat aplikasi targetnya?",
+      "options": [
+        "Untuk menghindari TLS",
+        "Untuk mem-pin versi yang dapat direproduksi agar evaluasi berbasis eksekusi dan tidak flaky",
+        "Untuk menghemat biaya",
+        "Untuk berjalan di GPU"
+      ],
+      "correct": 1,
+      "explanation": "Aplikasi self-hosted yang di-pin membuat evaluasi berbasis eksekusi andal dan dapat dibandingkan seiring waktu."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa OSWorld memakai screenshot OS nyata alih-alih accessibility API?",
+      "options": [
+        "Screenshot lebih murah",
+        "Accessibility API membocorkan PII",
+        "Accessibility API terlalu cepat",
+        "Screenshot memaksa agent melakukan GUI grounding nyata pada 1920x1080, sesuai batasan produksi"
+      ],
+      "correct": 3,
+      "explanation": "Evaluasi berbasis screenshot memaksa grounding piksel-ke-elemen, batasan produksi yang sebenarnya."
+    },
+    {
+      "stage": "check",
+      "question": "Dua mode kegagalan utama apa yang muncul di OSWorld?",
+      "options": [
+        "Latency dan bandwidth",
+        "Halusinasi dan penolakan",
+        "Embedding drift dan kebocoran token",
+        "GUI grounding dan pengetahuan operasional"
+      ],
+      "correct": 3,
+      "explanation": "Grounding (piksel-ke-elemen) dan pengetahuan operasional (menu, shortcut) adalah penghalang utamanya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditambahkan OSWorld-Human di atas benchmark dasarnya?",
+      "options": [
+        "Trajektori aksi emas yang dikurasi manual yang memunculkan celah inefisiensi langkah agent 1,4-2,7x",
+        "Resolusi layar lebih besar",
+        "Lebih banyak tugas",
+        "OS baru"
+      ],
+      "correct": 0,
+      "explanation": "Trajektori emas membuat efisiensi trajektori terukur, bukan hanya tingkat keberhasilan."
+    },
+    {
+      "stage": "check",
+      "question": "Angka saat rilis mana yang dikutip pelajaran untuk WebArena?",
+      "options": [
+        "Agent terbaik 50% dengan manusia 50%",
+        "Agent terbaik 0% di semua bidang",
+        "Agent terbaik 99% dengan manusia 100%",
+        "Agent GPT-4 terbaik 14,41% keberhasilan vs manusia 78,24%"
+      ],
+      "correct": 3,
+      "explanation": "Celah 14,41% vs 78,24% adalah angka saat rilis WebArena."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diperingatkan pelajaran terjadi pada evaluasi screenshot-only saat agent memakai DOM atau accessibility API?",
+      "options": [
+        "Tidak ada yang berubah",
+        "Test lulus secara sepele",
+        "Kamu melewati rate limit",
+        "Kamu melewatkan tantangan grounding yang dirancang OSWorld untuk diukur"
+      ],
+      "correct": 3,
+      "explanation": "Mengevaluasi agent berbasis accessibility API pada benchmark screenshot-only melewati uji grounding."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mengabaikan panjang trajektori merupakan kegagalan benchmarking?",
+      "options": [
+        "Panjang adalah satu-satunya metrik yang penting",
+        "Ia menyembunyikan biaya dan inefisiensi yang tidak tertangkap tingkat keberhasilan saja (celah 1,4-2,7x yang dimunculkan OSWorld-Human)",
+        "Trajektori tidak dapat diukur",
+        "Panjang trajektori selalu sama dengan emas"
+      ],
+      "correct": 1,
+      "explanation": "Dua agent dengan keberhasilan 60% bisa berbeda 2-3x dalam langkah; biaya dan efisiensi hanya terlihat jika kamu mengukur panjang trajektori."
+    }
+  ]
+}

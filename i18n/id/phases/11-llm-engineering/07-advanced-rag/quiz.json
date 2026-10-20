@@ -1,0 +1,66 @@
+{
+  "lesson": "07-advanced-rag",
+  "title": "RAG Lanjutan (Chunking, Reranking, Hybrid Search)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa keterbatasan pencarian semantik top-k dasar dalam RAG?",
+      "options": [
+        "Ia memerlukan GPU",
+        "Ia mengambil chunk yang mirip secara semantik dengan query tetapi mungkin tidak memuat jawaban sebenarnya, terutama untuk pertanyaan ambigu atau multi-hop",
+        "Ia terlalu lambat",
+        "Ia tidak dapat menangani dokumen besar"
+      ],
+      "correct": 1,
+      "explanation": "Pencarian semantik dasar mencocokkan makna permukaan. 'Berapa pendapatan kuartal lalu?' mengambil chunk tentang 'strategi pendapatan' (mirip semantik) alih-alih chunk yang menyatakan '$47.2M pada Q3 2025' (yang memakai kata 'earnings')."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu hybrid search dalam konteks RAG?",
+      "options": [
+        "Menggabungkan pencocokan kata kunci BM25 dengan pencarian vektor semantik untuk menangkap istilah persis dan relevansi berbasis makna",
+        "Memakai CPU dan GPU untuk pencarian",
+        "Mencari lintas beberapa database",
+        "Memakai dua LLM berbeda"
+      ],
+      "correct": 0,
+      "explanation": "BM25 menangkap kecocokan kata kunci persis (misalnya '$47.2M' atau 'Q3'). Pencarian semantik menangkap kecocokan makna. Menggabungkannya dengan reranker memberi yang terbaik dari keduanya: presisi pada istilah spesifik plus recall pada varian semantik."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan cross-encoder reranker dalam pipeline RAG lanjutan?",
+      "options": [
+        "Ia meng-encode dokumen menjadi vektor",
+        "Ia menghasilkan jawaban akhir",
+        "Ia memecah dokumen menjadi chunk",
+        "Ia mengambil pasangan (query, dokumen) dan menilai relevansinya dengan akurasi lebih tinggi daripada kemiripan embedding, mengurutkan ulang hasil retrieval awal"
+      ],
+      "correct": 3,
+      "explanation": "Kemiripan bi-encoder (dipakai untuk retrieval awal) cepat tetapi perkiraan. Cross-encoder memproses pasangan query-dokumen penuh bersama dengan cross-attention, memberi skor relevansi jauh lebih akurat untuk reranking kandidat teratas."
+    },
+    {
+      "stage": "post",
+      "question": "Apa teknik transformasi query HyDE (Hypothetical Document Embedding)?",
+      "options": [
+        "Mengenkripsi query untuk privasi",
+        "Memakai LLM untuk menghasilkan jawaban hipotetis, lalu meng-embed jawaban itu sebagai query pencarian alih-alih pertanyaan asli",
+        "Memperluas singkatan dalam query",
+        "Menyembunyikan query dari model"
+      ],
+      "correct": 1,
+      "explanation": "Query asli 'Berapa pendapatan Q3?' mungkin tidak ter-embed dekat dengan chunk jawaban. HyDE meminta LLM menghasilkan jawaban hipotetis ('Pendapatan Q3 kira-kira...'), lalu memakainya sebagai query pencarian, yang ter-embed lebih dekat ke chunk yang benar-benar memuat jawaban."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa parent-child chunking meningkatkan RAG dibanding chunking datar?",
+      "options": [
+        "Ia lebih cepat diindeks",
+        "Chunk anak kecil dipakai untuk retrieval presisi, tetapi chunk induk yang lebih besar dikembalikan untuk konteks, mencegah masalah 'konteks hilang'",
+        "Ia mengurangi jumlah chunk",
+        "Ia menghilangkan kebutuhan embedding"
+      ],
+      "correct": 1,
+      "explanation": "Chunk kecil (200 token) ter-embed presisi tetapi kurang konteks. Chunk besar (2000 token) punya konteks tetapi ter-embed tidak presisi. Parent-child memakai chunk kecil untuk akurasi pencarian tetapi mengembalikan chunk induk untuk konteks generasi."
+    }
+  ]
+}

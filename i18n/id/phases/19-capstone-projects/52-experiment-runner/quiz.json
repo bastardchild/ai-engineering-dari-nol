@@ -1,0 +1,78 @@
+{
+  "lesson": "52-experiment-runner",
+  "title": "Runner Eksperimen",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa runner menjalankan subprocess alih-alih mengimpor skrip eksperimen in-process?",
+      "options": [
+        "Karena subprocess lebih cepat daripada import",
+        "Karena proses terpisah memberi runner pegangan kill saat timeout atau batas memori dan mengisolasi crash dari orkestrator",
+        "Karena Python melarang import bersarang",
+        "Karena format metrik mewajibkannya"
+      ],
+      "correct": 1,
+      "explanation": "Proses terpisah adalah isolasi paling sederhana yang disediakan bahasa. Parent mempertahankan pegangan kill dan ruang alamat independen, sehingga eksperimen yang crash tidak menjatuhkan orkestrator."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa cap memori disebut soft?",
+      "options": [
+        "Karena hanya berlaku untuk heap, bukan stack",
+        "Karena poller punya interval non-nol, jadi proses dapat melonjak di atas cap antar polling dan runner hanya bertindak pada observasi berikutnya",
+        "Karena OS selalu menimpanya",
+        "Karena numpy mengabaikannya"
+      ],
+      "correct": 1,
+      "explanation": "Cap ditegakkan dengan polling, bukan batas in-kernel. Interval poller adalah resolusi cap, dan lonjakan singkat dapat melewati cap sebelum observasi berikutnya."
+    },
+    {
+      "stage": "check",
+      "question": "Label terminal mana yang dikembalikan runner saat stdout punya metrik tetapi exit code non-nol?",
+      "options": [
+        "timeout",
+        "crash",
+        "ok",
+        "oom"
+      ],
+      "correct": 1,
+      "explanation": "Terminal ok hanya saat exit code nol dan metrik ter-parse. Exit code non-nol adalah crash bahkan jika sebagian metrik tertangkap sebelum kegagalan."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana runner mengidentifikasi blob metrik final di dalam stdout?",
+      "options": [
+        "Memindai stderr untuk json",
+        "Mengharapkan tepat satu baris output",
+        "Membaca baris json terakhir yang key-nya mencakup metric_keys wajib; baris covering sebelumnya menjadi metrik intermediate",
+        "Membaca baris json pertama"
+      ],
+      "correct": 2,
+      "explanation": "Metrik final adalah baris terakhir yang di-parse sebagai json dan memuat setiap key wajib. Baris covering sebelumnya disimpan sebagai metrik intermediate untuk kurva pembelajaran."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa helper ablation menyapu satu knob sekaligus alih-alih faktorial penuh?",
+      "options": [
+        "Karena satu knob sekaligus menghasilkan sumbu bersih yang dapat diplot evaluator, sementara faktorial penuh meledak eksponensial dan mengaburkan interpretasi",
+        "Karena seed hanya bervariasi di satu knob",
+        "Karena runner tidak bisa meluncurkan lebih dari satu subprocess",
+        "Karena numpy tidak mendukung produk kartesian"
+      ],
+      "correct": 0,
+      "explanation": "Sweep satu knob menjaga hasil tetap dapat diinterpretasikan. Biaya faktorial penuh diskalakan eksponensial dengan jumlah knob dan tabel hasilnya sulit dibaca."
+    },
+    {
+      "stage": "check",
+      "question": "Jaminan apa yang diberikan meneruskan spec.seed ke config['__seed'] kepada evaluator?",
+      "options": [
+        "Konsumsi memori lebih rendah",
+        "Wall time lebih cepat",
+        "Uji signifikansi gratis",
+        "Determinisme, sehingga run ulang dengan seed sama menghasilkan metrik identik dan evaluator dapat membedakan perubahan nyata dari noise acak"
+      ],
+      "correct": 3,
+      "explanation": "Seed memaku inisialisasi acak dalam eksperimen. Dua run dengan seed sama menghasilkan metrik identik, itulah yang memungkinkan evaluator membedakan regresi nyata dari draw berbeda."
+    }
+  ]
+}

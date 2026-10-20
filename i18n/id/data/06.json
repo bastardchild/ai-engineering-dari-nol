@@ -1,0 +1,95 @@
+{
+  "phase": {
+    "6": {
+      "name": "Ucapan & Audio",
+      "desc": "Dengar, pahami, bicara."
+    }
+  },
+  "lessons": {
+    "phases/06-speech-and-audio/01-audio-fundamentals": {
+      "name": "Dasar-Dasar Audio: Waveform, Sampling, FFT",
+      "summary": "Waveform adalah sinyal mentah. Spectrogram adalah representasinya. Fitur mel adalah bentuk yang ramah ML. Setiap pipeline ASR dan TTS modern menaiki tangga ini, dan anak tangga pertamanya…",
+      "keywords": "Langkah 1: baca sebuah klip dan plot waveform-nya · Langkah 2: sintesis gelombang sinus dari prinsip dasar · Langkah 3: hitung DFT secara manual · Langkah 4: temukan frekuensi dominan · Langkah 5: demonstrasikan aliasing"
+    },
+    "phases/06-speech-and-audio/02-spectrograms-mel-features": {
+      "name": "Spectrogram, Skala Mel & Fitur Audio",
+      "summary": "Jaringan neural tidak mencerna waveform mentah dengan baik. Mereka mencerna spectrogram. Mereka mencerna mel spectrogram bahkan lebih baik. Setiap ASR, TTS, dan classifier audio pada 2026 hidup atau mati b…",
+      "keywords": "Langkah 1: framing waveform · Langkah 2: Hann window · Langkah 3: magnitudo STFT · Langkah 4: filterbank mel · Langkah 5: log-mel · Langkah 6: MFCC"
+    },
+    "phases/06-speech-and-audio/03-audio-classification": {
+      "name": "Klasifikasi Audio",
+      "summary": "Segala hal dari \"anjing menggonggong vs sirene\" sampai \"ini bahasa apa\" adalah klasifikasi audio. Fiturnya mel. Arsitekturnya bergeser tiap dekade. Evaluasinya tetap AUC, …",
+      "keywords": "Ketidakseimbangan kelas adalah tantangan sesungguhnya · Evaluasi · Langkah 1: featurisasi · Langkah 2: ringkasan panjang tetap · Langkah 3: k-NN · Langkah 4: tingkatkan ke CNN pada log-mel · Langkah 5: fine-tune transformer audio terlatih (AST ditunjukkan)"
+    },
+    "phases/06-speech-and-audio/04-speech-recognition-asr": {
+      "name": "Pengenalan Ucapan (ASR)",
+      "summary": "Pengenalan ucapan adalah klasifikasi audio di setiap timestep, direkatkan oleh model sequence yang paham bahasa Inggris dan keheningan. CTC, RNN-T, dan attention adalah tiga cara untuk …",
+      "keywords": "WER: satu angka itu · Langkah 1: decode CTC greedy · Langkah 2: beam-search CTC · Langkah 3: WER · Langkah 4: inferensi terhadap Whisper · Langkah 5: streaming dengan Parakeet atau wav2vec 2.0"
+    },
+    "phases/06-speech-and-audio/05-whisper-architecture-finetuning": {
+      "name": "Whisper: Arsitektur & Fine-Tuning",
+      "summary": "Whisper adalah transformer encoder-decoder berjendela 30 detik, dilatih pada 680 ribu jam pasangan audio-teks multibahasa dengan supervisi lemah. Satu arsitektur, banyak tugas, akurasi yang tangguh acr…",
+      "keywords": "Varian pada 2026 · Fine-tuning · Langkah 1: jalankan Whisper langsung pakai · Langkah 2: long-form terpotong chunk · Langkah 3: fine-tune dengan LoRA · Langkah 4: periksa apa yang dipelajari tiap layer"
+    },
+    "phases/06-speech-and-audio/06-speaker-recognition-verification": {
+      "name": "Speaker Recognition & Verifikasi",
+      "summary": "ASR bertanya \"apa yang mereka katakan?\" Speaker recognition bertanya \"siapa yang mengatakannya?\" Matematikanya tampak sama — embedding plus cosine — tapi setiap keputusan produksi bergantung pada satu angka EER…",
+      "keywords": "Scoring · Angka yang perlu kamu tahu (2026) · Diarisasi · Langkah 1: embedding mainan dari statistik MFCC · Langkah 2: kemiripan cosine + threshold · Langkah 3: EER dari pasangan kemiripan · Langkah 4: produksi dengan SpeechBrain · Langkah 5: diarisasi dengan pyannote"
+    },
+    "phases/06-speech-and-audio/07-text-to-speech": {
+      "name": "Text-to-Speech (TTS)",
+      "summary": "ASR membalik ucapan menjadi teks; TTS membalik teks menjadi ucapan. Stack 2026 terdiri dari tiga bagian: teks → token, token → mel, mel → waveform. Tiap bagian punya model default yang muat di …",
+      "keywords": "Evolusi vocoder · Evaluasi · Langkah 1: fonemisasi input · Langkah 2: jalankan Kokoro (default CPU 2026) · Langkah 3: jalankan F5-TTS dengan voice cloning · Langkah 4: vocoder HiFi-GAN dari nol · Langkah 5: pipeline lengkap (pseudocode)"
+    },
+    "phases/06-speech-and-audio/08-voice-cloning-conversion": {
+      "name": "Voice Cloning & Voice Conversion",
+      "summary": "Voice cloning membacakan teksmu dengan suara orang lain. Voice conversion menulis ulang suaramu menjadi suara orang lain sambil mempertahankan apa yang kamu ucapkan. Keduanya bergantung pada dekomposisi yang sama…",
+      "keywords": "Bagian etika, bukan tempelan · Angka (2026) · Langkah 1: dekomposisi dengan recognition-synthesis (demo kode saja di main.py) · Langkah 2: kloning zero-shot dengan F5-TTS · Langkah 3: konversi suara dengan KNN-VC · Langkah 4: sematkan watermark · Langkah 5: gate persetujuan"
+    },
+    "phases/06-speech-and-audio/09-music-generation": {
+      "name": "Pembuatan Musik",
+      "summary": "Pembuatan musik 2026: Suno v5 dan Udio v4 mendominasi komersial; MusicGen, Stable Audio Open, dan ACE-Step memimpin open-source. Masalah teknisnya sebagian besar sudah terpecahkan. Masalah hukum pro…",
+      "keywords": "LM token atas token neural-codec · Diffusion atas mel atau latent · Hybrid (produksi) — Suno, Udio, Lyria · Evaluasi · Langkah 1: generate dengan MusicGen · Langkah 2: conditioning melodi · Langkah 3: evaluasi FAD · Langkah 4: menambahkannya ke alur kerja musik-LLM"
+    },
+    "phases/06-speech-and-audio/10-audio-language-models": {
+      "name": "Model Audio-Language",
+      "summary": "Model audio-language 2026 bernalar atas ucapan + suara lingkungan + musik. Qwen2.5-Omni-7B menyamai GPT-4o Audio pada MMAU-Pro. Audio Flamingo Next mengalahkan Gemini 2.5 Pro pada LongAu…",
+      "keywords": "Template tiga komponen · Peta model 2026 · Pemeriksaan realitas benchmark (2026) · Di mana LALM berguna pada 2026 · Di mana mereka BELUM berguna · Langkah 1: query Qwen2.5-Omni · Langkah 2: pola proyektor · Langkah 3: benchmark MMAU / LongAudioBench"
+    },
+    "phases/06-speech-and-audio/11-real-time-audio-processing": {
+      "name": "Pemrosesan Audio Real-Time",
+      "summary": "Pipeline batch memproses sebuah file. Pipeline real-time memproses 20 milidetik berikutnya sebelum 20 milidetik berikutnya tiba. Setiap AI percakapan, studio siaran, dan bot telepon hidup…",
+      "keywords": "Jebakan umum · Langkah 1: ring buffer · Langkah 2: gate VAD · Langkah 3: streaming ASR · Langkah 4: penangan interupsi"
+    },
+    "phases/06-speech-and-audio/12-voice-assistant-pipeline": {
+      "name": "Bangun Pipeline Asisten Suara",
+      "summary": "Semua dari pelajaran 01-11, dirangkai. Bangun asisten suara yang mendengar, bernalar, dan membalas. Pada 2026 itu masalah rekayasa yang sudah terpecahkan, bukan masalah riset…",
+      "keywords": "Tujuh komponen · Tiga mode kegagalan yang akan kamu temui · Stack referensi produksi 2026 · Langkah 1: penangkapan mic dengan chunking (pseudocode) · Langkah 2: penangkapan giliran dengan gate VAD · Langkah 3: streaming STT → LLM → TTS · Langkah 4: tool calling di dalam loop LLM · Langkah 5: penanganan interupsi"
+    },
+    "phases/06-speech-and-audio/13-neural-audio-codecs": {
+      "name": "Codec Audio Neural — EnCodec, SNAC, Mimi, DAC",
+      "summary": "Pembuatan audio 2026 hampir seluruhnya token. EnCodec, SNAC, Mimi, dan DAC mengubah waveform kontinu menjadi sequence diskret yang bisa diprediksi transformer. Perbedaan semantik-vs-akustik…",
+      "keywords": "Trik inti: Residual Vector Quantization (RVQ) · Empat codec yang penting pada 2026 · Frame rate penting untuk pemodelan bahasa · Token semantik vs akustik · Kualitas rekonstruksi 2026 (bit per detik, bitrate lebih rendah lebih baik) · Langkah 1: encode dengan EnCodec · Langkah 2: decode dan ukur rekonstruksi · Langkah 3: pemisahan semantik-akustik (gaya Mimi) · Langkah 4: mengapa AR LM atas token codec bekerja"
+    },
+    "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking": {
+      "name": "Voice Activity Detection & Turn-Taking",
+      "summary": "Setiap agen suara hidup atau mati pada dua keputusan: apakah pengguna sedang bicara sekarang, dan apakah mereka sudah selesai? VAD menjawab yang pertama. Turn-detection (VAD + silence-hangover + semantic endpoint …",
+      "keywords": "Kaskade VAD tiga tingkat · Parameter kunci dan default-nya · Trik flush (Kyutai 2025) · Perbandingan VAD 2026 · Langkah 1: gate energi · Langkah 2: Silero VAD di Python · Langkah 3: state machine akhir giliran · Langkah 4: kerangka trik flush"
+    },
+    "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki": {
+      "name": "Speech-to-Speech Streaming — Moshi, Hibiki",
+      "summary": "2024-2026 mendefinisikan ulang AI suara. Moshi mengirim satu model yang mendengar dan berbicara simultan pada latency 200 ms. Hibiki melakukan terjemahan speech-to-speech chunk demi chunk. Keduanya …",
+      "keywords": "Arsitektur Moshi · Mengapa teks inner-monologue membantu · Hibiki: terjemahan speech-to-speech streaming · Stack Kyutai yang lebih luas (2026) · Sesame CSM — saudaranya · Angka performa 2026 · Langkah 1: antarmukanya · Langkah 2: loop full-duplex · Langkah 3: tujuan training (konseptual) · Langkah 4: di mana Moshi menang dan di mana tidak"
+    },
+    "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking": {
+      "name": "Anti-Spoofing Suara & Audio Watermarking",
+      "summary": "Voice cloning rilis lebih cepat daripada pertahanannya. Sistem suara produksi 2026 butuh dua hal: detektor (AASIST, RawNet2) yang mengklasifikasikan ucapan asli vs palsu, dan watermark (Aud…",
+      "keywords": "ASVspoof 5 — benchmark 2024-2025 · AASIST dan RawNet2 — keluarga model deteksi · AudioSeal — default watermark 2024 · WavMark · WaveVerify (Juli 2025) · Celah yang dieksploitasi adversary · C2PA / Content Authenticity Initiative · Langkah 1: detektor fitur spektral sederhana (mainan) · Langkah 2: sematkan + deteksi AudioSeal · Langkah 3: evaluasi — EER · Langkah 4: integrasi produksi"
+    },
+    "phases/06-speech-and-audio/17-audio-evaluation-metrics": {
+      "name": "Evaluasi Audio — WER, MOS, MMAU, Leaderboard",
+      "summary": "Kamu tidak bisa merilis apa yang tidak bisa kamu ukur. Pelajaran ini menyebutkan metrik 2026 untuk setiap tugas audio: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), audio-language…",
+      "keywords": "Metrik ASR · Metrik TTS · Khusus voice cloning · Verifikasi speaker · Diarisasi · Klasifikasi audio · Pembuatan musik · Benchmark audio-language · Speech-to-speech streaming · Leaderboard 2026 · Langkah 1: WER dengan normalisasi · Langkah 2: WER round-trip TTS · Langkah 3: SECS untuk voice cloning · Langkah 4: FAD untuk pembuatan musik · Langkah 5: EER untuk verifikasi speaker (kode sama dengan Pelajaran 6)"
+    }
+  }
+}

@@ -10,10 +10,10 @@ const learningPathsCss = fs.readFileSync(path.join(__dirname, 'learning-paths.cs
 const learningPathsJs = fs.readFileSync(path.join(__dirname, 'learning-paths.js'), 'utf8');
 
 const domains = [
-  { id: 'building-and-deploying', title: 'Building and Deploying AI Applications', children: 6 },
-  { id: 'software-fundamentals', title: 'Software Engineering Fundamentals', children: 5 },
-  { id: 'coding-agents', title: 'Agent-Assisted Engineering', children: 8 },
-  { id: 'shaping-the-build', title: 'Product Judgment and Delivery', children: 8 },
+  { id: 'building-and-deploying', title: 'Membangun dan Men-deploy Aplikasi AI', children: 6 },
+  { id: 'software-fundamentals', title: 'Dasar-Dasar Rekayasa Perangkat Lunak', children: 5 },
+  { id: 'coding-agents', title: 'Rekayasa Berbantuan Agent', children: 8 },
+  { id: 'shaping-the-build', title: 'Penilaian Produk dan Pengiriman', children: 8 },
 ];
 
 const expectedCareerTitles = new Map([
@@ -25,9 +25,18 @@ const expectedCareerTitles = new Map([
   ['ai-evaluation-reliability-engineer', 'AI Evaluation and Reliability'],
 ]);
 
+const expectedCareerDisplayTitles = new Map([
+  ['forward-deployed-ai-engineer', 'Deployment AI untuk Pelanggan'],
+  ['ai-developer-relations-engineer', 'Pengalaman dan Edukasi Developer'],
+  ['ai-data-engineer', 'Sistem Data AI'],
+  ['agentic-ai-engineer', 'Rekayasa Sistem Agent'],
+  ['applied-ai-engineer', 'Rekayasa Produk LLM'],
+  ['ai-evaluation-reliability-engineer', 'Evaluasi dan Keandalan AI'],
+]);
+
 const careerRoutes = Array.from(expectedCareerTitles, ([id, title]) => {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'learning-paths', `${id}.json`), 'utf8'));
-  return { id, title, manifest };
+  return { id, title, displayTitle: expectedCareerDisplayTitles.get(id), manifest };
 });
 
 function sectionSource(id) {
@@ -47,9 +56,9 @@ function careerSectionSource() {
 }
 
 test('homepage nodes open the expanded learning paths domains', () => {
-  assert.match(homepage, /href="learning-paths\.html"[\s\S]*?>\s*<span>Explore Learning Paths<\/span>/);
-  assert.match(homepage, /href="learning-paths\.html#career-routes">Browse career routes<\/a>/);
-  assert.match(homepage, /<figcaption class="learning-paths-compact-root">\s*<strong>AI Engineering<\/strong>\s*<span>4 connected domains<\/span>\s*<\/figcaption>/);
+  assert.match(homepage, /href="learning-paths\.html"[\s\S]*?>\s*<span>Jelajahi Jalur Belajar<\/span>/);
+  assert.match(homepage, /href="learning-paths\.html#career-routes">Jelajahi rute karier<\/a>/);
+  assert.match(homepage, /<figcaption class="learning-paths-compact-root">\s*<strong>AI Engineering<\/strong>\s*<span>4 domain yang terhubung<\/span>\s*<\/figcaption>/);
   assert.match(homepage, /@media \(max-width: 600px\)[\s\S]*?\.learning-paths-figure\s*\{[\s\S]*?display: grid;[\s\S]*?gap: 8px;[\s\S]*?padding: 12px;/);
   assert.match(homepage, /@media \(max-width: 600px\)[\s\S]*?\.learning-paths-figure picture\s*\{\s*display: none;\s*\}/);
   assert.match(homepage, /@media \(max-width: 600px\)[\s\S]*?\.learning-paths-node\s*\{[\s\S]*?position: relative;[\s\S]*?min-height: 48px;/);
@@ -83,24 +92,24 @@ test('every core learning path exposes clickable child competencies', () => {
 test('software foundations follows five capability branches backed by lessons', () => {
   const source = sectionSource('software-fundamentals');
   for (const branch of [
-    'End-to-End Application Delivery',
-    'Data Lifecycle and Storage',
-    'System Architecture and Boundaries',
-    'Secure and Resilient Systems',
-    'Production Scale and Service Ownership',
+    'Pengiriman Aplikasi Ujung-ke-Ujung',
+    'Siklus Hidup Data dan Penyimpanan',
+    'Arsitektur Sistem dan Batas',
+    'Sistem Aman dan Tangguh',
+    'Skala Produksi dan Kepemilikan Layanan',
   ]) {
     assert.match(source, new RegExp(`<strong>${branch}</strong>`));
   }
   assert.match(source, /class="skills-domain-children skills-domain-children--five"/);
-  assert.match(source, /Open representative lesson/);
-  assert.match(source, /13-lesson foundation path · 730 minutes/);
+  assert.match(source, /Buka pelajaran representatif/);
+  assert.match(source, /jalur fondasi 13 pelajaran · 730 menit/);
   assert.match(source, /17-infrastructure-and-production\/25-security-secrets-audit/);
 });
 
 test('domain route totals match their canonical manifests', () => {
-  assert.match(sectionSource('building-and-deploying'), /12-lesson path · 780 minutes/);
-  assert.match(sectionSource('software-fundamentals'), /13-lesson foundation path · 730 minutes/);
-  assert.match(sectionSource('coding-agents'), /16-lesson path · 900 minutes/);
+  assert.match(sectionSource('building-and-deploying'), /jalur 12 pelajaran · 780 menit/);
+  assert.match(sectionSource('software-fundamentals'), /jalur fondasi 13 pelajaran · 730 menit/);
+  assert.match(sectionSource('coding-agents'), /jalur 16 pelajaran · 900 menit/);
 });
 
 test('every child node resolves to a real local lesson', () => {
@@ -127,7 +136,7 @@ test('career chooser opens detailed work-family guides before lessons', () => {
   const source = careerSectionSource();
   assert.equal((source.match(/<details class="career-guide"/g) || []).length, careerRoutes.length);
   assert.equal((source.match(/data-career-choice=/g) || []).length, careerRoutes.length);
-  assert.equal((source.match(/>Study specialist lessons<\/a>/g) || []).length, careerRoutes.length);
+  assert.equal((source.match(/>Pelajari pelajaran spesialis<\/a>/g) || []).length, careerRoutes.length);
   assert.doesNotMatch(source, /career-path-card|Start path/);
 
   for (const career of careerRoutes) {
@@ -137,9 +146,9 @@ test('career chooser opens detailed work-family guides before lessons', () => {
     const href = `lesson?path=${firstLesson}&amp;learningPath=${career.id}`;
     assert.equal(source.includes(`href="#${guideId}" data-career-choice="${career.id}"`), true, `${career.id} chooser link is missing`);
     assert.equal(source.includes(`id="${guideId}" data-career-guide="${career.id}"`), true, `${career.id} guide is missing`);
-    assert.equal(source.includes(`<strong>${career.title}</strong>`), true, `${career.id} work-family title is missing`);
+    assert.equal(source.includes(`<strong>${career.displayTitle}</strong>`), true, `${career.id} work-family title is missing`);
     assert.equal(source.includes(manifest.commonTitles.join(' · ')), true, `${career.id} search titles drifted from its manifest`);
-    assert.equal(source.includes(`${manifest.lessons.length} specialist lessons · ${manifest.estimatedMinutes} minutes`), true, `${career.id} guided time is missing`);
+    assert.equal(source.includes(`${manifest.lessons.length} pelajaran spesialis · ${manifest.estimatedMinutes} menit`), true, `${career.id} guided time is missing`);
     assert.equal(source.includes(`href="${href}"`), true, `${career.id} guide does not open its specialist lessons`);
   }
 });
@@ -195,23 +204,23 @@ test('career route manifests are honest evidence-building overlays', () => {
 
 test('career guidance states the prerequisite and employment boundaries', () => {
   const source = careerSectionSource();
-  assert.match(source, /specialist overlays after shared foundations/i);
-  assert.match(source, /does not guarantee a job/i);
-  assert.match(source, /guided lesson time only/i);
-  assert.match(source, /exclude foundation work, independent projects, and professional experience/i);
-  assert.match(source, /href="#software-fundamentals">Engineering foundations<\/a>/);
-  assert.match(source, /href="#building-and-deploying">AI application foundations<\/a>/);
-  assert.match(source, /Which work would you want to repeat every week\?/);
-  assert.match(source, /What you would own/);
-  assert.match(source, /Portfolio proof/);
-  assert.match(source, /Course coverage and gaps/);
+  assert.match(source, /lapisan spesialis setelah fondasi bersama/i);
+  assert.match(source, /tidak menjamin pekerjaan/i);
+  assert.match(source, /hanya waktu pelajaran terpandu/i);
+  assert.match(source, /belum termasuk pekerjaan fondasi, proyek mandiri, dan pengalaman profesional/i);
+  assert.match(source, /href="#software-fundamentals">Fondasi rekayasa<\/a>/);
+  assert.match(source, /href="#building-and-deploying">Fondasi aplikasi AI<\/a>/);
+  assert.match(source, /Pekerjaan mana yang ingin kamu ulangi setiap minggu\?/);
+  assert.match(source, /Yang akan kamu tangani/);
+  assert.match(source, /Bukti portofolio/);
+  assert.match(source, /Cakupan kursus dan celah/);
   assert.doesNotMatch(source, /[–—]/);
 });
 
 test('learning paths stays navigable on narrow screens and uses a neutral root', () => {
-  assert.match(learningPaths, /<title>AI Engineering Learning Paths - AI Engineering from Scratch<\/title>/);
-  assert.match(learningPaths, /<span class="learning-paths-eyebrow">4 core paths · 6 career routes<\/span>/);
-  assert.match(learningPaths, /<h1 id="learningPathsTitle">AI Engineering Learning Paths<\/h1>/);
+  assert.match(learningPaths, /<title>Jalur Belajar AI Engineering - AI Engineering dari Nol<\/title>/);
+  assert.match(learningPaths, /<span class="learning-paths-eyebrow">4 jalur inti · 6 rute karier<\/span>/);
+  assert.match(learningPaths, /<h1 id="learningPathsTitle">Jalur Belajar AI Engineering<\/h1>/);
   assert.match(learningPaths, /class="learning-paths-entry-nav"[\s\S]*?href="#overview"[\s\S]*?href="#career-routes"/);
   assert.match(learningPathsCss, /@media \(max-width: 600px\)[\s\S]*?\.skills-domain-children\s*\{[\s\S]*?grid-template-columns: 1fr/);
   assert.match(learningPathsCss, /\.skills-domain-children\s*\{[\s\S]*?grid-template-columns: repeat\(4, minmax\(0, 1fr\)\);[\s\S]*?min-width: 0;/);

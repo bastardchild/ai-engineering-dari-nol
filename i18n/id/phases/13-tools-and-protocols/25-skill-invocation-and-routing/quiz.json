@@ -1,0 +1,78 @@
+{
+  "lesson": "25-skill-invocation-and-routing",
+  "title": "Invocation dan Routing Skill",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Event mana yang merupakan contoh aktivasi skill secara programatik dari perspektif host?",
+      "options": [
+        "Harness evaluasi memilih skill bernama untuk skenario terjadwal",
+        "Pengguna memilih skill bernama di UI host",
+        "Model menyimpulkan skill dari relevansi semantik",
+        "Katalog membaca deskripsi selama discovery"
+      ],
+      "correct": 0,
+      "explanation": "Aktivasi programatik berasal dari alur kontrol runtime atau harness, seperti evaluasi yang memilih skill persis. Pemilihan manusia adalah aktivasi pengguna eksplisit, sedangkan pencocokan semantik adalah aktivasi model implisit."
+    },
+    {
+      "stage": "check",
+      "question": "Host mengenali `user-invocable: false`. Bagaimana panduan portabilitas harus mendeskripsikan field itu?",
+      "options": [
+        "Bit izin filesystem",
+        "Pengganti deskripsi skill",
+        "Ekstensi invocation spesifik host yang diinterpretasikan adapter",
+        "Field wajib di setiap Agent Skill"
+      ],
+      "correct": 2,
+      "explanation": "Host tertentu dapat memberi makna pada ekstensi tanpa membuatnya universal. Tooling portabel harus mempertahankan atau secara eksplisit mengadaptasi field itu dan menghindari menjanjikan perilaku identik di runtime yang tidak mengenalinya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus dilakukan router model implisit terhadap query near-miss di bawah ambang aktivasinya?",
+      "options": [
+        "Mengaktifkan skill pertama secara alfabetis",
+        "Menurunkan ambang secara diam-diam untuk request itu",
+        "Mengubah query menjadi slash command manusia",
+        "Menolak aktivasi dan melanjutkan tanpa skill atau meminta klarifikasi"
+      ],
+      "correct": 3,
+      "explanation": "Negatif near-miss adalah tempat over-triggering muncul. Ambang berguna hanya jika router menghormatinya, melaporkan non-aktivasi, dan membiarkan penalaran normal atau klarifikasi berlanjut."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam 2x2 human/model, apa arti `human=true, model=false`?",
+      "options": [
+        "Skill memiliki otoritas tool tanpa batas",
+        "Manusia boleh memanggilnya secara eksplisit, tetapi model tidak boleh memilihnya secara implisit",
+        "Hanya harness evaluasi yang boleh mengaktifkannya",
+        "Model boleh mengaktifkannya hanya setelah request jaringan"
+      ],
+      "correct": 1,
+      "explanation": "Sumbu menggambarkan kanal aktivasi, bukan izin. Kuadran ini mendukung pemilihan pengguna yang disengaja sekaligus menekan routing model otomatis, yang berguna untuk alur kerja mahal atau mengganggu."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa harness evaluasi biasanya mengaktifkan skill dengan nama persis?",
+      "options": [
+        "Itu membuat deskripsi tidak diperlukan",
+        "Penamaan persis memberikan hak istimewa escape sandbox",
+        "Itu mengisolasi perilaku skill dari variasi routing sehingga eksekusi berulang dapat dibandingkan",
+        "Itu membuktikan semua host berbagi satu sintaks perintah"
+      ],
+      "correct": 2,
+      "explanation": "Harness sering perlu menguji skill itu sendiri, bukan model discovery. Pemilihan programatik persis menghilangkan satu sumber variasi; evaluasi trigger terpisah kemudian dapat mengukur presisi dan recall routing implisit."
+    },
+    {
+      "stage": "post",
+      "question": "Desain mana yang menjaga invocation dan otoritas terpisah dengan benar?",
+      "options": [
+        "Mengizinkan aktivasi model hanya ketika bundle memuat skrip shell",
+        "Jika pengguna memanggil skill, setujui setiap aksi yang dimintanya",
+        "Merutekan aktivasi melalui kebijakan host, lalu meninjau setiap aksi yang diminta di bawah model izin",
+        "Membiarkan metadata ekstensi menggantikan kebijakan filesystem dan jaringan"
+      ],
+      "correct": 2,
+      "explanation": "Aktivasi memutuskan apakah instruksi masuk ke konteks. Tinjauan izin memutuskan apakah pembacaan, penulisan, perintah, atau panggilan jaringan yang diusulkan boleh terjadi. Memisahkan kedua gerbang itu mencegah discoverability atau invocation menjadi otoritas yang tidak disengaja."
+    }
+  ]
+}

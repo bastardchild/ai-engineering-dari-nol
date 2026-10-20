@@ -1,0 +1,78 @@
+{
+  "lesson": "42-large-corpus-downloader",
+  "title": "Downloader Korpus Besar",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa downloader menyimpan checkpoint .partial.json terpisah per shard?",
+      "options": [
+        "Agar direktori cache terlihat rapi",
+        "Agar unduhan yang dilanjutkan dapat memverifikasi prefix sha256 atas byte terverifikasi sebelum menambahkan, membuat korupsi senyap mustahil",
+        "Untuk menyimpan URL jika file shard berpindah",
+        "Karena urllib mewajibkannya"
+      ],
+      "correct": 1,
+      "explanation": "Checkpoint mencatat verified_bytes dan sha256 byte tersebut; resume hanya berlanjut saat hash di disk cocok."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diberikan skema LSH band yang tidak diberikan dedup exact-hash?",
+      "options": [
+        "Penggunaan memori konstan",
+        "Kompresi lossless",
+        "Lookup sub-linear yang menandai near-duplicate dengan Jaccard similarity tinggi bahkan saat dokumen berbeda beberapa token",
+        "Komputasi sha256 lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "MinHash plus LSH menangkap parafrase dan varian boilerplate yang dilewatkan dedup exact-hash."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa checkpoint ditulis sebelum byte ditambahkan, bukan sesudahnya?",
+      "options": [
+        "Jika proses mati antara penulisan dan update checkpoint, resume berikutnya membaca checkpoint yang tertinggal dari byte dan diam-diam menambahkan ulang, merusak file",
+        "Itu menghemat disk",
+        "Itu nyaman",
+        "Itu lebih cepat"
+      ],
+      "correct": 0,
+      "explanation": "Checkpoint-first cocok dengan write-ahead log: crash meninggalkan offset terverifikasi tertinggal atau sama dengan file, tidak pernah di depan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran file lock sha256 manifest?",
+      "options": [
+        "Mempercepat pembacaan",
+        "Itu cadangan manifest",
+        "Tahap hilir menolak mulai kecuali konten manifest cocok dengan hash yang dipin, menutup permukaan serangan senyap di mana penyerang mengedit satu file",
+        "Itu mencatat tanggal"
+      ],
+      "correct": 2,
+      "explanation": "Memin hash manifest membuat tautan antara kode dan data menjadi kontrak content-addressed."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa dedup ditempatkan di hulu tokenisasi alih-alih sesudahnya?",
+      "options": [
+        "Tokenizer menolak duplikat",
+        "Tokenisasi mahal; menjalankannya dua kali pada dokumen yang sama menggandakan biaya tanpa manfaat kurva loss, jadi membuang duplikat lebih dulu jelas lebih murah",
+        "Tokenizer butuh kosakata dulu",
+        "Tokenizer tidak bisa membaca JSONL"
+      ],
+      "correct": 1,
+      "explanation": "Dedup adalah tahap pertama di mana setiap dokumen yang dibuang menghemat satu pass tokenizer."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dipertahankan tombstoning duplikat yang dibuang yang tidak dipertahankan penghapusan senyap?",
+      "options": [
+        "Rasio kompresi",
+        "Ruang disk",
+        "Stabilitas sha256 manifest",
+        "Tautan antara duplikat dan keeper yang bertabrakan dengannya, plus jejak audit yang bertahan saat ambang berubah nanti"
+      ],
+      "correct": 3,
+      "explanation": "Tombstone memungkinkan pass mendatang meninjau ulang ambang dedup; penghapusan kehilangan buktinya."
+    }
+  ]
+}

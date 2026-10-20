@@ -1,0 +1,48 @@
+{
+  "lesson": "50-choose-the-smallest-testable-slice",
+  "title": "Pilih Slice Terkecil yang Dapat Diuji",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang membuat slice kecil berguna?",
+      "options": ["Kodenya sedikit", "Ia menghindari ketidakpastian nyata", "Ia dapat mengubah keputusan penting", "UI-nya rapi"],
+      "correct": 2,
+      "explanation": "Ukuran hanya penting dalam kaitannya dengan bukti yang menentukan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus ditetapkan sebelum membandingkan kandidat slice?",
+      "options": ["Nama rilis", "Framework", "Arsitektur final", "Set pembuktian yang diperlukan"],
+      "correct": 3,
+      "explanation": "Kelayakan bergantung pada cakupan asumsi berisiko yang membutuhkan bukti."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mockup dashboard murah bisa menjadi minimum yang salah?",
+      "options": ["Ia terlalu reversibel", "Ia punya pengguna", "Ia mungkin mengeluarkan ketidakpastian data dan operasional dari test", "Dashboard selalu buruk"],
+      "correct": 2,
+      "explanation": "Slice yang menghindari mekanisme berisiko tidak dapat menjawab keputusannya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa respons yang benar terhadap slice berskor tinggi yang melewatkan pembuktian wajib?",
+      "options": ["Tolak karena tidak layak", "Naikkan skornya", "Pilih", "Sebut sebagai produksi"],
+      "correct": 0,
+      "explanation": "Cakupan adalah gerbang sebelum optimasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menambahkan stop rule?",
+      "options": ["Untuk menghindari pengukuran", "Untuk menetapkan bukti apa yang akan menyebabkan reframe, revisi, atau pengabaian", "Untuk membatasi dokumentasi", "Agar setiap hasil mendukung ide"],
+      "correct": 1,
+      "explanation": "Eksperimen harus mampu mengubah keputusan."
+    },
+    {
+      "stage": "post",
+      "question": "Slice mana yang umumnya lebih aman untuk menguji diagnosis?",
+      "options": ["Auto-remediation di produksi", "Replay read-only atas insiden representatif", "Migrasi", "Platform penuh"],
+      "correct": 1,
+      "explanation": "Replay dapat menguji inti yang belum diketahui dengan konsekuensi lebih rendah dan reversibilitas tinggi."
+    }
+  ]
+}

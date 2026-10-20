@@ -1,0 +1,90 @@
+{
+  "lesson": "04-tree-of-thoughts-lats",
+  "title": "Tree of Thoughts dan LATS: Pencarian Deliberatif",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa chain-of-thought kesulitan pada Game of 24?",
+      "options": [
+        "Langkah linear tidak bisa mundur saat langkah awal salah, sehingga langkah berikutnya menumpuk error",
+        "CoT membutuhkan tool kalkulator yang tidak dimiliki GPT-4",
+        "Model tidak bisa mengalikan bilangan bulat",
+        "Prompt-nya terlalu pendek"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa percabangan, subekspresi awal yang salah merusak sisa rantai; paper mengukur hanya 4 persen untuk CoT."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu node dalam pencarian Tree of Thoughts?",
+      "options": [
+        "Tool yang terdaftar di runtime",
+        "Update bobot selama fine-tuning",
+        "Token yang dihasilkan model",
+        "Langkah atau thought perantara yang koheren, dengan K kemungkinan ekspansi anak"
+      ],
+      "correct": 3,
+      "explanation": "ToT memperlakukan penalaran sebagai pohon di mana setiap node adalah thought perantara yang bisa berkembang menjadi K anak."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah dari ketiganya yang BUKAN peran LLM dalam LATS?",
+      "options": [
+        "Self-reflector yang menulis refleksi atas kegagalan",
+        "Optimizer yang memperbarui bobot model antar rollout",
+        "Value function yang menilai trajektori parsial",
+        "Policy yang mengusulkan aksi berikutnya"
+      ],
+      "correct": 1,
+      "explanation": "LATS bebas gradient; ketiga peran LLM adalah policy, value, dan self-reflector. Tidak ada update bobot."
+    },
+    {
+      "stage": "check",
+      "question": "Sebutkan empat fase MCTS yang didaftar pelajaran.",
+      "options": [
+        "Sample, Score, Sort, Submit",
+        "Plan, Execute, Reflect, Stop",
+        "Select, Expand, Simulate, Backpropagate",
+        "Search, Synthesize, Synthesize-Again, Stop"
+      ],
+      "correct": 2,
+      "explanation": "MCTS berjalan melalui select, expand, simulate, backpropagate pada setiap iterasi."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam UCT, apa peran konstanta eksplorasi c?",
+      "options": [
+        "Ia menskalakan estimasi nilai Q",
+        "Ia menetapkan kedalaman maksimum pohon",
+        "Ia mengatur jumlah rollout",
+        "Ia memberi bobot pada suku eksplorasi sqrt(ln N / n) terhadap suku eksploitasi Q"
+      ],
+      "correct": 3,
+      "explanation": "c menyeimbangkan eksploitasi (Q) dengan suku eksplorasi; sesuaikan per tugas."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan pencarian justru merugikan dibandingkan trajektori tunggal?",
+      "options": [
+        "Kapan pun token murah",
+        "Saat tugasnya pembuatan kode",
+        "Saat tugas memiliki banyak jawaban benar",
+        "Saat evaluator bising dan hanya ada satu jawaban benar, sehingga pencarian konvergen ke jawaban salah yang berskor bagus"
+      ],
+      "correct": 3,
+      "explanation": "Value function yang bising ditambah satu jawaban benar adalah tepat saat pencarian overfit terhadap noise."
+    },
+    {
+      "stage": "post",
+      "question": "Secara kasar berapa banyak tambahan penggunaan token yang perlu dianggarkan untuk ToT pada Game of 24 dibanding CoT?",
+      "options": [
+        "100x hingga 1000x",
+        "Lebih sedikit dari CoT karena pruning",
+        "Sekitar 2x",
+        "Sekitar 10x"
+      ],
+      "correct": 0,
+      "explanation": "Pelajaran mengutip biaya token 100-1000x untuk ToT pada Game of 24 dibanding CoT."
+    }
+  ]
+}

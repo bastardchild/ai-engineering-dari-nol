@@ -1,0 +1,48 @@
+{
+  "lesson": "07-building-an-mcp-server",
+  "title": "Membangun Server MCP: Python dan TypeScript Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dari mana server MCP modern membaca kemampuan klien?",
+      "options": ["Dari Mcp-Session-Id", "Dari panggilan initialize pertama", "Dari setiap request saat ini", "Dari environment proses"],
+      "correct": 2,
+      "explanation": "MCP 2026-07-28 membawa kemampuan klien di params._meta pada setiap request."
+    },
+    {
+      "stage": "check",
+      "question": "Method mana yang wajib diimplementasikan server modern?",
+      "options": ["initialize", "server/discover", "resources/subscribe", "shutdown"],
+      "correct": 1,
+      "explanation": "server/discover wajib pada server modern, meskipun klien bisa memanggil method lain lebih dulu."
+    },
+    {
+      "stage": "check",
+      "question": "Field hasil sukses mana yang wajib ada pada tools/list?",
+      "options": ["protocolVersion dan tools", "resultType, ttlMs, cacheScope, tools", "initialized dan tools", "sessionId dan tools"],
+      "correct": 1,
+      "explanation": "Hasil list modern memiliki tipe dan dapat di-cache."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa server sebaiknya mengurutkan tools secara deterministik?",
+      "options": ["Untuk menstabilkan cache dan konteks model", "Untuk membuat sesi", "Untuk menegosiasikan protokol", "Untuk menggantikan otorisasi"],
+      "correct": 0,
+      "explanation": "Urutan yang stabil membuat registry yang setara menghasilkan respons yang setara."
+    },
+    {
+      "stage": "post",
+      "question": "Panggilan tool yang valid berjalan tetapi operasi domainnya gagal. Bentuk mana yang tepat?",
+      "options": ["notifications/initialized", "HTTP DELETE", "Hasil tool lengkap dengan isError true", "Request server baru"],
+      "correct": 2,
+      "explanation": "Kegagalan tingkat tool tetap terlihat oleh model melalui content dan isError."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang seharusnya mengakhiri masa hidup transport server stdio?",
+      "options": ["EOF pada stdin", "Request GET", "RPC shutdown yang wajib", "Kedaluwarsa Mcp-Session-Id"],
+      "correct": 0,
+      "explanation": "EOF adalah sinyal shutdown stdio yang portabel. Itu tidak menutup sesi protokol modern."
+    }
+  ]
+}

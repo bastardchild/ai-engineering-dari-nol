@@ -1,0 +1,102 @@
+{
+  "lesson": "29-dialogue-state-tracking",
+  "title": "Dialogue State Tracking",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dijaga dialogue state tracking di seluruh giliran?",
+      "options": [
+        "Hanya riwayat teks bebas",
+        "Transkrip ber-POS tag",
+        "Embedding percakapan",
+        "Kamus slot-value yang mewakili tujuan pengguna saat ini, diperbarui setelah setiap giliran"
+      ],
+      "correct": 3,
+      "explanation": "DST menyimpan peta slot-value terstruktur yang dapat ditindaklanjuti backend."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur Joint Goal Accuracy (JGA)?",
+      "options": [
+        "Fraksi giliran di mana setiap slot tepat benar (semua-atau-tidak sama sekali)",
+        "Cosine similarity",
+        "Latensi per giliran",
+        "Akurasi slot rata-rata"
+      ],
+      "correct": 0,
+      "explanation": "JGA adalah kecocokan ketat per giliran di semua slot; akurasi per slot lebih longgar."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa meregenerasi seluruh state dari riwayat setiap giliran menangani koreksi pengguna secara alami?",
+      "options": [
+        "Ia memakai lebih sedikit token",
+        "Ia berjalan di GPU",
+        "Ia menghindari embedding",
+        "Membaca riwayat penuh memungkinkan model menurunkan ulang state akhir termasuk koreksi 'sebenarnya...' tanpa logika rollback eksplisit"
+      ],
+      "correct": 3,
+      "explanation": "Regenerasi riwayat penuh menyerap koreksi dengan menghitung ulang state akhir dari seluruh percakapan."
+    },
+    {
+      "stage": "check",
+      "question": "Pola 2026 mana yang memberikan dict slot valid terjamin dalam 5 baris kode?",
+      "options": [
+        "Regex tulisan tangan",
+        "LLM + Instructor + skema Pydantic dengan output terbatas atau tervalidasi",
+        "Classifier TF-IDF",
+        "Retrieval BM25"
+      ],
+      "correct": 1,
+      "explanation": "Skema Pydantic + Instructor memvalidasi output state LLM terhadap ontologi slot secara otomatis."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa membuat versi skema DST-mu?",
+      "options": [
+        "Menambahkan slot baru setelah fakta membatalkan data training lama dan merusak evaluasi longitudinal",
+        "Mengurangi jumlah token",
+        "Diwajibkan JSON",
+        "Perolehan kecepatan"
+      ],
+      "correct": 0,
+      "explanation": "Perubahan skema tanpa versi diam-diam merusak keselarasan data training dan komparabilitas eval."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa DST untuk domain sensitif kepatuhan harus menyertakan pemeriksaan berbasis aturan bersama ekstraksi LLM?",
+      "options": [
+        "LLM lebih lambat",
+        "Aturan menghindari embedding",
+        "DST hanya-LLM dapat salah mengekstrak parameter destruktif (jumlah, akun, tanggal); lapisan aturan menegakkan batasan deterministik",
+        "Aturan multibahasa"
+      ],
+      "correct": 2,
+      "explanation": "Domain kepatuhan memerlukan penegakan deterministik; aturan menangkap error slot yang ditimbulkan LLM."
+    },
+    {
+      "stage": "post",
+      "question": "Apa kekhawatiran biaya dari meregenerasi state setiap giliran melalui LLM?",
+      "options": [
+        "Pergeseran embedding",
+        "Lebih banyak embedding",
+        "Membaca ulang riwayat penuh setiap giliran menghasilkan penggunaan token total O(n^2); batasi atau ringkas giliran lama",
+        "Biaya cosine"
+      ],
+      "correct": 2,
+      "explanation": "Regenerasi riwayat penuh bersifat kuadratik terhadap jumlah giliran; batasi riwayat atau pakai ringkasan bergulir."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa alur konfirmasi eksplisit diperlukan sebelum aksi backend destruktif?",
+      "options": [
+        "Konfirmasi meningkatkan JGA",
+        "Bahkan DST yang baik memiliki tingkat error slot bukan nol; konfirmasi deterministik mencegah aksi pada akun atau jumlah yang salah",
+        "Diwajibkan tokenizer",
+        "Latensi"
+      ],
+      "correct": 1,
+      "explanation": "Aksi destruktif memerlukan konfirmasi pengguna karena DST tidak pernah bebas error."
+    }
+  ]
+}

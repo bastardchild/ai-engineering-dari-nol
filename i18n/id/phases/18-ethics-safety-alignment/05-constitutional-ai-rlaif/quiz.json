@@ -1,0 +1,78 @@
+{
+  "lesson": "05-constitutional-ai-rlaif",
+  "title": "Constitutional AI dan RLAIF",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa substitusi inti pada Constitutional AI dibanding RLHF standar?",
+      "options": [
+        "Itu menghapus reward model sepenuhnya",
+        "Itu memakai prompt sintetis alih-alih yang nyata",
+        "Itu menggantikan pelabel preferensi manusia dengan pelabel AI yang membaca daftar prinsip",
+        "Itu menggantikan PPO dengan DPO"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan fase pertama (SFT) Constitutional AI?",
+      "options": [
+        "Menghasilkan prinsip sintetis dengan mengklaster komentar pelabel",
+        "Menghasilkan respons awal, mengkritiknya di bawah prinsip konstitusi yang disampling, lalu merevisi dan memakai revisinya sebagai target SFT",
+        "Menjalankan PPO dengan reward turunan konstitusi",
+        "Melatih reward model hanya pada preferensi buatan AI"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan fase kedua (RLAIF)?",
+      "options": [
+        "Melewati PPO dan menerapkan satu loss supervised",
+        "Melatih reward model pada preferensi buatan AI dari model feedback lalu menjalankan PPO terhadapnya",
+        "Meminta manusia melabel ulang output SFT",
+        "Mendistilasi konstitusi ke tokenizer"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana urutan tier dalam konstitusi Claude empat tier Anthropic Januari 2026?",
+      "options": [
+        "Helpful > luas etis > aturan platform > hindari katastrofe",
+        "Hindari hasil katastrofik > ikuti panduan Anthropic > luas etis > helpful dan candid",
+        "Luas etis > helpful > aturan platform > hindari katastrofe",
+        "Aturan platform > hindari katastrofe > helpful > luas etis"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan mana yang TIDAK otomatis teratasi dengan beralih dari RLHF ke RLAIF?",
+      "options": [
+        "Kelangkaan pelabel",
+        "Biaya pelabel",
+        "Reward hacking / Hukum Goodhart",
+        "Inkonsistensi psikologis pelabel"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa perubahan utama antara Constitutional Classifiers v1 dan v2 (2026)?",
+      "options": [
+        "v2 menaikkan overhead komputasi dari 1% ke 23.7%",
+        "v2 menghapus classifier dan hanya mengandalkan konstitusi",
+        "v2 menurunkan overhead komputasi dari 23.7% ke sekitar 1% dengan tingkat serangan sukses yang rendah",
+        "v2 hanya berjalan pada input, bukan output"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

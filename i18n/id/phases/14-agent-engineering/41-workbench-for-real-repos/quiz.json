@@ -1,0 +1,90 @@
+{
+  "lesson": "41-workbench-for-real-repos",
+  "title": "Workbench pada Repo Nyata",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tujuan menjalankan tugas yang sama melalui pipeline prompt-only dan workbench-guided?",
+      "options": [
+        "Untuk benchmark GPU",
+        "Untuk membandingkan model",
+        "Untuk menghasilkan laporan before/after yang bisa kamu serahkan ke skeptis dengan angka, bukan argumen",
+        "Untuk memilih vendor"
+      ],
+      "correct": 2,
+      "explanation": "Angkanya yang berargumen; kasusnya dibuat pada tugas yang terasa nyata, bukan mainan."
+    },
+    {
+      "stage": "pre",
+      "question": "Manakah yang BUKAN salah satu dari lima outcome yang diukur?",
+      "options": [
+        "files_outside_scope",
+        "model_perplexity",
+        "acceptance_met",
+        "tests_actually_run"
+      ],
+      "correct": 1,
+      "explanation": "Kelima outcome-nya adalah tests_actually_run, acceptance_met, files_outside_scope, handoff_quality, reviewer_total."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur Anatomy of an Agent Harness dari LangChain pada Terminal Bench 2.0?",
+      "options": [
+        "Model teratas kehilangan 25 peringkat",
+        "Semua model konvergen di top-3",
+        "Perubahan harness tidak menggeser peringkat",
+        "Model yang sama bergerak dari luar 30 besar ke peringkat lima hanya dengan mengubah harness"
+      ],
+      "correct": 3,
+      "explanation": "Delta dua puluh lima peringkat pada model yang sama adalah bukti utama harness-vs-model."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikutip paper preprints.org sebagai tingkat kegagalan proyek agent enterprise?",
+      "options": [
+        "8%",
+        "Sekitar 88% gagal mencapai produksi, dengan kegagalan mengelompok di runtime, bukan penalaran",
+        "Sekitar 50%",
+        "Tidak ada yang gagal"
+      ],
+      "correct": 1,
+      "explanation": "Preprint Harness Engineering for Language Agents melacak kegagalan ke masalah runtime (state basi, retry rapuh, konteks kebesaran)."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi pada akurasi baseline WebAgent dalam kondisi konteks panjang?",
+      "options": [
+        "Tetap datar",
+        "Turun dari 40-50% ke bawah 10% sebagian besar karena loop tak berujung dan kehilangan tujuan",
+        "Naik 30%",
+        "Berhalving tetapi tetap di atas 30%"
+      ],
+      "correct": 1,
+      "explanation": "Keruntuhan konteks panjang adalah hal yang diserap Ralph Loop dan paket handoff."
+    },
+    {
+      "stage": "post",
+      "question": "Apa kata pelajaran tentang false negative (kasus saat prompt-only lebih cepat)?",
+      "options": [
+        "Tugas fakta satu langkah, lint satu baris, dan menjalankan formatter lebih cepat dengan prompt-only; sebutkan secara jujur agar workbench tidak dibingkai sebagai overkill",
+        "Itu membuktikan workbench gagal",
+        "Itu tidak ada",
+        "Itu membatalkan tesis harness"
+      ],
+      "correct": 0,
+      "explanation": "Menyebutkan kasus prompt-only-tercepat secara jujur menjaga argumen harness tetap kredibel."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana kamu mengutip laporan dari pelajaran ini?",
+      "options": [
+        "Review HR internal",
+        "Hanya di hackathon",
+        "Saat seseorang ingin mencabut gerbang verifikasi 'hanya untuk sprint ini', atau saat produk agent baru diluncurkan dan butuh benchmark penghematan waktu portabel",
+        "Hanya di deck marketing"
+      ],
+      "correct": 2,
+      "explanation": "Angkanya bergerak lebih jauh daripada penjelasannya; kutip laporan saat tekanan mencoba memintas permukaan."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kamu menjalankan benchmark model dan melaporkan 'rata-rata 12ms per gambar pada 4090'. Apa yang hilang?",
+      "options": ["Nama dataset", "Ukuran model", "Tidak ada; itu benchmark yang lengkap", "Persentil (p50/p95/p99), disiplin warmup, dan sinkronisasi CUDA; rata-rata saja menyembunyikan tail latency dan mungkin mengukur pengiriman kernel alih-alih eksekusi kernel"],
+      "correct": 3,
+      "explanation": "Latensi produksi diukur dalam persentil karena sistem real-time gagal pada ekor distribusi, bukan rata-rata. Tanpa warmup, kompilasi JIT menggelembungkan beberapa pengukuran pertama. Tanpa torch.cuda.synchronize, peluncuran kernel GPU kembali sebelum kernel selesai, sehingga kamu mengukur pengiriman, bukan eksekusi. Ketiganya harus benar agar angkanya bermakna."
+    },
+    {
+      "stage": "pre",
+      "question": "FLOPs dan latensi pada perangkat tidak berkorelasi sempurna. Mengapa?",
+      "options": ["Operasi berbeda memiliki keramahan perangkat keras berbeda; depthwise convolution mungkin memiliki FLOPs lebih rendah tetapi memory-bound di GPU, sedangkan dense convolution memakai Tensor Cores secara efisien. Bandwidth memori, overhead peluncuran kernel, dan perilaku cache juga membentuk latensi di luar FLOPs mentah", "Penghitung FLOPs rusak", "FLOPs mengabaikan batch size", "PyTorch menghitung FLOPs secara keliru"],
+      "correct": 0,
+      "explanation": "FLOPs adalah proksi murah. Latensi wall-clock bergantung pada seberapa baik operasi cocok dengan kekuatan perangkat keras: matmul padat menggunakan Tensor Cores; depthwise conv terhambat bandwidth memori; attention terhambat pembacaan memori sebesar panjang urutan^2. Untuk pencarian arsitektur FLOPs berguna; untuk keputusan deployment, ukur pada perangkat target."
+    },
+    {
+      "stage": "post",
+      "question": "Quantisasi INT8 statis post-training biasanya kehilangan berapa akurasi pada model vision kelas ImageNet?",
+      "options": ["Selalu 0; lossless", "20+ poin; tidak dapat dipakai", "5-10 poin persentase", "0,1-1 poin persentase bila dikalibrasi dengan benar; model conv yang BatchNorm-nya telah difusikan sangat berperilaku baik di bawah INT8"],
+      "correct": 3,
+      "explanation": "PTQ statis pada model vision yang dikalibrasi baik kehilangan sepersekian poin hingga sekitar 1 poin. Mode kehilangan yang lebih besar adalah (a) data kalibrasi tidak cukup, (b) mengkuantisasi aktivasi dengan outlier ekstrem (perbaiki dengan quantisation per-channel atau clipping), (c) layer BatchNorm yang belum difusikan. Ketika itu ditangani, INT8 pada dasarnya gratis."
+    },
+    {
+      "stage": "post",
+      "question": "Aplikasi mobilmu membutuhkan model vision di bawah 10MB dengan latensi di bawah 10ms. Backbone mana yang kamu pilih?",
+      "options": ["ResNet-50", "ConvNeXt-Large", "ViT-Base", "MobileNetV3-Small atau EfficientNet-Lite-B0 yang dikuantisasi ke INT8; keduanya menargetkan anggaran ini dan dikompilasi dengan bersih ke TFLite / Core ML"],
+      "correct": 3,
+      "explanation": "Pengiriman vision mobile pada 2026 masih didominasi varian MobileNetV3 dan EfficientNet-Lite karena keduanya dirancang untuk anggaran ini: depthwise conv, h-swish, squeeze-excite, quantisation-aware sejak awal. ResNet-50 dan ViT-Base berukuran 100MB+ dalam FP32 dan 25MB+ dalam INT8, melampaui anggaran ukuran bahkan sebelum latensi diukur."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mengekspor model PyTorch ke ONNX dengan opset 17 dan gagal dengan 'Unsupported operator'. Penyebab paling mungkin apa?",
+      "options": ["Model memiliki terlalu banyak parameter", "Shape input-nya salah", "Library ONNX-nya kedaluwarsa", "(1) Op kustom yang tidak memiliki pemetaan ONNX; (2) jalur control-flow non-deterministik yang tidak dapat ditangkap tracing; (3) interaksi tensor-scalar yang implisit di Python tetapi tidak memiliki padanan ONNX. Perbaikannya: ganti op, pakai `torch.jit.script` untuk control flow, atau naikkan opset"],
+      "correct": 3,
+      "explanation": "Ekspor ONNX secara default adalah tracing, sehingga apa pun yang tidak dapat ditangkap tracing — control flow runtime, cabang tingkat Python, op CUDA kustom — gagal. Sebagian besar kegagalan adalah satu node yang tidak memiliki padanan ONNX (sering op kustom kecil atau panggilan ke torch.special.*). Perbaikannya adalah mengganti op, beralih ke `torch.jit.script`, atau pindah ke opset lebih baru tempat op itu ada."
+    }
+  ]
+}

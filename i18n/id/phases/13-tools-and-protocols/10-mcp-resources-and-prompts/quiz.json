@@ -1,0 +1,78 @@
+{
+  "lesson": "10-mcp-resources-and-prompts",
+  "title": "Resource dan Prompt MCP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Host perlu mengambil catatan arsitektur yang stabil berdasarkan URI. Primitive MCP mana yang paling cocok?",
+      "options": [
+        "Sebuah resource",
+        "Notifikasi pembatalan",
+        "Sesi protokol",
+        "Tool yang destruktif"
+      ],
+      "correct": 0,
+      "explanation": "Resource mengekspos konten yang dapat dialamatkan melalui URI. Tool melakukan operasi, sedangkan sesi dan pembatalan tidak memodelkan konten yang dapat dibaca."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus dikembalikan server 2026-07-28 ketika resources/read menerima URI resource yang tidak dikenal?",
+      "options": [
+        "Notifikasi resources/list_changed",
+        "Error JSON-RPC -32601",
+        "Array contents sukses yang kosong",
+        "Error JSON-RPC -32602"
+      ],
+      "correct": 3,
+      "explanation": "Kontrak Resources saat ini memakai invalid parameters, kode -32602, untuk URI resource yang tidak valid atau tidak dikenal. Sukses kosong akan menyembunyikan kesalahan pemanggil."
+    },
+    {
+      "stage": "check",
+      "question": "Kebijakan cache mana yang paling aman untuk catatan milik pengguna yang dikembalikan resources/read?",
+      "options": [
+        "Public karena URI-nya stabil",
+        "Dibagikan antar pengguna saat MIME type cocok",
+        "Private dengan TTL terbatas",
+        "Public dengan TTL tanpa batas"
+      ],
+      "correct": 2,
+      "explanation": "Hasil milik pengguna tidak boleh melintasi batas identitas. Cache private terbatas dapat mengurangi pembacaan berulang sambil mempertahankan konteks otorisasi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang mengidentifikasi setiap notifikasi pada stream respons subscriptions/listen?",
+      "options": [
+        "ID request listen asli di metadata subscription",
+        "MIME type resource",
+        "Sesi protokol yang baru dibuat",
+        "ID proses server"
+      ],
+      "correct": 0,
+      "explanation": "ID JSON-RPC dari subscriptions/listen menjadi io.modelcontextprotocol/subscriptionId dan diulang pada acknowledgment serta setiap event berikutnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa resources/list dan prompts/list harus deterministik untuk input request yang sama?",
+      "options": [
+        "Untuk memberikan akses publik ke semua entri yang dikembalikan",
+        "Untuk menghindari validasi cursor pagination",
+        "Untuk menstabilkan cache, snapshot, dan antarmuka host",
+        "Untuk membuat keanggotaan list bergantung pada pembacaan sebelumnya"
+      ],
+      "correct": 2,
+      "explanation": "Keanggotaan dan urutan yang stabil mencegah cache miss yang berisik dan antarmuka yang berubah. Otorisasi tetap dapat memengaruhi visibilitas karena kredensial adalah input request yang eksplisit."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang wajib diekspos server MCP saat ini meskipun klien dapat memanggil resources/list secara langsung?",
+      "options": [
+        "Method resources/subscribe untuk setiap URI",
+        "Method initialize yang membuat sesi protokol",
+        "Stream event HTTP GET mandiri",
+        "server/discover dengan revisi dan kemampuan yang didukung"
+      ],
+      "correct": 3,
+      "explanation": "Server wajib mengimplementasikan server/discover agar klien dapat memperoleh satu snapshot kemampuan dan versi. Memanggilnya tetap opsional bagi klien, yang dapat memanggil method lain dan menangani error versi terstruktur."
+    }
+  ]
+}

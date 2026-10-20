@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "trees-pre-1",
+      "stage": "pre",
+      "question": "Apa yang diukur Gini impurity pada sebuah node decision tree?",
+      "options": [
+        "Jumlah total sampel di node tersebut",
+        "Peluang salah mengklasifikasikan sampel acak berdasarkan distribusi kelas di node itu",
+        "Korelasi antar fitur di node tersebut",
+        "Kedalaman node di dalam pohon"
+      ],
+      "correct": 1,
+      "explanation": "Gini impurity = 1 - sum(p_k^2). Nilai ini mengukur seberapa sering sampel acak salah diklasifikasikan jika diberi label sesuai distribusi kelas di node itu. Node murni = 0."
+    },
+    {
+      "id": "trees-pre-2",
+      "stage": "pre",
+      "question": "Apa keunggulan utama model berbasis pohon dibanding neural network untuk data tabular?",
+      "options": [
+        "Pohon berlatih lebih cepat di perangkat GPU",
+        "Pohon menangani tipe fitur campuran, butuh praproses lebih sedikit, dan lebih mudah diinterpretasikan",
+        "Pohon bisa memproses citra dan teks secara native",
+        "Pohon selalu punya bias lebih rendah daripada neural network"
+      ],
+      "correct": 1,
+      "explanation": "Pohon secara native menangani fitur numerik dan kategorikal tanpa encoding, butuh praproses minimal, dan menghasilkan aturan yang mudah dibaca. Neural network unggul pada data spasial/sekuensial, bukan tabel datar."
+    },
+    {
+      "id": "trees-post-1",
+      "stage": "post",
+      "question": "Mengapa random forest memakai bootstrap sampling DAN subset fitur acak pada setiap split?",
+      "options": [
+        "Untuk mengurangi kedalaman tiap pohon",
+        "Untuk memastikan setiap pohon melihat setiap titik data minimal sekali",
+        "Untuk mempercepat training dengan mengurangi ukuran dataset",
+        "Untuk membuat pohon yang beragam dan tidak saling berkorelasi agar rata-ratanya mengurangi variance tanpa menambah bias"
+      ],
+      "correct": 3,
+      "explanation": "Kedua sumber keacakan membuat pohon-pohonnya beragam. Tanpa pengacakan fitur, semua pohon akan memilih fitur dominan yang sama. Keragaman inilah yang membuat rata-rata efektif menurunkan variance."
+    },
+    {
+      "id": "trees-post-2",
+      "stage": "post",
+      "question": "Sebuah node berisi 8 anjing dan 2 kucing. Berapa Gini impurity-nya?",
+      "options": [
+        "0.20",
+        "0.50",
+        "0.32",
+        "0.0"
+      ],
+      "correct": 2,
+      "explanation": "Gini = 1 - (0.8^2 + 0.2^2) = 1 - (0.64 + 0.04) = 0.32. Node ini mayoritas anjing tetapi tidak murni, jadi Gini berada di antara 0 (murni) dan 0.5 (maksimum untuk biner)."
+    },
+    {
+      "id": "trees-post-3",
+      "stage": "post",
+      "question": "Feature importance MDI (Mean Decrease in Impurity) bias terhadap jenis fitur apa?",
+      "options": [
+        "Fitur biner yang hanya punya dua nilai",
+        "Fitur dengan variance rendah",
+        "Fitur high-cardinality dengan banyak titik split yang mungkin",
+        "Fitur yang sangat berkorelasi dengan target"
+      ],
+      "correct": 2,
+      "explanation": "MDI bias terhadap fitur high-cardinality karena fitur itu menawarkan lebih banyak titik split, memberi lebih banyak peluang menurunkan impurity secara kebetulan. Permutation importance lebih bisa diandalkan."
+    }
+  ]
+}

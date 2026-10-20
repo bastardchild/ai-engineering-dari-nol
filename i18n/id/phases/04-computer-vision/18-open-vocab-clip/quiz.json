@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Loss kontrastif CLIP bersifat simetris (image-to-text + text-to-image). Mengapa kedua arah?",
+      "options": ["Stabilitas numerik", "Simetri diwajibkan oleh PyTorch", "Karena loss harus berjumlah nol", "Kamu ingin kedua kueri berfungsi saat inferensi: retrieval text-to-image dan image-to-text. Melatih hanya satu arah membuat akurasi arah lainnya turun signifikan"],
+      "correct": 3,
+      "explanation": "Ruang embedding harus simetris antar modalitas karena tugas hilir melakukan kueri di kedua arah. Klasifikasi zero-shot adalah text-to-image (mengklasifikasi gambar berdasarkan prompt teks). Retrieval dapat berjalan ke arah mana pun. Melatih hanya i2t atau hanya t2i membuat arah lainnya lemah."
+    },
+    {
+      "stage": "pre",
+      "question": "Klasifikasi zero-shot dengan CLIP bekerja dengan cara... ?",
+      "options": ["Menyandikan prompt seperti 'a photo of a dog' untuk setiap kelas kandidat, menyandikan gambar uji, dan mengambil argmax cosine similarity antara embedding gambar dan semua embedding teks kelas", "Mencari database contoh berlabel", "Melakukan fine-tuning encoder gambar pada kelas", "Menjalankan classifier head yang dilatih pada ImageNet"],
+      "correct": 0,
+      "explanation": "Zero-shot berarti tanpa training khusus tugas: representasi model sudah memungkinkanmu membandingkan gambar dengan deskripsi teks arbitrer. Tulis satu prompt per kelas, sandikan semua prompt dan gambar uji, cosine similarity, argmax. Satu-satunya 'trik' adalah prompt engineering — memakai beberapa template per kelas dan merata-ratakan embedding-nya menambah 1-3 top-1 pada ImageNet."
+    },
+    {
+      "stage": "post",
+      "question": "SigLIP mengganti softmax CLIP dengan loss sigmoid per pasangan. Manfaat apa yang diberikannya?",
+      "options": ["Akurasi lebih baik hanya pada COCO", "Kernel GPU lebih cepat", "Penggunaan memori lebih rendah", "Loss sigmoid bersifat per pasangan, sehingga tidak bergantung pada batch sebagai penyebut normalisasi. SigLIP dapat dilatih dengan baik pada batch size lebih kecil di mana loss softmax CLIP kekurangan negatif"],
+      "correct": 3,
+      "explanation": "Cross-entropy simetris CLIP adalah softmax atas seluruh batch, sehingga negatif efektif = batch_size - 1. Batch kecil membuatnya kekurangan negatif. SigLIP bersifat per pasangan: setiap pasangan (gambar, caption) mendapat keputusan biner (cocok atau tidak). Tanpa normalisasi tingkat batch, SigLIP bekerja pada batch 128 sementara CLIP membutuhkan 8192. Pada skala setara, SigLIP menyamai atau mengalahkan CLIP."
+    },
+    {
+      "stage": "post",
+      "question": "Seorang praktisi melaporkan 88% top-1 zero-shot pada CIFAR-10 dengan CLIP ViT-B/32 dan 90% dengan model yang sama memakai 80 template prompt per kelas. Mengapa perata-rataan template membantu?",
+      "options": ["Ini mengurangi varians logit_scale", "Ini menggandakan dataset", "80 adalah angka ajaib untuk CLIP", "Template berbeda mengaktifkan aspek berbeda dari distribusi teks yang dipelajari encoder; perata-rataan menghaluskan embedding kelas di seluruh manifold deskripsi bahasa alami yang masuk akal untuk kelas itu, menghasilkan centroid yang lebih robust"],
+      "correct": 3,
+      "explanation": "Setiap template adalah isyarat bahasa alami yang berbeda. 'a photo of a dog' menekankan satu aspek; 'a blurry photo of a dog' aspek lain; 'a sketch of a dog' aspek lainnya lagi. Merata-ratakan embedding teks memberikan representasi konsep 'dog' yang lebih mulus dan kurang sensitif terhadap keanehan prompt individual. Makalah CLIP OpenAI menerbitkan 80 template yang menaikkan zero-shot ImageNet sekitar 2 poin."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa VLM modern (LLaVA, Qwen-VL, InternVL) memakai encoder vision keluarga CLIP alih-alih ResNet ImageNet supervised?",
+      "options": ["ResNet tidak dapat melihat warna", "Fitur CLIP selaras dengan bahasa alami, sehingga LLM dapat menalar tentangnya dengan adaptasi lebih sedikit; fitur ImageNet supervised tidak pernah dilatih terhadap caption dan memerlukan layer proyeksi berat untuk menjembatani ke teks", "Itu persyaratan lisensi", "Encoder CLIP lebih cepat"],
+      "correct": 1,
+      "explanation": "VLM memasang encoder vision ke model bahasa dan melatih proyeksi kecil. Encoder bergaya CLIP dilatih terhadap teks, sehingga outputnya sudah berada di ruang yang dapat dikonsumsi LLM dengan beberapa layer linear adaptasi. Encoder ImageNet supervised tidak memiliki gagasan struktur bahasa alami dan memerlukan MLP penjembatan jauh lebih besar agar bekerja dengan LLM. Itulah sebabnya setiap VLM SOTA memakai vision tower keluarga CLIP."
+    }
+  ]
+}

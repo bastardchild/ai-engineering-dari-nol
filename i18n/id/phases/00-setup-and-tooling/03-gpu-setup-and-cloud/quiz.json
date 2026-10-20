@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa GPU lebih cepat daripada CPU untuk melatih neural network?",
+      "options": ["GPU memiliki clock speed lebih tinggi daripada CPU", "GPU dapat melakukan ribuan operasi matriks paralel secara bersamaan", "GPU menggunakan bahasa pemrograman yang lebih efisien", "GPU memiliki RAM lebih banyak daripada CPU"],
+      "correct": 1,
+      "explanation": "GPU memiliki ribuan inti yang dioptimalkan untuk komputasi paralel, membuatnya ideal untuk perkalian matriks yang mendominasi pelatihan neural network."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dimaksud dengan VRAM?",
+      "options": ["Total RAM yang tersedia di semua perangkat", "Salah satu jenis memori cache CPU", "Video RAM pada GPU, terpisah dari RAM sistem", "RAM virtual yang dipakai sistem operasi untuk swap"],
+      "correct": 2,
+      "explanation": "VRAM (Video RAM) adalah memori khusus pada GPU. VRAM membatasi ukuran model dan batch size yang bisa kamu pakai saat pelatihan, terpisah dari RAM utama sistem."
+    },
+    {
+      "stage": "post",
+      "question": "Perintah apa yang memverifikasi bahwa GPU NVIDIA-mu terdeteksi dan menunjukkan statusnya saat ini?",
+      "options": ["torch.cuda.list_devices()", "nvidia-smi", "lspci | grep gpu", "gpu --status"],
+      "correct": 1,
+      "explanation": "nvidia-smi (NVIDIA System Management Interface) menampilkan utilisasi GPU, penggunaan memori, suhu, dan proses yang berjalan. Ini alat standar untuk memverifikasi ketersediaan GPU."
+    },
+    {
+      "stage": "post",
+      "question": "Saat membandingkan perkalian matriks GPU vs CPU, mengapa kamu harus memanggil torch.cuda.synchronize() sebelum mengukur waktu GPU?",
+      "options": ["Untuk memindahkan data dari memori CPU ke GPU", "Untuk memastikan semua operasi GPU selesai sebelum menghentikan timer", "Untuk membebaskan memori GPU yang tidak terpakai", "Untuk mengembalikan clock speed GPU ke frekuensi dasarnya"],
+      "correct": 1,
+      "explanation": "Operasi GPU bersifat asinkron -- Python langsung kembali sementara GPU masih menghitung. synchronize() menunggu hingga semua operasi GPU selesai, sehingga pengukuran waktu akurat."
+    },
+    {
+      "stage": "post",
+      "question": "Dengan aturan praktis fp16, kira-kira berapa parameter yang muat dalam 24 GB VRAM?",
+      "options": ["6 miliar parameter", "24 miliar parameter", "12 miliar parameter", "48 miliar parameter"],
+      "correct": 2,
+      "explanation": "Dalam fp16, setiap parameter memakai 2 byte. 24 GB / 2 byte = 12 miliar parameter. Ini perkiraan kasar; penggunaan sebenarnya mencakup aktivasi, gradient, dan state optimizer."
+    }
+  ]
+}

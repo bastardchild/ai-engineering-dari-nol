@@ -1,0 +1,78 @@
+{
+  "lesson": "11-scalable-oversight-weak-to-strong",
+  "title": "Scalable Oversight dan Weak-to-Strong Generalization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa pertanyaan inti yang diajukan agenda Superalignment?",
+      "options": [
+        "Apakah manusia lebih akurat daripada reward model?",
+        "Apakah RLHF bisa berskala melewati 1B parameter?",
+        "Bisakah pengawas yang lebih lemah mengawasi model yang lebih kuat dan aligned secara andal?",
+        "Bisakah adversarial training menghapus semua backdoor?"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dalam weak-to-strong generalization Burns et al. (2023), bagaimana setup-nya?",
+      "options": [
+        "Reward model dilatih hanya pada data sintetis",
+        "Dua model kuat berdebat; manusia menilai",
+        "Model kuat (kelas GPT-4) di-fine-tune pada label yang dihasilkan model lemah (kelas GPT-2) dan kapabilitasnya diukur terhadap plafon supervised model kuat",
+        "GPT-2 di-fine-tune pada label GPT-4"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana Performance Gap Recovered (PGR) didefinisikan?",
+      "options": [
+        "(fine-tuned - weak) / (ceiling - weak)",
+        "(weak - ceiling) / ceiling",
+        "fine-tuned / ceiling",
+        "(ceiling - fine-tuned) / weak"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang BUKAN mekanisme scalable oversight yang didaftar dalam pelajaran ini?",
+      "options": [
+        "Recursive Reward Modeling",
+        "Distilasi Tokenizer",
+        "Task Decomposition",
+        "Debate"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana scalable oversight dan W2SG saling melengkapi?",
+      "options": [
+        "Keduanya butuh akses white-box",
+        "Keduanya menyasar metrik yang sama",
+        "Scalable oversight memperbaiki kualitas sinyal efektif pengawas; W2SG menutup celah dari sinyal tidak sempurna apa pun yang diberikan pengawas",
+        "Keduanya saling eksklusif"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa asumsi sentral mekanisme AI-safety-via-debate?",
+      "options": [
+        "Menemukan jawaban benar yang meyakinkan lebih mudah daripada menemukan jawaban salah yang meyakinkan",
+        "Transkrip debat selalu lebih pendek daripada jawaban langsung",
+        "Juri lebih kapabel daripada para debater",
+        "Kedua debater selalu jujur"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

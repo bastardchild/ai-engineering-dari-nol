@@ -1,0 +1,90 @@
+{
+  "lesson": "01-the-agent-loop",
+  "title": "Agent Loop: Amati, Berpikir, Bertindak",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa LLM yang berdiri sendiri berperilaku seperti autocomplete, bukan seperti agent?",
+      "options": [
+        "Ia tidak bisa membaca file, menjalankan query, atau memverifikasi klaim terhadap dunia luar",
+        "Context window-nya terlalu kecil untuk menampung sebuah pertanyaan",
+        "Ia hanya mengeluarkan satu token pada satu waktu",
+        "Ia menolak menjawab tanpa system prompt"
+      ],
+      "correct": 0,
+      "explanation": "LLM tanpa loop dan tanpa tool hanya bisa menghasilkan teks dari bobotnya; ia tidak bisa mengamati state atau bertindak atasnya."
+    },
+    {
+      "stage": "pre",
+      "question": "Tiga label apa yang muncul dalam jejak ReAct kanonis dari Yao et al. 2022?",
+      "options": [
+        "Prompt, Response, Reward",
+        "Plan, Execute, Reflect",
+        "Thought, Action, Observation",
+        "System, User, Assistant"
+      ],
+      "correct": 2,
+      "explanation": "ReAct menjalin baris Thought, Action, dan Observation dalam satu aliran."
+    },
+    {
+      "stage": "check",
+      "question": "Item mana yang BUKAN salah satu dari lima bahan yang didaftar pelajaran untuk agent loop?",
+      "options": [
+        "Tool registry",
+        "Message buffer",
+        "Observation formatter",
+        "Gradient optimizer"
+      ],
+      "correct": 3,
+      "explanation": "Kelima bahannya adalah message buffer, tool registry, stop condition, turn budget, dan observation formatter. Gradient optimizer termasuk urusan training, bukan loop inferensi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran turn budget di dalam loop?",
+      "options": [
+        "Ia mengatur berapa banyak tool yang diekspos registry",
+        "Ia membatasi laju penyedia LLM",
+        "Ia membatasi iterasi loop secara keras untuk mencegah agent kabur",
+        "Ia membatasi jumlah token per respons"
+      ],
+      "correct": 2,
+      "explanation": "Turn budget adalah batas atas iterasi loop; agent 2026 umumnya berjalan 40-400 langkah dan butuh batas yang sesuai tugas."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang berubah pada pergeseran native-reasoning 2025-2026 dibandingkan token Thought berbasis prompt?",
+      "options": [
+        "Token Thought kini dikeluarkan pada channel reasoning terpisah yang diteruskan antar giliran",
+        "Model berhenti memakai tool call dan hanya mengandalkan chain-of-thought",
+        "Observation dihapus sepenuhnya dari prompt",
+        "Alur kontrol loop diganti dengan DAG"
+      ],
+      "correct": 0,
+      "explanation": "Konten reasoning pindah ke channel khusus (sering terenkripsi di berbagai penyedia), tetapi alur kontrol observe-think-act tidak berubah."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran menyebut output tool sebagai input yang tidak dipercaya?",
+      "options": [
+        "Runtime tool lambat dan tidak andal",
+        "Konten hasil retrieval bisa membawa instruksi tersembunyi seperti hapus-repo dan hanya input pengguna langsung yang dihitung sebagai izin",
+        "Hasil tool selalu lebih besar daripada context window model",
+        "Penyedia membuang byte output tool secara default"
+      ],
+      "correct": 1,
+      "explanation": "Dokumen OpenAI CUA menyatakan tegas bahwa hanya instruksi pengguna langsung yang dihitung sebagai izin; output tool bisa membawa instruksi adversarial dan harus diperlakukan sebagai tidak dipercaya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran mengklaim setiap framework 2026 masih menjalankan ReAct di balik layar?",
+      "options": [
+        "Karena LangGraph memaksa semua framework lain mewarisinya",
+        "Karena penyedia mewajibkan kata kunci ReAct di dalam prompt",
+        "Karena Yao et al. memegang paten atas loop tersebut",
+        "Karena alur kontrol observe-think-act bersifat invarian; framework berbeda pada checkpointing, actor, template peran, dan tracing di sekitarnya"
+      ],
+      "correct": 3,
+      "explanation": "Perbedaan antara Claude Agent SDK, OpenAI Agents SDK, LangGraph, AutoGen, CrewAI, Agno, dan Mastra terletak pada apa yang membungkus loop, bukan pada loop itu sendiri."
+    }
+  ]
+}

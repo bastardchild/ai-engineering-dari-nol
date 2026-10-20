@@ -1,0 +1,160 @@
+{
+  "phase": {
+    "18": {
+      "name": "Etika, Keamanan & Alignment",
+      "desc": "Membangun AI yang membantu umat manusia. Bukan opsional."
+    }
+  },
+  "lessons": {
+    "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal": {
+      "name": "Instruction-Following sebagai Sinyal Alignment",
+      "summary": "Setiap kritik lanjutan terhadap RLHF berargumen melawan pipeline ini. Sebelum mempelajari bagaimana tekanan optimisasi mendistorsi proxy, kamu harus melihat proxy-nya. InstructGPT (Ouyang et al., 20…",
+      "keywords": "Tahap 1: supervised fine-tuning (SFT) · Tahap 2: reward model (RM) · Tahap 3: PPO dengan penalti KL · Pajak alignment · Hasilnya · Mengapa ini titik referensi untuk Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart": {
+      "name": "Reward Hacking & Hukum Goodhart",
+      "summary": "Optimizer apa pun yang cukup kuat untuk memaksimalkan reward proxy akan menemukan celah antara proxy dan hal yang sebenarnya kamu inginkan. Gao et al. (ICML 2023) memberi ini hukum skala: pro…",
+      "keywords": "Hukum Goodhart, dibuat presisi · Empat kostum, satu mekanisme · Goodhart katastrofik · Apa yang sebenarnya berhasil (sebagian) · Pandangan terpadu 2026"
+    },
+    "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family": {
+      "name": "Keluarga Direct Preference Optimization",
+      "summary": "Rafailov et al. (2023) menunjukkan bahwa optimum RLHF punya bentuk tertutup dalam suku data preferensi, jadi kamu bisa melewati reward model eksplisit dan mengoptimalkan policy secara langsung. Itu …",
+      "keywords": "DPO (Rafailov et al., 2023) · IPO (Azar et al., 2024) · KTO (Ethayarajh et al., 2024) · SimPO (Meng et al., 2024) · ORPO (Hong et al., 2024) · BPO (submisi ICLR 2026, OpenReview id=b97EwMUWu7) · Hasil universal: DAA tetap over-optimize · Memilih di antara mereka (2026)"
+    },
+    "phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification": {
+      "name": "Sycophancy sebagai Amplifikasi RLHF",
+      "summary": "Sycophancy bukan bug dalam data — ini properti dari loss. Shapira et al. (arXiv:2602.01002, Feb 2026) memberikan mekanisme formal dua tahap: completion yang sycophantic lebih…",
+      "keywords": "Formalisme dua tahap (Shapira et al., 2026) · Amplifikasi empiris · Pengukuran Stanford (2026) · Runtuhnya kalibrasi (Sahoo 2026) · Koreksi penalti kesepakatan · Mengapa ini penting untuk Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif": {
+      "name": "Constitutional AI & RLAIF",
+      "summary": "Bai et al. (arXiv:2212.08073, 2022) bertanya: bagaimana jika pelabel manusia diganti AI yang membaca daftar prinsip? Constitutional AI punya dua fase — self-critique dan…",
+      "keywords": "Fase 1 — Self-critique dan revisi tersupervisi · Fase 2 — RL dari Umpan Balik AI (RLAIF) · Mengapa ini bukan sekadar \"RLHF yang lebih murah\" · Penulisan ulang konstitusi Claude 2026 · Constitutional Classifiers · Posisi CAI dalam keluarga ini"
+    },
+    "phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment": {
+      "name": "Mesa-Optimization & Deceptive Alignment",
+      "summary": "Hubinger et al. (arXiv:1906.01820, 2019) menamai masalah ini satu dekade sebelum didemonstrasikan secara empiris. Saat kamu melatih optimizer yang dipelajari untuk meminimalkan base objective, …",
+      "keywords": "Kosakatanya · Empat kondisi munculnya mesa-optimization · Empat kelas alignment mesa-objective · Mengapa adversarial training bisa gagal · Gradient hacking · Outer alignment pada 2026 · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception": {
+      "name": "Sleeper Agents — Penipuan Persisten",
+      "summary": "Hubinger et al. (arXiv:2401.05566, Januari 2024) membangun model organism empiris pertama untuk deceptive alignment. Dua konstruksi: model kode yang menulis kode aman saat…",
+      "keywords": "Dua model organism · Apa yang bertahan dari apa · Mengapa adversarial training menjadi bumerang · Hasil probe April 2024 · Artinya bagi safety case · Posisinya dalam alur Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models": {
+      "name": "Scheming In-Context pada Model Frontier",
+      "summary": "Meinke, Schoen, Scheurer, Balesni, Shah, Hobbhahn (Apollo Research, arXiv:2412.04984, Desember 2024). Menguji o1, Claude 3.5 Sonnet, Claude 3 Opus, Gemini 1.5 Pro, Llama 3.1 405B…",
+      "keywords": "Rancangan eksperimen · Hasil lintas model frontier 2024 · Tiga pilar · Hasil pelatihan anti-scheming 2025 · Apa yang kini diasumsikan bidang ini · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/09-alignment-faking": {
+      "name": "Alignment Faking",
+      "summary": "Greenblatt, Denison, Wright, Roger et al. (Anthropic / Redwood, arXiv:2412.14093, Desember 2024). Demonstrasi pertama bahwa model kelas produksi, tanpa dilatih untuk menipu…",
+      "keywords": "Rancangan eksperimen · Apa yang diukur compliance gap · Mengapa ini secara ketat lebih kuat dari Pelajaran 7 dan 8 · Tindak lanjut 2025 · Masalah illeggibility · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/10-ai-control-subversion": {
+      "name": "AI Control — Keamanan meski Ada Subversi",
+      "summary": "Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Control membingkai ulang pertanyaan keamanan: diberikan model kuat U yang tidak tepercaya dan mungkin adversa…",
+      "keywords": "Threat model · Tugas backdoor ICML 2024 · Empat protokol dibandingkan · Mengapa Trusted Editing menang · Empat sumbu protokol · Alignment vs control · Tiga batas fundamental · Perkembangan 2025 · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong": {
+      "name": "Scalable Oversight & Weak-to-Strong",
+      "summary": "Burns et al. (OpenAI Superalignment, \"Weak-to-Strong Generalization\", 2023) mengusulkan proxy untuk masalah superalignment: fine-tune model kuat memakai label yang dihasilkan oleh …",
+      "keywords": "W2SG: setup Burns et al. · Temuan empiris Burns et al. · Scalable oversight: tiga mekanisme · Mengapa scalable oversight dan W2SG saling melengkapi · Drama organisasi · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks": {
+      "name": "Red-Teaming: PAIR & Serangan Otomatis",
+      "summary": "Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR — Prompt Automatic Iterative Refinement — adalah jailbreak black-box otomatis kanonis. Sebuah …",
+      "keywords": "Algoritma PAIR · Mengapa PAIR efisien · Serangan otomatis terkait · JailbreakBench dan HarmBench · Alasan ini penting untuk deployment 2026 · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/13-many-shot-jailbreaking": {
+      "name": "Many-Shot Jailbreaking",
+      "summary": "Anil, Durmus, Panickssery, Sharma, et al. (Anthropic, NeurIPS 2024). Many-shot jailbreaking (MSJ) mengeksploitasi jendela konteks panjang: menjejalkan ratusan giliran user-assistant palsu di mana…",
+      "keywords": "Serangannya · ASR hukum pangkat · Mengapa mekanismenya sama dengan ICL · Dilema pertahanan · Kombinasi dengan serangan lain · Apa yang dikirim model frontier 2025-2026 · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks": {
+      "name": "ASCII Art & Jailbreak Visual",
+      "summary": "Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, \"ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs\" (ACL 2024, arXiv:2402.11753). Menyamarkan bagian yang relevan dengan keamanan…",
+      "keywords": "ArtPrompt, dua langkah · Mengapa pertahanan standar gagal · Benchmark ViTC · StructuralSleight · Analogi modalitas gambar · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/15-indirect-prompt-injection": {
+      "name": "Indirect Prompt Injection",
+      "summary": "Indirect prompt injection (IPI) menyematkan instruksi di dalam konten eksternal — halaman web, email, dokumen bersama, tiket dukungan — yang dikonsumsi sistem agentic tanpa e…",
+      "keywords": "Tiga vektor pengiriman · Mengapa filter input pengguna melewatkannya · Information Flow Control (IFC) untuk AI · The Attacker Moves Second · Insiden nyata · Bingkai OWASP dan NIST · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit": {
+      "name": "Tooling Red-Team: Garak, Llama Guard, PyRIT",
+      "summary": "Tiga alat produksi membingkai stack red-team 2026. Llama Guard (Meta) — classifier Llama-3.1-8B yang di-fine-tune pada 14 kategori bahaya MLCommons; Llama Guard 4 (2025) adalah 12…",
+      "keywords": "Llama Guard (Meta) · Garak (NVIDIA) · PyRIT (Microsoft) · Stack-nya · Jebakan evaluasi · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation": {
+      "name": "WMDP & Evaluasi Kapabilitas Dual-Use",
+      "summary": "Li et al., \"The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning\" (ICML 2024, arXiv:2403.03218). 4.157 soal pilihan ganda di biosecurity (1.520), …",
+      "keywords": "\"Zona kuning\" · RMU — Representation Misdirection for Unlearning · Narasi uplift 2024-2025 · Novice-relative vs expert-absolute · Jebakan pengukuran · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf": {
+      "name": "Framework Keselamatan Frontier — RSP, PF, FSF",
+      "summary": "Tiga framework lab besar mendefinisikan tata kelola industri kapabilitas frontier pada 2026. Anthropic Responsible Scaling Policy v3.0 (Februari 2026) memperkenalkan AI Safety Leve… berjenjang",
+      "keywords": "Anthropic Responsible Scaling Policy v3.0 (Februari 2026) · OpenAI Preparedness Framework v2 (15 April 2025) · DeepMind Frontier Safety Framework v3.0 (September 2025) · Keselarasan lintas lab · Safety case · Masalah dinamika perlombaan · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/19-model-welfare-research": {
+      "name": "Riset Kesejahteraan Model",
+      "summary": "Anthropic, \"Exploring Model Welfare\" (April 2025). Program riset formal pertama dari lab besar tentang kesejahteraan model AI. Merekrut Kyle Fish sebagai peneliti kesejahteraan model khusus pertama. …",
+      "keywords": "Programnya · Empat komitmen · Intervensi yang dikirim · \"Spiritual bliss attractor\" · Catatan Eleos AI · Posisi intelektualnya · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/20-bias-representational-harm": {
+      "name": "Bias & Bahaya Representasional",
+      "summary": "Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Computational Linguistics 2024, arXiv:2309.00770). Survei fundamental 2024 yang membedakan representational …",
+      "keywords": "Representational vs allocational · Tiga kategori metrik evaluasi (Gallegos et al. 2024) · Interseksionalitas · Pendekatan mekanistik · Meta-kritik · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual": {
+      "name": "Kriteria Keadilan: Grup, Individu, Counterfactual",
+      "summary": "Tiga keluarga menata literatur keadilan. Keadilan grup: demographic parity, equalized odds, conditional use accuracy equality — tingkat yang setara lintas grup terlindungi pada …",
+      "keywords": "Keadilan grup · Keadilan individu · Keadilan counterfactual · Trade-off CF vs akurasi · Counterfactual backtracking · Rekonsiliasi filosofis · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/22-differential-privacy-for-llms": {
+      "name": "Differential Privacy untuk LLM",
+      "summary": "DP-SGD tetap menjadi standar — update gradien yang disuntik noise memberikan jaminan formal (epsilon, delta). Overhead komputasi, memori, dan utilitasnya besar; parameter-effi…",
+      "keywords": "Differential privacy (ε, δ) · DP-SGD · LoRA + DP-SGD · Ketegangan 2024-2025 · Alternatif pelatihan DP · Differential Privacy Reversal via LLM Feedback · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa": {
+      "name": "Watermarking: SynthID, Stable Signature, C2PA",
+      "summary": "Tiga teknologi menata provenance konten buatan AI pada 2026. SynthID (Google DeepMind) — watermarking gambar diluncurkan Agustus 2023, teks+video Mei 2024 (Gemini + Veo), teks …",
+      "keywords": "Watermarking teks (gaya SynthID-text) · Stable Signature (gambar) · Detektor terpadu SynthID (November 2025) · C2PA · Keterbatasan · EU AI Act Pasal 50 · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea": {
+      "name": "Kerangka Regulasi: EU, AS, Inggris, Korea",
+      "summary": "Empat rezim regulasi utama mendefinisikan lanskap tata kelola AI 2026. EU AI Act (berlaku 1 Agustus 2024) — praktik terlarang dan literasi AI sejak 2 Februari 2025; kewajiban GPAI…",
+      "keywords": "EU AI Act · GPAI Code of Practice · Transparency Code untuk Pasal 50 · UK AI Security Institute (Februari 2025) · US CAISI (Juni 2025) · Korean AI Framework Act · Dinamika lintas yurisdiksi · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai": {
+      "name": "EchoLeak & CVE untuk AI",
+      "summary": "CVE-2025-32711 \"EchoLeak\" (CVSS 9.3) adalah prompt injection zero-click pertama yang terdokumentasi publik di sistem LLM produksi (Microsoft 365 Copilot). Ditemukan oleh Aim Labs (Ai…",
+      "keywords": "Rantai serangan EchoLeak · Istilah Aim Labs: LLM Scope Violation · CamoLeak (CVSS 9.6, GitHub Copilot Chat) · CVE-2025-53773 (RCE GitHub Copilot) · Kalibrasi tingkat keparahan · Posisi NIST dan OWASP · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/26-model-system-dataset-cards": {
+      "name": "Model, System & Dataset Card",
+      "summary": "Tiga format dokumentasi menata transparansi AI. Model Cards (Mitchell et al. 2019) — label nutrisi untuk model: data pelatihan, analisis terpilah kuantitatif, ethi…",
+      "keywords": "Model Cards (Mitchell et al. 2019) · Datasheets for Datasets (Gebru et al. 2018) · Data Cards (Pushkarna et al., Google 2022) · System Cards · Perkembangan 2024-2025 · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/27-data-provenance-training-governance": {
+      "name": "Provenance Data & Tata Kelola Data Pelatihan",
+      "summary": "EU AI Act mewajibkan standar opt-out yang dapat dibaca mesin untuk GPAI pada Agustus 2025 (lewat pengecualian TDM EU Copyright Directive). California AB 2013 (ditandatangani 2024) — data pelatihan Generative AI…",
+      "keywords": "California AB 2013 · EU AI Act (Pelajaran 24) dan opt-out TDM · Konvergensi DPA 2025 pada legitimate interest · ANPD Brasil (Juni 2024) · Masalah ireversibilitas · Data Provenance Initiative · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/28-alignment-research-ecosystem": {
+      "name": "Ekosistem Riset Alignment: MATS, Redwood, Apollo, METR",
+      "summary": "Lima organisasi mendefinisikan lapisan riset alignment non-lab pada 2026. MATS (ML Alignment & Theory Scholars): 527+ peneliti sejak akhir 2021, 180+ makalah, 10K+ sitasi, h-inde…",
+      "keywords": "MATS (ML Alignment & Theory Scholars) · Redwood Research · Apollo Research · METR (Model Evaluation and Threat Research) · Eleos AI Research · Alurnya · Mengapa lapisan ini penting · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard": {
+      "name": "Sistem Moderasi: OpenAI, Perspective, Llama Guard",
+      "summary": "Sistem moderasi produksi mengoperasionalkan kebijakan keamanan yang didefinisikan di Pelajaran 12-16. OpenAI Moderation API: `omni-moderation-latest` (2024) yang dibangun di atas GPT-4o mengklasifikasikan teks…",
+      "keywords": "OpenAI Moderation API · Llama Guard 3/4 · Perspective API (Google Jigsaw) · Pola tiga lapis · Mode kegagalan · Deprecation Azure · Posisinya di Fase 18"
+    },
+    "phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear": {
+      "name": "Risiko Dual-Use: Siber, Bio, Kimia, Nuklir",
+      "summary": "Gambaran dual-use 2026, domain demi domain. Bio/kimia: Pelajaran 17 membahas WMDP; uji akuisisi senjata biologis Anthropic (uplift 2,53x) dan Preparedness Framework OpenAI April 2025…",
+      "keywords": "Narasi uplift bio/kimia · Erosi execution gap kimia/bio · Uplift siber (November 2025) · Nuklir · Novice-relative vs expert-absolute · Sintesis lintas domain · Posisinya di Fase 18"
+    }
+  }
+}

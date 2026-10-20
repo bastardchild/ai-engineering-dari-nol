@@ -1,0 +1,78 @@
+{
+  "lesson": "68-rag-eval-precision-recall",
+  "title": "Evaluasi RAG: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa recall@k biasanya menjadi metrik retrieval utama di RAG produksi?",
+      "options": [
+        "Recall mengabaikan peringkat",
+        "Recall diwajibkan spesifikasi OpenAPI",
+        "Recall sama dengan precision di RAG",
+        "Generasi dapat membuang chunk tidak relevan tetapi tidak dapat mengarang jawaban dari chunk yang tidak pernah dilihatnya, jadi melewatkan chunk yang benar adalah kegagalan yang lebih mahal"
+      ],
+      "correct": 3,
+      "explanation": "Retriever yang melewatkan chunk benar tidak dapat diperbaiki di hilir; chunk berlebih memboroskan token tetapi jarang meracuni jawaban."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dihitung MRR?",
+      "options": [
+        "Jumlah token jawaban",
+        "Rata-rata geometrik cosine similarity",
+        "Median peringkat dokumen relevan kedua",
+        "Rata-rata 1 / posisi-dokumen-relevan-pertama lintas query"
+      ],
+      "correct": 3,
+      "explanation": "MRR didominasi bagian atas daftar: peringkat 1 berkontribusi 1.0, peringkat 2 berkontribusi 0.5, peringkat 10 berkontribusi 0.1."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan kamu harus memakai nDCG alih-alih recall@k?",
+      "options": [
+        "Saat retriever tidak mengembalikan skor",
+        "Saat korpus kecil",
+        "Tidak pernah",
+        "Saat label emas membawa relevansi bertingkat (mis. dok A bernilai 3, dok B 2, dok C 1) dan metrik biner kehilangan informasi"
+      ],
+      "correct": 3,
+      "explanation": "nDCG memakai gain bertingkat dan diskon posisi; recall meratakan semuanya menjadi biner."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan faithfulness dan answer relevance?",
+      "options": [
+        "Faithfulness metrik retrieval dan relevance metrik chunker",
+        "Keduanya metrik sama dengan dua nama",
+        "Faithfulness mengukur precision; relevance mengukur recall",
+        "Faithfulness bertanya 'apakah jawaban berpijak pada konteks yang diambil'; answer relevance bertanya 'apakah jawaban menjawab pertanyaan'"
+      ],
+      "correct": 3,
+      "explanation": "Jawaban faithful tetapi melenceng dari topik tinggi faithfulness, rendah relevance; jawaban relevan tetapi tidak berpijak tinggi relevance, rendah faithfulness."
+    },
+    {
+      "stage": "check",
+      "question": "Pipeline menunjukkan recall@5 cukup baik tetapi MRR rendah. Tahap mana yang pertama diperiksa?",
+      "options": [
+        "Generator",
+        "Chunker",
+        "Ingestor korpus",
+        "Reranker, karena chunk yang benar ada di top-k tetapi tidak di puncak"
+      ],
+      "correct": 3,
+      "explanation": "Recall@5 berarti emas ada di top-5; MRR rendah berarti tidak di puncak daftar. Itu tugas tahap rerank."
+    },
+    {
+      "stage": "post",
+      "question": "Bahaya produksi apa yang membuat file qrels beku berbahaya seiring waktu?",
+      "options": [
+        "Suite eval memakai terlalu banyak disk",
+        "Vektor embedding kedaluwarsa",
+        "Retriever berhenti bekerja setelah enam bulan",
+        "Qrels membusuk: korpus berubah dan dokumen yang menjadi jawaban emas kuartal lalu bukan lagi jawaban yang benar; metrik dilaporkan terhadap label basi"
+      ],
+      "correct": 3,
+      "explanation": "Jadwalkan tinjauan qrels kuartalan atau metrikmu akan mengukur hal yang salah saat korpus berkembang."
+    }
+  ]
+}

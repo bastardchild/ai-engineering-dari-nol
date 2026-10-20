@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa model video 2D+pool gagal pada dataset Something-Something V2?",
+      "options": [
+        "Arsitektur modelnya tidak kompatibel",
+        "Gambarnya terlalu kecil",
+        "Kelasnya terlalu banyak",
+        "Label dataset didefinisikan oleh arah gerak ('mendorong sesuatu dari kiri ke kanan'), bukan tampilan; average pooling yang invarian urutan atas fitur per frame tidak dapat membedakan arah gerak"
+      ],
+      "correct": 3,
+      "explanation": "Label Something-Something secara literal adalah 'X bergerak kiri ke kanan' vs 'X bergerak kanan ke kiri'. Keduanya tampak identik dalam frame tunggal mana pun, dan merata-ratakan embedding frame bersifat invarian urutan sehingga pool(f1, f2, ..., fT) == pool(fT, ..., f2, f1). Label yang didefinisikan oleh gerak memerlukan model yang memperhatikan urutan temporal."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa trik inflation milik I3D?",
+      "options": [
+        "Scheduler untuk learning rate",
+        "Metode untuk mengompresi video",
+        "Cara melakukan pretraining pada lebih banyak gambar",
+        "Mengambil kernel pretrained CNN 2D, menyalinnya sepanjang sumbu waktu baru (dibagi kernel_T untuk mempertahankan skala aktivasi), lalu memakainya untuk menginisialisasi CNN 3D — memberikan bobot kuat pada model 3D tanpa pretraining 3D"
+      ],
+      "correct": 3,
+      "explanation": "Inflation mem-bootstrap model video 3D dari bobot ImageNet 2D yang kuat. Kernel 2D 3x3 menjadi kernel 3D 3x3x3 dengan mereplikasinya sepanjang T dan menskalakan ulang 1/kernel_T. Ini mentransfer fitur objek dan tekstur yang dipelajari pada ImageNet langsung ke model video, itulah sebabnya I3D adalah model 3D pertama yang serius mengalahkan baseline 2D+pool."
+    },
+    {
+      "stage": "post",
+      "question": "Convolution terfaktorisasi (2+1)D membagi conv 3D menjadi dua operasi apa?",
+      "options": [
+        "Conv spasial 1x3x3 diikuti conv temporal 3x1x1, dengan BN+ReLU di antaranya untuk menambahkan non-linearitas yang tidak dimiliki conv 3D penuh",
+        "Dua conv 3D dengan stride berbeda",
+        "Satu conv temporal diikuti satu depthwise conv",
+        "Satu grouped conv dan satu conv 1x1"
+      ],
+      "correct": 0,
+      "explanation": "(2+1)D memfaktorisasi kernel 3x3x3 menjadi (1x3x3) lalu (3x1x1). Kedua conv memiliki non-linearitas di antaranya (BN+ReLU), yang meningkatkan daya ekspresif per parameter. Pada Kinetics, R(2+1)D-34 mengungguli R3D-34 setara dengan parameter lebih sedikit — non-linearitas tambahan itu benar-benar berperan."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam video transformer, apa arti 'divided attention'?",
+      "options": [
+        "Attention yang melewati beberapa layer",
+        "Attention atas separuh token",
+        "Setiap blok transformer memiliki dua modul attention: satu atas token pada posisi spasial yang sama sepanjang waktu (temporal attention), lalu satu atas token pada timestep yang sama di seluruh ruang (spatial attention) — memecah attention penuh O((T*H*W)^2) menjadi O(T^2) + O((H*W)^2)",
+        "Attention yang hanya diterapkan selama training"
+      ],
+      "correct": 2,
+      "explanation": "Attention spatio-temporal gabungan penuh adalah O((T*H*W)^2), yang tidak layak untuk video panjang. Divided attention (TimeSformer) bergantian antara temporal dan spatial attention di setiap blok, menurunkan biaya ke O(T^2 + (H*W)^2). Ia menukar kehilangan ekspresivitas teoretis dengan training yang layak; dalam praktik, divided attention menyamai atau mengalahkan gabungan pada sebagian besar benchmark."
+    },
+    {
+      "stage": "post",
+      "question": "Model Kinetics-400-mu melaporkan akurasi clip 76% dan akurasi video 82%. Apa yang ditunjukkan jarak itu?",
+      "options": [
+        "Test set-nya terlalu kecil",
+        "Modelnya rusak",
+        "Prediksi per clip berisik; merata-ratakan prediksi di beberapa clip yang disampel per video (test-time augmentation) menstabilkan hasil. Jarak besar menunjukkan fitur model sensitif terhadap jendela 8 frame mana yang disampel, dan clip lebih panjang atau augmentasi spasial lebih kuat selama training akan memperkecil jarak itu",
+        "Akurasi clip menurut definisi selalu lebih rendah daripada akurasi video"
+      ],
+      "correct": 2,
+      "explanation": "Akurasi clip mengevaluasi model pada satu jendela tersampel; akurasi video merata-ratakan prediksi di beberapa jendela. Jarak 6 poin berarti model sensitif terhadap jendela yang kamu sampel. Menutup jarak berarti model telah menggeneralisasi lebih baik di seluruh distribusi temporal setiap video — yang kamu inginkan saat deployment. Selalu laporkan kedua angka."
+    }
+  ]
+}

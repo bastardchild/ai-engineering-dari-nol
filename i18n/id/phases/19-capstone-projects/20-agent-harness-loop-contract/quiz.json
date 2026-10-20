@@ -1,0 +1,90 @@
+{
+  "lesson": "20-agent-harness-loop-contract",
+  "title": "Kontrak Loop Agent Harness",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa memodelkan loop harness sebagai state machine eksplisit alih-alih while loop dengan flag?",
+      "options": [
+        "Itu satu-satunya bentuk yang bisa dipanggil model",
+        "Itu menghindari kebutuhan test",
+        "Itu memungkinkan harness menolak transisi ilegal di satu tempat dan memutar ulang sesi dari event log",
+        "Itu lebih cepat di CPython"
+      ],
+      "correct": 2,
+      "explanation": "State machine menempatkan aturan legalitas di satu fungsi transisi. Urutan input yang sama mereproduksi state yang sama, itulah yang memungkinkan replay sesi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang direpresentasikan pull point di dalam loop?",
+      "options": [
+        "Timer yang menyala setiap N detik",
+        "Titik di mana loop menyerahkan kontrol dan menunggu pemanggil memberikan input",
+        "Subscriber hook yang memutasi payload",
+        "Panggilan model yang mengembalikan nama tool"
+      ],
+      "correct": 1,
+      "explanation": "Pull point adalah return, bukan exception. Pemanggil mengambil apa yang diminta harness lalu memanggil resume()."
+    },
+    {
+      "stage": "check",
+      "question": "State mana yang menjadi satu-satunya pull point legal untuk tool call?",
+      "options": [
+        "PLANNING",
+        "AWAITING_TOOL",
+        "EXECUTING",
+        "REFLECTING"
+      ],
+      "correct": 1,
+      "explanation": "Hanya AWAITING_TOOL yang menghasilkan pull point tool. EXECUTING bertransisi ke sana saat langkah membutuhkan tool."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi saat hook melempar HookAbort di before_tool_call?",
+      "options": [
+        "Hook di-unregister",
+        "Tool call dilewati, on_error menyala, dan loop bergerak ke REFLECTING",
+        "Sesi langsung bertransisi ke DONE",
+        "Anggaran direset"
+      ],
+      "correct": 1,
+      "explanation": "HookAbort membatalkan dispatch tool yang sedang berjalan, menyalakan on_error dengan alasan abort, dan melanjutkan."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa hook dan event dipisahkan sebagai concern berbeda?",
+      "options": [
+        "Karena tipe event adalah byte dan hook adalah string",
+        "Hook bersifat imperatif dan dapat memutasi atau membatalkan. Event bersifat observasional dan append-only.",
+        "Karena skrip audit melarang subscriber",
+        "Karena event log tidak bisa menyimpan dict"
+      ],
+      "correct": 1,
+      "explanation": "Hook mengubah perilaku. Event mendeskripsikan perilaku. Mencampurnya mengopel kebijakan dan telemetri, itulah bug yang kita hindari."
+    },
+    {
+      "stage": "post",
+      "question": "Saat anggaran wall-clock terlampaui, apa state berikutnya?",
+      "options": [
+        "DONE — sesi dihentikan",
+        "IDLE — pull point dikembalikan dengan alasan budget_exceeded",
+        "PLANNING — rencana baru disusun",
+        "EXECUTING — loop mencoba ulang"
+      ],
+      "correct": 1,
+      "explanation": "Anggaran habis adalah yield. Harness bertransisi ke IDLE, menyalakan on_budget_exceeded, dan mengembalikan PullRequest agar pemanggil bisa memutuskan memperpanjang atau menutup."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa lesson ini men-stub planner alih-alih memanggil model?",
+      "options": [
+        "Karena model lambat dipanggil secara lokal",
+        "Untuk menjaga kontrak loop dapat diuji dan deterministik sebelum model apa pun diikat",
+        "Untuk menghemat token",
+        "Karena model tidak bisa mengembalikan tool call"
+      ],
+      "correct": 1,
+      "explanation": "Mematok kontrak loop lebih dulu memungkinkan lesson berikutnya menukar planner, registry, dan dispatcher nyata tanpa menegosiasikan ulang state machine."
+    }
+  ]
+}

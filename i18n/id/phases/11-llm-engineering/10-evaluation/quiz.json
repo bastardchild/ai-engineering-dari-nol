@@ -1,0 +1,66 @@
+{
+  "lesson": "10-evaluation",
+  "title": "Evaluasi & Pengujian Aplikasi LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa membaca beberapa output LLM secara manual bukan metode evaluasi yang andal?",
+      "options": [
+        "Review manual terlalu mahal",
+        "Terlalu lama",
+        "Sampel kecil melewatkan mode kegagalan yang hanya muncul dalam skala besar, dan penilaian manusia tidak konsisten antar reviewer dan sesi",
+        "Output LLM selalu benar"
+      ],
+      "correct": 2,
+      "explanation": "Membaca 10 output menunjukkan 10 titik dalam distribusi. Perubahan prompt bisa meningkatkan 90% output tetapi merusak 10% edge case. Tanpa evaluasi sistematis, kamu akan melewatkan regresi sampai pengguna melaporkannya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu regression testing dalam konteks aplikasi LLM?",
+      "options": [
+        "Menguji pada data training",
+        "Mengukur loss model selama training",
+        "Menjalankan set test case tetap setelah setiap perubahan (prompt, model, parameter) untuk memastikan kualitas tidak menurun",
+        "Menguji model regresi linear"
+      ],
+      "correct": 2,
+      "explanation": "Setiap perubahan prompt, penggantian model, atau penyesuaian temperature mengubah distribusi output. Regression test menangkap kasus di mana perubahan yang meningkatkan satu area diam-diam menurunkan area lain."
+    },
+    {
+      "stage": "post",
+      "question": "Apa pendekatan evaluasi LLM-as-judge?",
+      "options": [
+        "Memakai LLM kuat untuk menilai output terhadap rubrik, menggantikan evaluasi manusia yang mahal sambil menskalakan ke ribuan test case",
+        "Membandingkan jumlah parameter dua model",
+        "Membuat model mengevaluasi loss training-nya sendiri",
+        "Memakai skor keyakinan model"
+      ],
+      "correct": 0,
+      "explanation": "LLM-as-judge mengirim (input, output, rubrik) ke model kuat (misalnya GPT-4) yang menilai output. Ia lebih murah dan cepat daripada evaluasi manusia, meski memiliki bias yang diketahui (misalnya lebih menyukai respons bertele-tele)."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang membuat dataset evaluasi bagus untuk aplikasi LLM?",
+      "options": [
+        "Sebanyak mungkin contoh",
+        "Sampel acak dari internet",
+        "Hanya contoh tersulit",
+        "Input beragam yang mencakup kasus umum, edge case, input adversarial, dan output yang diharapkan dengan rubrik jelas"
+      ],
+      "correct": 3,
+      "explanation": "Set eval yang baik mencakup distribusi: kasus happy path, edge case (input kosong, input sangat panjang), input adversarial (prompt injection), dan query ambigu. Setiap contoh memiliki output yang diharapkan atau rubrik penilaian yang jelas."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu harus menangani output LLM non-deterministik dalam evaluasi?",
+      "options": [
+        "Jalankan setiap test case beberapa kali dan gunakan metrik agregat (pass rate, skor rata-rata) untuk memperhitungkan variasi output",
+        "Hanya evaluasi output pertama",
+        "Atur temperature 0 untuk semua evaluasi",
+        "Non-determinisme tidak memengaruhi evaluasi"
+      ],
+      "correct": 0,
+      "explanation": "Bahkan pada temperature 0, beberapa penyedia memasukkan variasi sampling. Menjalankan setiap test 3-5 kali dan mengukur pass rate atau skor rata-rata memberi gambaran lebih andal daripada satu kali jalan yang mungkin mengenai sampel beruntung/tidak beruntung."
+    }
+  ]
+}

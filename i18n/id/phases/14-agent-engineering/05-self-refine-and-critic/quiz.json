@@ -1,0 +1,90 @@
+{
+  "lesson": "05-self-refine-and-critic",
+  "title": "Self-Refine dan CRITIC: Perbaikan Output Iteratif",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tiga prompt apa yang membentuk loop Self-Refine?",
+      "options": [
+        "Plan, execute, solve",
+        "Generate, feedback, refine",
+        "Actor, evaluator, reflector",
+        "Search, score, synthesize"
+      ],
+      "correct": 1,
+      "explanation": "Self-Refine memakai satu model dalam tiga peran: generate, feedback, refine."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa Self-Refine membutuhkan history pada langkah refine?",
+      "options": [
+        "History dibutuhkan untuk penagihan",
+        "Penyedia hanya melakukan cache pada history",
+        "Ia mempercepat pembuatan token",
+        "Tanpa output dan kritik sebelumnya, langkah refine mengulang kesalahan lama; ablation menunjukkan kualitas turun tajam"
+      ],
+      "correct": 3,
+      "explanation": "Prompt refine dikondisikan pada seluruh history agar model tidak mengulang error sebelumnya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diubah CRITIC dibandingkan Self-Refine?",
+      "options": [
+        "Ia memakai model lebih besar untuk generasi",
+        "Ia menjalankan langkah feedback secara paralel",
+        "Ia mengganti langkah self-feedback dengan verifikator eksternal berbasis tool",
+        "Ia menghapus langkah refine"
+      ],
+      "correct": 2,
+      "explanation": "CRITIC menukar self-critique dengan langkah verify yang dirutekan melalui search, code interpreter, kalkulator, atau verifikator domain."
+    },
+    {
+      "stage": "check",
+      "question": "Pola workflow Anthropic mana yang cocok dengan Self-Refine dan CRITIC dalam bahasa yang ramah Claude?",
+      "options": [
+        "Parallel sampling",
+        "Prompt chain",
+        "Evaluator-Optimizer",
+        "Router"
+      ],
+      "correct": 2,
+      "explanation": "Anthropic menamai pola ini Evaluator-Optimizer: evaluator memberi skor, optimizer merevisi, berulang sampai konvergen."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu rubber-stamp loop dan bagaimana pelajaran menyarankan menghindarinya?",
+      "options": [
+        "Guardrail yang timeout; lebarkan timeout",
+        "Retry yang selalu gagal; naikkan budget",
+        "Model dan prompt yang sama mengkritik outputnya sendiri lalu menyetujuinya; pakai prompt yang berbeda secara struktural atau critic kecil terpisah",
+        "Test yang selalu lulus; hapus test"
+      ],
+      "correct": 2,
+      "explanation": "Self-critique bergaya sama konvergen ke 'menurutku sudah bagus'; bedakan evaluator dari optimizer."
+    },
+    {
+      "stage": "post",
+      "question": "Fitur SDK mana di OpenAI Agents SDK yang berbentuk CRITIC?",
+      "options": [
+        "Sessions",
+        "Tracing",
+        "Handoffs",
+        "Output guardrails (yang bisa memanggil tool)"
+      ],
+      "correct": 3,
+      "explanation": "Output guardrails memvalidasi output akhir agent dan bisa memanggil tool, cocok dengan peran verifikator CRITIC."
+    },
+    {
+      "stage": "post",
+      "question": "Stop condition apa yang disarankan pelajaran untuk loop evaluator-optimizer 2026?",
+      "options": [
+        "Berhenti hanya saat model berkata 'oke'",
+        "Jangan pernah berhenti; biarkan agent memperbaiki diri tanpa batas",
+        "Berhenti hanya saat verifikator lulus",
+        "Gabungkan: verifikator lulus ATAU (model berkata oke DAN iterasi >= 2) ATAU iterasi >= max_iterations"
+      ],
+      "correct": 3,
+      "explanation": "Kondisi gabungan menghindari mode kegagalan dari satu kondisi tunggal."
+    }
+  ]
+}

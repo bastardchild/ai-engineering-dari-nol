@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa tujuan hidden layer pada jaringan multi-layer?",
+      "options": ["Mengubah input menjadi representasi fitur baru yang memungkinkan batas keputusan nonlinier", "Menerapkan fungsi loss", "Mengurangi jumlah parameter", "Menyimpan data training"],
+      "correct": 0,
+      "explanation": "Hidden layer menerapkan bobot, bias, dan activation function untuk membentuk representasi fitur baru. Fitur perantara ini memungkinkan jaringan mempelajari pemetaan nonlinier yang tak bisa dilakukan satu layer.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa yang dilakukan forward pass pada neural network?",
+      "options": ["Menghitung gradient untuk backpropagation", "Mengocok data training", "Memperbarui bobot memakai gradient", "Mendorong input melewati tiap layer untuk menghasilkan output"],
+      "correct": 3,
+      "explanation": "Forward pass adalah komputasi murni: untuk tiap layer, kalikan dengan bobot, tambahkan bias, terapkan aktivasi, lalu teruskan hasilnya ke layer berikutnya. Tidak ada pembelajaran selama forward pass.",
+      "stage": "pre"
+    },
+    {
+      "question": "Untuk layer dengan 3 neuron yang menerima input dari 2 neuron, bagaimana bentuk matriks bobotnya?",
+      "options": ["(2, 3)", "(3, 2)", "(2, 2)", "(3, 3)"],
+      "correct": 1,
+      "explanation": "Matriks bobot berbentuk (neuron di layer sekarang, neuron di layer sebelumnya) = (3, 2). Tiap baris memuat bobot satu neuron terhadap semua input.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa yang dijamin Universal Approximation Theorem?",
+      "options": ["Neural network bisa menyelesaikan masalah komputasi apa pun", "Satu hidden layer dengan neuron cukup bisa mengaproksimasi fungsi kontinu apa pun", "Jaringan yang lebih dalam selalu mengungguli yang dangkal", "Jaringan apa pun bisa dilatih dalam waktu polinomial"],
+      "correct": 1,
+      "explanation": "Cybenko (1989) membuktikan bahwa jaringan dengan satu hidden layer dan neuron yang cukup bisa mengaproksimasi fungsi kontinu apa pun sampai akurasi yang diinginkan. Dalam praktik, jaringan lebih dalam mencapai hal sama dengan total parameter lebih sedikit.",
+      "stage": "post"
+    },
+    {
+      "question": "Mengapa activation function sigmoid memungkinkan pembelajaran, berbeda dari step function pada perceptron?",
+      "options": ["Sigmoid menghasilkan nilai lebih besar", "Sigmoid lebih cepat dihitung", "Sigmoid halus dan terdiferensiasi di mana saja sehingga gradient ada untuk backpropagation", "Sigmoid menghasilkan nilai negatif"],
+      "correct": 2,
+      "explanation": "Step function punya gradient nol hampir di semua titik dan gradient tak terdefinisi di ambangnya. Sigmoid halus dengan turunan yang terdefinisi baik (s*(1-s)) di setiap titik, dan itu esensial untuk pembelajaran berbasis gradient.",
+      "stage": "post"
+    }
+  ]
+}

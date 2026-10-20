@@ -1,0 +1,90 @@
+{
+  "lesson": "12-anthropic-workflow-patterns",
+  "title": "Pola Workflow Anthropic: Sederhana di Atas Kompleks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana Anthropic membedakan workflow dari agent?",
+      "options": [
+        "Workflow adalah graph terdefinisi yang dimiliki engineer; agent adalah arah tool dinamis yang dimiliki model",
+        "Workflow tidak punya state; agent punya state",
+        "Workflow berjalan di CPU; agent butuh GPU",
+        "Workflow memakai embedding; agent memakai tool"
+      ],
+      "correct": 0,
+      "explanation": "Workflow = jalur kode terdefinisi yang dimiliki engineer; agent = model yang memiliki graph-nya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tiga kemampuan augmented LLM yang mendasari kelima pola?",
+      "options": [
+        "Search (retrieval), tools (actions), memory (persistence)",
+        "Vector, KV, graph",
+        "Plan, execute, reflect",
+        "Embeddings, fine-tuning, RAG"
+      ],
+      "correct": 0,
+      "explanation": "Unit atomiknya adalah satu LLM dengan retrieval, tool, dan memori yang terpasang."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu dari lima pola workflow Anthropic?",
+      "options": [
+        "Evaluator-optimizer",
+        "Gradient distillation",
+        "Prompt chaining",
+        "Routing"
+      ],
+      "correct": 1,
+      "explanation": "Kelima pola itu adalah prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer. Gradient distillation adalah konsep training."
+    },
+    {
+      "stage": "check",
+      "question": "Parallelization hadir dalam dua bentuk apa?",
+      "options": [
+        "Sync dan async",
+        "Stateful dan stateless",
+        "Hot dan cold",
+        "Sectioning (chunk berbeda) dan voting (prompt sama N kali, agregasi)"
+      ],
+      "correct": 3,
+      "explanation": "Parallelization adalah sectioning atau voting; keduanya menyebar N panggilan dan mengagregasi."
+    },
+    {
+      "stage": "check",
+      "question": "Pola workflow mana yang merupakan generalisasi Self-Refine?",
+      "options": [
+        "Orchestrator-workers",
+        "Evaluator-optimizer",
+        "Prompt chaining",
+        "Routing"
+      ],
+      "correct": 1,
+      "explanation": "Evaluator-optimizer adalah nama Anthropic untuk pola iteratif Self-Refine / CRITIC."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan workflow mengalahkan agent menurut pelajaran?",
+      "options": [
+        "Selalu",
+        "Hanya di GPU",
+        "Pada tugas yang dapat diprediksi, berbiaya terbatas, atau terikat kepatuhan di mana graph-nya dapat dienumerasi dan diaudit",
+        "Hanya untuk chat"
+      ],
+      "correct": 2,
+      "explanation": "Workflow lebih murah, lebih mudah di-debug, dan dapat diaudit; pilih saat langkahnya dapat diketahui."
+    },
+    {
+      "stage": "post",
+      "question": "Apa titik awal default yang disarankan pelajaran?",
+      "options": [
+        "Framework multi-agent",
+        "Fine-tune model",
+        "Bangun MCTS kustom",
+        "Panggilan API langsung; tambahkan framework hanya saat durable state, konkurensi actor, atau role templating sepadan biayanya"
+      ],
+      "correct": 3,
+      "explanation": "Schluntz dan Zhang: mulai sederhana; tambahkan kompleksitas framework hanya saat terjustifikasi."
+    }
+  ]
+}

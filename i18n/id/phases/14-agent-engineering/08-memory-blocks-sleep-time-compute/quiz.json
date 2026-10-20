@@ -1,0 +1,90 @@
+{
+  "lesson": "08-memory-blocks-sleep-time-compute",
+  "title": "Memory Blocks dan Sleep-Time Compute",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tiga tingkat memori Letta?",
+      "options": [
+        "RAM, swap, disk",
+        "Cache, KV, archival",
+        "Core, recall, archival",
+        "Working, episodic, semantic"
+      ],
+      "correct": 2,
+      "explanation": "Letta memakai tingkat core (selalu terlihat), recall (riwayat percakapan), dan archival (eksternal)."
+    },
+    {
+      "stage": "pre",
+      "question": "Masalah produksi mana yang menjadi sasaran sleep-time compute?",
+      "options": [
+        "Menurunkan biaya embedding",
+        "Parsing JSON yang lebih cepat",
+        "Akurasi lebih tinggi pada soal matematika",
+        "Tail latency akibat melakukan konsolidasi memori di jalur kritis"
+      ],
+      "correct": 3,
+      "explanation": "Sleep-time memindahkan prune/summarize/reconcile keluar dari jalur yang menghadap pengguna, sehingga respons utama tetap cepat."
+    },
+    {
+      "stage": "check",
+      "question": "Properti mana yang BUKAN field memory block di Letta?",
+      "options": [
+        "limit",
+        "embedding_model_version",
+        "label",
+        "value"
+      ],
+      "correct": 1,
+      "explanation": "Block membawa id, label, value, limit, description; versi model embedding bukan bagian dari skema block."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa sleep-time agent bisa menjalankan model yang lebih kuat daripada agent utama?",
+      "options": [
+        "Operasi memori memakan setengah token",
+        "Ia menerima API key privat",
+        "Ia berada di luar jalur kritis, jadi tidak dibatasi latency",
+        "Ia dibebaskan dari rate limit"
+      ],
+      "correct": 2,
+      "explanation": "Karena tidak memblokir respons pengguna, sleep-time agent boleh lebih lambat dan lebih mahal."
+    },
+    {
+      "stage": "check",
+      "question": "Pola apa yang menjadi generalisasi block Human dan Persona?",
+      "options": [
+        "Proses OS",
+        "Block tertipe yang dapat diedit dan didefinisikan pengguna secara bebas (Task, Project, Safety, ...)",
+        "Channel JSON-RPC",
+        "Vector embedding"
+      ],
+      "correct": 1,
+      "explanation": "Letta menggeneralisasi dua block MemGPT menjadi block apa pun yang didefinisikan pengguna dengan id, label, value, limit, description."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu silent drift dalam pola ini?",
+      "options": [
+        "Agent utama tidak pernah melihat bahwa sleep-time agent menulis ulang sebuah block di bawahnya; perbaiki dengan versioning dan diff yang terlihat",
+        "Peningkatan model embedding",
+        "Penulisan disk yang lambat",
+        "Jitter rate limit"
+      ],
+      "correct": 0,
+      "explanation": "Versioning block dan menampilkan diff di trace membuat penulisan ulang sleep-time terlihat oleh loop utama."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang menggantikan token `Thought:` inline dan pola send_message/heartbeat di Letta V1?",
+      "options": [
+        "Native reasoning yang dikeluarkan pada channel terpisah dan diteruskan antar giliran",
+        "LLM kedua yang khusus untuk thought",
+        "System prompt yang lebih besar",
+        "Thought yang diketik manual oleh pengguna"
+      ],
+      "correct": 0,
+      "explanation": "Letta V1 (letta_v1_agent) memakai native reasoning tingkat penyedia, bukan thought berbentuk prompt."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "30-bpe-tokenizer-from-scratch",
+  "title": "Tokenizer BPE dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa tokenizer BPE tingkat byte dimulai dari alfabet 256 simbol?",
+      "options": [
+        "Itu alfabet terkecil yang mendukung bahasa Inggris",
+        "Itu menjamin setiap input UTF-8 dapat direpresentasikan sebelum merge apa pun dipelajari",
+        "Itu menghapus kebutuhan menyimpan tabel merge",
+        "Itu cocok dengan ukuran warp GPU di sebagian besar akselerator"
+      ],
+      "correct": 1,
+      "explanation": "256 id byte mentah mencakup setiap input UTF-8 yang mungkin. Tidak ada token unknown yang diperlukan karena input apa pun dapat diekspresikan sebagai urutan byte."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan setiap langkah training BPE?",
+      "options": [
+        "Mengurangi kosakata dengan menghapus id paling jarang",
+        "Melatih jaringan neural kecil untuk memberi skor subword",
+        "Memecah kata acak dan memberinya id baru",
+        "Menghitung pasangan simbol bertetangga di korpus dan menggabungkan yang paling sering"
+      ],
+      "correct": 3,
+      "explanation": "Setiap langkah menemukan pasangan bertetangga paling sering di korpus, menggabungkannya menjadi simbol baru, dan mencatat merge."
+    },
+    {
+      "stage": "check",
+      "question": "Saat encoding teks baru, dalam urutan apa merge diterapkan?",
+      "options": [
+        "Berdasarkan posisi di input, kiri ke kanan, tanpa peduli peringkat training",
+        "Berdasarkan peringkat yang diterima merge selama training, peringkat terendah dulu",
+        "Berdasarkan byte pasangan, diurutkan alfabetis",
+        "Dalam urutan acak sampai tidak ada yang berlaku"
+      ],
+      "correct": 1,
+      "explanation": "Inferensi menerapkan merge dalam urutan dipelajarinya. Merge paling awal di tabel menang saat beberapa merge bisa berlaku."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perilaku encoder pada string token khusus saat allow_special False?",
+      "options": [
+        "Melempar error",
+        "Mengenkode byte literal string",
+        "Diam-diam melewati string",
+        "Memetakan string ke id yang dicadangkan"
+      ],
+      "correct": 1,
+      "explanation": "Dengan allow_special mati, string seperti <|endoftext|> diperlakukan sebagai byte mentah dan melewati loop merge seperti input lain."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa decoder tidak pernah membutuhkan id unknown-token?",
+      "options": [
+        "Setiap token yang dipelajari adalah konkatenasi dua token yang diketahui, rekursif sampai byte tunggal",
+        "Encoder membuang token unknown sebelum decoding",
+        "Decoder selalu mengembalikan string kosong untuk id unknown",
+        "Model menolak id unknown saat sampling"
+      ],
+      "correct": 0,
+      "explanation": "Setiap id bermuara pada byte mentah atau dua id yang sebelumnya diketahui. Ekspansi rekursif selalu berakhir di byte, yang di-decode ke UTF-8."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang terjadi pada panjang terenkode kalimat tetap saat kosakata target tumbuh?",
+      "options": [
+        "Cenderung menurun karena kosakata lebih besar mencakup lebih banyak subword",
+        "Berisolasi acak karena BPE non-deterministik",
+        "Tetap konstan karena setiap id mengodekan satu byte",
+        "Naik linear dengan ukuran kosakata"
+      ],
+      "correct": 0,
+      "explanation": "Kosakata lebih besar mempelajari lebih banyak merge, jadi subword umum runtuh menjadi satu id dan urutan terenkode menjadi lebih pendek."
+    }
+  ]
+}

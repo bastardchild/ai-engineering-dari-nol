@@ -1,0 +1,66 @@
+{
+  "lesson": "13-production-app",
+  "title": "Membangun Aplikasi LLM Produksi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa kesenjangan terbesar antara demo LLM dan aplikasi LLM produksi?",
+      "options": [
+        "Kualitas model",
+        "Infrastruktur: penanganan error, streaming, pelacakan biaya, rate limiting, fallback, observabilitas, dan degradasi yang anggun saat beban tinggi",
+        "Pilihan penyedia API",
+        "Kualitas prompt"
+      ],
+      "correct": 1,
+      "explanation": "Demo memanggil API dan mencetak respons. Produksi harus menangani timeout, gangguan penyedia, pengguna konkuren, anggaran biaya, pengiriman streaming, logging, dan degradasi yang anggun. Model adalah bagian yang mudah."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa pengiriman token secara streaming penting dalam aplikasi LLM produksi?",
+      "options": [
+        "Ia meningkatkan akurasi model",
+        "Ia memakai lebih sedikit memori",
+        "Pengguna mempersepsikan token pertama yang tiba cepat sebagai lebih cepat, meskipun total waktu generasi sama -- mengurangi latensi yang dirasakan dari detik menjadi milidetik",
+        "Ia mengurangi biaya"
+      ],
+      "correct": 2,
+      "explanation": "Tanpa streaming, pengguna menunggu 3-10 detik tanpa melihat apa pun sebelum respons penuh muncul. Dengan streaming, token pertama tiba dalam ~200ms dan teks mengalir terus-menerus, membuat pengalaman terasa responsif."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang harus terjadi ketika penyedia API LLM-mu mengalami gangguan?",
+      "options": [
+        "Retry tanpa henti sampai penyedia pulih",
+        "Tampilkan halaman error ke pengguna",
+        "Aplikasi harus otomatis beralih ke penyedia alternatif atau mengembalikan respons terdegradasi yang anggun",
+        "Beralih ke model lokal"
+      ],
+      "correct": 2,
+      "explanation": "Sistem produksi membutuhkan strategi fallback: coba Penyedia B jika Penyedia A gagal, sajikan respons ter-cache untuk query umum, atau kembalikan pesan 'sementara tidak tersedia' yang membantu. Jangan pernah biarkan gangguan penyedia membuat aplikasimu crash."
+    },
+    {
+      "stage": "post",
+      "question": "Metrik observabilitas apa yang harus dilacak aplikasi LLM produksi?",
+      "options": [
+        "Hanya jumlah error",
+        "Hanya akurasi model",
+        "Latensi request (P50/P95/P99), biaya per request, tingkat error, penggunaan token, cache hit rate, dan skor kualitas dari eval otomatis",
+        "Hanya biaya bulanan"
+      ],
+      "correct": 2,
+      "explanation": "Observabilitas menyeluruh mencakup: persentil latensi (untuk kepatuhan SLA), pelacakan biaya (untuk manajemen anggaran), tingkat error (untuk keandalan), penggunaan token (untuk optimasi), dan metrik kualitas (untuk deteksi regresi)."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu harus menerapkan rate limiting di aplikasi LLM-mu?",
+      "options": [
+        "Untuk membuat aplikasi tampak eksklusif",
+        "Untuk mencegah pengguna individu menghabiskan anggaran API-mu, melindungi dari penyalahgunaan, dan memastikan akses adil saat trafik tinggi",
+        "Untuk mengurangi akurasi model",
+        "Rate limiting hanya dibutuhkan untuk tier gratis"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa rate limiting, satu pengguna (atau bot) dapat menghabiskan anggaran API harianmu dalam beberapa menit. Rate limiting melindungi biaya, mencegah penyalahgunaan, dan memastikan semua pengguna mendapat waktu respons wajar saat beban puncak."
+    }
+  ]
+}

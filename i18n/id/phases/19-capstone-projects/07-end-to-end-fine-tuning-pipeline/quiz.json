@@ -1,0 +1,90 @@
+{
+  "lesson": "07-end-to-end-fine-tuning-pipeline",
+  "title": "Capstone 07 — Pipeline Fine-Tuning End-to-End (Data ke SFT ke DPO ke Serve)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dijaga pemeriksaan kontaminasi selama persiapan data?",
+      "options": [
+        "Drift tokenizer antara tahap SFT dan DPO",
+        "Kebocoran test-set dari benchmark publik seperti MMLU-Pro dan MT-Bench-v2 ke data latih",
+        "Ketidakcocokan driver GPU antara training dan serving",
+        "Skew versi GGUF antar build llama.cpp"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa pipeline menyusun SFT lalu DPO (atau GRPO) alih-alih DPO saja?",
+      "options": [
+        "DPO tidak bisa berjalan pada bobot terkuantisasi",
+        "Axolotl tidak mengimplementasikan DPO",
+        "SFT membentuk perilaku domain pada completion berlabel, sedangkan DPO atau GRPO menyelaraskan model terhadap pasangan preferensi atau reward yang dapat diverifikasi",
+        "DPO membutuhkan arsitektur model dasar terpisah"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa kontribusi EAGLE-3 pada tahap serving vLLM?",
+      "options": [
+        "Kebijakan OPA untuk tool call",
+        "Langkah dedup data otomatis",
+        "Lapisan prompt-caching baru",
+        "Draft head yang memprediksi N token ke depan; target memverifikasi dalam satu pass untuk throughput 2-3x"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Metrik mana yang melaporkan seberapa baik draft speculative decoding selaras dengan model target?",
+      "options": [
+        "Acceptance rate",
+        "Perplexity",
+        "PSI",
+        "Coverage delta"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Trio kuantisasi mana yang dikirim pipeline untuk fleksibilitas deployment?",
+      "options": [
+        "GPTQ-INT4-Marlin, AWQ-INT4, dan GGUF-Q4_K_M",
+        "FP32, FP16, BF16",
+        "INT8 saja di tiga runtime",
+        "ONNX, CoreML, TFLite"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Konvensi framework mana yang diikuti model card 2026 dalam capstone ini?",
+      "options": [
+        "Hanya front-matter YAML HuggingFace",
+        "Format model card OpenAI",
+        "Datasheets for Datasets",
+        "Template Model Openness Framework (MOF) 2026 yang mencakup data, training, eval, safety, lisensi, dan reproducibility"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Metrik HPA mana yang dipakai untuk autoscale replika serving?",
+      "options": [
+        "Suhu GPU",
+        "Utilisasi CPU",
+        "Queue-wait time",
+        "Byte egress jaringan"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

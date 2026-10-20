@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Modelmu mengeluarkan logits mentah dengan shape (N, C). Kamu menulis `loss = cross_entropy(softmax(logits), y)`. Apa yang salah?",
+      "options": ["cross_entropy menerapkan softmax lagi di dalam, jadi kamu menghitung softmax(softmax(logits)), menghasilkan probabilitas yang hampir seragam dan gradien yang tidak berguna", "Tidak ada yang salah — itu API yang benar", "cross_entropy memunculkan ValueError tentang shape", "Akurasi turun tepat sebesar 1/C"],
+      "correct": 0,
+      "explanation": "cross_entropy PyTorch mengharapkan logits mentah — ia menggabungkan log_softmax dan NLL secara internal demi stabilitas numerik. Menerapkan softmax terlebih dahulu menghasilkan softmax(softmax(x)), yang memampatkan logits menuju seragam dan membuat gradien hampir nol. Training loss tampak masuk akal selama beberapa langkah lalu berhenti berkembang. Selalu berikan logits mentah."
+    },
+    {
+      "stage": "pre",
+      "question": "Kamu mengevaluasi classifier 10 kelas dan mendapatkan akurasi 92%. Kelas 0 memiliki 9.000 contoh; kelas 1-9 berbagi 1.000 contoh (masing-masing sekitar 111, total 10.000). Apa yang disembunyikan angka utama itu?",
+      "options": ["Model bisa saja memprediksi kelas 0 untuk setiap input dan tetap mendapat 90% (9000/10000); 2% sisanya bisa berasal dari kelas mana pun. Precision/recall per kelas menunjukkan apa yang sebenarnya terjadi", "Tidak ada — akurasi adalah akurasi", "Model pasti overfitting", "Validation loss-nya salah"],
+      "correct": 0,
+      "explanation": "Pada pembagian 9000/1000 (ketidakseimbangan 90/10 dengan total 10.000 contoh), selalu memprediksi kelas mayoritas menghasilkan akurasi 9000/10000 = 90%. Angka 92% bisa menyembunyikan sembilan kelas minoritas dengan akurasi sekitar 20% masing-masing. Precision, recall, F1 per kelas, dan confusion matrix adalah diagnostik yang mengungkap hal ini, itulah sebabnya akurasi agregat saja tidak pernah cukup untuk merilis classifier."
+    },
+    {
+      "stage": "post",
+      "question": "Mixup mengganti label one-hot dengan target lunak terinterpolasi seperti lambda * y_i + (1-lambda) * y_j. Mengapa ini membantu generalisasi?",
+      "options": ["Ia menggandakan ukuran batch efektif", "Ia menjamin train loss nol", "Ia memungkinkanmu melatih dengan learning rate lebih besar", "Model dipaksa menghasilkan prediksi yang mulus antar kelas alih-alih menghafal target one-hot keras, yang meningkatkan kalibrasi sekaligus akurasi uji"],
+      "correct": 3,
+      "explanation": "Melatih terhadap target one-hot keras mendorong logits menjadi tajam secara arbitrer di setiap titik training, yang merusak kalibrasi dan mengundang overfitting. Kombinasi konveks input dan label dari mixup memaksa classifier berperilaku mulus di antara titik training, sebuah prior yang wajar untuk kelas gambar alami dan secara konsisten meningkatkan akurasi uji tanpa data tambahan."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mengganti `RandomCrop(32, padding=4, padding_mode='zeros')` dengan `padding_mode='reflect'` pada CIFAR-10. Mengapa reflect lebih baik di sini?",
+      "options": ["Zero padding menciptakan tepi hitam keras yang dipelajari model untuk diandalkan; reflect pad mencerminkan piksel tepi sehingga crop hasil augmentasi tampak seperti foto alami", "Reflect pad diwajibkan oleh batch normalization", "Reflect pad mengubah ukuran output", "Reflect pad lebih cepat"],
+      "correct": 0,
+      "explanation": "Crop dengan zero padding memiliki tepi hitam yang terlihat dan membocorkan informasi tentang posisi crop ke dalam fitur. Jaringan dapat belajar melihat sudut dan secara implisit membatalkan augmentasi. Reflect pad mencerminkan konten nyata, sehingga setiap crop tetap tampak seperti gambar alami dan jaringan tidak dapat mencurangi augmentasi."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melatih classifier dan confusion matrix menunjukkan sebagian besar kesalahan adalah kelas 3 diprediksi sebagai kelas 5 dan kelas 5 diprediksi sebagai kelas 3. Langkah berikutnya yang paling berdampak adalah apa?",
+      "options": ["Menambah batch size", "Beralih dari SGD ke Adam", "Melihat sampel gambar kelas 3 dan kelas 5 yang membingungkan model; kedua kelas mungkin benar-benar ambigu, salah label, atau mirip secara visual sehingga perlu augmentasi bertarget atau training set yang dilabel ulang", "Menambah lebih banyak data training untuk semua kelas secara merata"],
+      "correct": 2,
+      "explanation": "Confusion matrix yang terkonsentrasi pada satu pasangan off-diagonal berarti mode kegagalannya spesifik. Tindakan yang tepat adalah memeriksa gambar tersebut: kamu sering menemukan data salah label, kelas yang hampir duplikat, atau invariansi sederhana yang belum dipelajari model. Perubahan menyeluruh (lebih banyak data, optimizer baru) jarang membantu ketika kegagalannya begitu terlokalisasi."
+    }
+  ]
+}

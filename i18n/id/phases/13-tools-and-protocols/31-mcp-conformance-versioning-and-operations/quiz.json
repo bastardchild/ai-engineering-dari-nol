@@ -1,0 +1,78 @@
+{
+  "lesson": "31-mcp-conformance-versioning-and-operations",
+  "title": "Rekayasa Conformance MCP: Versioning, Bukti, dan Operasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa satu panggilan tools/list SDK yang sukses tidak cukup sebagai bukti conformance?",
+      "options": [
+        "Nilai ternormalisasi dapat menyembunyikan field wire, perilaku versi, perubahan proxy, dan respons tidak valid",
+        "SDK tidak dapat memanggil tool MCP",
+        "Panggilan yang sukses selalu memilih era legacy",
+        "Conformance hanya berlaku untuk publisher Registry"
+      ],
+      "correct": 0,
+      "explanation": "Conformance harus memeriksa request dan respons mentah, era versi yang dipilih, perantara, dan transformasi SDK."
+    },
+    {
+      "stage": "check",
+      "question": "Probe modern mengembalikan error JSON-RPC -32021. Apa yang harus dilakukan klien yang mendukung fallback?",
+      "options": [
+        "Langsung mengirim initialize untuk era legacy",
+        "Menganggap peer offline",
+        "Tetap di era modern dan perbaiki atau laporkan deklarasi kemampuan yang hilang",
+        "Mengabaikan error dan mencoba ulang tanpa kemampuan"
+      ],
+      "correct": 2,
+      "explanation": "Error modern yang dikenali membuktikan perilaku modern. Itu bukti koreksi, bukan izin untuk downgrade."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien modern menangani hasil dengan resultType complete dan field aditif yang tidak dikenal?",
+      "options": [
+        "Mengubah resultType menjadi input_required",
+        "Menolak setiap hasil yang memuat kunci tidak dikenal",
+        "Menerima tipe hasil yang dikenal dan mempertahankan atau sengaja mengabaikan field aditif sesuai perannya",
+        "Memperlakukan field tidak dikenal sebagai handshake legacy"
+      ],
+      "correct": 2,
+      "explanation": "Field aditif mendukung kompatibilitas maju. Field itu berbeda dari diskriminator lifecycle yang tidak dikenal."
+    },
+    {
+      "stage": "check",
+      "question": "Apa respons JSON-RPC yang diwajibkan untuk notifikasi tanpa id?",
+      "options": [
+        "Hasil server/discover",
+        "Tidak ada respons JSON-RPC",
+        "Hasil complete dengan content null",
+        "Error dengan id null"
+      ],
+      "correct": 1,
+      "explanation": "Notifikasi bersifat satu arah. Serializer transport final tidak boleh memancarkan sukses atau error JSON-RPC."
+    },
+    {
+      "stage": "post",
+      "question": "Bukti mana yang paling baik membuktikan proxy mempertahankan error protokol origin?",
+      "options": [
+        "Bukti status dan body ingress, origin, dan egress yang disunting dengan digest stabil",
+        "Screenshot dashboard gateway",
+        "Kelas exception SDK saja",
+        "Uptime proses proxy"
+      ],
+      "correct": 0,
+      "explanation": "Bukti tiga batas mengungkap keruntuhan status, penulisan ulang body, dan hop persis tempat perilaku berubah."
+    },
+    {
+      "stage": "post",
+      "question": "Kandidat gagal pada transkrip negatifnya dan versi sebelumnya tidak memiliki bukti admission atau kesehatan. Apa yang harus dilakukan gerbang rilis?",
+      "options": [
+        "Memilih versi Registry terbaru",
+        "Mempromosikan karena transkrip golden lulus",
+        "Rollback ke paket yang ditandai latest",
+        "Menahan rilis sampai target rollback yang memenuhi syarat atau kandidat yang diperbaiki terbukti"
+      ],
+      "correct": 3,
+      "explanation": "Rollback tanpa bukti admission dan kesehatan yang persis adalah rilis lain yang tidak terverifikasi, jadi tindakan aman adalah menahan."
+    }
+  ]
+}

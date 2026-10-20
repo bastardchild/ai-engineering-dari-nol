@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa manfaat utama 'version control'?",
+      "options": ["Memperbaiki bug di kode kamu secara otomatis", "Mempercepat eksekusi kode", "Melacak perubahan file dari waktu ke waktu dan berkolaborasi dengan orang lain", "Mengompresi file untuk menghemat ruang disk"],
+      "correct": 2,
+      "explanation": "Sistem version control seperti git melacak setiap perubahan pada file, memungkinkan kamu kembali ke keadaan sebelumnya dan berkolaborasi dengan orang lain pada basis kode yang sama."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu 'repository' dalam konteks pengembangan perangkat lunak?",
+      "options": ["Manajer paket untuk menginstal library", "Kumpulan file dan riwayat perubahan lengkapnya yang dikelola version control", "Basis data untuk menyimpan data pengguna", "Layanan penyimpanan cloud seperti Google Drive"],
+      "correct": 1,
+      "explanation": "Repository (repo) adalah direktori yang dilacak git dan berisi semua file proyek beserta riwayat lengkap perubahan pada file-file tersebut."
+    },
+    {
+      "stage": "post",
+      "question": "Apa urutan yang benar untuk menyimpan dan mencadangkan pekerjaanmu di git?",
+      "options": ["git push, git add, git commit", "git clone, git add, git push", "git add, git commit, git push", "git commit, git add, git push"],
+      "correct": 2,
+      "explanation": "Pertama kamu men-stage perubahan dengan 'git add', lalu menyimpan snapshot dengan 'git commit', lalu mengunggahnya ke remote dengan 'git push'. Inilah alur kerja harian."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan perintah 'git checkout -b experiment/new-optimizer'?",
+      "options": ["Membuat branch baru bernama experiment/new-optimizer dan berpindah ke sana", "Menghapus branch experiment/new-optimizer", "Mengunduh branch bernama experiment/new-optimizer dari GitHub", "Mengembalikan semua file agar sesuai dengan branch experiment/new-optimizer"],
+      "correct": 0,
+      "explanation": "Flag '-b' membuat branch baru dengan nama yang diberikan dan langsung berpindah ke sana, sehingga kamu bisa bereksperimen tanpa memengaruhi branch main."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu harus menambahkan '.pt', '.pth', dan '.safetensors' ke .gitignore?",
+      "options": ["Itu adalah file checkpoint model yang terlalu besar untuk git dan bisa dibuat ulang", "Git tidak dapat melacak file biner apa pun", "Itu adalah file pengujian Python yang tidak boleh di-commit", "File tersebut berisi API key sensitif"],
+      "correct": 0,
+      "explanation": "File checkpoint model (.pt, .pth, .safetensors) sering berukuran gigabyte. Git tidak dirancang untuk file biner besar, jadi file ini sebaiknya dikecualikan lalu dibuat ulang atau disimpan terpisah."
+    }
+  ]
+}

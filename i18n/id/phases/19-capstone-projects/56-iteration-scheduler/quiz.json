@@ -1,0 +1,78 @@
+{
+  "lesson": "56-iteration-scheduler",
+  "title": "Scheduler Iterasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa scheduler memakai skor UCB alih-alih selalu memilih branch terbaik saat ini?",
+      "options": [
+        "Karena antrean tidak bisa diurutkan jika tidak",
+        "Karena asyncio membutuhkan UCB",
+        "Karena UCB lebih cepat dihitung",
+        "Karena greedy tidak pernah eksplorasi; UCB menyeimbangkan exploitation dengan exploration"
+      ],
+      "correct": 3,
+      "explanation": "Greedy terkunci pada pemimpin pertama. Uniform tidak pernah exploit. UCB memilih pemimpin sambil menyediakan kapasitas untuk branch kurang tereksplorasi lewat suku sqrt(ln N / n)."
+    },
+    {
+      "stage": "pre",
+      "question": "Skor apa yang diterima branch dengan nol run selesai di bawah UCB1?",
+      "options": [
+        "Positif tak hingga, sehingga branch yang belum dicoba selalu dipilih dulu",
+        "Mean reward semua branch lain",
+        "Nol",
+        "Konstanta eksplorasi c"
+      ],
+      "correct": 0,
+      "explanation": "Lesson memberi +inf untuk runs=0. Ini menjamin setiap branch dicoba setidaknya sekali sebelum branch mana pun dikunjungi ulang."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana scheduler menjaga beberapa slot tetap sibuk?",
+      "options": [
+        "Memakai asyncio.create_task per hipotesis yang dikirim dan menunggu FIRST_COMPLETED pada set in-flight",
+        "Menjalankan runner di thread pool",
+        "Memblokir event loop dengan sleep",
+        "Memakai multiprocessing"
+      ],
+      "correct": 0,
+      "explanation": "Setiap hipotesis yang dikirim menjadi task. Loop utama menunggu FIRST_COMPLETED sehingga slot yang selesai segera dibebaskan dan hipotesis lain dikirim."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan scheduler mengeluarkan paper.trigger untuk sebuah branch?",
+      "options": [
+        "Setiap kali hasil mendarat di branch itu",
+        "Saat lantai prune tercapai",
+        "Hanya di akhir run",
+        "Pada hasil pertama yang mean branch-nya memenuhi atau melebihi ambang paper, dan hanya sekali per branch"
+      ],
+      "correct": 3,
+      "explanation": "Trigger menyala sekali per branch, pertama kali mean branch melewati ambang. Flag paper_triggered pada BranchStats mencegah pengulangan."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang terjadi pada branch yang mean reward-nya tetap di bawah lantai prune setelah ambang minimum run?",
+      "options": [
+        "Tidak ada; UCB akhirnya memilih branch lain",
+        "Lantai reward diturunkan otomatis",
+        "Branch ditandai pruned dan hipotesis tersisa di branch itu dihapus dari antrean",
+        "Scheduler melempar exception"
+      ],
+      "correct": 2,
+      "explanation": "Pruning menghapus branch dari penjadwalan mendatang. Pruning terpisah dari picker: UCB memeringkat, pruning menyingkirkan."
+    },
+    {
+      "stage": "post",
+      "question": "Dua anggaran apa yang ditegakkan scheduler sebagai batas keras?",
+      "options": [
+        "Memori dan CPU",
+        "paper trigger dan jumlah prune",
+        "slot dan kedalaman antrean",
+        "max_experiments (total run) dan max_seconds (wall clock)"
+      ],
+      "correct": 3,
+      "explanation": "Keduanya menyala sebagai alasan berhenti. max_experiments membatasi total pekerjaan. max_seconds membatasi wall time. Trace mencatat mana yang menghentikan run."
+    }
+  ]
+}

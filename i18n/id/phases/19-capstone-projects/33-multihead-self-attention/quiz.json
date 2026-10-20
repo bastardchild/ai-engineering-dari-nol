@@ -1,0 +1,78 @@
+{
+  "lesson": "33-multihead-self-attention",
+  "title": "Multi-Head Self-Attention",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa blok self-attention yang efisien memakai satu layer linear yang mengeluarkan fitur 3*D?",
+      "options": [
+        "Itu setara secara matematis dengan tiga layer Linear(D, D) dan berjalan sebagai satu matmul",
+        "Itu mengurangi jumlah parameter model",
+        "Itu menegakkan weight sharing antara Q, K, dan V",
+        "Itu menghindari kebutuhan causal mask"
+      ],
+      "correct": 0,
+      "explanation": "Menumpuk tiga matriks proyeksi (D, D) menjadi satu matriks (3D, D) menghasilkan output sama, tetapi forward pass menjadi satu matmul yang ramah akselerator."
+    },
+    {
+      "stage": "check",
+      "question": "Apa hubungan antara d_model, n_heads, dan d_head?",
+      "options": [
+        "d_head = d_model * n_heads",
+        "d_head = d_model + n_heads",
+        "d_head independen dari d_model",
+        "d_head = d_model // n_heads dan d_model harus habis dibagi n_heads"
+      ],
+      "correct": 3,
+      "explanation": "Blok membagi d_model secara merata ke head. Kendala d_model % n_heads == 0 ditegakkan saat konstruksi."
+    },
+    {
+      "stage": "check",
+      "question": "Nilai apa yang masuk ke faktor skala scaled dot-product attention?",
+      "options": [
+        "sqrt(d_head)",
+        "sqrt(n_heads)",
+        "sqrt(d_model)",
+        "sqrt(seq_len)"
+      ],
+      "correct": 0,
+      "explanation": "Skor dibagi sqrt(d_head), dimensi head yang dikontrak matmul. Ini menjaga varians skor tetap terbatas saat d_head tumbuh."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana causal mask menegakkan posisi t tidak dapat memperhatikan posisi t+1?",
+      "options": [
+        "Dengan mengalikan key di posisi masa depan dengan nol",
+        "Dengan menyetel entri skor di atas diagonal ke negatif tak hingga sebelum softmax",
+        "Dengan menghapus token masa depan dari input",
+        "Dengan memakai head attention berbeda untuk masa depan"
+      ],
+      "correct": 1,
+      "explanation": "Menyetel entri masa depan ke -inf memaksa softmax memberi bobot nol. Posisi lampau dan sekarang mempertahankan distribusi bobot yang valid."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa blok diakhiri proyeksi output Linear(D, D) setelah menggabungkan head?",
+      "options": [
+        "Untuk memungkinkan model mencampur informasi antar head",
+        "Untuk mencocokkan ukuran kosakata model",
+        "Untuk menormalisasi aktivasi ke rata-rata nol",
+        "Itu diperlukan agar autograd melacak gradien"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa proyeksi output, output head hanya akan bergabung di layer berikutnya. Proyeksi memberi blok satu tempat untuk mencampur head pada langkah yang sama."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diberitahukan matriks bobot attention berbentuk (B, H, T, T)?",
+      "options": [
+        "Posisi key mana yang diperhatikan setiap posisi query, per head, per elemen batch",
+        "Cosine similarity antara vektor query dan value",
+        "Logit output untuk token berikutnya",
+        "Berapa parameter yang dimiliki setiap head"
+      ],
+      "correct": 0,
+      "explanation": "Baris t dari matriks per head adalah distribusi atas posisi key yang dipakai posisi query t. Memeriksanya menunjukkan ke mana setiap head melihat."
+    }
+  ]
+}

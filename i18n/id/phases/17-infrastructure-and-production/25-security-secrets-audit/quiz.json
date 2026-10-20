@@ -1,0 +1,78 @@
+{
+  "lesson": "25-security-secrets-audit",
+  "title": "Keamanan — Secret, Rotasi API Key, Audit Log, Guardrail",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa pola standar 2026 untuk kredensial layanan LLM?",
+      "options": [
+        "Hardcode API key di file konfigurasi demi kecepatan",
+        "Kirim key lewat email ke tiap engineer",
+        "Simpan key di channel Slack",
+        "Vault terpusat yang ditarik AI gateway saat runtime lewat IAM role; rotasi di vault dan semua aplikasi mengambilnya dalam hitungan menit"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kadens rotasi apa yang direkomendasikan pelajaran ini untuk API key, token root vault, dan kredensial CI/CD?",
+      "options": [
+        "Dalam 90 hari, otomatis bila memungkinkan, dicatat dan dilacak bila manual",
+        "Hanya saat bocor",
+        "Tidak pernah",
+        "Setiap 5 tahun"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa tokenisasi konsisten (pendekatan Mesh) dipakai untuk scrubbing PII?",
+      "options": [
+        "Itu mengenkripsi prompt ke model",
+        "Itu diwajibkan ISO 27001",
+        "Nilai sumber yang sama dipetakan ke placeholder yang sama, sehingga LLM mempertahankan semantik kode dan relasi di seluruh prompt",
+        "Itu memakai memori lebih sedikit daripada regex"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Postur egress apa yang direkomendasikan pelajaran ini untuk subnet layanan LLM?",
+      "options": [
+        "Whitelist sedikit domain (api.openai.com, api.anthropic.com, DB vektor, vault) dan buang sisanya, dengan resolver DNS yang hanya allowlist",
+        "Blokir semua egress termasuk provider",
+        "Izinkan DNS tapi blokir HTTP",
+        "Izinkan semua traffic keluar"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa pelajaran dari insiden supply chain Vercel 2026 tentang kredensial CI/CD?",
+      "options": [
+        "Kredensial CI/CD berisiko rendah dan boleh tetap di file env",
+        "Secret CI/CD tidak bisa dicuri",
+        "Vercel tidak terdampak",
+        "Kredensial CI/CD setara produksi — simpan di vault, batasi cakupan, rotasi agresif"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Field audit log mana yang direkomendasikan pelajaran ini untuk disimpan pada setiap panggilan LLM?",
+      "options": [
+        "Hanya biayanya",
+        "Timestamp, pengguna/tenant, hash prompt (bukan mentah), model + versi, jumlah token, biaya, hash respons, setiap guardrail yang terpicu",
+        "Hanya prompt mentah",
+        "Hanya respons"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

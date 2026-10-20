@@ -1,0 +1,75 @@
+{
+  "phase": {
+    "3": {
+      "name": "Inti Deep Learning",
+      "desc": "Neural network dari prinsip pertama. Tanpa framework sampai kamu membangunnya sendiri."
+    }
+  },
+  "lessons": {
+    "phases/03-deep-learning-core/01-the-perceptron": {
+      "name": "Perceptron: Tempat Semuanya Dimulai",
+      "summary": "Perceptron adalah atom neural network. Buka dan kamu temukan bobot, bias, dan sebuah keputusan.",
+      "keywords": "Satu Neuron, Satu Keputusan · Decision Boundary · Aturan Belajar · Masalah XOR · Langkah 1: Class Perceptron · Langkah 2: Latih pada gerbang logika · Langkah 3: Lihat XOR gagal · Langkah 4: Selesaikan XOR dengan dua layer · Langkah 5: Latih Jaringan Dua Layer"
+    },
+    "phases/03-deep-learning-core/02-multi-layer-networks": {
+      "name": "Jaringan Multi-Layer & Forward Pass",
+      "summary": "Satu neuron menggambar satu garis. Susun banyak, dan kamu bisa menggambar apa pun.",
+      "keywords": "Layer: Input, Hidden, Output · Neuron dan Aktivasi · Forward Pass: Bagaimana Data Mengalir · Dimensi Matriks · Universal Approximation Theorem · Komposabilitas · Langkah 1: Aktivasi Sigmoid · Langkah 2: Class Layer · Langkah 3: Class Network · Langkah 4: XOR dengan Bobot yang Disetel Manual · Langkah 5: Klasifikasi Lingkaran"
+    },
+    "phases/03-deep-learning-core/03-backpropagation": {
+      "name": "Backpropagation dari Nol",
+      "summary": "Backpropagation adalah algoritma yang memungkinkan pembelajaran. Tanpanya, neural network hanyalah generator bilangan acak yang mahal.",
+      "keywords": "Aturan Rantai, Diterapkan pada Jaringan · Computation Graph · Forward vs Backward · Aliran Gradient Melalui Jaringan · Vanishing Gradient · Menurunkan Gradient untuk Jaringan 2 Layer · Langkah 1: Node Value · Langkah 2: Operasi dengan Fungsi Backward · Langkah 3: Sigmoid dan Loss · Langkah 4: Backward Pass · Langkah 5: Layer dan Network · Langkah 6: Latih pada XOR · Langkah 7: Klasifikasi Lingkaran"
+    },
+    "phases/03-deep-learning-core/04-activation-functions": {
+      "name": "Fungsi Aktivasi: ReLU, Sigmoid, GELU & Alasannya",
+      "summary": "Tanpa nonlinearitas, jaringan 100 layer-mu hanyalah perkalian matriks mewah. Aktivasi adalah gerbang yang memungkinkan neural network berpikir dalam kurva.",
+      "keywords": "Mengapa Nonlinearitas Diperlukan · Sigmoid · Tanh · ReLU: Terobosan · Leaky ReLU · GELU: Default Modern · Swish / SiLU · Softmax: Aktivasi Output · Perbandingan Bentuk · Perbandingan Aliran Gradient · Aktivasi Mana Kapan · Langkah 1: Implementasikan Semua Fungsi Aktivasi dengan Turunannya · Langkah 2: Visualisasikan Tempat Gradient Mati · Langkah 3: Eksperimen Vanishing Gradient · Langkah 4: Detektor Neuron Mati · Langkah 5: Perbandingan Training -- Sigmoid vs ReLU vs GELU"
+    },
+    "phases/03-deep-learning-core/05-loss-functions": {
+      "name": "Fungsi Loss: MSE, Cross-Entropy, Contrastive",
+      "summary": "Jaringanmu membuat prediksi. Ground truth berkata sebaliknya. Seberapa salah? Angka itu adalah loss. Pilih fungsi loss yang salah dan modelmu akan mengoptimalkan hal yang salah…",
+      "keywords": "Mean Squared Error (MSE) · Cross-Entropy Loss · Mengapa MSE Gagal untuk Klasifikasi · Label Smoothing · Contrastive Loss · Focal Loss · Pohon Keputusan Fungsi Loss · Loss Landscape · Langkah 1: MSE dan Gradient-nya · Langkah 2: Binary Cross-Entropy · Langkah 3: Categorical Cross-Entropy dengan Softmax · Langkah 4: Label Smoothing · Langkah 5: Contrastive Loss (InfoNCE Sederhana) · Langkah 6: MSE vs Cross-Entropy pada Klasifikasi"
+    },
+    "phases/03-deep-learning-core/06-optimizers": {
+      "name": "Optimizer: SGD, Momentum, Adam, AdamW",
+      "summary": "Gradient descent memberitahu arah bergerak. Ia tidak mengatakan seberapa jauh atau seberapa cepat. SGD adalah kompas. Adam adalah GPS dengan data lalu lintas.",
+      "keywords": "Stochastic Gradient Descent (SGD) · Momentum · RMSProp · Adam: Momentum + RMSProp · AdamW: Weight Decay yang Benar · Learning Rate: Hyperparameter Terpenting · Perbandingan Optimizer · Kapan Setiap Optimizer Menang · Langkah 1: SGD Vanilla · Langkah 2: SGD dengan Momentum · Langkah 3: Adam · Langkah 4: AdamW · Langkah 5: Perbandingan Training"
+    },
+    "phases/03-deep-learning-core/07-regularization": {
+      "name": "Regularisasi: Dropout, Weight Decay, BatchNorm",
+      "summary": "Modelmu mendapat 99% pada data training dan 60% pada data test. Ia menghafal alih-alih belajar. Regularisasi adalah pajak yang kamu kenakan pada kompleksitas untuk memaksa generalisasi.",
+      "keywords": "Spektrum Overfitting · Dropout · Weight Decay (Regularisasi L2) · Batch Normalization · Layer Normalization · RMSNorm · Perbandingan Normalisasi · Data Augmentation sebagai Regularisasi · Early Stopping · Kapan Terapkan Apa · Langkah 1: Dropout (Mode Train dan Eval) · Langkah 2: Weight Decay L2 · Langkah 3: Batch Normalization · Langkah 4: Layer Normalization · Langkah 5: RMSNorm · Langkah 6: Training Dengan dan Tanpa Regularisasi"
+    },
+    "phases/03-deep-learning-core/08-weight-initialization": {
+      "name": "Inisialisasi Bobot & Stabilitas Training",
+      "summary": "Salah inisialisasi dan training tidak pernah mulai. Inisialisasi benar dan 50 layer berlatih semulus 3 layer.",
+      "keywords": "Masalah Simetri · Propagasi Variance Melalui Layer · Inisialisasi Xavier/Glorot · Inisialisasi Kaiming/He · Inisialisasi Transformer · Magnitudo Aktivasi Melalui 50 Layer · Memilih Inisialisasi yang Tepat · Langkah 1: Strategi Inisialisasi · Langkah 2: Fungsi Aktivasi · Langkah 3: Forward Pass Melalui 50 Layer · Langkah 4: Eksperimen · Langkah 5: Demonstrasi Simetri · Langkah 6: Laporan Magnitudo per Layer"
+    },
+    "phases/03-deep-learning-core/09-learning-rate-schedules": {
+      "name": "Jadwal Learning Rate & Warmup",
+      "summary": "Learning rate adalah satu-satunya hyperparameter paling penting. Bukan arsitektur. Bukan ukuran dataset. Bukan fungsi aktivasi. Learning rate. Jika kamu tidak menyetel apa pun…",
+      "keywords": "Learning Rate Konstan · Step Decay · Cosine Annealing · Warmup: Mengapa Kamu Mulai Kecil · Linear Warmup + Cosine Decay · Kebijakan 1cycle · Bentuk Jadwal · Flowchart Keputusan · Angka Nyata dari Model yang Dipublikasikan · Langkah 1: Fungsi Jadwal · Langkah 2: Visualisasikan Semua Jadwal · Langkah 3: Latih Jaringan · Langkah 4: Bandingkan Semua Jadwal · Langkah 5: LR Terlalu Tinggi vs Terlalu Rendah"
+    },
+    "phases/03-deep-learning-core/10-mini-framework": {
+      "name": "Bangun Mini Framework Milikmu Sendiri",
+      "summary": "Kamu telah membangun neuron, layer, network, backprop, aktivasi, fungsi loss, optimizer, regularisasi, inisialisasi, dan jadwal LR. Semuanya sebagai bagian terpisah. Sekarang rangkai…",
+      "keywords": "Abstraksi Module · Container Sequential · Mode Training vs Evaluasi · Optimizer · DataLoader · Arsitektur Framework · Training Loop · Hierarki Module · Langkah 1: Class Dasar Module · Langkah 2: Layer Linear · Langkah 3: Module Aktivasi · Langkah 4: Module Dropout · Langkah 5: Module BatchNorm · Langkah 6: Container Sequential · Langkah 7: Fungsi Loss · Langkah 8: Optimizer SGD dan Adam · Langkah 9: DataLoader · Langkah 10: Latih Jaringan 4 Layer pada Klasifikasi Lingkaran"
+    },
+    "phases/03-deep-learning-core/11-intro-to-pytorch": {
+      "name": "Pengenalan PyTorch",
+      "summary": "Kamu membangun mesin dari piston dan poros engkol. Sekarang pelajari yang benar-benar dikendarai semua orang.",
+      "keywords": "Mengapa PyTorch Menang · Tensor · Autograd · nn.Module · Fungsi Loss dan Optimizer · Training Loop · Dataset dan DataLoader · Training GPU · Perbandingan: Mini Framework vs PyTorch vs JAX · Langkah 1: Muat MNIST dari File Mentah · Langkah 2: Definisikan Model · Langkah 3: Training Loop · Langkah 4: Rangkai Semuanya · Perbandingan Singkat: Mini Framework vs PyTorch · Menyimpan dan Memuat Model · Penjadwalan Learning Rate"
+    },
+    "phases/03-deep-learning-core/12-intro-to-jax": {
+      "name": "Pengenalan JAX",
+      "summary": "PyTorch memutasi tensor. TensorFlow membangun graph. JAX mengompilasi fungsi murni. Yang terakhir mengubah cara kamu berpikir tentang deep learning.",
+      "keywords": "Filosofi JAX · jax.numpy: Permukaan yang Familiar · jax.grad: Autodiff Fungsional · jit: Kompilasi ke XLA · vmap: Vektorisasi Otomatis · pmap: Data Parallelism Antar Perangkat · Pytree: Struktur Data Universal · Fungsional vs Berorientasi Objek · Ekosistem JAX · Kapan Pakai JAX vs PyTorch · Bilangan Acak di JAX · Langkah 1: Setup dan Data · Langkah 2: Inisialisasi Parameter · Langkah 3: Forward Pass · Langkah 4: Training Step Terkompilasi JIT · Langkah 5: Training Loop · Flax: Standar Google · Equinox: Alternatif Pythonic · Optax: Optimizer yang Dapat Dikomposisi"
+    },
+    "phases/03-deep-learning-core/13-debugging-neural-networks": {
+      "name": "Debugging Neural Network",
+      "summary": "Jaringanmu terkompilasi. Ia berjalan. Ia menghasilkan angka. Angkanya salah dan tidak ada yang crash. Selamat datang di debugging jenis tersulit -- jenis yang tidak punya pesan error.",
+      "keywords": "Mindset Debugging · Gejala 1: Loss Tidak Menurun · Gejala 2: Loss Menurun Tapi Model Buruk · Gejala 3: NaN atau Inf dalam Loss · Teknik 1: Pemeriksaan Gradient · Teknik 2: Statistik Aktivasi · Teknik 3: Visualisasi Aliran Gradient · Teknik 4: Uji Overfit Satu Batch · Teknik 5: Learning Rate Finder · Bug PyTorch Umum · Tabel Debugging Utama · Langkah 1: Class NetworkDebugger · Langkah 2: Uji Overfit Satu Batch · Langkah 3: Learning Rate Finder · Langkah 4: Pemeriksa Gradient · Langkah 5: Jaringan yang Sengaja Dirusak · Tool Bawaan PyTorch · Integrasi Weights & Biases · TensorBoard · Checklist Debug (Sebelum Training Penuh)"
+    }
+  }
+}

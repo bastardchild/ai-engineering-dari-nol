@@ -1,0 +1,78 @@
+{
+  "lesson": "55-critic-loop",
+  "title": "Loop Critic",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa critic memberi skor pada lima dimensi tetap alih-alih mengembalikan paragraf bebas?",
+      "options": [
+        "Karena model tidak bisa menghasilkan paragraf secara andal",
+        "Karena reviser hanya menerima JSON",
+        "Karena LaTeX membutuhkan field skor",
+        "Karena vektor tetap memungkinkan harness mendeteksi regresi per dimensi antar ronde"
+      ],
+      "correct": 3,
+      "explanation": "Vektor dimensi tetap mengubah kritik menjadi data terstruktur yang dapat dibandingkan harness antar ronde. Kritik bebas tidak dapat diverifikasi; vektor membuat regresi terlihat."
+    },
+    {
+      "stage": "pre",
+      "question": "Dalam urutan apa loop memeriksa kondisi berhenti di akhir ronde?",
+      "options": [
+        "Plateau, lalu target, lalu budget",
+        "Budget, lalu plateau, lalu target",
+        "Yang menyala lebih dulu secara tie-break acak",
+        "Target, lalu plateau, lalu budget"
+      ],
+      "correct": 3,
+      "explanation": "Target terpenuhi menang (pekerjaan selesai). Lalu plateau (tidak ada kemajuan lagi). Lalu budget (cap keras). Urutannya membuat hasil deterministik saat lebih dari satu kondisi bisa menyala."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa deteksi plateau membutuhkan dua ronde datar berturut-turut alih-alih satu?",
+      "options": [
+        "Karena model mengembalikan skor non-deterministik",
+        "Karena skor deterministik tetap punya noise per ronde; satu ronde datar bukan sinyal cukup",
+        "Karena dataclass membutuhkan list",
+        "Karena dashboard mengharapkan dua titik"
+      ],
+      "correct": 1,
+      "explanation": "Bahkan output scorer deterministik berubah antar ronde tergantung saran mana yang diterapkan. Membutuhkan dua ronde datar memfilter noise itu."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diterima reviser sebagai input setiap ronde?",
+      "options": [
+        "Sumber LaTeX mentah",
+        "Paragraf hasil generate model",
+        "Objek Critique lengkap termasuk skor",
+        "Paper dan daftar record Suggestion"
+      ],
+      "correct": 3,
+      "explanation": "Reviser.__call__ menerima (paper, suggestions). Setiap Suggestion membawa dimensi, section target, dan instruksi edit. Reviser tidak melihat skor. Pemisahan itu memungkinkan salah satu sisi ditukar tanpa menyentuh yang lain."
+    },
+    {
+      "stage": "post",
+      "question": "Apa isi trace untuk setiap ronde?",
+      "options": [
+        "Hanya draft paper final",
+        "Hanya verdict konvergensi",
+        "Prompt dan completion model",
+        "Nomor ronde, vektor skor, mean, saran yang diterapkan, verdict"
+      ],
+      "correct": 3,
+      "explanation": "Trace adalah log event per ronde. Dashboard merendernya sebagai grafik skor sepanjang waktu; tahap berikutnya membacanya untuk memutuskan apakah branch layak dipertahankan."
+    },
+    {
+      "stage": "post",
+      "question": "Critic yang terus mengeluarkan saran yang tidak pernah meningkatkan skor apa pun akan menghasilkan verdict terminal mana?",
+      "options": [
+        "converged, karena saran diterapkan",
+        "target, karena budget menyembunyikan bug",
+        "plateau atau budget, karena harness akan menangkap kurangnya kemajuan",
+        "Exception, karena loop crash"
+      ],
+      "correct": 2,
+      "explanation": "Plateau (dua ronde datar) atau budget (cap keras) menyala. Kedua verdict memunculkan bug. Loop tidak pernah sukses diam-diam."
+    }
+  ]
+}

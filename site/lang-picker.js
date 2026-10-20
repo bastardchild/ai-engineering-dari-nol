@@ -23,11 +23,7 @@
   }
   function current() {
     if (isCertificationLesson()) return 'en';
-    var q = new URLSearchParams(location.search).get('lang');
-    if (supported(q)) return q;
-    var saved = '';
-    try { saved = localStorage.getItem('lang') || ''; } catch (_) {}
-    return supported(saved) ? saved : 'en';
+    return 'id';
   }
   function nativeOf(code) {
     for (var i = 0; i < LANGS.length; i++) if (LANGS[i].code === code) return LANGS[i].native;
@@ -202,12 +198,8 @@
 
   function init() {
     var host = document.getElementById('langPicker');
-    if (isCertificationLesson()) {
-      applyDir('en');
-      if (host) host.hidden = true;
-      return;
-    }
-    if (host) mount(host);
+    applyDir(current());
+    if (host) host.hidden = true;
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

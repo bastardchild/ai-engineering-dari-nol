@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa model pose meregresi heatmap alih-alih koordinat (x, y) secara langsung?",
+      "options": ["Heatmap lebih murah dihitung", "Regresi koordinat menghasilkan NaN", "Heatmap diwajibkan oleh metrik COCO", "Struktur spasial feature map conv selaras dengan output spasial; target heatmap Gaussian menyediakan lanskap loss yang mulus dan toleran terhadap kesalahan lokalisasi kecil, sedangkan regresi koordinat langsung rapuh dan kehilangan konteks spasial"],
+      "correct": 3,
+      "explanation": "Meregresi koordinat dengan MSE meminta jaringan mereduksi posisi 2D menjadi dua skalar, kehilangan keselarasan feature map yang dimanfaatkan CNN. Regresi heatmap memberi jaringan loss per piksel yang mulus di sekitar lokasi sebenarnya dan mempertahankan prior spasial. Peningkatan empiris dibanding regresi koordinat cukup besar sehingga setiap model pose modern memakai heatmap."
+    },
+    {
+      "stage": "pre",
+      "question": "Estimasi pose top-down vs bottom-up: mana yang lebih baik skalanya terhadap jumlah orang, dan mengapa?",
+      "options": ["Keduanya berskala sama", "Top-down tidak pernah berskala", "Bottom-up, karena ia melakukan satu forward pass atas seluruh gambar lalu mengelompokkan keypoint, sehingga runtime konstan terhadap jumlah orang", "Top-down, karena setiap orang memakai model cepat terpisah"],
+      "correct": 2,
+      "explanation": "Top-down menjalankan model keypoint per orang setelah detektor orang, sehingga biayanya tumbuh linear dengan jumlah orang. Bottom-up (OpenPose, HigherHRNet) menghasilkan semua keypoint dan field asosiasi dalam satu pass, lalu mengelompokkannya — waktu konstan terlepas dari kepadatan kerumunan. Trade-off-nya: top-down lebih akurat per orang; bottom-up lebih cepat di kerumunan."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu Part Affinity Fields?",
+      "options": ["Teknik augmentasi data", "Jenis fungsi loss", "Algoritma penjadwalan", "Field vektor satuan 2 channel yang menyandikan arah dari satu keypoint ke keypoint lain; mengintegralkan PAF sepanjang garis kandidat memberi tahu apakah dua keypoint milik instance yang sama, memungkinkan asosiasi bottom-up tanpa deteksi per orang"],
+      "correct": 3,
+      "explanation": "Untuk setiap pasangan keypoint yang terhubung (anggota tubuh), prediksi field 2 channel (komponen x, y dari vektor satuan yang menunjuk dari satu keypoint ke keypoint lain). Untuk mencocokkan kandidat bahu dengan kandidat siku, integralkan PAF sepanjang garis yang menghubungkan keduanya; integral lebih tinggi = kecocokan lebih kuat. Ini mengubah pose menjadi masalah pencocokan bipartit yang dapat diselesaikan dalam waktu polinomial."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa refinement sub-piksel di sekitar argmax secara berarti menaikkan akurasi keypoint?",
+      "options": ["Ini mencegah overfitting", "Ini menormalisasi output", "Argmax integer membulatkan ke sel grid terdekat; mencocokkan parabola lokal atau memakai offset dx = 0.25*(heatmap[y,x+1] - heatmap[y,x-1]) memulihkan posisi puncak kontinu, sering memangkas separuh error L2 untuk keypoint yang diprediksi dengan bersih", "Ini menghaluskan heatmap"],
+      "correct": 2,
+      "explanation": "Heatmap yang diprediksi baik memiliki puncak Gaussian mulus yang pusatnya biasanya berada di antara sel grid. Argmax integer kehilangan informasi sub-piksel itu (error hingga 0,5 px). Mencocokkan parabola atau memakai offset selisih pertama memulihkan puncak kontinu. Untuk analitik olahraga, landmark medis, atau apa pun yang memerlukan koordinat presisi, langkah ini wajib."
+    },
+    {
+      "stage": "post",
+      "question": "OKS (Object Keypoint Similarity) adalah analog estimasi pose dari metrik deteksi objek apa?",
+      "options": ["Cross-entropy loss", "Latensi inferensi", "IoU — keduanya mengukur kecocokan geometris antara prediksi dan ground truth, dengan OKS memakai jarak keypoint berbobot varians anotasi tiap keypoint; COCO melaporkan mAP@OKS 0.5:0.95 untuk pose", "Akurasi klasifikasi"],
+      "correct": 2,
+      "explanation": "OKS berkisar 0 sampai 1 seperti IoU dan memainkan peran yang sama: ia memutuskan apakah prediksi cocok dengan pose ground truth pada tingkat keketatan tertentu. Setiap keypoint memiliki varians (COCO menerbitkannya) yang menskalakan kontribusinya — sendi invarian seperti hidung dan mata berbobot lebih besar daripada pergelangan tangan, yang dianotasi kurang konsisten. COCO Pose AP @ OKS 0.5:0.95 adalah benchmark komunitas 2026."
+    }
+  ]
+}

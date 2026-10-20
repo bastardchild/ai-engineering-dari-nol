@@ -1,0 +1,78 @@
+{
+  "lesson": "59-vit-transformer",
+  "title": "Encoder Vision Transformer",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa blok ViT standar memakai penempatan pre-LayerNorm alih-alih post-LayerNorm?",
+      "options": [
+        "Pre-LN lebih cepat",
+        "Post-LN memakai memori lebih banyak",
+        "Pre-LN berlatih stabil pada kedalaman tanpa warm-up learning rate sementara post-LN divergen melewati sekitar 6 layer",
+        "Post-LN dipatenkan"
+      ],
+      "correct": 2,
+      "explanation": "Pre-LN menormalisasi input setiap sub-layer yang menjaga norm gradien terbatas seiring kedalaman bertambah."
+    },
+    {
+      "stage": "pre",
+      "question": "Pada hidden=768 dengan heads=12, berapa dimensi per head dan mengapa itu penting?",
+      "options": [
+        "12, agar setiap head bisa berjalan di GPU kecil",
+        "96, ditentukan ResNet-50",
+        "768, karena semua head berbagi proyeksi",
+        "64, yang mengontrol resolusi setiap attention map dan memungkinkan dua belas head memperhatikan secara independen secara paralel"
+      ],
+      "correct": 3,
+      "explanation": "head_dim = hidden / heads = 64. Setiap head memproyeksikan token ke q/k/v 64-D sendiri dan menghitung attention map sendiri."
+    },
+    {
+      "stage": "check",
+      "question": "Apakah encoder ViT membutuhkan causal attention mask?",
+      "options": [
+        "Hanya selama training",
+        "Tidak: encoder bersifat bidirectional, setiap token boleh memperhatikan setiap token lain dalam urutan yang sama",
+        "Ya, seperti decoder GPT",
+        "Hanya untuk baris CLS"
+      ],
+      "correct": 1,
+      "explanation": "Encoder vision bersifat bidirectional. Causal masking muncul nanti saat decoder teks mengonsumsi output cross-attention."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang direpresentasikan hidden state final token CLS setelah semua 12 blok?",
+      "options": [
+        "Ringkasan vektor yang dipelajari dari seluruh gambar yang diproyeksikan head hilir ke logit kelas atau embedding kontrastif",
+        "Hanya patch terakhir",
+        "Noise acak",
+        "Salinan embedding input"
+      ],
+      "correct": 0,
+      "explanation": "Token CLS mulai kosong dan mengakumulasi informasi dari setiap patch lewat self-attention di semua 12 blok."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa layer feed-forward diekspansi ke 4x dimensi hidden?",
+      "options": [
+        "Itu memangkas FLOPs separuh",
+        "PyTorch mewajibkan 4x",
+        "Sweet spot empiris sejak Transformer asli; lebih kecil underfit, lebih besar overfit pada anggaran data tetap",
+        "Itu menghapus kebutuhan attention"
+      ],
+      "correct": 2,
+      "explanation": "Faktor 4x bertahan lintas transformer bahasa dan vision sejak 2017. Kapasitas per parameter memuncak di sini."
+    },
+    {
+      "stage": "post",
+      "question": "Ekstensi keluarga mana yang menjaga matematika blok tidak berubah tetapi menambah token terpelajari yang di-prepend?",
+      "options": [
+        "Causal masking",
+        "Rotasi RoPE",
+        "Register token (DINOv2): beberapa vektor terpelajari yang di-prepend setelah CLS yang menangkap statistik global dan menghaluskan attention map",
+        "Mixture-of-experts"
+      ],
+      "correct": 2,
+      "explanation": "Register token menstabilkan attention tanpa mengubah matematika blok; mereka adalah slot tambahan dalam urutan."
+    }
+  ]
+}

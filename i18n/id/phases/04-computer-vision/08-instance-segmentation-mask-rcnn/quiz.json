@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa Mask R-CNN mengganti RoIPool dengan RoIAlign?",
+      "options": ["RoIPool membulatkan koordinat box ke integer di beberapa langkah, membuat feature map tidak sejajar dengan piksel input hingga sebesar satu piksel feature map; RoIAlign memakai sampling bilinear tanpa pembulatan, mempertahankan lokalisasi", "RoIPool bermasalah dengan hak cipta", "RoIPool hanya bekerja di CPU", "RoIAlign lebih cepat di GPU"],
+      "correct": 0,
+      "explanation": "Pembulatan RoIPool menyebabkan ketidaksejajaran hingga seukuran stride (misalnya 32 piksel pada feature map berstride 32). RoIAlign melakukan sampling pada koordinat float yang tepat melalui interpolasi bilinear. Perubahan ini menaikkan mask AP sebesar 3-4 poin pada COCO dalam makalah aslinya dan kini menjadi standar di setiap detektor yang peduli lokalisasi."
+    },
+    {
+      "stage": "pre",
+      "question": "Mask head Mask R-CNN mengeluarkan mask 28x28 per kelas per proposal. Mengapa per kelas?",
+      "options": ["Makalahnya mewajibkan itu", "Mask biner meluap dalam satu channel", "Memisahkan prediksi mask dari klasifikasi: mask head hanya perlu mempelajari bentuk untuk setiap kelas secara terpisah, sehingga keputusan classifier tidak memengaruhi mask mana yang dihasilkan, hanya channel mana yang dibaca saat inferensi", "Karena mask biner memerlukan channel per kelas untuk backprop"],
+      "correct": 2,
+      "explanation": "Menghasilkan satu mask per kelas per proposal memisahkan pembelajaran bentuk mask dari klasifikasi. Saat inferensi kamu hanya membaca channel yang cocok dengan kelas prediksi. Pemisahan multi-tugas ini penting karena bentuk mask dan probabilitas kelas adalah target berbeda yang dilatih dengan gradien berbeda."
+    },
+    {
+      "stage": "post",
+      "question": "Dict prediksi Mask R-CNN dari torchvision memiliki `labels` yang dimulai dari 1, bukan 0. Mengapa?",
+      "options": ["torchvision memakai indeks berbasis 1 di seluruhnya", "Kelas 0 dicadangkan untuk background; kelas pengguna selalu berbasis 1 agar classifier head dapat memperlakukan background sebagai kelas nyata dengan logits dan gradiennya sendiri", "Data training yang menentukannya", "Bug warisan"],
+      "correct": 1,
+      "explanation": "Sebagian besar detektor memperlakukan background sebagai kelas 0 dan kelas foreground eksplisit sebagai 1..C. Softmax atas (C+1) kelas memungkinkan jaringan belajar secara aktif memprediksi 'tidak ada objek di sini' alih-alih sekadar keyakinan rendah pada semua kelas. Dataset dengan 4 kelas nyata membutuhkan num_classes = 5 saat mengganti predictor."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melakukan fine-tune Mask R-CNN pada dataset 500 gambar dan val mAP mendatar sementara train loss terus turun. Hal pertama yang harus dicoba?",
+      "options": ["Menambah epoch", "Memakai learning rate lebih tinggi", "Beralih ke segmentasi U-Net", "Membekukan backbone dan FPN agar model hanya melakukan fine-tune pada RPN dan head; 500 gambar terlalu sedikit untuk memperbarui 23 juta parameter backbone tanpa overfitting"],
+      "correct": 3,
+      "explanation": "Pada dataset kecil kamu tidak memiliki cukup sinyal untuk melakukan fine-tune setiap parameter. Membekukan backbone dan FPN pretrained (fitur ImageNet + COCO) dan melatih hanya head objectness RPN serta dua head classifier/mask adalah resep standar dan biasanya mengatasi kemandekan ini dalam satu kali training."
+    },
+    {
+      "stage": "post",
+      "question": "FPN di dalam Mask R-CNN memiliki empat level (P2, P3, P4, P5) pada stride 4, 8, 16, 32. Mengapa tidak memakai satu level saja?",
+      "options": ["Untuk mengurangi jumlah parameter", "Empat level bersifat arbitrer", "Objek dalam gambar alami mencakup rentang skala; mengarahkan setiap proposal ke level FPN yang cocok dengan ukurannya memberikan head feature map dengan receptive field yang tepat untuk objek itu, yang secara tegas lebih baik daripada selalu memakai satu skala", "Untuk memakai lebih banyak memori GPU"],
+      "correct": 2,
+      "explanation": "Objek kecil pada feature map berstride 32 menempati satu sel, yang hampir tidak memiliki informasi spasial. FPN mengarahkan objek kecil ke level dangkal beresolusi tinggi (P2) dan objek besar ke level dalam beresolusi rendah (P5), mencocokkan receptive field dengan ukuran objek. Itulah sebabnya setiap detektor modern memiliki pyramid."
+    }
+  ]
+}

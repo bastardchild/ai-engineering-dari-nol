@@ -1,0 +1,90 @@
+{
+  "lesson": "02-rewoo-plan-and-execute",
+  "title": "ReWOO dan Plan-and-Execute: Perencanaan Terpisah",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa prompt ReAct tumbuh secara kuadratik seiring kedalaman?",
+      "options": [
+        "Setiap langkah membawa seluruh konteks sebelumnya termasuk setiap thought dan observation sebelumnya",
+        "Model melakukan tokenisasi ulang terhadap dirinya sendiri di setiap langkah",
+        "Skema tool diduplikasi per panggilan",
+        "Penyedia menagih per byte, bukan per token"
+      ],
+      "correct": 0,
+      "explanation": "ReAct menyertakan kembali thought dan observation sebelumnya pada setiap langkah, sehingga panjang prompt total tumbuh sebanding kuadrat kedalaman."
+    },
+    {
+      "stage": "pre",
+      "question": "Pembagian tiga peran apa yang mendefinisikan ReWOO?",
+      "options": [
+        "Planner, Workers, Solver",
+        "Reader, Writer, Reviewer",
+        "Generator, Critic, Optimizer",
+        "Actor, Evaluator, Reflector"
+      ],
+      "correct": 0,
+      "explanation": "ReWOO memisahkan Planner yang mengeluarkan DAG, Workers yang mengambil evidence, dan Solver yang menyusun jawaban akhir."
+    },
+    {
+      "stage": "check",
+      "question": "Angka utama apa yang dilaporkan paper untuk ReWOO vs ReAct pada HotpotQA?",
+      "options": [
+        "10x lebih sedikit token dan -2 akurasi",
+        "~5x lebih sedikit token dan +4 akurasi absolut",
+        "Token sama dan +1 akurasi",
+        "~2x lebih banyak token dan +10 akurasi"
+      ],
+      "correct": 1,
+      "explanation": "ReWOO melaporkan pengurangan token sekitar 5x dan akurasi absolut +4 pada HotpotQA dibandingkan ReAct."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arti placeholder seperti #E1 di dalam node rencana ReWOO?",
+      "options": [
+        "Referensi yang diganti saat dispatch dengan output node worker sebelumnya",
+        "Pengenal versi planner",
+        "Kode error yang dikembalikan worker 1",
+        "Penghitung retry untuk pengambilan evidence"
+      ],
+      "correct": 0,
+      "explanation": "Node rencana memakai referensi evidence seperti #E1, #E2 yang diganti executor dengan output worker hulu."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa ReWOO melokalisasi kegagalan lebih baik daripada ReAct?",
+      "options": [
+        "Planner mengeluarkan ulang DAG baru setelah setiap error",
+        "Worker membuat run crash pada setiap error",
+        "ReWOO mengulang setiap panggilan gagal hingga sepuluh kali",
+        "Error pada worker menjadi string yang dilihat Solver bersama rencana asli, sehingga degradasinya per-node bukan per-step"
+      ],
+      "correct": 3,
+      "explanation": "Kegagalan per-node dengan rencana asli di konteks memungkinkan Solver terdegradasi dengan mulus alih-alih menalar di tengah aliran untuk keluar dari error."
+    },
+    {
+      "stage": "post",
+      "question": "Bentuk tugas mana yang paling cocok untuk Plan-and-Act dibanding ReWOO biasa?",
+      "options": [
+        "Pertanyaan aritmetika murni",
+        "Trajektori navigasi web atau mobile 40 langkah",
+        "Pencarian fakta dua langkah",
+        "Klasifikasi satu giliran"
+      ],
+      "correct": 1,
+      "explanation": "Plan-and-Act dirancang untuk agent web dan mobile berhorizon panjang (lebih dari 30 langkah) saat trajektori ReAct tunggal kehilangan koherensi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa implikasi hasil distilasi planner ReWOO bagi agent produksi?",
+      "options": [
+        "Model frontier harus dipakai di setiap langkah",
+        "Planner kecil (sekitar 7B) bisa menyamai guru besar karena planner tidak pernah melihat observation",
+        "Kualitas perencanaan turun di bawah 7B parameter",
+        "Distilasi membutuhkan data RL berbasis gradient"
+      ],
+      "correct": 1,
+      "explanation": "Karena planner tidak melihat observation, jejak rencana dari guru besar dapat ditransfer dengan bersih ke planner kecil yang di-fine-tune."
+    }
+  ]
+}

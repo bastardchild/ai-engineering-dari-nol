@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "ensemble-pre-1",
+      "stage": "pre",
+      "question": "Mengapa menggabungkan banyak weak classifier menjadi ensemble meningkatkan akurasi?",
+      "options": [
+        "Weak classifier selalu lebih cepat daripada strong classifier",
+        "Tiap weak classifier menghafal bagian berbeda dari set test",
+        "Ensemble selalu memakai lebih banyak data training daripada model tunggal",
+        "Kalau classifier membuat error yang berbeda, majority voting saling meniadakan kesalahan masing-masing"
+      ],
+      "correct": 3,
+      "explanation": "Kuncinya keragaman. Jika classifier membuat error yang independen, majority voting berarti jawaban salah harus menipu lebih dari separuh model. Error saling meniadakan dan akurasi ensemble melebihi tiap model individual."
+    },
+    {
+      "id": "ensemble-pre-2",
+      "stage": "pre",
+      "question": "Apa perbedaan utama bagging dan boosting?",
+      "options": [
+        "Bagging butuh data berlabel; boosting bekerja tanpa pengawasan",
+        "Bagging melatih model paralel pada subset acak; boosting melatih model berurutan, fokus pada error sebelumnya",
+        "Bagging mengurangi bias; boosting mengurangi variance",
+        "Bagging memakai neural network dalam; boosting memakai decision tree"
+      ],
+      "correct": 1,
+      "explanation": "Bagging melatih model secara independen pada sampel bootstrap (paralel, mengurangi variance). Boosting melatih model berurutan, dengan tiap model baru berfokus pada kesalahan ensemble sejauh itu (mengurangi bias)."
+    },
+    {
+      "id": "ensemble-post-1",
+      "stage": "post",
+      "question": "Pada AdaBoost, apa yang terjadi pada bobot sampel training yang salah klasifikasi setelah tiap putaran?",
+      "options": [
+        "Bobotnya naik, sehingga weak learner berikutnya lebih fokus pada contoh sulit ini",
+        "Bobotnya turun, sehingga learner berikutnya mengabaikannya",
+        "Bobotnya tetap sama",
+        "Sampel itu dikeluarkan dari set training"
+      ],
+      "correct": 0,
+      "explanation": "AdaBoost menaikkan bobot sampel yang salah klasifikasi setelah tiap putaran. Ini memaksa weak learner berikutnya lebih memperhatikan contoh yang saat ini masih salah ditebak ensemble."
+    },
+    {
+      "id": "ensemble-post-2",
+      "stage": "post",
+      "question": "Random forest dengan 100 pohon punya akurasi test yang sama dengan 200 pohon. Menambah sampai 500 pohon juga tidak membaik. Mengapa?",
+      "options": [
+        "Setelah cukup banyak pohon, penurunan variance mendatar dan menambah pohon memberi imbal hasil menurun tanpa menaikkan overfitting",
+        "500 pohon adalah batas maksimum yang diizinkan",
+        "Semua pohon identik sehingga menambah pohon tidak berpengaruh",
+        "Random forest underfitting dan butuh algoritma lain"
+      ],
+      "correct": 0,
+      "explanation": "Random forest tidak overfitting dengan lebih banyak pohon (berbeda dari boosting). Namun penurunan variance mendatar setelah cukup banyak pohon beragam dirata-ratakan. Pohon tambahan hanya menambah biaya komputasi tanpa memperbaiki akurasi."
+    },
+    {
+      "id": "ensemble-post-3",
+      "stage": "post",
+      "question": "Gradient boosting mencocokkan setiap pohon baru pada kuantitas apa?",
+      "options": [
+        "Prediksi dari pohon sebelumnya",
+        "Nilai target asli",
+        "Subset fitur acak",
+        "Residual (error) dari prediksi ensemble saat ini"
+      ],
+      "correct": 3,
+      "explanation": "Pada gradient boosting, tiap pohon baru dilatih memprediksi residual (gradien negatif dari loss) ensemble saat ini. Ini secara berurutan mengurangi sisa error."
+    }
+  ]
+}

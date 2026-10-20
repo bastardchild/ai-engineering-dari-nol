@@ -1,0 +1,66 @@
+{
+  "lesson": "02-building-a-tokenizer",
+  "title": "Membangun Tokenizer dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa tokenizer BPE dasar rusak pada input multibahasa atau kode?",
+      "options": [
+        "BPE hanya bekerja pada ASCII",
+        "BPE secara inheren monolingual",
+        "Teks multibahasa tidak dapat di-tokenisasi",
+        "Tanpa penanganan Unicode yang tepat, byte fallback, dan regex pra-tokenisasi, ia menghasilkan urutan token yang salah atau tidak efisien"
+      ],
+      "correct": 3,
+      "explanation": "Implementasi BPE naif mungkin tidak menangani karakter Unicode multi-byte, salah menggabungkan melintasi batas kata, dan tidak memiliki byte-level fallback untuk karakter di luar kosakata yang dilatih."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa peran regex pra-tokenisasi dalam tokenizer produksi?",
+      "options": [
+        "Ia memecah teks pada batas kata sebelum merge BPE, mencegah penggabungan melintasi spasi dan batas kata",
+        "Ia mengompresi whitespace",
+        "Ia mengubah teks menjadi huruf kecil",
+        "Ia menghapus tanda baca"
+      ],
+      "correct": 0,
+      "explanation": "Regex pra-tokenisasi memecah teks menjadi potongan (biasanya pada batas kata, angka, dan tanda baca) sehingga merge BPE hanya terjadi di dalam potongan. Tanpa ini, BPE bisa menggabungkan 'end' dengan spasi sebelum kata berikutnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu special token dan mengapa tokenizer dirancang untuk menanganinya?",
+      "options": [
+        "Token yang dicadangkan seperti <|endoftext|> atau [PAD] yang mengontrol perilaku model dan harus di-encode sebagai ID tunggal yang spesifik",
+        "Token dengan nilai embedding tertinggi",
+        "Token yang hanya dipakai saat evaluasi",
+        "Token yang sering muncul"
+      ],
+      "correct": 0,
+      "explanation": "Special token melayani tujuan struktural: menandai batas dokumen, padding sequence, menandakan awal/akhir generasi. Mereka harus dikenali dan di-encode sebagai ID persisnya, bukan dipecah menjadi subword."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu mengevaluasi apakah tokenizer kustom itu bagus?",
+      "options": [
+        "Dengan mengukur rasio kompresi (token per karakter) pada teks beragam dan membandingkannya dengan tokenizer mapan seperti tiktoken",
+        "Dengan memeriksa apakah ia bisa men-tokenisasi namamu",
+        "Dengan mengukur kecepatan encoding saja",
+        "Dengan menghitung ukuran kosakata"
+      ],
+      "correct": 0,
+      "explanation": "Rasio kompresi (byte per token atau token per kata) mengukur efisiensi. Tokenizer yang baik menghasilkan lebih sedikit token untuk teks yang sama, artinya lebih banyak konten muat di context window. Bandingkan lintas bahasa dan domain."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa byte-level BPE lebih disukai daripada tokenisasi level kata untuk LLM modern?",
+      "options": [
+        "Tokenisasi level kata lebih akurat",
+        "Ia dapat merepresentasikan input apa pun tanpa token unknown sambil tetap mempelajari merge subword yang efisien untuk pola umum",
+        "Ia menghasilkan kosakata lebih kecil",
+        "Ia lebih cepat"
+      ],
+      "correct": 1,
+      "explanation": "Tokenizer level kata tidak dapat menangani kata yang belum pernah dilihat (menghasilkan token [UNK]). Byte-level BPE dimulai dari byte mentah (menjamin cakupan input apa pun) dan mempelajari merge untuk urutan umum, menyeimbangkan cakupan dan efisiensi."
+    }
+  ]
+}

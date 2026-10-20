@@ -1,0 +1,78 @@
+{
+  "lesson": "03-gpu-autoscaling-kubernetes",
+  "title": "Autoscaling GPU di Kubernetes — Karpenter, KAI Scheduler, Gang Scheduling",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sinyal mana yang biasanya dipakai HPA untuk scaling secara default yang disebut pelajaran ini rusak untuk serving gaya vLLM?",
+      "options": [
+        "P99 TTFT",
+        "Siklus duty DCGM_FI_DEV_GPU_UTIL",
+        "Kedalaman antrean",
+        "Utilisasi KV cache"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Masalah apa yang terutama dicegah gang scheduling di KAI Scheduler?",
+      "options": [
+        "Contention GIL pada tokenizer",
+        "Jebakan alokasi parsial saat 7 dari 8 GPU menganggur menunggu GPU kedelapan",
+        "Latensi cold-start",
+        "Fragmentasi memori GPU"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa consolidationPolicy default Karpenter, WhenEmptyOrUnderutilized, berbahaya untuk pool GPU inferensi?",
+      "options": [
+        "Itu hanya mengonsolidasikan instance spot",
+        "Itu mencegah Karpenter menyediakan node baru",
+        "Itu menghentikan node GPU yang berjalan untuk memindahkan pod, sehingga permintaan yang berjalan dievict dan bobot dimuat ulang",
+        "Itu menolak scale up saat burst"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira seberapa cepat Karpenter menyediakan node GPU dibanding Cluster Autoscaler?",
+      "options": [
+        "Sekitar 5% lebih cepat",
+        "Sama saja",
+        "Sekitar 40% lebih cepat (~45-60 detik vs ~90-120 detik)",
+        "Sekitar 10x lebih lambat"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Untuk pod prefill/decode terdisagregasi (Fase 17 · 17), sinyal scaling mana yang direkomendasikan pelajaran ini?",
+      "options": [
+        "Cluster Autoscaler untuk keduanya",
+        "Satu HPA pada duty cycle yang mencakup kedua kelas pod",
+        "Hanya scaling manual",
+        "Kedalaman antrean untuk pod prefill dan tekanan KV cache untuk pod decode, sebagai HPA terpisah per peran"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Setelan disruption Karpenter mana yang direkomendasikan pelajaran ini untuk pool GPU inferensi agar tidak mengevict job yang berjalan?",
+      "options": [
+        "Selalu jalankan dengan instance spot dan tanpa konsolidasi",
+        "Nonaktifkan Karpenter sepenuhnya",
+        "consolidationPolicy: WhenEmptyOrUnderutilized dengan consolidateAfter: 0s",
+        "consolidationPolicy: WhenEmpty dengan consolidateAfter: 1h"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

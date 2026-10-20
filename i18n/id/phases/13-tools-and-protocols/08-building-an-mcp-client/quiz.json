@@ -1,0 +1,48 @@
+{
+  "lesson": "08-building-an-mcp-client",
+  "title": "Membangun Klien MCP: Discovery, Routing, dan Fallback Dua Era",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang harus dikirim klien stdio dua era lebih dulu?",
+      "options": ["Mcp-Session-Id", "server/discover", "initialize", "HTTP GET"],
+      "correct": 1,
+      "explanation": "Probe discovery menciptakan batas jelas antara metadata per-request modern dan inisialisasi legacy."
+    },
+    {
+      "stage": "check",
+      "question": "Probe discovery mengembalikan -32022 dengan versi yang didukung kedua pihak. Apa yang harus dilakukan klien?",
+      "options": ["Mengulang discovery modern pada versi yang didukung", "Mengirim initialize", "Membuka HTTP GET", "Mengabaikan server"],
+      "correct": 0,
+      "explanation": "-32022 adalah bukti modern yang dikenali, jadi klien tetap modern dan mencoba ulang."
+    },
+    {
+      "stage": "check",
+      "question": "Kondisi mana yang cukup untuk memilih era legacy?",
+      "options": ["Error -32601 apa pun", "Peer ada di allowlist legacy", "Peer ada di allowlist dan probe initialize terbatas mengembalikan hasil legacy valid yang didukung", "Timeout discovery saja"],
+      "correct": 2,
+      "explanation": "Allowlist mengizinkan probe, tetapi hanya hasil initialize positif yang valid secara struktur untuk revisi legacy terkonfigurasi yang membuktikan era legacy."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien menangani dua tool bernama search?",
+      "options": ["Menimpa salah satunya secara diam-diam", "Mempercayai urutan startup", "Memberi prefix atau menolak sesuai kebijakan yang dideklarasikan", "Membuat sesi protokol"],
+      "correct": 2,
+      "explanation": "Prefix eksplisit atau penolakan menjaga routing tetap terlihat dan deterministik."
+    },
+    {
+      "stage": "post",
+      "question": "Hasil legacy tidak menyertakan resultType setelah klien menegosiasikan era legacy. Bagaimana hasil itu ditafsirkan?",
+      "options": ["Sebagai input_required", "Sebagai complete", "Sebagai error transport", "Sebagai server/discover"],
+      "correct": 1,
+      "explanation": "Klien memperlakukan resultType yang tidak ada dari versi protokol sebelumnya sebagai complete."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang harus terjadi setelah kehilangan transport modern sebelum routing dilanjutkan?",
+      "options": ["Menyambung ulang, discovery ulang, dan list ulang", "Melanjutkan dengan Last-Event-ID", "Menggemakan Mcp-Session-Id", "Menggunakan ulang metadata koneksi lama"],
+      "correct": 0,
+      "explanation": "Klien membangun ulang pembukuan peer dan hanya mencoba ulang operasi yang aman dengan id request baru."
+    }
+  ]
+}

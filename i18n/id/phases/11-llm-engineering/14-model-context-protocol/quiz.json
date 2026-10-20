@@ -1,0 +1,78 @@
+{
+  "lesson": "14-model-context-protocol",
+  "title": "Model Context Protocol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dalam MCP 2026-07-28, di mana client mengirim versi protokol dan kemampuannya?",
+      "options": [
+        "Hanya di cookie HTTP",
+        "Hanya dalam request initialize",
+        "Di params._meta pada setiap request",
+        "Dalam record sesi sisi server"
+      ],
+      "correct": 2,
+      "explanation": "MCP modern bersifat stateless. Setiap request membawa versi protokol dan kemampuan client di params._meta."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus diimplementasikan setiap server MCP modern untuk penemuan versi dan kemampuan di awal?",
+      "options": [
+        "server/discover",
+        "sessions/create",
+        "logging/setLevel",
+        "initialize"
+      ],
+      "correct": 0,
+      "explanation": "server/discover mengiklankan versi yang didukung, kemampuan server, dan identitas server."
+    },
+    {
+      "stage": "check",
+      "question": "Bentuk Streamable HTTP mana yang berlaku saat ini di MCP 2026-07-28?",
+      "options": [
+        "Request DELETE setelah setiap pemanggilan tool",
+        "Sesi WebSocket yang diidentifikasi Mcp-Session-Id",
+        "Satu POST per pesan JSON-RPC; POST request menerima JSON atau SSE yang tercakup request",
+        "Stream GET plus endpoint POST terpisah"
+      ],
+      "correct": 2,
+      "explanation": "Transport saat ini memiliki satu endpoint POST. POST request menerima JSON atau SSE yang tercakup request; POST notification yang diterima menerima HTTP 202 tanpa body."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana server harus membedakan metadata versi protokol yang hilang dari versi yang terbentuk baik tetapi tidak didukung?",
+      "options": [
+        "Kembalikan -32022 untuk kedua kasus",
+        "Kembalikan HTTP 301 untuk versi hilang dan buat Mcp-Session-Id untuk versi tidak didukung",
+        "Kembalikan -32602 untuk metadata hilang atau bukan string dan -32022 dengan supported/requested untuk string yang tidak didukung",
+        "Terima versi yang hilang dan kembalikan -32601 untuk versi tidak didukung"
+      ],
+      "correct": 2,
+      "explanation": "Field wajib yang hilang atau bertipe salah adalah params JSON-RPC yang cacat. UnsupportedProtocolVersionError hanya berlaku ketika string versi yang diberikan tidak diimplementasikan."
+    },
+    {
+      "stage": "post",
+      "question": "Tool multi-langkah membutuhkan kontinuitas antar panggilan. Apa desain MCP modernnya?",
+      "options": [
+        "Menaruh state mutable di clientInfo",
+        "Mengembalikan Mcp-Session-Id khusus untuk tool ini",
+        "Membuat handle opaque dan mewajibkannya sebagai argumen tool berikutnya",
+        "Menyimpan state di balik koneksi TCP"
+      ],
+      "correct": 2,
+      "explanation": "State lintas panggilan adalah state aplikasi eksplisit. Handle yang dibuat server berjalan sebagai argumen biasa yang diotorisasi."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana server modern meminta input pengguna, model, atau root selama operasi tool?",
+      "options": [
+        "Ia menulis pertanyaan ke stderr",
+        "Ia membuka koneksi SSE kedua",
+        "Ia mengembalikan input_required dan client mencoba ulang dengan inputResponses",
+        "Ia mengirim request JSON-RPC server-ke-client independen"
+      ],
+      "correct": 2,
+      "explanation": "Pola Multi Round-Trip Requests menyematkan inputRequests dalam hasil input_required dan mencoba ulang operasi asli."
+    }
+  ]
+}

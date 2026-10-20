@@ -1,0 +1,78 @@
+{
+  "lesson": "47-checkpoint-save-resume",
+  "title": "Checkpoint Save dan Resume",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Set mana yang paling menggambarkan checkpoint training lengkap?",
+      "options": [
+        "Apa pun yang bisa diserialisasi torch.save()",
+        "Hanya bobot model",
+        "State model, state optimizer, state scheduler, counter step, riwayat loss, dan state RNG untuk python, numpy, torch CPU, torch CUDA",
+        "Hanya riwayat loss"
+      ],
+      "correct": 2,
+      "explanation": "Resume harus menempuh lintasan yang sama. Tanpa momen optimizer, posisi scheduler, dan state RNG, loss yang dilanjutkan adalah kurva berbeda."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa saver menulis ke file sementara lalu rename alih-alih menulis nama target langsung?",
+      "options": [
+        "I/O lebih cepat",
+        "Rename POSIX dalam direktori yang sama bersifat atomik, jadi crash saat menulis meninggalkan file baik sebelumnya di tempatnya alih-alih file setengah tertulis di nama target",
+        "Itu men-dedupe file",
+        "Itu melewati fsync"
+      ],
+      "correct": 1,
+      "explanation": "atomic_save memanggil os.replace dari file temp di direktori yang sama. Rename lintas device kehilangan atomisitas, itulah sebabnya file temp harus berada di direktori target."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa checkpoint ter-shard menyimpan sha256 di index.json per shard?",
+      "options": [
+        "Agar loader dapat mendeteksi shard terpotong atau dimanipulasi saat load alih-alih diam-diam menggabungkan state_dict buruk",
+        "Karena torch mewajibkannya",
+        "Untuk SEO",
+        "Untuk mengompres file"
+      ],
+      "correct": 0,
+      "explanation": "load_sharded_checkpoint memeriksa hash aktual setiap shard terhadap yang dicatat, dan hash file meta juga, lalu raise sebelum merge pada mismatch apa pun. Korupsi senyap adalah mode kegagalan terburuk."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana resume melanjutkan pada offset yang tepat di dalam epoch saat ini?",
+      "options": [
+        "Memakai database khusus",
+        "Melompat ke batas epoch berikutnya",
+        "Selalu memulai ulang dari step 0",
+        "TrainState mencatat (epoch, batch_in_epoch) dan state RNG dipulihkan, jadi loader memajukan generator melewati batch yang sudah dikonsumsi sebelum melanjutkan"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa (epoch, batch_in_epoch) kamu snap ke batas epoch berikutnya dan membuang pekerjaan. Tanpa RNG kamu melihat batch berbeda. Keduanya diperlukan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dibeli field schema pada payload?",
+      "options": [
+        "Hook migrasi: perubahan format di masa depan menaikkan string schema dan loader dapat melakukan dispatch padanya alih-alih merusak run lama",
+        "Tidak ada",
+        "Kompresi",
+        "Nama file cantik"
+      ],
+      "correct": 0,
+      "explanation": "Lesson memakai ckpt.v1; versi berikutnya adalah ckpt.v2 dengan fungsi migrate. Tanpa field itu, evolusi format membutuhkan kerusakan."
+    },
+    {
+      "stage": "post",
+      "question": "Membaca ringkasan demo resume, apa yang dibuktikan max_loss_diff_after_resume mendekati 0?",
+      "options": [
+        "Tidak ada yang berguna",
+        "Bahwa disk cepat",
+        "Bahwa model bagus",
+        "Bahwa lintasan loss pasca-resume cocok dengan baseline tanpa interupsi dalam noise floating point, yang berarti state RNG dan state optimizer keduanya dipulihkan dengan setia"
+      ],
+      "correct": 3,
+      "explanation": "Jika lupa RNG kamu melihat kurva berbeda dan diff non-trivial. Jika lupa state optimizer diff-nya besar. Angka mendekati nol adalah kontraknya."
+    }
+  ]
+}

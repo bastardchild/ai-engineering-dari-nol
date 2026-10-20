@@ -1,0 +1,90 @@
+{
+  "lesson": "13-langgraph-stateful-graphs",
+  "title": "Orkestrasi Graph Berstate — Durable Execution dan Checkpoint",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diperlakukan LangGraph sebagai unit inti agent?",
+      "options": [
+        "Indeks vector",
+        "State machine dengan state bertipe, node fungsi, dan edge kondisional",
+        "Satu tool registry",
+        "Panggilan LLM bebas"
+      ],
+      "correct": 1,
+      "explanation": "LangGraph memodelkan agent sebagai state graph: node adalah fungsi murni, edge adalah transisi, state bertipe dan immutable."
+    },
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang diselesaikan durable execution?",
+      "options": [
+        "Menurunkan biaya inferensi",
+        "Menghasilkan embedding lebih cepat",
+        "Melanjutkan run 40 langkah dari langkah 38 saat gagal, dengan state persis, alih-alih memulai dari awal",
+        "Menerjemahkan antar penyedia"
+      ],
+      "correct": 2,
+      "explanation": "Checkpoint setelah setiap node memungkinkan runtime melanjutkan dari langkah sukses terakhir."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu dari tiga topologi yang didukung LangGraph?",
+      "options": [
+        "Gradient ring",
+        "Hierarchical (subgraph bersarang)",
+        "Supervisor",
+        "Swarm (peer-to-peer)"
+      ],
+      "correct": 0,
+      "explanation": "Topologinya adalah supervisor, swarm, dan hierarchical. Gradient ring bukan topologi LangGraph."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa node harus deterministik agar resume berjalan bersih?",
+      "options": [
+        "Itu diwajibkan GIL",
+        "Determinisme menurunkan biaya token",
+        "Resume mengasumsikan input sama menghasilkan update state yang sama; random seed, wall-clock, dan API eksternal harus ditangkap",
+        "Penyedia mewajibkan determinisme"
+      ],
+      "correct": 2,
+      "explanation": "Jika node bergantung pada nondeterminisme yang tidak ditangkap, resume tidak bisa merekonstruksi state pasca-langkah."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu conditional edge?",
+      "options": [
+        "Edge dengan TTL",
+        "Edge yang dipilih oleh fungsi atas state, dipakai untuk mencabang graph",
+        "Edge yang hanya berjalan di GPU",
+        "Edge yang dibobot oleh training loss"
+      ],
+      "correct": 1,
+      "explanation": "Conditional edge mencabang berdasarkan state; terlalu banyak memakainya membuat graph sulit dicerna."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang salah saat checkpoint terlalu kecil?",
+      "options": [
+        "Disk penuh",
+        "Graph tidak bisa mencapai END",
+        "State tool dan penulisan memori tidak dapat dipulihkan; state lengkap harus diserialisasi",
+        "Model menghasilkan jawaban lebih pendek"
+      ],
+      "correct": 2,
+      "explanation": "Hanya melakukan checkpoint pada giliran percakapan membuat state tool dan penulisan memori di luar jangkauan resume."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana human-in-the-loop masuk ke desain LangGraph?",
+      "options": [
+        "Berhenti sebelum node kritis, tampilkan state terserialisasi ke manusia, terima modifikasi, lanjutkan; checkpointer membuatnya murah",
+        "Hanya di START dan END",
+        "Melalui API penyedia terpisah",
+        "Butuh fork runtime"
+      ],
+      "correct": 0,
+      "explanation": "Karena state sudah terserialisasi antar node, review dan edit manusia menjadi pola pause-and-resume yang alami."
+    }
+  ]
+}

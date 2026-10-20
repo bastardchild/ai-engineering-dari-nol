@@ -1,0 +1,66 @@
+{
+  "lesson": "08-dpo",
+  "title": "DPO: Direct Preference Optimization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa keunggulan utama DPO dibanding RLHF?",
+      "options": [
+        "DPO menghasilkan model lebih baik",
+        "DPO memakai lebih sedikit data training",
+        "DPO menghilangkan kebutuhan akan reward model terpisah dan PPO, melatih langsung pada pasangan preferensi dalam satu loop",
+        "DPO bekerja tanpa data preferensi"
+      ],
+      "correct": 2,
+      "explanation": "RLHF memerlukan training reward model terpisah, lalu menjalankan optimasi PPO. DPO melipat kedua langkah menjadi satu tujuan training yang langsung mengoptimalkan model bahasa pada pasangan preferensi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa peran reference model dalam DPO?",
+      "options": [
+        "Ia berfungsi sebagai jangkar yang mencegah model terlatih menyimpang terlalu jauh, mirip penalti KL di RLHF",
+        "Ia menghasilkan data training",
+        "Ia menangani tokenisasi",
+        "Ia mengevaluasi kualitas model"
+      ],
+      "correct": 0,
+      "explanation": "Loss DPO membandingkan log probabilitas di bawah policy terlatih dan model referensi (biasanya SFT). Model referensi membatasi seberapa jauh policy dapat bergeser, mencegah reward hacking tanpa tuning KL eksplisit."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dikontrol parameter beta dalam DPO?",
+      "options": [
+        "Ukuran batch",
+        "Learning rate",
+        "Jumlah epoch training",
+        "Seberapa kuat policy dibatasi agar tetap dekat dengan model referensi -- beta lebih tinggi berarti update lebih konservatif"
+      ],
+      "correct": 3,
+      "explanation": "Beta menskalakan penalti KL implisit. Beta=0.1 memungkinkan model menyimpang jauh dari referensi (berpotensi lebih baik tetapi lebih berisiko). Beta=0.5 menjaganya tetap dekat (lebih aman tetapi belajar lebih sedikit)."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana DPO secara implisit merepresentasikan reward model?",
+      "options": [
+        "Tidak -- DPO tidak memiliki konsep reward",
+        "Fungsi loss DPO dapat diturunkan dengan menunjukkan bahwa policy optimal di bawah fungsi reward dapat dinyatakan langsung melalui log probabilitas policy",
+        "Ia melatih reward model tersembunyi di dalam model bahasa",
+        "DPO memakai fungsi loss sebagai reward"
+      ],
+      "correct": 1,
+      "explanation": "Rafailov et al. menunjukkan bahwa solusi closed-form dari tujuan RLHF menyatakan reward sebagai fungsi log-probabilitas policy relatif terhadap referensi. DPO mengoptimalkannya secara langsung, sehingga secara implisit mempelajari reward."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan RLHF mungkin masih lebih disukai daripada DPO?",
+      "options": [
+        "Saat melatih model lebih kecil",
+        "Saat kamu punya lebih sedikit data preferensi",
+        "Selalu -- RLHF secara ketat lebih baik",
+        "Saat kamu membutuhkan reward model yang dapat dipakai ulang untuk mengevaluasi banyak policy atau saat pengumpulan data online bermanfaat"
+      ],
+      "correct": 3,
+      "explanation": "DPO bersifat offline (data preferensi tetap). RLHF memungkinkan pengumpulan data online di mana reward model menilai generasi baru, menemukan pola reward hacking. Reward model mandiri juga berguna untuk evaluasi dan policy lain."
+    }
+  ]
+}

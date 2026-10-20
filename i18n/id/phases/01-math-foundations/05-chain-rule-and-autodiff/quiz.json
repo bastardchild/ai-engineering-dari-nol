@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dinyatakan aturan rantai dalam kalkulus?",
+      "options": ["Fungsi hanya dapat diturunkan jika linear", "Turunan fungsi komposit adalah hasil kali turunan masing-masing", "Turunan penjumlahan adalah jumlah turunannya", "Integral hasil kali adalah hasil kali integral"],
+      "correct": 1,
+      "explanation": "Untuk y = f(g(x)), aturan rantai menyatakan dy/dx = f'(g(x)) * g'(x). Kamu mengalikan turunan di setiap mata rantai. Ini dasar matematis backpropagation."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu computational graph?",
+      "options": ["Graf berarah tempat node adalah operasi dan edge membawa nilai ke depan atau gradient ke belakang", "Diagram yang menunjukkan arsitektur neural network", "Basis data graf yang dipakai untuk menyimpan data pelatihan", "Grafik loss terhadap langkah pelatihan"],
+      "correct": 0,
+      "explanation": "Computational graph merepresentasikan urutan operasi dalam suatu komputasi. Data mengalir ke depan melalui graf, dan gradient mengalir ke belakang selama backpropagation."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa PyTorch memakai autodiff mode reverse (backpropagation) alih-alih mode forward?",
+      "options": ["Mode forward tidak dapat menangani fungsi non-linear", "Mode reverse menghitung semua gradient dalam satu backward pass, sedangkan mode forward memerlukan satu pass per variabel input -- neural network punya jutaan input tetapi satu output loss", "Mode reverse lebih akurat secara numerik", "Mode reverse memakai lebih sedikit memori"],
+      "correct": 1,
+      "explanation": "Neural network memiliki jutaan input bobot tetapi menghasilkan satu loss skalar. Mode reverse memerlukan satu backward pass total. Mode forward akan memerlukan satu pass per bobot -- jutaan pass -- sehingga tidak praktis."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam mesin autograd kelas Value, mengapa fungsi backward memakai '+=' alih-alih '=' untuk mengakumulasi gradient?",
+      "options": ["Karena nilai yang dipakai di beberapa operasi menerima kontribusi gradient dari masing-masingnya, yang harus dijumlahkan", "Untuk merata-ratakan gradient di beberapa sampel", "Untuk mencegah overflow numerik pada gradient", "Karena Python tidak mendukung operator '=' dalam closure"],
+      "correct": 0,
+      "explanation": "Ketika sebuah nilai mengalir ke beberapa operasi (misalnya x dipakai di x*y dan x+z), gradient totalnya adalah jumlah semua kontribusi gradient yang masuk. Memakai '=' akan menimpa kontribusi sebelumnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu gradient checking dan kapan kamu harus memakainya?",
+      "options": ["Memeriksa bahwa gradient di bawah ambang untuk mencegah exploding gradient", "Membandingkan gradient autodiff dengan gradient finite-difference numerik untuk memverifikasi kebenaran backward pass", "Memeriksa bahwa semua parameter menerima gradient bukan nol selama pelatihan", "Memantau magnitudo gradient selama pelatihan untuk mendeteksi vanishing gradient"],
+      "correct": 1,
+      "explanation": "Gradient checking menghitung turunan numerik via (f(x+h) - f(x-h)) / 2h lalu membandingkannya dengan gradient autodiff. Gunakan saat menambahkan operasi baru ke mesin autograd-mu atau men-debug kegagalan pelatihan."
+    }
+  ]
+}

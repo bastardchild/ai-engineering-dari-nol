@@ -1,0 +1,78 @@
+{
+  "lesson": "18-frontier-safety-frameworks-rsp-pf-fsf",
+  "title": "Frontier Safety Frameworks - RSP, PF, FSF",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "ASL Anthropic memodelkan dirinya pada apa?",
+      "options": [
+        "Kategori EU AI Act",
+        "Tingkat biosafety (BSL)",
+        "Tingkat RFC internet",
+        "Severitas insiden ITIL"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kriteria Preparedness Framework v2 OpenAI mana yang menangkap 'bahaya terjadi cepat atau tidak bisa dibatalkan'?",
+      "options": [
+        "Net-new",
+        "Plausible",
+        "Measurable",
+        "Instan-atau-tak-dapat-diperbaiki"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Critical Capability Level mana yang ditambahkan ke FSF v3.0 DeepMind (September 2025)?",
+      "options": [
+        "Manipulasi Berbahaya",
+        "Uplift Siber",
+        "Uplift Senjata Biologis",
+        "Akselerasi R&D ML"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu 'competitor-adjustment clause' dalam frontier safety framework 2025+?",
+      "options": [
+        "Ketentuan yang memungkinkan lab menurunkan persyaratan keselamatan jika lab sejawat merilis tanpa pengaman yang sebanding",
+        "Pengecualian kontrol ekspor",
+        "Kewajiban pengungkapan model card",
+        "Aturan harga untuk akses API"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa tiga pilar standar safety case seperti dijelaskan pelajaran ini?",
+      "options": [
+        "Helpful, honest, harmless",
+        "Monitoring, illegibility, incapability",
+        "Kecepatan, akurasi, biaya",
+        "Inner, outer, mesa"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Alignment struktural apa yang ada di antara 'Capability Thresholds' Anthropic, 'High Capability thresholds' OpenAI, dan 'Critical Capability Levels' DeepMind?",
+      "options": [
+        "Tidak ada yang didokumentasikan publik",
+        "Alignment struktural: ambang kapabilitas frontier bertingkat dengan kriteria evaluasi yang dipublikasikan, meski terminologinya berbeda",
+        "Terminologi dan batas numerik yang identik",
+        "Ketiganya memakai evaluasi yang persis sama"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa fungsi operator pipe '|' dalam perintah shell?",
+      "options": ["Menjalankan dua perintah secara paralel", "Menggabungkan dua file menjadi satu", "Mengirim standard output satu perintah sebagai standard input ke perintah berikutnya", "Menyimpan output perintah ke file"],
+      "correct": 2,
+      "explanation": "Operator pipe menghubungkan perintah dalam pipeline. Misalnya, 'cat log.txt | grep error' mengirim isi log.txt sebagai input ke grep, yang menyaring baris berisi 'error'."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang terjadi pada proses yang berjalan saat kamu menutup terminal yang memulainya?",
+      "options": ["Proses berhenti sementara sampai kamu membuka terminal baru", "Proses terus berjalan di latar belakang", "Proses menerima sinyal hangup (SIGHUP) dan biasanya berhenti", "Proses otomatis berpindah menjadi service sistem"],
+      "correct": 2,
+      "explanation": "Menutup terminal mengirim SIGHUP ke proses anak, yang membuatnya berhenti secara default. Alat seperti tmux, nohup, atau screen mencegah hal ini."
+    },
+    {
+      "stage": "post",
+      "question": "Apa keunggulan utama tmux dibanding 'nohup command &' untuk job pelatihan berdurasi panjang?",
+      "options": ["tmux otomatis memulai ulang proses yang gagal", "tmux memakai CPU lebih sedikit daripada nohup", "tmux memungkinkan detach, reattach, dan melihat output langsung dengan beberapa pane", "tmux mengompresi output proses untuk menghemat disk"],
+      "correct": 2,
+      "explanation": "tmux membuat sesi persisten yang dapat kamu lepaskan (detach) dan sambungkan lagi (reattach) nanti, dengan output langsung terlihat di beberapa pane. nohup hanya menulis ke file tanpa cara berinteraksi atau reattach."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan 'python train.py > output.log 2>&1'?",
+      "options": ["Menjalankan train.py dan hanya menyimpan error ke output.log", "Menjalankan train.py dengan alokasi memori dua kali lipat", "Menjalankan train.py dua kali dan mencatat eksekusi kedua", "Menjalankan train.py dan mengalihkan standard output serta standard error ke output.log"],
+      "correct": 3,
+      "explanation": "'> output.log' mengalihkan stdout ke file. '2>&1' mengirim stderr ke tempat yang sama dengan stdout. Hasilnya, output normal dan error tertangkap dalam satu file."
+    },
+    {
+      "stage": "post",
+      "question": "Perintah mana yang memungkinkan kamu mengakses Jupyter notebook jarak jauh di port 8888 mesin GPU dari browser lokalmu?",
+      "options": ["ssh -L 8888:localhost:8888 user@gpu-box", "ssh user@gpu-box --forward-port 8888", "scp -P 8888 user@gpu-box:~/notebook.ipynb", "rsync -avz user@gpu-box:8888 localhost:8888"],
+      "correct": 0,
+      "explanation": "Port forwarding lokal SSH (-L) memetakan port jarak jauh ke mesin lokalmu. Setelah perintah ini, membuka localhost:8888 di browser mengakses server Jupyter jarak jauh."
+    }
+  ]
+}

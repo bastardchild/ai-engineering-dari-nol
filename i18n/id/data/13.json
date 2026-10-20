@@ -1,0 +1,165 @@
+{
+  "phase": {
+    "13": {
+      "name": "Tool & Protokol",
+      "desc": "Antarmuka antara AI dan dunia nyata."
+    }
+  },
+  "lessons": {
+    "phases/13-tools-and-protocols/01-the-tool-interface": {
+      "name": "Antarmuka Tool",
+      "summary": "Model bahasa menghasilkan token. Program melakukan aksi. Celah di antara keduanya adalah antarmuka tool: kontrak yang memungkinkan model meminta aksi dan host mengeksekusinya…",
+      "keywords": "Langkah satu: deskripsikan · Langkah dua: putuskan · Langkah tiga: eksekusi · Langkah empat: observasi · Pemisahan kepercayaan · Di mana loop berada · Kenapa tidak sekadar meminta model mengeluarkan JSON? · Circuit breaker · Arah Phase 13 selanjutnya"
+    },
+    "phases/13-tools-and-protocols/02-function-calling-deep-dive": {
+      "name": "Function Calling Mendalam",
+      "summary": "Tiga provider frontier bertemu pada loop tool-call yang sama pada 2024 lalu berbeda pada segala hal lainnya. OpenAI memakai `tools` dan `tool_calls`. Anthropic memakai `tool_use` dan…",
+      "keywords": "Struktur umumnya · Perbedaan bentuk, field demi field · Batas yang akan benar-benar kamu temui · Perilaku `tool_choice` · Panggilan paralel · Streaming · Error dan perbaikan · Pola translator"
+    },
+    "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls": {
+      "name": "Panggilan Tool Paralel dan Streaming",
+      "summary": "Tiga pencarian cuaca independen yang diserialkan berarti tiga round trip. Jalankan paralel dan total waktu menyusut menjadi panggilan tunggal terlambat. Setiap provider frontier kini memancarkan mu…",
+      "keywords": "Mengaktifkan paralel · Korelasi ID · Menjalankan panggilan secara bersamaan · Streaming tool call · JSON parsial dan jebakan parse-early · Penyelesaian tidak berurutan · Benchmark: sekuensial vs paralel · Wall-clock fan-out streaming"
+    },
+    "phases/13-tools-and-protocols/04-structured-output": {
+      "name": "Structured Output",
+      "summary": "\"Minta model dengan baik untuk mengembalikan JSON\" gagal 5 hingga 15 persen, bahkan pada model frontier. Structured output menutup celah itu dengan constrained decoding: model secara literal…",
+      "keywords": "JSON Schema 2020-12 — lingua franca · Pydantic, binding Python · Zod, binding TypeScript · Refusal · Constrained decoding secara terbuka · Tiga mode kegagalan · Strategi retry · Dukungan model kecil"
+    },
+    "phases/13-tools-and-protocols/05-tool-schema-design": {
+      "name": "Desain Skema Tool",
+      "summary": "Tool yang benar bisa gagal diam-diam ketika model tidak bisa menentukan kapan harus memakainya. Penamaan, deskripsi, dan bentuk parameter mendorong ayunan 10 hingga 20 poin persentase dalam akurasi pemilihan tool…",
+      "keywords": "Aturan penamaan · Pola deskripsi · Atomik vs monolitik · Desain parameter · Pesan error sebagai sinyal pengajaran · Versioning · Pencegahan tool poisoning · Benchmark"
+    },
+    "phases/13-tools-and-protocols/06-mcp-fundamentals": {
+      "name": "Dasar-dasar MCP: Request Stateless dan JSON-RPC",
+      "summary": "MCP modern tidak punya handshake dan tidak punya sesi protokol. Setiap request harus membawa metadata yang cukup untuk dipahami, diotorisasi, dirutekan, dan dicoba ulang secara mandiri.",
+      "keywords": "Primitif server · Envelope JSON-RPC · Metadata request wajib · Hasil lengkap dan identitas server · Discovery tanpa handshake · Siklus hidup satu request · Kompatibilitas legacy eksplisit"
+    },
+    "phases/13-tools-and-protocols/07-building-an-mcp-server": {
+      "name": "Membangun MCP Server: Python dan TypeScript Stateless",
+      "summary": "MCP server modern tidak mengingat handshake. Ia memvalidasi metadata pada setiap request, menjalankan satu handler, dan mengembalikan satu hasil bertipe.",
+      "keywords": "Loop dispatch modern · Validasi request · Discovery wajib · Tool · Resource · Prompt · Setiap hasil sukses bertipe · Tanpa request dari server · Kompatibilitas legacy eksplisit"
+    },
+    "phases/13-tools-and-protocols/08-building-an-mcp-client": {
+      "name": "Membangun MCP Client: Discovery, Routing, dan Fallback Dua Era",
+      "summary": "MCP client modern mengulang kontraknya pada setiap request. Keputusan kompatibilitas tersulitnya adalah mengetahui kapan server lama benar-benar lama dan kapan server modern melaporkan…",
+      "keywords": "Peer, bukan sesi protokol · Bangun setiap request modern dari nol · Discovery modern · Probe kompatibilitas stdio · Allowlist adalah niat operator, bukan bukti · Legacy adalah cabang kompatibilitas · Menemukan dan meng-cache tool · Penggabungan namespace aman tabrakan · Merutekan panggilan · Notifikasi dan subscription · Tanpa request dari server"
+    },
+    "phases/13-tools-and-protocols/09-mcp-transports": {
+      "name": "Transport MCP: stdio dan Streamable HTTP Stateless",
+      "summary": "Transport membawa pesan MCP. Ia tidak memasok state protokol yang hilang. Pada `2026-07-28`, stdio lokal dan Streamable HTTP jarak jauh sama-sama membawa request yang mendeskripsikan dirinya sendiri.",
+      "keywords": "stdio · Streamable HTTP pada 2026-07-28 · POST-only berarti POST-only · Validasi Origin · Header metadata HTTP wajib · SSE berlingkup request · Perubahan berumur panjang memakai subscription/listen · State aplikasi eksplisit · Kompatibilitas dua era HTTP"
+    },
+    "phases/13-tools-and-protocols/10-mcp-resources-and-prompts": {
+      "name": "MCP Resource dan Prompt: Konteks Addressable untuk Server Stateless",
+      "summary": "Tool melakukan operasi. Resource mengekspos konten yang dapat dialamatkan. Prompt mengemas template pesan pilihan pengguna. MCP server yang baik menjaga kontrak-kontrak itu tetap terpisah dan dapat diprediksi.",
+      "keywords": "Template resource · Konten bukan instruksi tepercaya"
+    },
+    "phases/13-tools-and-protocols/11-mcp-sampling": {
+      "name": "Input Model MCP: Migrasi Sampling dan MRTR Stateless",
+      "summary": "MCP 2026-07-28 men-depecate Sampling untuk desain baru dan menghapus kanal request server-ke-client. Jika alur kerja yang ada masih membutuhkan model milik client, server mengembalikan…",
+      "keywords": "Server baru: integrasikan langsung dengan provider model · Alur Sampling yang ada: migrasikan ke MRTR"
+    },
+    "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation": {
+      "name": "Scope Eksplisit dan Elicitation Stateless",
+      "summary": "Roots dideprecate di MCP 2026-07-28 dan tidak pernah menjadi sandbox keamanan. Taruh scope di argumen tool atau URI resource yang terlihat, otorisasi di server, dan gunakan MRTR ketika…",
+      "keywords": "Aturan tiga lapis"
+    },
+    "phases/13-tools-and-protocols/13-mcp-async-tasks": {
+      "name": "Ekstensi MCP Tasks: Pekerjaan Durable di Inti Stateless",
+      "summary": "MCP stateless bukan berarti setiap operasi harus selesai dalam satu request. Ekstensi Tasks resmi memberi pekerjaan berjalan lama sebuah handle durable yang eksplisit. Server dapat mengembalikan…",
+      "keywords": "Input dibutuhkan sebelum pembuatan task · Input dibutuhkan setelah pembuatan task · Error protokol · Hasil eksekusi task"
+    },
+    "phases/13-tools-and-protocols/14-mcp-apps": {
+      "name": "MCP Apps pada Protokol Stateless",
+      "summary": "Hasil interaktif tetap merupakan pertukaran tool dan resource MCP. Inti 2026-07-28 membuat pertukaran itu mandiri, sementara ekstensi Apps menambahkan permukaan browser yang di-sandbox…",
+      "keywords": "Dua protokol, satu fitur · Discovery sebelum rendering · Deklarasikan UI pada definisi tool · Kembalikan data, lalu biarkan host mengikat view · Sajikan app sebagai resource · Cache resource UI sebagai konten yang dapat dieksekusi · Tolak ambiguitas wire sebelum kebijakan fitur · Sandbox adalah batas, bukan vonis kepercayaan · Jembatan Apps punya siklus hidup sendiri · Konteks host, aksi, dan pencabutan · Fallback adalah bagian dari kontrak"
+    },
+    "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning": {
+      "name": "Keamanan MCP: Metadata Teracuni, Routing, dan State MRTR",
+      "summary": "Stateless bukan berarti tanpa kepercayaan. Artinya setiap request mengekspos bukti yang dibutuhkan server dan gateway untuk memvalidasi panggilan secara independen.",
+      "keywords": "Tujuh permukaan serangan yang layak diperiksa · Envelope request saat ini adalah bukti, bukan identitas · Validasi routing sebelum kebijakan · Pin seluruh deskriptor · Pemindaian statis adalah tripwire · Namespace sebelum penggabungan · Capability adalah deklarasi kompatibilitas · Lindungi konfirmasi MRTR stateless · Aturan dua untuk panggilan berisiko tinggi · Kurangi otoritas sebelum eksekusi · Jalur interaksi saat ini dan legacy · Pemeriksaan transport stateless"
+    },
+    "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1": {
+      "name": "Otorisasi MCP: CIMD, Issuer Binding, PKCE, dan Step-Up",
+      "summary": "Request MCP jarak jauh bersifat stateless, tetapi otorisasinya tidak anonim. Ikat setiap credential ke issuer yang membuatnya dan setiap token ke resource yang menerimanya.",
+      "keywords": "Kenali tiga peran · Otorisasi berlaku untuk HTTP · Mulai dari metadata protected-resource · Verifikasi metadata authorization server · Ikuti prioritas registrasi · Utamakan Client ID Metadata Documents · DCR adalah jalur kompatibilitas · Ikat credential ke issuer · Authorization code dengan PKCE · Validasi `iss` secara persis · Validasi audience di MCP server · Minta scope terkecil saat ini · Otorisasi dan wire MCP stateless · Tanpa token passthrough · Refresh token"
+    },
+    "phases/13-tools-and-protocols/17-mcp-gateways-and-registries": {
+      "name": "Gateway MCP Stateless dan Admission Registry",
+      "summary": "Gateway seharusnya membuat setiap rute eksplisit. Protokol 2026-07-28 memberinya batas method, nama, versi, capability, identitas, cache, dan trace tanpa sesi transport.",
+      "keywords": "Jalur gateway modern · Kebijakan runtime adalah keputusan utama gateway · Satu endpoint POST · Implementasikan discovery di setiap layer · Capability client per request · Namespacing deterministik · Pin deskriptor yang disetujui · Registry membantu discovery, bukan memutuskan · Mediasi credential · Rate limit tanpa sesi · Audit rantai keputusan · SSE berlingkup request · Notifikasi perubahan berumur panjang · MRTR melalui gateway · Routing ekstensi Tasks · Batas kompatibilitas"
+    },
+    "phases/13-tools-and-protocols/18-mcp-auth-production": {
+      "name": "Auth MCP di Produksi: Enrollment dan Token Terikat Issuer",
+      "summary": "Pelajaran 16 membangun state machine OAuth 2.1. Pelajaran ini mengeraskan batas produksinya untuk MCP 2026-07-28: Client ID Metadata Documents lebih dulu, registrasi dinamis yang dideprecate…",
+      "keywords": "RFC 8414 — OAuth Authorization Server Metadata · RFC 9728 (ringkasan) — Protected Resource Metadata · Client ID Metadata Documents (default yang disarankan) · RFC 7591: enrollment kompatibilitas yang dideprecate · RFC 8707 (ringkasan) — Resource Indicators · RFC 7636 (ringkasan) — PKCE · Profil otorisasi MCP 2026-07-28 · Checklist kapabilitas deployment · Pola refresh JWKS (rotasi di AS, refresh di resource server) · Rutinitas validasi · Token opaque memakai introspeksi, bukan tebakan · Revocation adalah kontrak kesegaran · Kegagalan dependency butuh keputusan yang dideklarasikan · Walkthrough audience-replay (pembatasan privilege access token) · Serangan mix-up (pertahanan sisi client yang tidak bisa disediakan server) · Mode kegagalan"
+    },
+    "phases/13-tools-and-protocols/19-a2a-protocol": {
+      "name": "Protokol A2A",
+      "summary": "MCP adalah agent-to-tool. A2A (Agent2Agent) adalah agent-to-agent — protokol terbuka agar agent opaque yang dibangun di framework berbeda dapat berkolaborasi. Dirilis Google pada April 202…",
+      "keywords": "Agent Card · Agent Card bertanda tangan (AP2) · Siklus hidup task · Message dan Part · Artifact · Dua binding transport · Preservasi opacity · Timeline · Hubungan dengan MCP"
+    },
+    "phases/13-tools-and-protocols/20-opentelemetry-genai": {
+      "name": "OpenTelemetry GenAI",
+      "summary": "Sebuah agent memanggil lima tool, tiga MCP server, dan dua sub-agent. Kamu butuh satu trace melintasi semuanya. Konvensi semantik OpenTelemetry GenAI (atribut stabil di v1.37 dan…",
+      "keywords": "Hierarki span · Atribut wajib · Jenis span · Penangkapan konten opt-in · Event pada span · Exporter · Propagasi lintas MCP · Metrik · Layer AgentOps"
+    },
+    "phases/13-tools-and-protocols/21-llm-routing-layer": {
+      "name": "Layer Routing LLM",
+      "summary": "Lock-in provider itu mahal. Beban kerja tool calling yang berbeda cocok untuk model berbeda. Gateway routing memberi satu permukaan API, retry, failover, pelacakan biaya, dan guardrails.…",
+      "keywords": "Bentuk proxy kompatibel OpenAI · Alias model · Rantai fallback · Semantic caching · Guardrails · Rate limit per key · Trade-off self-hosted vs terkelola · Pelacakan biaya · MCP plus routing · Strategi routing"
+    },
+    "phases/13-tools-and-protocols/22-skills-and-agent-sdks": {
+      "name": "Agent Skills: Kontrak Portabel dan Batas Runtime",
+      "summary": "Skill bukan prompt panjang dengan nama file yang lebih baik. Ia adalah paket instruksi, resource, dan helper yang dapat dieksekusi, yang masuk ke konteks agent melalui run…",
+      "keywords": "Preflight untuk lab host nyata · 1. Mulai di direktori kerja kosong · 2. Pasang bundle reviewer lengkap · 3. Panggil secara eksplisit · 4. Uji pemilihan implisit · 5. Bersihkan · Skill mengodekan pengetahuan prosedural · Abstraksi tetangga · Kata \"skill\" menamai dua ide berbeda · Inti portabel · Ekstensi runtime adalah layer kedua · Frontmatter adalah metadata yang dapat dieksekusi · Siklus hidup skill · Skill dan tool ortogonal · Skill dan instruksi repositori adalah scope berbeda · Skill tidak saling mengimpor · Urutan validasi penting"
+    },
+    "phases/13-tools-and-protocols/23-capstone-tool-ecosystem": {
+      "name": "Capstone: Ekosistem Tool Stateless",
+      "summary": "Sistem agent produksi adalah sekumpulan batas, bukan tumpukan fitur. Capstone ini memisahkan simulasi in-process yang mudah dibaca dari client protokol, server otorisasi…",
+      "keywords": "Arsitektur target · Trace target · Permukaan protokol saat ini · MCP stateless mengubah batas integrasi · Postur keamanan · Skill adalah prosedur, bukan transport · Metadata artefak kursus adalah adapter lokal · Simulasi versus produksi · Peta Phase 13"
+    },
+    "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure": {
+      "name": "Discovery Skill dan Progressive Disclosure",
+      "summary": "Skill menjadi berguna sebelum body-nya dimuat. Nama dan deskripsinya mendapat tempat di katalog; file yang lebih dalam baru mendapat konteks ketika tugas mencapainya.",
+      "keywords": "Discovery adalah pipeline compiler · Scope adalah kebijakan runtime · Tabrakan butuh identitas melampaui `name` · Tiga tingkat disclosure · Referensi spesifik cabang mengalahkan tumpukan topik · Anggaran katalog dan konteks aktif adalah anggaran berbeda · Path resource adalah batas kepercayaan · Pemuatan harus dapat diamati · Kenapa discovery dangkal · Kenapa lab tidak mem-parsing YAML sembarangan"
+    },
+    "phases/13-tools-and-protocols/25-skill-invocation-and-routing": {
+      "name": "Invocation dan Routing Skill",
+      "summary": "Invocation adalah keputusan otoritas yang diikuti keputusan relevansi. Deskripsi yang baik membantu model memilih; kebijakan yang baik menentukan apakah pilihan itu diizinkan.",
+      "keywords": "Lima kanal dapat memulai siklus hidup · Lima tahap invocation · Invocation manusia dan model membentuk matriks 2x2 · Invocation eksplisit mengutamakan identitas · Invocation implisit mengutamakan deskripsi · Routing adalah klasifikasi dengan opsi abstain · Kelayakan harus mendahului peringkat · Eval routing butuh near miss · Argumen punya tiga representasi · Invocation aplikasi adalah orkestrasi eksplisit · Invocation skill-ke-skill adalah edge mirip tool · Siklus hidup konteks spesifik host · Kenapa adapter inti dan ekstensi terpisah"
+    },
+    "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust": {
+      "name": "Izin, Sandbox, dan Trust pada Skill",
+      "summary": "Skill dapat menyarankan aksi. Hanya host yang dapat mengotorisasinya, hanya batas isolasi yang dapat menahannya, dan hanya verifikasi yang bisa memberitahumu apakah aksi itu berhasil.",
+      "keywords": "Skill adalah konteks, bukan batas keamanan · Lima layer kontrol · Threat-model seluruh paket · Kepercayaan paket dimulai sebelum aktivasi · Konten punya tingkat otoritas · Tinjau aksi sebagai request terstruktur · Kebijakan perintah butuh struktur · Kebijakan path harus menyelesaikan realitas · Penanganan secret adalah desain kapabilitas · Jaringan adalah izin independen · Persetujuan harus mengikuti konsekuensi · Pilih batas isolasi · Skrip sebaiknya membosankan · Jalankan latihan isolasi · Kenapa `ask` bukan `allow`"
+    },
+    "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability": {
+      "name": "Eval, Packaging, dan Portabilitas Skill",
+      "summary": "Skill selesai ketika paketnya lolos linting, dirutekan pada request yang tepat, meningkatkan tugas yang terukur, tetap di dalam kebijakan, dan menurun secara jujur di host lain.",
+      "keywords": "Mulai dari alur kerja nyata, bukan topik · Pisahkan penilaian dari pekerjaan deterministik · Susun paket dalam urutan dependensi · Enam layer eval · Eval routing harus memakai runtime target · Kontrak artefak membuat perilaku dapat dieksekusi · Pasang direktori sebagai satu unit · Portabilitas adalah matriks kapabilitas · Tes portabilitas butuh fixture host · Data skala bukan bukti kualitas · Pisahkan keberhasilan fixture, integritas lokal, dan kesiapan produksi · Baca laporan per layer · 1. Tetapkan batas fixture lokal · 2. Pasang bundle lengkap ke host pertama · 3. Uji discovery, routing, referensi, dan skrip · 4. Uji perilaku persetujuan · 5. Pakai host kedua atau deklarasikan fallback · 6. Uji upgrade dan uninstall"
+    },
+    "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content": {
+      "name": "Kontrak dan Konten Tool MCP",
+      "summary": "Tool aman diotomasi hanya ketika discovery, argumen, hasil, pagination, dan metadata transport sepakat pada satu kontrak.",
+      "keywords": "Structured content adalah nilai JSON apa pun · Validator kecil tetap mengajarkan batasnya · Encode nilai sebelum membangun header HTTP · Server memeriksa salinan yang dicerminkan"
+    },
+    "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control": {
+      "name": "Reliabilitas, Cancellation, dan Flow Control MCP",
+      "summary": "Request ID mengorelasikan sebuah pesan. Ia tidak membuat efek samping menjadi aman, menghentikan worker, atau melindungi stream dari consumer yang lambat.",
+      "keywords": "stdio · Streamable HTTP · Pembatalan server-sent bersifat sempit · Cancellation menang · Completion menang · Batas ledger harus atomik dan durable · Matriks retry · Buffering proxy · Cegah reconnect herd · `RequestCoordinator` · `MutationLedger` · `DurableTaskService` · `BoundedSseBuffer` · Helper pemulihan"
+    },
+    "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift": {
+      "name": "Supply Chain Registry MCP: Admission, Drift, dan Rollback",
+      "summary": "Entri registry memberi tahu apa yang dideklarasikan publisher. Admission produksi membuktikan apa yang kamu ambil, apa yang kamu amati, apa yang kamu setujui, dan apa yang dapat kamu pulihkan dengan aman.",
+      "keywords": "1. Verifikasi namespace · 2. Gabungkan provenance · 3. Pin keputusan, bukan hanya versi · 4. Deteksi drift langsung · 5. Status registry adalah state langsung · 6. Rollback berarti pemulihan rute · 7. Tambahkan admission ledger · Lab A: tabrakan namespace · Lab B: drift deskriptor · Lab C: status dan rollback"
+    },
+    "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations": {
+      "name": "Rekayasa Conformance MCP: Versioning, Bukti, dan Operasi",
+      "summary": "Server tidak menjadi conformant karena happy path-nya berhasil lewat satu SDK. Conformance hidup di wire, di batas versi, melewati perantara, dan selama rollback.",
+      "keywords": "Strict mode · Fallback mode · Transkrip golden · Transkrip negatif · Field tambahan yang tidak dikenal · `resultType` tidak dikenal · Lab A: buktikan batas era · Lab B: field aditif versus discriminator · Lab C: periksa transformasi SDK · Lab D: perbaiki proxy"
+    }
+  }
+}

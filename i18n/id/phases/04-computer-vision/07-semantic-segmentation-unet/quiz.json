@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa U-Net membutuhkan skip connection antara encoder dan decoder?",
+      "options": ["Karena transposed convolution memerlukan input tambahan", "Untuk mencocokkan konvensi shape PyTorch", "Encoder memampatkan detail spasial untuk memperoleh konteks; decoder tidak dapat merekonstruksi batas yang tajam tanpa akses ke feature map resolusi tinggi dari encoder, dan skip menyediakan tepat itu", "Untuk mempercepat training"],
+      "correct": 2,
+      "explanation": "Tanpa skip, decoder U-Net menghasilkan prediksi H x W dari bottleneck beresolusi sangat rendah, yang tidak dapat menyelesaikan tepi tajam. Skip connection menyambungkan fitur resolusi tinggi dan semantik rendah dari encoder ke fitur resolusi rendah dan semantik tinggi milik decoder sehingga konteks dan detail tersedia pada setiap tahap output."
+    },
+    {
+      "stage": "pre",
+      "question": "Sebuah tugas segmentasi memiliki 99% piksel background dan 1% piksel tumor. Kamu melatih dengan cross-entropy biasa dan mencapai akurasi piksel 99%. Apa yang terjadi?",
+      "options": ["Fungsi loss-nya diimplementasikan dengan salah", "Modelnya konvergen", "Model belajar memprediksi background untuk setiap piksel; akurasi piksel didominasi kelas mayoritas dan mengabaikan kelas yang sebenarnya kamu pedulikan", "Optimizer-nya gagal"],
+      "correct": 2,
+      "explanation": "Akurasi piksel pada dataset tidak seimbang adalah metrik yang tidak berguna. Jaringan mengumpulkan 99% yang mudah dengan selalu memprediksi background dan menghasilkan mask tumor kosong. Perbaikannya: gabungkan cross-entropy dengan Dice loss (berbasis overlap, bebas skala) dan laporkan IoU/Dice per kelas foreground."
+    },
+    {
+      "stage": "post",
+      "question": "Jenis tugas mana yang memisahkan mobil-mobil individual dari kelas yang sama satu sama lain?",
+      "options": ["Keduanya menghasilkan output yang sama", "Semantic segmentation", "Instance segmentation", "Keduanya bukan — itu memerlukan model deteksi"],
+      "correct": 2,
+      "explanation": "Semantic segmentation memberi label kelas pada setiap piksel tetapi menggabungkan instance yang bersentuhan dari kelas yang sama menjadi satu blob. Instance segmentation mempertahankan ID instance, sehingga setiap mobil, setiap orang, setiap apel adalah mask prediksi terpisah. Panoptic segmentation menyatukan keduanya: label semantik untuk stuff, ID instance untuk things."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mengganti bilinear upsample + conv 3x3 milik U-Net dengan ConvTranspose2d ber-kernel_size=2, stride=2 dan melihat artefak papan catur pada output. Mengapa?",
+      "options": ["Transposed conv rusak di PyTorch", "Learning rate-nya terlalu rendah", "Ketika kernel_size tidak habis dibagi stride, piksel output menerima kontribusi yang tidak merata dari piksel input, menghasilkan pola periodik pada output yang tampak seperti papan catur", "Batch norm harus ditambahkan sebelum transposed conv"],
+      "correct": 2,
+      "explanation": "Artefak papan catur berasal dari tumpang tindih receptive field transposed convolution yang tidak merata di seluruh posisi output. Menggunakan kernel_size = stride * n (misalnya kernel 4, stride 2) atau mengganti transposed conv dengan bilinear upsample + conv menghilangkan artefak. Default modern adalah bilinear + conv karena alasan ini."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melaporkan mIoU = 0.78 pada tugas segmentasi 10 kelas. Mengapa kamu juga harus mempublikasikan IoU per kelas?",
+      "options": ["Mean IoU menyembunyikan kegagalan kelas individual; mIoU 0.78 konsisten dengan delapan kelas pada 0.9 dan dua kelas pada 0.3, yang merupakan cerita deployment sangat berbeda dibandingkan semua kelas di sekitar 0.78", "IoU per kelas diwajibkan oleh PyTorch", "Itu hanya diperlukan untuk pencitraan medis", "IoU per kelas selalu lebih tinggi daripada mIoU"],
+      "correct": 0,
+      "explanation": "Rata-rata agregat memampatkan distribusi skor per kelas, padahal justru itu yang dibutuhkan pembaca untuk memutuskan apakah model siap dirilis. Dua kelas lemah dalam model yang sebaliknya kuat dapat membuat sistem tidak dapat dipakai untuk tugas yang dimaksud; profil yang rata berarti model memerlukan peningkatan data yang merata. Selalu publikasikan metrik per kelas bersama rata-ratanya."
+    }
+  ]
+}

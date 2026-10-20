@@ -1,0 +1,102 @@
+{
+  "lesson": "24-coreference-resolution",
+  "title": "Coreference Resolution",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tujuan coreference resolution?",
+      "options": [
+        "Mengklaster semua penyebutan (bernama, nominal, pronominal) yang merujuk ke entitas dunia nyata yang sama",
+        "Mengekstrak relasi",
+        "Menandai kelas kata",
+        "Menerjemahkan pronomina menjadi nomina"
+      ],
+      "correct": 0,
+      "explanation": "Coref mengklaster span penyebutan yang semuanya merujuk ke entitas yang sama."
+    },
+    {
+      "stage": "pre",
+      "question": "Jenis ekspresi apa yang merupakan penyebutan 'nominal'?",
+      "options": [
+        "Kata kerja",
+        "Pronomina seperti 'she'",
+        "Hanya nama diri",
+        "Frasa nomina seperti 'the CEO' atau 'the company'"
+      ],
+      "correct": 3,
+      "explanation": "Penyebutan nominal adalah frasa nomina seperti 'the company'; penyebutan pronominal adalah pronomina."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arsitektur coref modern (Lee dkk., 2017)?",
+      "options": [
+        "Hanya parsing sintaksis berbasis aturan",
+        "Decision tree",
+        "End-to-end berbasis span: enumerasi span, nilai penyebutan, lalu nilai probabilitas anteseden dan klaster secara greedy",
+        "Retrieval BM25"
+      ],
+      "correct": 2,
+      "explanation": "Coref neural end-to-end mengenumerasi span dan mempelajari penilaian penyebutan + anteseden secara bersama."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dirata-ratakan CoNLL F1?",
+      "options": [
+        "Skor F1 MUC, B-cubed, dan CEAF-phi4",
+        "Precision dan recall",
+        "F1 lintas bahasa",
+        "F1 token dan span"
+      ],
+      "correct": 0,
+      "explanation": "CoNLL F1 adalah rata-rata metrik MUC, B-cubed, dan CEAF-phi4."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu bridging anaphora?",
+      "options": [
+        "Referensi implisit seperti 'the wheels' yang menyiratkan roda dari mobil yang disebut sebelumnya",
+        "Salah terjemahan",
+        "Pronomina sebelum antesedennya",
+        "Pronomina tanpa anteseden"
+      ],
+      "correct": 0,
+      "explanation": "Bridging menghubungkan penyebutan ke entitas bagian-dari atau terkait yang tersirat tetapi tidak dinyatakan eksplisit."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa coref hanya-LLM tidak dapat diandalkan pada dokumen panjang?",
+      "options": [
+        "Coref memerlukan CFG",
+        "LLM tidak dapat membaca teks",
+        "Tokenizer gagal",
+        "LLM sekali panggil menggabungkan berlebihan atau diam-diam membuang penyebutan di 50+ paragraf; perlukan sliding-window plus merge"
+      ],
+      "correct": 3,
+      "explanation": "Coref LLM dokumen panjang menurun; sliding-window dengan penggabungan lintas jendela meredakannya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menggabungkan klaster coref ke hasil NER sebelum tugas hilir?",
+      "options": [
+        "Diwajibkan oleh Wikidata",
+        "Agar tugas hilir melihat satu entitas per klaster alih-alih satu per penyebutan permukaan, sangat meningkatkan cakupan",
+        "Latensi lebih rendah",
+        "Untuk menambah jumlah token"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa penggabungan, NER menghitung setiap bentuk permukaan secara terpisah dan melewatkan 60-80% penyebutan entitas."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa aturan gender yang di-hard-code menjadi kerapuhan dalam sistem coref?",
+      "options": [
+        "Mereka gagal pada referen non-biner, organisasi, dan hewan; penilaian yang dipelajari lebih robust",
+        "Mereka tidak dapat memakai POS tag",
+        "Mereka memerlukan GPU",
+        "Mereka berjalan terlalu cepat"
+      ],
+      "correct": 0,
+      "explanation": "Heuristik gender gagal pada teks yang beragam secara demografis; model yang dipelajari lebih disukai."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa proyek AI memerlukan virtual environment tersendiri?",
+      "options": [
+        "Python mewajibkan virtual environment untuk mengimpor paket",
+        "Virtual environment mengisolasi dependensi agar proyek berbeda tidak bentrok",
+        "Virtual environment membuat kode berjalan lebih cepat",
+        "Virtual environment menyediakan akses GPU"
+      ],
+      "correct": 1,
+      "explanation": "Virtual environment mengisolasi versi paket per proyek. Tanpa itu, meningkatkan PyTorch untuk satu proyek dapat merusak proyek lain yang bergantung pada versi lama."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang disediakan CUDA untuk beban kerja AI?",
+      "options": [
+        "Komputasi paralel di GPU NVIDIA untuk operasi matriks",
+        "Manajer paket Python untuk library ML",
+        "Framework web untuk men-deploy model",
+        "Runtime container untuk menyajikan model"
+      ],
+      "correct": 0,
+      "explanation": "CUDA adalah platform komputasi paralel NVIDIA yang memungkinkan kamu menjalankan operasi matriks di ribuan inti GPU secara bersamaan. PyTorch dan TensorFlow memakainya di balik layar."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam tumpukan environment empat lapis, lapisan mana yang harus dipasang lebih dulu?",
+      "options": [
+        "Runtime Bahasa (Python, Node.js)",
+        "Fondasi Sistem (OS, shell, driver GPU)",
+        "Manajer Paket (pip, npm, cargo)",
+        "Library AI/ML (PyTorch, JAX)"
+      ],
+      "correct": 1,
+      "explanation": "Kamu memasang dari bawah ke atas: fondasi sistem lebih dulu (OS, driver), lalu manajer paket, lalu runtime bahasa, lalu library AI. Setiap lapisan bergantung pada lapisan di bawahnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa tujuan uv dalam proyek AI Python?",
+      "options": [
+        "Alat pemantau GPU",
+        "Library visualisasi neural network",
+        "Penginstal dan penyelesai paket Python yang sangat cepat",
+        "Kompiler CUDA untuk kernel kustom"
+      ],
+      "correct": 2,
+      "explanation": "uv adalah penginstal paket Python cepat yang ditulis dalam Rust. Ia menggantikan pip dengan resolusi dan instalasi dependensi yang jauh lebih cepat, sering kali 10-100x lebih cepat."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu memverifikasi bahwa PyTorch dapat mengakses GPU-mu?",
+      "options": [
+        "python -c 'import gpu'",
+        "import torch; print(torch.cuda.is_available())",
+        "import torch; print(torch.__version__)",
+        "nvidia-smi --query"
+      ],
+      "correct": 1,
+      "explanation": "torch.cuda.is_available() mengembalikan True jika PyTorch dapat mengakses GPU CUDA. Di Apple Silicon, gunakan torch.backends.mps.is_available() untuk Metal Performance Shaders."
+    }
+  ]
+}

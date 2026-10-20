@@ -1,0 +1,78 @@
+{
+  "lesson": "22-differential-privacy-for-llms",
+  "title": "Differential Privacy untuk LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dijamin (epsilon, delta)-differential privacy untuk algoritma teracak M?",
+      "options": [
+        "Untuk dua dataset apa pun yang berbeda satu contoh dan event S apa pun, P(M(D) di S) <= e^epsilon * P(M(D') di S) + delta, sehingga kontribusi satu individu tidak bisa disimpulkan secara andal",
+        "M terbukti setara dengan algoritma non-privat",
+        "M tidak pernah menghafal data pelatihan apa pun",
+        "M deterministik hingga noise"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang BUKAN langkah DP-SGD seperti dijelaskan Abadi et al. 2016?",
+      "options": [
+        "Mengacak ulang tokenizer model antar langkah",
+        "Clip setiap gradien per contoh ke ambang C",
+        "Jumlahkan gradien yang di-clip dan tambahkan noise Gaussian berskala sigma * C",
+        "Sampling mini-batch dan hitung gradien per contoh"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa LoRA + DP-SGD menjadi konfigurasi umum 2025?",
+      "options": [
+        "LoRA menaikkan epsilon secara desain",
+        "LoRA menghilangkan kebutuhan accountant",
+        "DP-SGD penuh pada model frontier terlalu mahal; LoRA membatasi update gradien ke adapter kecil, mengurangi penyimpanan gradien per contoh sambil tetap memberi jaminan DP pada adapter",
+        "Itu memakai LoRA sebagai tokenizer"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana audit Maret 2025 (arXiv:2503.06808) menyelesaikan ketegangan canary-MIA vs training-data-extraction?",
+      "options": [
+        "Itu menghilangkan kebutuhan canary sepenuhnya",
+        "Itu menunjukkan keduanya mengukur properti yang sama",
+        "Itu membuktikan DP-SGD tidak perlu",
+        "Itu menunjukkan keduanya mengukur hal berbeda: MIA pada canary yang disisipkan melaporkan memorisasi lebih rendah karena canary tidak dioptimalkan menjadi contoh 'paling bisa diekstrak' yang sebenarnya penting untuk privasi"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang disediakan PMixED (arXiv:2403.15638) sebagai alternatif pelatihan DP?",
+      "options": [
+        "Accountant baru untuk Renyi DP",
+        "Differential privacy saat inferensi lewat mixture of experts pada distribusi token berikutnya, dengan noise agregasi; menghindari pelatihan DP sepenuhnya",
+        "Cara menghitung epsilon hanya dari akuntansi epsilon-delta",
+        "Varian DP-SGD yang lebih cepat"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa serangan Differential Privacy Reversal via LLM Feedback?",
+      "options": [
+        "Serangan pada entropi tokenizer",
+        "Penanggulangan penyisipan canary",
+        "Memakai skor keyakinan model terlatih DP sebagai oracle untuk mengidentifikasi ulang individu, bahkan saat output tidak bocor secara langsung",
+        "Metode mengatur ulang epsilon ke nol"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

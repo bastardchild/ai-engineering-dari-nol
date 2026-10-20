@@ -1,0 +1,78 @@
+{
+  "lesson": "81-end-to-end-distributed-train",
+  "title": "Pelatihan Terdistribusi End-to-End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa capstone penting padahal setiap lesson sudah punya test sendiri?",
+      "options": [
+        "Komposisi adalah properti terpisah: bagian dapat lulus unit test tetapi integrasi deadlock, loss divergen, atau memori tumbuh saat berjalan bersama",
+        "Kosmetik",
+        "Lebih lambat",
+        "Lebih mudah dinilai"
+      ],
+      "correct": 0,
+      "explanation": "Test end-to-end menangkap bug wiring yang tidak ditangkap test bagian mana pun secara terisolasi: rendezvous, urutan barrier, kontrak gather."
+    },
+    {
+      "stage": "pre",
+      "question": "Empat invarian apa yang diverifikasi demo?",
+      "options": [
+        "Kecepatan",
+        "Token per detik",
+        "Hardware",
+        "(a) loss berjalan sampai langkah 20 tanpa NaN, (b) norm parameter setiap rank sepakat, (c) memori optimiser per rank sama dengan formula ZeRO-1, (d) checkpoint langkah-10 dimuat ulang byte-equal"
+      ],
+      "correct": 3,
+      "explanation": "Setiap invarian menangkap bug komposisi berbeda: NaN menangkap divergensi, norm-sepakat menangkap drift sinkronisasi, memori menangkap bug sharding, checkpoint menangkap atomisitas tulis."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa modelnya GPT kecil alih-alih MLP?",
+      "options": [
+        "Diwajibkan",
+        "Terlihat mewah",
+        "GPT menambahkan statistik berjalan LayerNorm, bentuk gradien embedding, dan edge case softmax+cross-entropy yang akan disembunyikan MLP",
+        "Lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "Sinkronisasi gradien MLP sudah diverifikasi di lesson 77; capstone membutuhkan model dengan lebih banyak edge case untuk membuktikan komposisi pada operasi realistis."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arti self-terminating dalam konteks ini?",
+      "options": [
+        "Proses membunuh dirinya",
+        "Jumlah langkah tetap (20), exit 0 saat selesai, tanpa manusia dalam loop; jika ada bagian deadlock demo tidak pernah kembali dan CI menangkapnya",
+        "Pemulihan crash",
+        "Manual"
+      ],
+      "correct": 1,
+      "explanation": "Run terbatas dengan exit 0 memungkinkan rig test memastikan terminasi; loop while-True menyamarkan deadlock."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana demo menggabungkan DDP dan ZeRO?",
+      "options": [
+        "Hanya ZeRO",
+        "Keduanya sekaligus",
+        "Broadcast gaya DDP saat init untuk sinkronisasi parameter, reduce_scatter+allgather ZeRO-1 menggantikan optimiser.step; allreduce gradien DDP disubsumsi ke reduce_scatter ZeRO",
+        "Hanya DDP"
+      ],
+      "correct": 2,
+      "explanation": "ZeRO-1 memiliki sinkronisasi gradien lewat reduce_scatter, jadi allreduce terpisah DDP tidak diperlukan; broadcast saat init satu-satunya panggilan spesifik DDP yang bertahan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa produksi memakai kadens checkpoint wall-clock alih-alih jumlah langkah?",
+      "options": [
+        "Terlihat lebih rapi",
+        "Lebih cepat",
+        "Diwajibkan NCCL",
+        "Waktu per langkah bervariasi dengan panjang urutan dan jumlah microbatch; kadens 10 menit menangkap compute yang sama terlepas dari ukuran model"
+      ],
+      "correct": 3,
+      "explanation": "Lesson memakai berbasis langkah untuk kejelasan; run produksi biasanya menyimpan setiap 5-15 menit wall-clock."
+    }
+  ]
+}

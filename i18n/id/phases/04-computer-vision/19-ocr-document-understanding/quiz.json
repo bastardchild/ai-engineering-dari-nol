@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa OCR memakai CTC loss alih-alih cross-entropy biasa?",
+      "options": ["CTC diwajibkan oleh PyTorch", "OCR memetakan urutan fitur berpanjang tetap ke urutan karakter berpanjang variabel tanpa penyelarasan per timestep; CTC loss memarginalisasi semua penyelarasan yang tereduksi ke target setelah menghapus pengulangan dan blank, sehingga kamu dapat melatih tanpa label waktu tingkat karakter", "Cross-entropy meluap untuk urutan panjang", "CTC lebih cepat"],
+      "correct": 1,
+      "explanation": "Pengenalan menghasilkan satu distribusi per langkah waktu, tetapi teks target tidak memiliki penyelarasan per langkah. CTC menanganinya dengan menjumlahkan semua penyelarasan yang tereduksi ke target melalui operasi gabungkan-pengulangan-dan-hapus-blank. Inilah sebabnya CRNN dapat dilatih hanya pada pasangan (gambar, teks) tanpa mengetahui di mana setiap karakter mulai dan berakhir dalam gambar."
+    },
+    {
+      "stage": "pre",
+      "question": "Dalam decoding CTC, apa fungsi token blank?",
+      "options": ["Menandakan akhir urutan", "Melapisi urutan ke panjang tetap", "Menutupi wilayah berisik", "Memisahkan karakter identik yang berdampingan sehingga output seperti 'hello' dengan dua L dapat dihasilkan model dengan mengeluarkan 'h e l _ l o' — tanpa blank, 'l l' akan kolaps menjadi satu 'l'"],
+      "correct": 3,
+      "explanation": "Blank adalah mekanisme yang memungkinkan CTC menyandikan karakter ganda. 'll' memerlukan blank di antara dua l agar langkah 'gabungkan pengulangan' membuat keduanya tetap berbeda: 'l _ l' bertahan setelah penggabungan, 'l l' tidak. Tanpa blank, CTC tidak dapat merepresentasikan kata apa pun yang mengandung karakter identik berdekatan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa decoding CTC greedy kadang lebih baik daripada beam search pada dataset sederhana?",
+      "options": ["Greedy lebih mudah diimplementasikan", "Beam search memerlukan model bahasa", "Greedy selalu lebih baik", "Ketika model yakin di setiap langkah (tulisan tangan bersih, font tercetak), argmax greedy biasanya merupakan pemenang beam; beam search menambah latensi tanpa perolehan akurasi. Pada input berisik atau ambigu, beam search membantu"],
+      "correct": 3,
+      "explanation": "Beam search hanya menang ketika argmax per langkah tidak dapat diandalkan — karakter ambigu, huruf bertumpuk, pindaian terdegradasi. Untuk teks cetak bersih, model yakin di setiap langkah dan greedy berada dalam 1% CER dari beam. Selalu benchmark keduanya; trade-off latensinya nyata."
+    },
+    {
+      "stage": "post",
+      "question": "Donut melewati deteksi teks dan pengenalan karakter eksplisit. Bagaimana?",
+      "options": ["Ia adalah encoder ViT + decoder teks yang dilatih menghasilkan string output akhir (sering JSON) langsung dari gambar; model mempelajari lokalisasi dan pengenalan secara implisit melalui objektif training", "Ia memproses gambar terlebih dahulu dengan detektor teks CNN", "Ia terbatas pada kategori dokumen dengan tata letak tetap", "Ia memakai mesin OCR eksternal di dalamnya"],
+      "correct": 0,
+      "explanation": "Donut adalah model end-to-end: encoder ViT melihat seluruh dokumen, decoder transformer mengeluarkan teks atau JSON target secara autoregresif. Tidak ada pipeline detektor + pengenal + modul tata letak. Ini melewati akumulasi error antar tahap tetapi memerlukan training set berlabel besar untuk jenis dokumen spesifik yang kamu pedulikan."
+    },
+    {
+      "stage": "post",
+      "question": "Untuk mengekstrak `invoice_total` dari struk, pendekatan mana yang biasanya terbaik pada 2026?",
+      "options": ["Hanya OCR klasik yang cukup andal", "CNN terpisah untuk setiap field", "Donut yang di-fine-tune atau VLM pada set kecil struk target berlabel; keduanya menangani tata letak dan ekstraksi semantik dalam satu model dan menggeneralisasi lebih baik antar varian struk daripada pendekatan berbasis pipeline", "Regex buatan tangan pada output Tesseract"],
+      "correct": 2,
+      "explanation": "Ekstraksi field terstruktur dulunya domain LayoutLM + heuristik. Model end-to-end (Donut, Qwen-VL-OCR) telah melampaui jalur itu: mereka menerima gambar dan menghasilkan JSON langsung. Untuk set kecil struk berlabel (100-1000), fine-tuning Donut mencapai F1 lebih tinggi daripada pipeline OCR + aturan mana pun."
+    }
+  ]
+}

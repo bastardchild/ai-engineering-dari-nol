@@ -1,0 +1,48 @@
+{
+  "lesson": "47-outcomes-before-output",
+  "title": "Outcome Sebelum Output",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Pernyataan mana yang merupakan outcome, bukan output?",
+      "options": ["Bangun asisten insiden", "Tambahkan dashboard", "Deploy basis data vector", "Identifikasi layanan yang gagal dalam dua menit sambil tetap read-only"],
+      "correct": 3,
+      "explanation": "Pernyataan itu menyebut perubahan dan batasan yang dapat diamati tanpa mematok artefaknya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa implementasi yang lebih cepat menaikkan risiko shaping?",
+      "options": ["Tim bisa berkomitmen pada masalah yang salah sebelum pembelajaran menyusul", "Kode menjadi lebih lambat", "Model berhenti merencanakan", "Test menjadi mustahil"],
+      "correct": 0,
+      "explanation": "Kecepatan memperbesar biaya arah yang belum dibuktikan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang termasuk dalam outcome frame?",
+      "options": ["Pengguna, situasi, perilaku saat ini, outcome yang diinginkan, batasan, dan non-goal", "Hanya arsitektur", "Hanya fitur", "Versi model dan framework"],
+      "correct": 0,
+      "explanation": "Keenam permukaan itu menghubungkan build dengan situasi dan batas nyata."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan outcome frame boleh menyebut teknologi?",
+      "options": ["Hanya di judul", "Saat batasan kompatibilitas terverifikasi benar-benar mematoknya", "Di setiap goal", "Kapan pun teknologinya populer"],
+      "correct": 1,
+      "explanation": "Teknologi hanya masuk saat bukti menjadikannya batasan nyata."
+    },
+    {
+      "stage": "post",
+      "question": "Apa peran non-goal?",
+      "options": ["Mendaftar impian masa depan", "Menolak pekerjaan sampingan yang menggoda pada slice ini", "Mengukur keberhasilan", "Menggantikan batasan"],
+      "correct": 1,
+      "explanation": "Non-goal yang konkret menjaga build tetap terikat pada outcome saat ini."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan outcome yang dibatasi dianggap gagal?",
+      "options": ["Hanya saat tidak ada kode yang dikirim", "Saat implementasi berubah", "Saat hasil yang diinginkan dicapai dengan melanggar batasan yang dipatok", "Saat non-goal didokumentasikan"],
+      "correct": 2,
+      "explanation": "Batasan adalah bagian dari outcome, bukan panduan implementasi opsional."
+    }
+  ]
+}

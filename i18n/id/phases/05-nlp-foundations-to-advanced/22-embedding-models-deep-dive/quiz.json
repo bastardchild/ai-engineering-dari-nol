@@ -1,0 +1,102 @@
+{
+  "lesson": "22-embedding-models-deep-dive",
+  "title": "Embedding Models — Pendalaman 2026",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu dense embedding?",
+      "options": [
+        "Satu vektor berukuran tetap per teks di mana cosine similarity memeringkat passage berdasarkan kedekatan semantik",
+        "Matriks penyelarasan tingkat token",
+        "Bobot sparse per token kosakata",
+        "Graf atas dokumen"
+      ],
+      "correct": 0,
+      "explanation": "Embedding dense memberikan satu vektor per teks (biasanya 384-3072 dim); cosine memeringkat kemiripan."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dimungkinkan Matryoshka Representation Learning?",
+      "options": [
+        "Softmax lebih cepat",
+        "Training multibahasa",
+        "Rescoring cross-encoder",
+        "Memotong embedding terlatih ke N dimensi pertamanya dan mendapatkan embedding lebih kecil yang masih berguna"
+      ],
+      "correct": 3,
+      "explanation": "Training Matryoshka membuat N dim pertama vektor berguna secara mandiri, memungkinkan pemotongan murah."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana embedding multi-vektor (ColBERT) menilai pasangan kueri-dokumen?",
+      "options": [
+        "Cosine dari vektor token hasil mean-pooling",
+        "Cross-entropy",
+        "MaxSim: untuk setiap token kueri temukan token dokumen paling mirip, lalu jumlahkan maksimumnya",
+        "Earth-mover's distance"
+      ],
+      "correct": 2,
+      "explanation": "Interaksi akhir bergaya ColBERT memakai MaxSim atas vektor per token."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikeluarkan BGE-M3 secara bersamaan?",
+      "options": [
+        "Hanya vektor sparse",
+        "Hanya vektor dense",
+        "Representasi dense, sparse, dan multi-vektor (colbert) dari satu model dalam satu inferensi",
+        "Hanya vektor colbert"
+      ],
+      "correct": 2,
+      "explanation": "BGE-M3 mengeluarkan tiga mode retrieval dari satu model, berguna untuk penilaian hybrid terfusi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa kamu harus menormalisasi ulang vektor hasil pemotongan Matryoshka sebelum cosine similarity?",
+      "options": [
+        "Pemotongan mengubah norm vektor; tanpa normalisasi ulang, dot product tidak lagi sama dengan cosine",
+        "Cosine mengabaikan normalisasi",
+        "Pemotongan merusak training",
+        "Hanya diwajibkan FAISS"
+      ],
+      "correct": 0,
+      "explanation": "Normalisasi ulang setelah pemotongan memulihkan norm satuan sehingga dot product sama dengan cosine lagi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa model BGE sering memerlukan string prefiks di sisi kueri?",
+      "options": [
+        "Untuk mengompresi kueri",
+        "Prefiks mengubah perilaku tokenizer",
+        "Diwajibkan oleh FAISS",
+        "BGE dilatih dengan prompt kueri eksplisit; melewatinya memakan 3-5 poin recall"
+      ],
+      "correct": 3,
+      "explanation": "Model BGE mengharapkan prefiks 'Represent this sentence for searching...' pada kueri."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa MTEB perlu tetapi tidak cukup untuk memilih model embedding?",
+      "options": [
+        "MTEB hanya mencakup bahasa Inggris",
+        "MTEB memberi penghargaan pada model lebih besar",
+        "MTEB mengabaikan latensi",
+        "Peringkat papan skor adalah rata-rata lintas banyak tugas; domain spesifikmu mungkin berbeda, jadi selalu benchmark pada datamu"
+      ],
+      "correct": 3,
+      "explanation": "MTEB merata-ratakan lintas tugas; evaluasi spesifik domain dapat membalik peringkat."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus menambahkan retrieval sparse SPLADE bersama embedding dense?",
+      "options": [
+        "Hanya pada korpus kecil",
+        "Setiap kali encoder multibahasa",
+        "Ketika kueri padat kata kunci atau mengandung identifier/kode yang dikaburkan embedding dense",
+        "Setiap kali Matryoshka dipakai"
+      ],
+      "correct": 2,
+      "explanation": "SPLADE menangkap kecocokan leksikal/kata kunci yang dapat dilewatkan model dense; fusikan dengan dense melalui RRF."
+    }
+  ]
+}

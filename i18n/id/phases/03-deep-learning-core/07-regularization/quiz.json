@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa itu overfitting pada neural network?",
+      "options": ["Model terlalu kecil untuk mempelajari data", "Model berlatih terlalu lambat", "Model menghafal data training alih-alih mempelajari pola yang bisa digeneralisasi, sehingga jarak akurasi train dan test besar", "Fungsi loss-nya salah"],
+      "correct": 2,
+      "explanation": "Overfitting terjadi saat model meraih akurasi training tinggi tetapi akurasi test buruk. Ia menghafal noise data training alih-alih mempelajari pola yang mendasarinya.",
+      "stage": "pre"
+    },
+    {
+      "question": "Bagaimana dropout meregularisasi neural network?",
+      "options": ["Ia menghapus neuron berperforma terburuk secara permanen", "Ia menurunkan learning rate", "Ia secara acak membuat output neuron menjadi nol saat training, memaksa jaringan mempelajari representasi yang redundan", "Ia menghapus outlier dari data training"],
+      "correct": 2,
+      "explanation": "Pada tiap forward pass, dropout secara acak menyetel output neuron ke nol dengan probabilitas p. Ini mencegah co-adaptation (neuron bergantung pada neuron tertentu) dan setara dengan melatih ensemble berisi 2^N subjaringan.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa transformer memakai LayerNorm, bukan BatchNorm?",
+      "options": ["BatchNorm menyebabkan gradient meledak", "LayerNorm ditemukan lebih baru", "LayerNorm lebih cepat dihitung", "LayerNorm menormalkan lintas fitur per sampel (tidak bergantung batch), sehingga cocok untuk panjang sekuens bervariasi dan batch kecil"],
+      "correct": 3,
+      "explanation": "BatchNorm bergantung pada statistik batch, yang berisik pada batch kecil dan tak bermakna saat batch size 1 (umum saat generasi). LayerNorm menormalkan lintas fitur dalam tiap sampel, terlepas dari ukuran batch.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa perbedaan kunci RMSNorm dan LayerNorm?",
+      "options": ["RMSNorm memakai statistik batch", "RMSNorm hanya bekerja pada CNN", "RMSNorm melewati pengurangan mean dan hanya membagi dengan root mean square, memberi percepatan ~10% dengan akurasi setara", "RMSNorm menambah parameter yang bisa dipelajari"],
+      "correct": 2,
+      "explanation": "RMSNorm menghapus langkah pengurangan mean dari LayerNorm, yang kontribusinya kecil bagi akurasi tetapi menambah komputasi. LLaMA, Mistral, dan sebagian besar LLM modern memakai RMSNorm demi efisiensi ini.",
+      "stage": "post"
+    },
+    {
+      "question": "Mengapa sangat penting memanggil model.eval() sebelum menjalankan inferensi di PyTorch?",
+      "options": ["Ia mempercepat komputasi", "Ia mengaktifkan komputasi gradient", "Ia menonaktifkan dropout dan mengalihkan BatchNorm ke statistik running alih-alih statistik batch, memberi output deterministik", "Ia membebaskan memori GPU"],
+      "correct": 2,
+      "explanation": "Tanpa model.eval(), dropout secara acak membuat neuron nol saat inferensi (menyebabkan output berubah-ubah) dan BatchNorm memakai statistik batch saat ini alih-alih rata-rata running yang stabil dari training.",
+      "stage": "post"
+    }
+  ]
+}

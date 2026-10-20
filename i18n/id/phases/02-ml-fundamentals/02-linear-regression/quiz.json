@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "linreg-pre-1",
+      "stage": "pre",
+      "question": "Apa yang dikendalikan learning rate dalam gradient descent?",
+      "options": [
+        "Jumlah fitur yang dipakai model",
+        "Besar setiap langkah pembaruan parameter",
+        "Rasio data training terhadap data test",
+        "Berapa epoch model dilatih"
+      ],
+      "correct": 1,
+      "explanation": "Learning rate adalah skalar yang mengatur seberapa besar bobot berubah per langkah gradient descent. Terlalu besar menyebabkan divergensi, terlalu kecil membuat konvergensi lambat."
+    },
+    {
+      "id": "linreg-pre-2",
+      "stage": "pre",
+      "question": "Apa arti R-squared = 0 bagi sebuah model regresi?",
+      "options": [
+        "Model memiliki error bernilai negatif",
+        "Model belum dilatih sama sekali",
+        "Model tidak lebih baik daripada selalu memprediksi rata-rata target",
+        "Model membuat prediksi yang sempurna"
+      ],
+      "correct": 2,
+      "explanation": "R-squared = 0 berarti model tidak menjelaskan varians target sama sekali. Performanya persis sama dengan selalu memprediksi nilai rata-rata."
+    },
+    {
+      "id": "linreg-post-1",
+      "stage": "post",
+      "question": "Mengapa feature scaling penting untuk gradient descent pada multiple linear regression?",
+      "options": [
+        "Ini menjamin model akan menemukan global minimum",
+        "Ini mengurangi jumlah fitur yang dibutuhkan",
+        "Ini mencegah permukaan cost memanjang sehingga konvergensi lebih cepat",
+        "Ini membuat model lebih mudah diinterpretasikan"
+      ],
+      "correct": 2,
+      "explanation": "Saat fitur punya skala yang sangat berbeda, permukaan cost menjadi memanjang. Gradient descent butuh jauh lebih banyak langkah untuk konvergen. Menstandarkan fitur membuat permukaan lebih bulat."
+    },
+    {
+      "id": "linreg-post-2",
+      "stage": "post",
+      "question": "Normal equation memberi bobot optimal secara langsung. Mengapa kamu lebih memilih gradient descent?",
+      "options": [
+        "Gradient descent butuh memori lebih sedikit daripada menyimpan data",
+        "Gradient descent selalu memberi hasil yang lebih akurat",
+        "Normal equation tidak bekerja untuk linear regression",
+        "Invers matriks pada normal equation adalah O(n^3) terhadap fitur, terlalu lambat untuk ribuan fitur"
+      ],
+      "correct": 3,
+      "explanation": "Normal equation butuh menginvers X^T * X, yang berkompleksitas O(n^3) terhadap jumlah fitur. Untuk jumlah fitur besar, gradient descent lebih efisien."
+    },
+    {
+      "id": "linreg-post-3",
+      "stage": "post",
+      "question": "Model polynomial regression derajat 10 sangat pas di data training (R^2 = 1.0) tetapi R^2 = 0.3 di data test. Apa yang sebaiknya kamu lakukan?",
+      "options": [
+        "Naikkan derajat polinomial ke 20 agar fit training makin sempurna",
+        "Kumpulkan lebih sedikit data training agar model tidak bisa menghafal",
+        "Kurangi kompleksitas model (derajat lebih rendah) atau tambahkan regularisasi (Ridge) untuk mencegah overfitting",
+        "Hapus set test dan laporkan R^2 training saja"
+      ],
+      "correct": 2,
+      "explanation": "Fit training yang sempurna dengan fit test yang buruk adalah overfitting. Solusinya mengurangi kompleksitas (derajat polinomial lebih rendah) atau menambah regularisasi untuk menghukum bobot besar."
+    }
+  ]
+}

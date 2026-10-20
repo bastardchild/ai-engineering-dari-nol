@@ -1,0 +1,78 @@
+{
+  "lesson": "32-token-positional-embeddings",
+  "title": "Embedding Token dan Posisional",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bentuk apa yang dihasilkan tahap embedding dari id (B, T)?",
+      "options": [
+        "(B, T, D) di mana D adalah dimensi model",
+        "(B, V)",
+        "(B, T, V) di mana V adalah ukuran kosakata",
+        "(B, T)"
+      ],
+      "correct": 0,
+      "explanation": "Setiap id dipetakan ke vektor berdimensi D. Batch mempertahankan B dan T serta memperoleh dimensi fitur baru D."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana embedding token dan posisional dikomposisikan dalam lesson ini?",
+      "options": [
+        "Dengan proyeksi linear tambahan",
+        "Dengan mengambil maksimum elementwise",
+        "Dengan jumlah elementwise, menyiarkan vektor posisi lintas batch",
+        "Dengan konkatenasi sepanjang sumbu fitur"
+      ],
+      "correct": 2,
+      "explanation": "Dua tensor berbentuk (B, T, D) dan (T, D) dijumlahkan. Broadcasting mereplikasi tabel posisional lintas sumbu batch."
+    },
+    {
+      "stage": "check",
+      "question": "Berapa parameter yang dapat dipelajari yang disumbangkan SinusoidalPositionalEmbedding?",
+      "options": [
+        "max_context_length * d_model",
+        "Nol",
+        "max_context_length",
+        "d_model"
+      ],
+      "correct": 1,
+      "explanation": "Tabel sinusoidal dihitung dari formula dan disimpan sebagai buffer. Ia tidak menyumbang parameter."
+    },
+    {
+      "stage": "check",
+      "question": "Encoding posisional mana yang tidak bisa menerima urutan lebih panjang dari batas konstruksinya?",
+      "options": [
+        "Embedding posisional sinusoidal",
+        "Tidak keduanya",
+        "Keduanya",
+        "Embedding posisional yang dipelajari"
+      ],
+      "correct": 2,
+      "explanation": "Dalam implementasi lesson ini, kedua kelas menegakkan max_context_length saat forward. Learned secara inheren dibatasi tabel; sinusoidal di sini juga dibatasi karena memakai tabel yang dibangun sebelumnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa skema sinusoidal memakai sin dan cos pada pasangan fitur bertetangga?",
+      "options": [
+        "Agar vektor di posisi p+k menjadi fungsi linear dari vektor di posisi p",
+        "Karena cos saja tidak bisa di-backpropagate",
+        "Karena sin saja tidak periodik",
+        "Karena itu menggandakan jumlah parameter"
+      ],
+      "correct": 0,
+      "explanation": "Memasangkan sin dan cos pada panjang gelombang sama berarti pergeseran posisi sebesar k adalah rotasi, yaitu peta linear. Attention lalu dapat mempelajari offset relatif lewat proyeksi linear."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa backward pass embedding hanya memperbarui baris tabel token yang muncul di batch?",
+      "options": [
+        "Baris yang tidak tersentuh di forward pass menghasilkan gradien nol menurut aturan rantai",
+        "Optimizer melewati baris yang belum pernah dilihatnya",
+        "PyTorch hanya menyimpan gradien untuk entri non-nol",
+        "Token id disimpan dalam struktur data sparse"
+      ],
+      "correct": 0,
+      "explanation": "Baris yang tidak berkontribusi pada output apa pun memiliki turunan nol untuk loss, jadi gradiennya nol untuk langkah itu."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa perbedaan desain mendasar antara PyTorch dan JAX?",
+      "options": ["PyTorch lebih cepat", "PyTorch memutasi tensor secara eager sedangkan JAX mengompilasi fungsi murni tanpa efek samping", "PyTorch tidak mendukung diferensiasi otomatis", "JAX tidak mendukung GPU"],
+      "correct": 1,
+      "explanation": "PyTorch memakai eksekusi eager dengan state yang bisa dimutasi (misalnya tensor.grad diubah di tempat). JAX menganut pemrograman fungsional: fungsi murni, state eksplisit, dan kompilasi jit mengoptimalkan seluruh computational graph.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa yang dilakukan jax.jit?",
+      "options": ["Ia menambahkan regularisasi dropout", "Ia mengompilasi fungsi Python menjadi kode XLA teroptimasi yang berjalan jauh lebih cepat daripada Python terinterpretasi", "Ia menghitung gradient", "Ia menginisialisasi bobot model"],
+      "correct": 1,
+      "explanation": "jax.jit melacak fungsi dan mengompilasinya menjadi kode mesin XLA (Accelerated Linear Algebra). Panggilan pertama lambat (kompilasi), tetapi panggilan berikutnya menjalankan versi terkompilasi yang teroptimasi.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa yang dilakukan jax.vmap?",
+      "options": ["Menghitung gradient orde dua", "Mengelola memori GPU", "Memvalidasi arsitektur model", "Memvektorisasi fungsi agar berjalan pada dimensi batch tanpa menulis loop eksplisit"],
+      "correct": 3,
+      "explanation": "jax.vmap otomatis memvektorisasi fungsi yang ditulis untuk satu contoh agar memproses seluruh batch. Kamu menulis kode untuk satu sampel dan vmap menangani batching, sering lebih efisien daripada loop batch manual.",
+      "stage": "post"
+    },
+    {
+      "question": "Bagaimana JAX menangani state model (bobot) berbeda dari PyTorch?",
+      "options": ["JAX mewajibkan state dilewatkan eksplisit -- bobot adalah argumen fungsi, bukan atribut objek yang bisa dimutasi", "JAX dan PyTorch menangani state dengan cara identik", "JAX tidak mendukung bobot yang bisa dilatih", "JAX hanya menyimpan bobot di CPU"],
+      "correct": 0,
+      "explanation": "Di PyTorch, bobot tinggal di dalam objek nn.Module dan dimutasi di tempat. Di JAX, bobot dilewatkan eksplisit sebagai argumen fungsi dan dikembalikan sebagai nilai baru. Tanpa mutasi, tanpa state tersembunyi.",
+      "stage": "post"
+    },
+    {
+      "question": "Kapan kamu memilih JAX alih-alih PyTorch?",
+      "options": ["Saat kamu butuh ekosistem model pretrained terbesar", "Untuk deployment di perangkat mobile", "Untuk prototipe cepat model kecil", "Saat melatih dalam skala masif di TPU pod, tempat kompilasi dan transformasi fungsional memberi percepatan besar"],
+      "correct": 3,
+      "explanation": "JAX unggul dalam skala: kompilasi jit menghilangkan overhead Python, pmap menangani paralelisme multi-perangkat secara alami, dan optimasi XLA pada seluruh computational graph memberi percepatan besar di klaster TPU.",
+      "stage": "post"
+    }
+  ]
+}

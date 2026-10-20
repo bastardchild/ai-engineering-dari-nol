@@ -1,0 +1,102 @@
+{
+  "lesson": "14-information-retrieval-search",
+  "title": "Information Retrieval dan Search",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Atas dasar apa BM25 memberi skor dokumen?",
+      "options": [
+        "Frekuensi term, IDF, dan keberadaan istilah kueri yang dinormalisasi panjang dokumen",
+        "Edit distance ke kueri",
+        "Cosine embedding ke kueri",
+        "PageRank atas korpus"
+      ],
+      "correct": 0,
+      "explanation": "BM25 membobot saturasi TF, IDF, dan normalisasi panjang untuk menilai kecocokan leksikal."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kelemahan utama retrieval dense-only yang ditangkap BM25?",
+      "options": [
+        "Kueri multibahasa",
+        "Latensi",
+        "Kecocokan kata kunci dan identifier persis (kode produk, string error, entitas bernama) yang dapat dilewatkan embedding semantik",
+        "Dokumen panjang"
+      ],
+      "correct": 2,
+      "explanation": "Embedding dense dapat mengaburkan identifier dan string persis; BM25 menangkapnya dengan tepat."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa Reciprocal Rank Fusion (RRF) mengabaikan skor mentah dari setiap retriever?",
+      "options": [
+        "Skor BM25 dan dense berada pada skala berbeda; memakai hanya posisi peringkat membuat fusi robust terhadap kalibrasi",
+        "Mempercepat pengurutan",
+        "RRF memerlukan probabilitas",
+        "Skor mentah ilegal dipakai"
+      ],
+      "correct": 0,
+      "explanation": "RRF memakai 1/(k + rank), sehingga skala kedua sistem penilaian tidak harus cocok."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menjalankan cross-encoder reranker hanya pada 30 hasil fusi teratas?",
+      "options": [
+        "Cross-encoder lambat per pasangan; mengamortisasinya pada kumpulan kandidat kecil memberikan akurasi tinggi dengan latensi yang dapat diterima",
+        "Reranker mengurangi recall",
+        "Cross-encoder diwajibkan di setiap langkah",
+        "Top-30 diwajibkan oleh FAISS"
+      ],
+      "correct": 0,
+      "explanation": "Cross-encoder menilai kueri+dokumen secara bersama; menjalankannya hanya pada kumpulan kandidat fusi kecil menjaga latensi tetap terkendali."
+    },
+    {
+      "stage": "check",
+      "question": "Metrik mana yang paling penting untuk dioptimalkan bagi retriever RAG?",
+      "options": [
+        "Throughput",
+        "Recall@k, karena reader tidak dapat menjawab jika passage yang benar hilang dari top-k",
+        "BLEU",
+        "Latensi"
+      ],
+      "correct": 1,
+      "explanation": "Jika passage yang tepat tidak ada di top-k yang diambil, reader dijamin gagal."
+    },
+    {
+      "stage": "post",
+      "question": "Dari mana sebagian besar kegagalan RAG produksi berasal, menurut pengalaman industri 2026?",
+      "options": [
+        "Ingestion dan chunking, bukan model; konteks buruk mengalahkan reader yang baik",
+        "Kebanyakan prompt",
+        "Penyetelan reranker",
+        "Pilihan LLM"
+      ],
+      "correct": 0,
+      "explanation": "Sekitar 80% kegagalan RAG berasal dari kualitas chunking dan ingestion, bukan model generatif."
+    },
+    {
+      "stage": "post",
+      "question": "Apa pola retrieval 'parent-doc'?",
+      "options": [
+        "Memilih dokumen terpanjang",
+        "Hanya memakai embedding dokumen induk",
+        "Mengambil potongan anak kecil untuk presisi, lalu memperluas ke blok induk ketika beberapa anak dari induk yang sama muncul, mempertahankan konteks",
+        "Hanya menempelkan dokumen induk"
+      ],
+      "correct": 2,
+      "explanation": "Retrieval tingkat anak bersifat presisi; memperluas ke induk mempertahankan konteks sekitarnya yang dibutuhkan reader."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus merilis retrieval tiga arah (BM25 + dense + SPLADE)?",
+      "options": [
+        "Selalu",
+        "Ketika infrastruktur mendukung indeks learned-sparse dan kueri mencampur nama diri dengan maksud semantik",
+        "Hanya pada di bawah 1000 dokumen",
+        "Hanya untuk korpus berbahasa Inggris"
+      ],
+      "correct": 1,
+      "explanation": "Retrieval tiga arah mengungguli dua arah pada benchmark 2026 untuk kueri leksikal-semantik campuran, dengan infrastruktur SPLADE."
+    }
+  ]
+}

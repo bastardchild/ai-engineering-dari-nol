@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "pipeline-pre-1",
+      "stage": "pre",
+      "question": "Apa itu data leakage dalam konteks pipeline ML?",
+      "options": [
+        "Fitur yang terbuang saat encoding",
+        "Model yang terlalu lambat memproses data",
+        "Informasi dari set test atau data masa depan yang mencemari proses training",
+        "Data yang tidak sengaja terhapus saat praproses"
+      ],
+      "correct": 2,
+      "explanation": "Data leakage terjadi saat informasi yang seharusnya tidak tersedia pada waktu prediksi dipakai selama training. Contoh: menghitung mean/std scaler pada seluruh dataset termasuk data test."
+    },
+    {
+      "id": "pipeline-pre-2",
+      "stage": "pre",
+      "question": "Mengapa men-fit scaler pada seluruh dataset sebelum split train/test dianggap bocor?",
+      "options": [
+        "Statistik scaler (mean, std) memasukkan data test, jadi model secara tidak langsung melihat informasi test saat training",
+        "Scaling mengubah distribusi data",
+        "Scaling seharusnya hanya dilakukan pada set test",
+        "Men-fit scaler terlalu lama pada dataset besar"
+      ],
+      "correct": 0,
+      "explanation": "Saat scaler di-fit pada semua data, mean dan standar deviasinya meng-encode informasi dari sampel test. Fitur training lalu digeser memakai statistik test sehingga informasi masa depan bocor ke training."
+    },
+    {
+      "id": "pipeline-post-1",
+      "stage": "post",
+      "question": "Di sklearn, apa beda memanggil fit_transform dan transform pada sebuah langkah pipeline?",
+      "options": [
+        "Keduanya identik -- sama-sama fit dan transform",
+        "fit_transform mempelajari parameter dari data lalu menerapkan transform; transform hanya menerapkan parameter yang sudah dipelajari",
+        "transform untuk data training; fit_transform untuk data test",
+        "fit_transform lebih lambat tetapi lebih akurat"
+      ],
+      "correct": 1,
+      "explanation": "fit_transform menghitung statistik (misalnya mean, std) dari data DAN mentransformasikannya. transform menerapkan statistik yang sudah dipelajari tanpa menghitung ulang. Pada data test, kamu wajib memakai transform agar tidak bocor."
+    },
+    {
+      "id": "pipeline-post-2",
+      "stage": "post",
+      "question": "Mengapa ColumnTransformer diperlukan untuk dataset dunia nyata?",
+      "options": [
+        "Ini membuat pipeline berjalan paralel di beberapa CPU",
+        "Ini mengubah semua kolom ke tipe data yang sama",
+        "Ini menerapkan langkah praproses berbeda untuk kolom numerik dan kategorikal dalam pipeline yang sama",
+        "Ini menghapus kolom dengan nilai hilang secara otomatis"
+      ],
+      "correct": 2,
+      "explanation": "Dataset nyata punya tipe campuran. Kolom numerik butuh scaling, kolom kategorikal butuh encoding. ColumnTransformer mengarahkan tiap subset kolom ke transformer yang tepat dalam satu pipeline."
+    },
+    {
+      "id": "pipeline-post-3",
+      "stage": "post",
+      "question": "Model produksi menerima nilai kategorikal yang belum pernah dilihat saat training ('new_category'). Apa yang harus ditangani pipeline?",
+      "options": [
+        "Mengubah kategori tak dikenal menjadi angka nol",
+        "Menangani kategori tak dikenal dengan baik, misalnya lewat keranjang 'unknown' atau rata-rata global pada target encoding",
+        "Mengabaikan baris itu sepenuhnya dan tidak memberi prediksi",
+        "Melatih ulang seluruh model dari awal"
+      ],
+      "correct": 1,
+      "explanation": "Pipeline yang tangguh mengantisipasi kategori tak terlihat di produksi. Solusinya antara lain fallback 'unknown' untuk one-hot encoding, atau nilai default rata-rata global untuk target encoding."
+    }
+  ]
+}

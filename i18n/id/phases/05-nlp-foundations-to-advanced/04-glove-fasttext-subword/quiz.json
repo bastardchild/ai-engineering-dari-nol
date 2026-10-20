@@ -1,0 +1,102 @@
+{
+  "lesson": "04-glove-fasttext-subword",
+  "title": "GloVe, FastText, dan Embedding Subword",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa kontribusi GloVe dibanding Word2Vec?",
+      "options": [
+        "Jaringan neural lebih dalam",
+        "Embedding subword n-gram",
+        "Faktorisasi langsung matriks ko-okurensi kata-kata dengan loss berbobot",
+        "Tokenization tingkat byte"
+      ],
+      "correct": 2,
+      "explanation": "GloVe memfaktorisasi matriks ko-okurensi global dengan log-loss yang diberi bobot secara cermat."
+    },
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang diselesaikan FastText tetapi tidak oleh Word2Vec dan GloVe?",
+      "options": [
+        "Mengurangi biaya training",
+        "Transfer multibahasa",
+        "Disambiguasi polisemi",
+        "Menghasilkan vektor untuk kata yang belum pernah dilihat dengan mengomposisi n-gram karakter"
+      ],
+      "correct": 3,
+      "explanation": "FastText mengomposisi vektor kata dari n-gram subword-nya, sehingga kata OOV tetap mendapat vektor yang masuk akal."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam GloVe, apa peran fungsi pembobot f(x) = (x/x_max)^alpha?",
+      "options": [
+        "Memilih sampel negatif",
+        "Menormalisasi vektor ke panjang satuan",
+        "Menginisialisasi bobot secara acak",
+        "Menurunkan bobot pasangan yang sangat sering agar tidak mendominasi loss"
+      ],
+      "correct": 3,
+      "explanation": "Pembobotan mencegah ko-okurensi yang ada di mana-mana seperti (the, and) mendominasi training."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana langkah merge BPE memilih pasangan mana yang digabungkan berikutnya?",
+      "options": [
+        "Pasangan acak",
+        "Pasangan pertama secara leksikografis",
+        "Pasangan token berdekatan paling sering di seluruh korpus",
+        "Pasangan dengan IDF tertinggi"
+      ],
+      "correct": 2,
+      "explanation": "BPE secara iteratif menggabungkan pasangan berdekatan yang paling sering."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa GPT-2 memakai BPE tingkat byte?",
+      "options": [
+        "Kosakata dasar 256 byte mencakup input apa pun, menghilangkan out-of-vocabulary sepenuhnya",
+        "Byte berlatih lebih cepat daripada karakter",
+        "Byte mempertahankan kapitalisasi secara implisit",
+        "Byte BPE melewati training merge"
+      ],
+      "correct": 0,
+      "explanation": "Memulai dari 256 byte berarti setiap string UTF-8 dapat ditokenisasi; tidak ada yang OOV."
+    },
+    {
+      "stage": "post",
+      "question": "Tokenizer mana yang harus kamu pakai saat melakukan fine-tuning transformer pretrained?",
+      "options": [
+        "Selalu BPE tingkat byte",
+        "Selalu SentencePiece",
+        "Yang kosakatanya paling besar",
+        "Tokenizer persis yang dikirim bersama model; ketidakcocokan merusak embedding"
+      ],
+      "correct": 3,
+      "explanation": "Ketidakcocokan tokenizer-model diam-diam merusak input; selalu pasangkan tokenizer yang dikirim dengan modelnya."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu memilih FastText daripada GloVe untuk vektor kata pretrained?",
+      "options": [
+        "Ketika kamu membutuhkan model 50d",
+        "Ketika latensi paling ketat",
+        "Ketika korpus sangat kecil",
+        "Untuk bahasa dengan morfologi kaya atau domain dengan neologisme dan salah eja yang sering"
+      ],
+      "correct": 3,
+      "explanation": "Komposisi subword FastText menangani infleksi, neologisme, dan salah eja yang tidak dapat ditangani GloVe."
+    },
+    {
+      "stage": "post",
+      "question": "Unit apa yang membentuk dasar kosakata WordPiece, BPE, dan SentencePiece?",
+      "options": [
+        "Kalimat",
+        "Kata utuh",
+        "Paragraf",
+        "Potongan subword (karakter, n-gram, atau merge yang dipelajari) di bawah tingkat kata"
+      ],
+      "correct": 3,
+      "explanation": "Ketiganya adalah tokenizer subword; mereka berbeda dalam cara merge atau potongan dipelajari, bukan dalam sifat subword-nya."
+    }
+  ]
+}

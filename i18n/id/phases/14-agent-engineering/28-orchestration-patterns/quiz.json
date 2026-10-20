@@ -1,0 +1,90 @@
+{
+  "lesson": "28-orchestration-patterns",
+  "title": "Pola Orkestrasi: Supervisor, Swarm, Hierarchical",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Empat pola orkestrasi apa yang didaftar pelajaran?",
+      "options": [
+        "Push, pull, batch, stream",
+        "Supervisor-worker, swarm/peer-to-peer, hierarchical, debate",
+        "Sequential, parallel, distributed, federated",
+        "Plan, act, reflect, refine"
+      ],
+      "correct": 1,
+      "explanation": "Supervisor-worker, swarm, hierarchical, dan debate berulang di framework 2026."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa rekomendasi LangChain 2026 terkait supervisi?",
+      "options": [
+        "Selalu pakai create_supervisor",
+        "Hindari supervisi sepenuhnya",
+        "Utamakan panggilan tool langsung dibanding create_supervisor untuk kendali context-engineering yang lebih halus",
+        "Jalankan supervisor di GPU"
+      ],
+      "correct": 2,
+      "explanation": "Supervisi berbasis tool call memberimu kendali presisi atas apa yang dilihat setiap spesialis."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang membedakan swarm dari topologi supervisor-worker?",
+      "options": [
+        "Swarm hanya berjalan lewat cron",
+        "Swarm tidak punya router pusat; agent handoff langsung melalui permukaan tool bersama",
+        "Swarm memakai GPU",
+        "Swarm adalah single-agent"
+      ],
+      "correct": 1,
+      "explanation": "Swarm bersifat peer-to-peer; supervisor memusatkan routing melalui satu LLM."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan orkestrasi hierarchical terjustifikasi?",
+      "options": [
+        "Jangan pernah; itu antipattern",
+        "Hanya dengan GPU",
+        "Saat budget konteks satu supervisor tidak bisa menampung deskripsi semua spesialis",
+        "Selalu; ia diskalakan gratis"
+      ],
+      "correct": 2,
+      "explanation": "Supervisor bersarang untuk populasi spesialis besar yang melebihi budget satu supervisor."
+    },
+    {
+      "stage": "check",
+      "question": "Apa urutan keputusan yang didukung Anthropic?",
+      "options": [
+        "Mulai dengan satu agent plus pola workflow; tambahkan topologi hanya saat perlu; supervisor sebelum swarm sebelum hierarchical; debate saat akurasi mengalahkan biaya",
+        "Mulai dengan debate",
+        "Selalu mulai dengan multi-agent hierarchical",
+        "Mulai dengan swarm dan menyusut ke single"
+      ],
+      "correct": 0,
+      "explanation": "Panduan Anthropic adalah membangun sistem yang tepat untuk kebutuhanmu, bukan yang paling canggih."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu fake hierarchy dalam pelajaran ini?",
+      "options": [
+        "Tiga lapis supervisor karena 'enterprise' padahal hanya ada dua tim nyata; runtuhkan saja",
+        "Orchestrator yang ditulis di TypeScript",
+        "YAML yang salah label",
+        "Fixture test"
+      ],
+      "correct": 0,
+      "explanation": "Lapisan yang tidak berkorespondensi dengan tim nyata menambah kompleksitas operasional tanpa hasil."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu memitigasi handoff yang memantul di swarm (A -> B -> A -> B)?",
+      "options": [
+        "Pin temperature ke 0",
+        "Turunkan rate limit",
+        "Tambahkan penghitung hop dan tolak setelah N transfer",
+        "Nonaktifkan tracing"
+      ],
+      "correct": 2,
+      "explanation": "Penghitung hop membatasi siklus swarm sebelum berulang tanpa henti."
+    }
+  ]
+}

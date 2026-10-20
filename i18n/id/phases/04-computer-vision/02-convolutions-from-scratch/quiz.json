@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kamu memberikan gambar RGB 224x224 ke conv dengan kernel_size=3, stride=1, padding=0. Berapa ukuran spasial outputnya?",
+      "options": ["222x222", "224x224", "74x74", "112x112"],
+      "correct": 0,
+      "explanation": "Ukuran output = (H - K + 2P) / S + 1 = (224 - 3 + 0) / 1 + 1 = 222. Tanpa padding, setiap convolution 3x3 menyusutkan feature map sebesar 2 piksel pada tiap sumbu — satu piksel dari setiap tepi."
+    },
+    {
+      "stage": "pre",
+      "question": "Sebuah conv layer memiliki in_channels=3, out_channels=64, kernel_size=3, dengan bias. Berapa parameter yang dapat dipelajari?",
+      "options": ["576", "1.792", "1.728", "192"],
+      "correct": 1,
+      "explanation": "C_out * C_in * K * K + C_out = 64 * 3 * 3 * 3 + 64 = 1.728 + 64 = 1.792. +C_out adalah satu bias per output channel. Bandingkan dengan dense layer pada input yang sama (224*224*3 -> 64 = sekitar 9,6 juta parameter) dan kamu akan melihat mengapa convolution adalah prior yang tepat untuk gambar."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa CNN modern lebih memilih tumpukan convolution 3x3 daripada satu conv 5x5 atau 7x7?",
+      "options": ["3x3 adalah satu-satunya ukuran kernel yang mendukung padding", "Kernel besar meluap dari register GPU", "Convolution 3x3 dipercepat perangkat keras; yang lebih besar tidak", "Dua conv 3x3 mencakup receptive field 5x5 yang sama dengan parameter lebih sedikit (2 * 9 vs 25) dan menambahkan non-linearitas ekstra di antaranya"],
+      "correct": 3,
+      "explanation": "Menumpuk conv 3x3 memberikan receptive field yang sama dengan satu conv besar tetapi dengan parameter lebih sedikit dan lebih banyak non-linearitas, yang meningkatkan daya ekspresif. VGG membuktikannya secara empiris dan setiap keluarga modern (ResNet, ConvNeXt) mewarisi desain ini."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang sebenarnya dilakukan transformasi im2col?",
+      "options": ["Menggabungkan semua gambar dalam satu batch menjadi satu matriks 2D", "Mengekstrak setiap jendela receptive seukuran kernel dari input dan menumpuknya sebagai kolom sehingga convolution menjadi satu perkalian matriks", "Mengonversi piksel float32 ke int8 agar aritmetika lebih cepat", "Mengompresi gambar agar muat di cache GPU"],
+      "correct": 1,
+      "explanation": "im2col membentuk ulang input sehingga setiap kolom adalah satu receptive field yang diratakan. Meratakan kernel menjadi satu baris mereduksi convolution menjadi cols @ w_flat.T, satu panggilan GEMM yang dieksekusi GPU ribuan kali lebih cepat daripada loop Python empat lapis. Setiap library conv produksi adalah semacam varian dari ini."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu menumpuk empat convolution 3x3 (semuanya stride 1, tanpa pooling). Berapa receptive field sebuah neuron di layer terakhir?",
+      "options": ["3x3 — setiap conv berukuran 3x3", "5x5 — dua conv menghasilkan 5x5 dan kedalaman tidak membantu", "9x9 — setiap conv menambahkan 2 di tiap sisi: 1 + 4*(3-1) = 9", "15x15 — setiap conv melipattigakan receptive field"],
+      "correct": 2,
+      "explanation": "Untuk L conv K x K bertumpuk dengan stride 1, receptive field = 1 + L * (K - 1). Dengan L=4 dan K=3 hasilnya 1 + 4*2 = 9. Rumus yang sama menggeneralisasi dengan stride: receptive field tumbuh secara multiplikatif melalui layer berstride, itulah sebabnya jaringan dalam dengan downsampling dapat mencakup seluruh gambar dalam sepuluh atau lima belas blok."
+    }
+  ]
+}

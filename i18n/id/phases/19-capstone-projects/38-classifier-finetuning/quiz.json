@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/38-classifier-finetuning",
+  "title": "Fine-Tuning Classifier dengan Head Swap",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca: model bahasa pretrained punya body dengan 5M parameter dan output head yang memproyeksikan ke kosakata 30K. Kamu ingin classifier 2 kelas. Mana langkah pertama paling dapat dipertahankan?",
+      "options": [
+        "Freeze head dan latih hanya body.",
+        "Buang body dan latih transformer baru dari nol pada set berlabel 800 contoh.",
+        "Pertahankan head asli tetapi mask semua kecuali dua logit output.",
+        "Ganti hanya head dengan layer linear 2 kelas dan putuskan nanti apakah body dilatih."
+      ],
+      "correct": 3,
+      "explanation": "Body adalah bagian mahal dan mengodekan struktur berguna dari pretraining. Tukar head dulu. Apakah body di-freeze adalah keputusan terpisah yang dipandu ukuran data dan domain drift."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa lesson memakai mean pooling dengan pembobotan attention-mask alih-alih mean biasa di sumbu sequence?",
+      "options": [
+        "Mean biasa mengabaikan dimensi batch.",
+        "Mean pool membutuhkan masking menurut konvensi bahkan saat tidak ada pad.",
+        "Mean biasa tidak terdefinisi secara matematis untuk transformer.",
+        "Posisi padding menyumbang hidden state tak relevan yang akan menarik vektor terpool ke nol."
+      ],
+      "correct": 3,
+      "explanation": "Token padding tidak membawa sinyal tetapi body tetap menghasilkan hidden state untuknya. Tanpa masking, posisi padding merusak representasi terpool, terutama pada urutan pendek dalam batch yang dipad ke contoh terpanjang."
+    },
+    {
+      "stage": "check",
+      "question": "Di train_classifier, optimizer dibangun dengan [p for p in model.parameters() if p.requires_grad]. Idiom ini menegakkan apa?",
+      "options": [
+        "Itu diwajibkan konstruktor Adam.",
+        "Itu memberi tahu PyTorch agar autograd melewati parameter yang di-freeze.",
+        "Itu diam-diam mengabaikan head saat body di-freeze.",
+        "Itu membangun param group hanya dari subset yang dapat dilatih, sehingga kasus head-only dan full-FT berbagi jalur kode sama."
+      ],
+      "correct": 3,
+      "explanation": "Optimizer hanya memperbarui parameter di daftar param-nya. Dengan memfilter requires_grad, fungsi training yang sama bekerja untuk kedua rezim; toggle-nya adalah panggilan freeze, bukan loop."
+    },
+    {
+      "stage": "check",
+      "question": "Precision 0.9 dan recall 0.6 pada kelas spam. Berapa F1?",
+      "options": [
+        "0.30",
+        "0.50",
+        "0.75",
+        "0.72"
+      ],
+      "correct": 3,
+      "explanation": "F1 adalah rata-rata harmonik precision dan recall: 2 * 0.9 * 0.6 / (0.9 + 0.6) = 1.08 / 1.5 = 0.72."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melatih ulang model dengan full fine-tuning pada learning rate sama dengan training head-only. F1 jatuh ke 0.55 dari 0.90. Penyebab paling mungkin?",
+      "options": [
+        "PyTorch diam-diam menonaktifkan gradien selama full fine-tuning.",
+        "Parameter body membutuhkan learning rate lebih kecil daripada head.",
+        "Cross-entropy loss tidak terdefinisi untuk masalah dua kelas.",
+        "Adam tidak kompatibel dengan objektif klasifikasi."
+      ],
+      "correct": 1,
+      "explanation": "Body pretrained biasanya membutuhkan learning rate lebih kecil daripada head baru. Pola umum adalah dua parameter group: LR tinggi pada head, LR lebih kecil pada body. LR sama untuk keduanya merusak sinyal pretraining."
+    },
+    {
+      "stage": "post",
+      "question": "Tim kamu ingin men-deploy classifier dan bertanya bagaimana mencatat rezim mana yang menghasilkan checkpoint produksi. Artefak mana yang menjawab pertanyaan itu secara reproducible?",
+      "options": [
+        "Nilai loss akhir, karena loss head-only selalu lebih tinggi daripada full-FT.",
+        "Jumlah trainable di TrainReport, yang berbeda beberapa orde besaran antar rezim.",
+        "Confusion matrix, yang secara unik mengidentifikasi rezim.",
+        "Triple precision-recall-F1."
+      ],
+      "correct": 1,
+      "explanation": "trainable mencatat jumlah parameter yang menerima gradien selama training. Head-only berada di kisaran hidden * num_classes; full FT adalah seluruh model. Angka itu adalah jejak audit."
+    }
+  ]
+}

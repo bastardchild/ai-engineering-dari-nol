@@ -1,0 +1,66 @@
+{
+  "lesson": "phase-11/16-langgraph-state-machines",
+  "title": "State Machine Agent: Graph, Node, Checkpoint",
+  "questions": [
+    {
+      "stage": "post",
+      "question": "Mengapa field `messages` dalam TypedDict State LangGraph memerlukan `Annotated[list, add_messages]`?",
+      "options": [
+        "Ia mengompresi daftar pesan saat checkpoint ditulis ke disk.",
+        "Ia mengaktifkan streaming delta token dari model.",
+        "Ia mengonversi dict biasa menjadi objek pesan LangChain saat runtime.",
+        "Tanpa reducer, update node menimpa daftar alih-alih menambahkan, sehingga setiap giliran kehilangan riwayat sebelumnya."
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa perbedaan antara `interrupt_before=['tools']` dan `interrupt_after=['tools']`?",
+      "options": [
+        "`interrupt_before` berhenti setelah model mengeluarkan tool_calls tetapi sebelum tool dieksekusi; `interrupt_after` berhenti setelah tool sudah berjalan.",
+        "`interrupt_before` menjalankan tool di sandbox dulu; `interrupt_after` menjalankannya di produksi.",
+        "Tidak ada perbedaan; keduanya alias.",
+        "`interrupt_before` untuk unit test; `interrupt_after` untuk produksi."
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Diberikan riwayat checkpoint sebuah thread, bagaimana kamu melakukan time-travel ke state sebelumnya dan mengeksplorasi cabang berbeda?",
+      "options": [
+        "Atur `graph.rewind = True` lalu invoke ulang.",
+        "Panggil `graph.reset(thread_id)` lalu `graph.invoke(new_input, config)`.",
+        "Hapus direktori checkpoint dan invoke ulang dengan thread_id yang sama.",
+        "Invoke graph dengan `checkpoint_id` sebelumnya yang diinginkan di config; memberikan `None` sebagai input memutar ulang dari checkpoint itu, memberikan nilai baru menambahkannya sebelum melanjutkan."
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Dalam graph ReAct empat node (agent, tools, conditional edge, static edge kembali ke agent), di mana conditional edge berada?",
+      "options": [
+        "Dari `START`, merutekan ke `agent` atau `END` berdasarkan panjang input.",
+        "Dari `tools` kembali ke `agent`, merutekan berdasarkan apakah output tool kosong.",
+        "Tidak ada conditional edge; keduanya statis.",
+        "Dari `agent`, merutekan ke `tools` jika pesan terakhir memiliki tool_calls dan ke `END` jika tidak."
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus memakai `Send(node_name, state)` alih-alih edge biasa?",
+      "options": [
+        "Untuk memanggil node di proses berbeda untuk isolasi.",
+        "Untuk menunda node sampai timer habis.",
+        "Untuk mencoba ulang node setelah kegagalan.",
+        "Untuk mengirim N eksekusi paralel dari node target yang outputnya digabungkan kembali melalui state reducer."
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

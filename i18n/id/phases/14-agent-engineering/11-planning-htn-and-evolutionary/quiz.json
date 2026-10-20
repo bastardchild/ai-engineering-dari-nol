@@ -1,0 +1,90 @@
+{
+  "lesson": "11-planning-htn-and-evolutionary",
+  "title": "Perencanaan dengan HTN dan Evolutionary Search",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang ditambahkan HTN dibandingkan rencana LLM bebas?",
+      "options": [
+        "Embedding yang lebih baik",
+        "Inferensi yang lebih murah",
+        "Kebenaran yang dapat dibuktikan saat precondition dan effect operator ditegakkan",
+        "Prompt yang lebih pendek"
+      ],
+      "correct": 2,
+      "explanation": "Operator simbolik HTN dengan precondition dan effect menjamin kesahihan secara konstruksi."
+    },
+    {
+      "stage": "pre",
+      "question": "Kelas masalah apa yang menjadi sasaran AlphaEvolve?",
+      "options": [
+        "Memori chat multi-giliran",
+        "Generasi prosa bebas",
+        "Peringkat pencarian vector",
+        "Optimasi dengan fitness function deterministik yang dapat diperiksa mesin"
+      ],
+      "correct": 3,
+      "explanation": "Evolutionary search membutuhkan evaluator deterministik; AlphaEvolve menyasar domain yang memilikinya."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana ChatHTN menjaga kesahihan rencana saat memakai LLM?",
+      "options": [
+        "Ia memakai basis data vector",
+        "Saran LLM hanya masuk sebagai dekomposisi kandidat, divalidasi terhadap skema operator; lapisan simbolik yang memiliki kebenaran",
+        "Tidak; kesahihan hanya upaya terbaik",
+        "Ia melakukan fine-tuning LLM pada jejak HTN"
+      ],
+      "correct": 1,
+      "explanation": "LLM memperluas pustaka method tetapi tidak bisa melewati precondition dan effect operator."
+    },
+    {
+      "stage": "check",
+      "question": "Hasil AlphaEvolve mana yang dikutip pelajaran?",
+      "options": [
+        "Peningkatan pertama atas Strassen untuk perkalian matriks kompleks 4x4 dalam 56 tahun",
+        "Bukti pertama P=NP",
+        "Mengalahkan GPT-4 pada HumanEval",
+        "Percepatan inferensi 10x pada Gemini"
+      ],
+      "correct": 0,
+      "explanation": "AlphaEvolve menemukan 48 perkalian skalar untuk matmul kompleks 4x4, peningkatan pertama atas Strassen dalam 56 tahun."
+    },
+    {
+      "stage": "check",
+      "question": "Elemen HTN mana yang merupakan aksi primitif yang langsung dapat dieksekusi dengan precondition dan effect?",
+      "options": [
+        "State",
+        "Task",
+        "Method",
+        "Operator"
+      ],
+      "correct": 3,
+      "explanation": "Operator adalah primitifnya; method mendekomposisi tugas majemuk; state adalah himpunan fakta."
+    },
+    {
+      "stage": "post",
+      "question": "Apa peringatan pelajaran tentang AlphaEvolve tanpa evaluator sungguhan?",
+      "options": [
+        "Ia lambat",
+        "Ia tidak bisa berjalan di GPU",
+        "Bertanya ke LLM apakah kodenya lebih baik bukanlah fitness function; evaluator harus deterministik dan cepat",
+        "Ia melanggar Apache 2.0"
+      ],
+      "correct": 2,
+      "explanation": "Tanpa evaluator deterministik, pencarian tidak punya sinyal untuk konvergen."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus memilih ReAct atau ReWOO alih-alih HTN atau AlphaEvolve?",
+      "options": [
+        "Jangan pernah; HTN selalu lebih baik",
+        "Saat kamu tidak membutuhkan kesahihan formal atau fitness yang dapat diperiksa mesin; sebagian besar tugas agent ada di sini",
+        "Saat kamu punya cluster GPU",
+        "Saat latency di bawah 100 ms"
+      ],
+      "correct": 1,
+      "explanation": "Pelajaran secara eksplisit memperingatkan agar tidak over-engineering: sebagian besar tugas tidak butuh perencanaan formal atau evolutionary search."
+    }
+  ]
+}

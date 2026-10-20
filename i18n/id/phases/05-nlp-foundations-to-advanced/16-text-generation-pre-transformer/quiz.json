@@ -1,0 +1,102 @@
+{
+  "lesson": "16-text-generation-pre-transformer",
+  "title": "Generasi Teks Sebelum Transformer — Model Bahasa N-gram",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diestimasi model bahasa n-gram?",
+      "options": [
+        "Embedding dokumen",
+        "Edit distance antar kata",
+        "P(kata berikutnya | n-1 kata sebelumnya) dari statistik hitungan",
+        "P(label | dokumen)"
+      ],
+      "correct": 2,
+      "explanation": "LM n-gram memodelkan P(w | n-1 kata terakhir) melalui kemunculan yang dihitung."
+    },
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang diselesaikan smoothing dalam model n-gram?",
+      "options": [
+        "Presisi numerik",
+        "Pemberian probabilitas nol pada n-gram yang tidak terlihat dalam training, yang membuat likelihood kalimat kolaps ke nol",
+        "Penggunaan memori",
+        "Ketidakcocokan tokenization"
+      ],
+      "correct": 1,
+      "explanation": "Smoothing mengalokasikan ulang massa probabilitas sehingga n-gram yang tidak terlihat mendapat probabilitas bukan nol."
+    },
+    {
+      "stage": "check",
+      "question": "Wawasan apa yang membuat smoothing Kneser-Ney lebih baik daripada absolute discounting naif?",
+      "options": [
+        "Ia memakai n lebih besar",
+        "Ia memakai TF-IDF",
+        "Ia memakai gradient descent",
+        "Ia mengestimasi distribusi orde lebih rendah dengan continuation probability (jumlah konteks berbeda tempat kata muncul) alih-alih frekuensi mentah"
+      ],
+      "correct": 3,
+      "explanation": "Continuation probability memberi kredit atas keragaman konteks, bukan hanya hitungan mentah."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur perplexity?",
+      "options": [
+        "Jumlah n-gram berbeda",
+        "exp dari rata-rata negative log-likelihood per token pada test set held-out; lebih rendah lebih baik",
+        "Cross-entropy label",
+        "Throughput generasi"
+      ],
+      "correct": 1,
+      "explanation": "Perplexity = exp(- rata-rata log P); lebih rendah berarti model kurang terkejut oleh teks uji."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa train dan test set harus memakai tokenization identik saat membandingkan angka perplexity?",
+      "options": [
+        "Untuk menghindari OOV",
+        "Perplexity bergantung pada skema tokenization; tokenizer yang tidak cocok menghasilkan skor yang tidak dapat dibandingkan",
+        "Diwajibkan oleh gradient descent",
+        "Untuk mengontrol batch size"
+      ],
+      "correct": 1,
+      "explanation": "Tokenization berbeda mengubah jumlah token dan likelihood, membuat nilai perplexity tidak dapat dibandingkan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kalimat yang dihasilkan LM trigram terasa lancar secara lokal tetapi tidak koheren secara global?",
+      "options": [
+        "Konteks trigram lokal memandu setiap kata berikutnya tetapi model tidak memiliki memori jarak jauh melampaui n-1 token",
+        "Mereka membuang tanda baca",
+        "Mereka memakai Laplace smoothing",
+        "Beam search gagal"
+      ],
+      "correct": 0,
+      "explanation": "Mengondisikan hanya pada n-1 token terakhir membuat koherensi jarak jauh menjadi kebetulan."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana model n-gram masih dikirim di produksi pada 2026?",
+      "options": [
+        "Terjemahan multibahasa",
+        "Summarization",
+        "Chatbot domain terbuka",
+        "Jalur kritis latensi seperti rescoring pengenalan suara dan autocomplete on-device melalui library seperti KenLM"
+      ],
+      "correct": 3,
+      "explanation": "Model n-gram bergaya KenLM masih berfungsi sebagai komponen rescoring atau on-device yang cepat."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menghitung baseline n-gram sebelum menyatakan LM neural 'bagus' masih disarankan?",
+      "options": [
+        "Ia mempercepat training",
+        "Diwajibkan oleh ROUGE",
+        "Ia menghapus OOV",
+        "Jika LM transformer tidak mengalahkan baseline Kneser-Ney yang disetel dengan selisih besar pada tokenization yang sama, ada yang salah di pipeline training"
+      ],
+      "correct": 3,
+      "explanation": "Baseline KN ternyata kuat; LM neural harus menang dengan selisih besar atau kamu memiliki bug."
+    }
+  ]
+}

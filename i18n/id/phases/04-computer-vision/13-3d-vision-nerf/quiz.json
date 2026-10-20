@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa CNN biasa tidak dapat memproses point cloud secara langsung?",
+      "options": ["Point cloud memerlukan kuaternion", "CNN mengasumsikan piksel input tersusun pada grid teratur dengan struktur ketetanggaan; point cloud adalah himpunan titik tak berurutan di R^3 tanpa grid dan berukuran variabel, melanggar kedua asumsi itu", "CNN hanya bekerja pada grayscale", "Point cloud terlalu besar"],
+      "correct": 1,
+      "explanation": "Convolution CNN membutuhkan ketetanggaan yang teratur. Point cloud tidak memiliki grid maupun jumlah titik tetap. Voxelisasi cloud mengembalikan grid (dipakai CNN 3D) tetapi mahal secara memori. PointNet menghindari ini dengan arsitektur invarian permutasi yang memperlakukan setiap titik secara independen lalu mengagregasinya secara simetris."
+    },
+    {
+      "stage": "pre",
+      "question": "Trik apa yang membuat PointNet invarian permutasi terhadap titik input?",
+      "options": ["Mengurutkan titik sebelum forward pass", "Batch normalisation", "Fungsi loss khusus", "MLP bersama yang diterapkan pada setiap titik secara independen, diikuti agregasi simetris (max pool atau sum); karena agregasi mengabaikan urutan titik, output seluruh jaringan invarian urutan"],
+      "correct": 3,
+      "explanation": "Trik fungsi simetris adalah inti setiap keluarga jaringan point cloud sejak 2017. Jalankan MLP yang sama pada setiap titik (bobot sama, tanpa ketergantungan urutan) lalu agregasikan dengan fungsi yang tidak bergantung urutan. Max dan sum adalah dua pilihan kanonik; max dipakai PointNet dan sebagian besar turunannya."
+    },
+    {
+      "stage": "post",
+      "question": "MLP NeRF vanilla yang diberi koordinat (x, y, z) mentah menghasilkan hasil buram. Apa yang memperbaikinya?",
+      "options": ["Menambah data training", "Beralih ke CNN", "Positional encoding: memproyeksikan koordinat ke fitur Fourier (sin/cos dari 2^l * pi * x untuk beberapa l) sebelum MLP; ini memungkinkan MLP yang berbias frekuensi rendah merepresentasikan detail frekuensi tinggi", "Memakai presisi 16-bit"],
+      "correct": 2,
+      "explanation": "MLP berbias spektral: mereka mudah mencocokkan fungsi mulus dan kesulitan dengan frekuensi tinggi. Positional encoding mengangkat setiap koordinat ke vektor yang sudah mengandung sinyal frekuensi tinggi. MLP kemudian jauh lebih mudah menyusun fitur itu menjadi geometri dan tekstur tajam. Trik yang sama dipakai pada positional encoding transformer dan time embedding diffusion."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana piksel hasil render NeRF dihitung?",
+      "options": ["Dengan memancarkan ray dari kamera melalui piksel, menyampel N titik sepanjang ray, menanyakan MLP di setiap titik untuk (density, colour), dan mengomposit sampel dengan persamaan volume rendering yang mengakumulasi warna berbobot alpha sepanjang ray", "Dengan menjalankan convolution atas depth map", "Dengan mencari voxel grid yang telah dihitung", "Sebagai output layer MLP terakhir"],
+      "correct": 0,
+      "explanation": "Render NeRF adalah volume rendering klasik dengan medan density neural. Untuk setiap piksel kamu memilih ray, menyampel sepanjang ray, menanyakan (sigma, c) di setiap sampel, dan mengomposit memakai alpha (1 - exp(-sigma * delta)) serta transmitansi kumulatif. Backprop melalui langkah rendering inilah yang melatih MLP dari foto 2D — tidak pernah ada supervisi 3D eksplisit."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa 3D Gaussian splatting sebagian besar menggantikan NeRF di produksi?",
+      "options": ["NeRF terbukti salah secara matematis", "Ia adalah representasi eksplisit (jutaan Gaussian 3D dengan opacity dan warna) yang merender secara real time melalui rasterisasi alih-alih kueri MLP pada ray tersampel; training dalam hitungan menit bukan jam, rendering 100x lebih cepat, dan kualitasnya sebanding", "Gaussian lebih mudah dikompresi", "Ia menghasilkan gambar berkualitas lebih tinggi"],
+      "correct": 1,
+      "explanation": "3D Gaussian Splatting (SIGGRAPH 2023) menggantikan adegan berbasis MLP implisit dengan cloud eksplisit primitif Gaussian 3D. Rendering menjadi rasterisasi GPU, yang jauh lebih cepat daripada sampling ray per piksel melalui MLP. Sebagian besar produk NeRF 2026 dikirim dengan Gaussian splatting atau penerusnya; paradigma NeRF masih menginformasikan objektif training dan matematikanya."
+    }
+  ]
+}

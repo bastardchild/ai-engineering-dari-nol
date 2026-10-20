@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang membuat debugging kode AI/ML secara fundamental berbeda dari debugging aplikasi web biasa?",
+      "options": ["Kode AI selalu memerlukan GPU untuk di-debug", "Kode AI memakai bahasa pemrograman berbeda", "Bug AI sering tidak crash -- ia diam-diam menghasilkan hasil salah tanpa pesan error", "Kode AI tidak dapat di-debug dengan alat standar seperti pernyataan print"],
+      "correct": 2,
+      "explanation": "Bug AI terburuk menghasilkan output yang tampak valid. Training loop yang salah konfigurasi bisa berjalan berjam-jam tanpa error sementara model tidak mempelajari hal berguna, berbeda dari aplikasi web yang crash dengan stack trace."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur profiler?",
+      "options": ["Berapa banyak waktu dan memori yang dikonsumsi setiap bagian kode", "Berapa banyak bug yang ada di basis kode", "Apakah kode menghasilkan output yang benar", "Cakupan kode dari unit test"],
+      "correct": 0,
+      "explanation": "Profiler mengukur konsumsi resource -- waktu eksekusi per fungsi, alokasi memori, dan utilisasi GPU -- membantu kamu menemukan bottleneck dan mengoptimalkan performa."
+    },
+    {
+      "stage": "post",
+      "question": "Model-mu mencapai akurasi 99% pada set pengujian. Bug khas AI apa yang harus kamu curigai lebih dulu?",
+      "options": ["Batch size terlalu besar", "Data leakage -- sampel pengujian mungkin bocor ke set pelatihan", "Learning rate terlalu tinggi", "Model memiliki terlalu banyak parameter"],
+      "correct": 1,
+      "explanation": "Akurasi yang mencurigakan tinggi sering menandakan data leakage -- tumpang tindih antara data pelatihan dan pengujian, atau fitur yang memuat label target. Selalu periksa tumpang tindih train/test."
+    },
+    {
+      "stage": "post",
+      "question": "Apa temuan paling umum saat memprofilkan pembagian waktu sebuah training loop?",
+      "options": ["Alokasi memori GPU adalah bottleneck-nya", "Backward pass memakan 90% waktu", "Pemuatan data memakan waktu lebih lama daripada forward dan backward pass digabung", "Menulis log memakan waktu paling lama"],
+      "correct": 2,
+      "explanation": "Pemuatan data sering memakan 60%+ waktu pelatihan ketika num_workers=0 di DataLoader. Solusinya mengatur num_workers > 0 agar data dimuat paralel dengan komputasi GPU."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melihat loss NaN pada step 500. Pendekatan mana yang membantumu menemukan akar masalahnya?",
+      "options": ["Ganti optimizer dari Adam ke SGD", "Mulai ulang pelatihan dari awal dengan random seed berbeda", "Perbesar batch size untuk menstabilkan gradient", "Pakai detect_nan untuk memeriksa NaN/Inf pada gradient dan tambahkan breakpoint() di titik kegagalan"],
+      "correct": 3,
+      "explanation": "Pertama identifikasi DI MANA NaN berasal dengan memeriksa gradient tiap parameter. Breakpoint kondisional pada step NaN memungkinkan kamu memeriksa nilai tensor secara interaktif. Penyebab umum: learning rate terlalu tinggi, log(0), atau pembagian dengan nol."
+    }
+  ]
+}

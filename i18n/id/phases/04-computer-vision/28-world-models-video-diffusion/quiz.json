@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Perbedaan arsitektural apa yang membedakan world model berkondisi aksi (Genie 3) dari model generasi video murni (Sora 2)?",
+      "options": ["Hanya dataset training yang berbeda", "World model hanya bekerja pada adegan 3D", "Generator video murni berkondisi pada prompt di t=0 lalu bergulir; world model berkondisi aksi mengambil aksi laten atau eksplisit per frame sehingga pengguna dapat mengarahkan rollout di tengah generasi", "Model berkondisi aksi lebih kecil"],
+      "correct": 2,
+      "explanation": "Sora 2 bersifat autoregresif pada token ruang-waktu; prompt-nya menetapkan adegan tetapi kamu tidak dapat mengubah arah di tengah rollout. Genie 3 menyimpulkan atau mengambil aksi laten di setiap langkah dan mengondisikan prediksi frame berikutnya pada aksi itu, memungkinkan pengguna berinteraksi dengan dunia simulasi. Interaktivitas inilah yang membuat model menjadi 'simulator dunia' alih-alih generator video."
+    },
+    {
+      "stage": "pre",
+      "question": "Divided attention dalam video transformer berarti apa?",
+      "options": ["Separuh token dimask", "Attention dibagi lintas GPU", "Setiap blok melakukan temporal attention (posisi spasial sama, lintas frame) lalu spatial attention (frame sama, lintas posisi); ini memfaktorisasi biaya dari O((T*H*W)^2) menjadi O((H*W)*T^2) + O(T*(H*W)^2) — jauh lebih murah daripada produk gabungan", "Hanya separuh layer menjalankan attention"],
+      "correct": 2,
+      "explanation": "Attention gabungan penuh atas token ruang-waktu sangat mahal: untuk T=150 token temporal dan grid spasial 60x45 (2700 token spasial), gabungan (T*H*W)^2 ≈ 1,6e11 pasangan. Divided attention menjalankan temporal attention di setiap posisi spasial (H*W * T^2 ≈ 6,1e7) dan spatial attention di setiap timestep (T * (H*W)^2 ≈ 1,1e9) — beberapa orde magnitudo lebih sedikit. TimeSformer memperkenalkan pola ini; hampir setiap video DiT 2026 (Sora, Wan, HunyuanVideo) memakai varian divided atau window."
+    },
+    {
+      "stage": "post",
+      "question": "Rilis Sora 2 tahun 2026 mengiklankan plausibilitas fisik yang lebih baik. Mode kegagalan spesifik apa yang disasar?",
+      "options": ["Berat, keseimbangan, object permanence, sebab-akibat — model kini menangani objek yang jatuh, karakter bertabrakan, dan 'kegagalan dengan sengaja' (lompatan yang meleset) lebih meyakinkan daripada Sora 1", "Panjang video", "Rendering teks di dalam gambar", "Keseimbangan warna dan kontras"],
+      "correct": 0,
+      "explanation": "Model video generasi sebelumnya terkenal gagal pada makan spaghetti, minum dari gelas, dan adegan objek persisten — tangan menembus objek, item menghilang di tengah aksi. Sora 2 secara eksplisit mengiklankan peningkatan pada berat, keseimbangan, object permanence, dan sebab-akibat, diukur terhadap benchmark plausibilitas internal dan publik. Ini adalah kegagalan kualitas dominan yang masih digarap bidang ini."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam tumpukan robotika yang berkembang (VLM + generasi video + inverse dynamics), apa yang dilakukan model inverse dynamics?",
+      "options": ["Ia mengambil pasangan (observasi saat ini, observasi berikutnya yang diinginkan dari model video) dan mengeluarkan aksi motor tingkat rendah yang menghubungkan keduanya; ini menutup loop antara rollout yang dibayangkan dan aktuasi nyata", "Ia memberi label data training", "Ia menghasilkan frame berikutnya", "Ia melatih VLM"],
+      "correct": 0,
+      "explanation": "VLM merencanakan, model video membayangkan, dan model inverse dynamics mengubah imajinasi menjadi perintah motor. Diberikan dua observasi berurutan, inverse dynamics bertanya: aksi apa yang menghasilkan transisi ini? Tumpukan tiga komponen ini memungkinkan robot sebagian besar dilatih di simulator yang dipelajari, memakai model video untuk menghasilkan data dan model inverse dynamics untuk mengeksekusi."
+    },
+    {
+      "stage": "post",
+      "question": "Tim mengemudi otonom memakai world model (Cosmos-Drive, Gaia-2, DrivingWorld) untuk menggantikan biaya apa?",
+      "options": ["Depresiasi kendaraan", "Asuransi armada aktual", "Pengumpulan data dunia nyata yang mahal untuk kasus sudut langka atau berbahaya (pejalan kaki menyeberang sembarangan, jalan berlapis es, kendaraan tidak biasa); video mengemudi yang disintesis menyediakan data training dan evaluasi sesuai permintaan untuk skenario itu", "Tarif tol"],
+      "correct": 2,
+      "explanation": "Mengumpulkan data mengemudi kasus sudut membutuhkan jutaan mil dunia nyata. Cosmos-Drive, Gaia-2, dan DrivingWorld menghasilkannya dengan conditioning pada lintasan dan peta. Tim memakai data ini untuk memperluas training set, mengevaluasi planner dalam kondisi yang dapat direproduksi, dan mengurangi risiko skenario yang tidak dapat mereka jalani secara etis di dunia nyata. Menggantikan sebagian pengumpulan dunia nyata dengan sintesis adalah salah satu kemenangan produksi paling jelas bagi world model video pada 2026."
+    }
+  ]
+}

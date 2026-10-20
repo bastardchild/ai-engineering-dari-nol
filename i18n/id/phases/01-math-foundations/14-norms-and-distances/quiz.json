@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur cosine similarity antara dua vektor?",
+      "options": [
+        "Sudut di antara keduanya, mengabaikan magnitudonya",
+        "Jarak Euclidean di antara keduanya",
+        "Perbedaan maksimum pada satu dimensi mana pun",
+        "Jumlah hasil kali element-wise keduanya"
+      ],
+      "correct": 0,
+      "explanation": "Cosine similarity mengukur kosinus sudut antara dua vektor, dinormalisasi oleh magnitudonya. Nilainya berkisar dari -1 (berlawanan) hingga +1 (arah sama) dan mengabaikan panjang vektor, itulah sebabnya ia mendominasi di NLP tempat panjang dokumen adalah noise."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa jarak L1 disebut 'Manhattan distance'?",
+      "options": [
+        "Ia hanya bekerja di tepat dua dimensi",
+        "Ia menghitung perbedaan maksimum di semua dimensi",
+        "Ia ditemukan di Manhattan",
+        "Ia mengukur jarak sepanjang grid, seolah berjalan di blok kota"
+      ],
+      "correct": 3,
+      "explanation": "Jarak L1 menjumlahkan perbedaan absolut sepanjang setiap sumbu, yang setara dengan jalur terpendek pada grid tempat kamu hanya bisa bergerak sepanjang sumbu (tanpa diagonal) -- seperti berjalan di grid jalan kota."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa regularisasi L1 (Lasso) menghasilkan bobot sparse sedangkan regularisasi L2 (Ridge) tidak?",
+      "options": [
+        "L1 memakai konstanta penalti lebih besar daripada L2",
+        "Batasan diamond L1 memiliki sudut pada sumbu tempat bobot nol; kontur loss cenderung menyentuh di sudut",
+        "Regularisasi L2 hanya berlaku untuk suku bias",
+        "Regularisasi L1 memotong bobot di bawah ambang menjadi nol"
+      ],
+      "correct": 1,
+      "explanation": "Wilayah batasan L1 berbentuk diamond dengan sudut sejajar sumbu. Elips kontur fungsi loss paling mungkin pertama menyentuh diamond di sudut, tempat satu atau lebih bobot tepat nol. Batasan L2 adalah lingkaran tanpa sudut, sehingga titik sentuhnya memiliki semua bobot bukan nol."
+    },
+    {
+      "stage": "post",
+      "question": "Apa keunggulan Wasserstein distance dibanding KL divergence saat membandingkan distribusi probabilitas?",
+      "options": [
+        "Wasserstein selalu lebih kecil daripada KL divergence",
+        "Wasserstein memberi gradient bermakna bahkan saat distribusi tidak tumpang tindih, sedangkan KL menuju tak terhingga",
+        "Wasserstein simetris tetapi KL tidak",
+        "Baik B maupun C benar"
+      ],
+      "correct": 3,
+      "explanation": "Wasserstein distance adalah metrik sejati (simetris, memenuhi ketaksamaan segitiga) dan memberi gradient bahkan untuk distribusi yang tidak tumpang tindih. KL divergence asimetris dan menuju tak terhingga saat distribusi tidak tumpang tindih, itulah sebabnya WGAN menggantikan GAN berbasis KL."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu memakai Mahalanobis distance alih-alih jarak Euclidean?",
+      "options": [
+        "Saat fitur memiliki skala berbeda dan saling berkorelasi",
+        "Saat kamu butuh komputasi lebih cepat daripada L2",
+        "Saat semua fitur biner (0 atau 1)",
+        "Saat kamu membandingkan string alih-alih vektor"
+      ],
+      "correct": 0,
+      "explanation": "Mahalanobis distance memperhitungkan struktur kovariansi data, mendekorelasi dan menormalisasi fitur sebelum menghitung jarak L2. Ia menangani fitur dengan skala berbeda dan berkorelasi dengan benar, sedangkan jarak Euclidean memperlakukan semua dimensi sama."
+    }
+  ]
+}

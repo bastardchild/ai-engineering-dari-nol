@@ -1,0 +1,78 @@
+{
+  "lesson": "34-transformer-block",
+  "title": "Transformer Block dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dua sublayer apa yang berada dalam satu decoder transformer block?",
+      "options": [
+        "Convolution dan recurrent gate",
+        "Multi head causal attention dan MLP position-wise, masing-masing dibungkus koneksi residual",
+        "RNN encoder dan decoder",
+        "Embedding lookup dan softmax"
+      ],
+      "correct": 1,
+      "explanation": "Setiap blok LLM decoder modern adalah attention plus MLP, masing-masing punya jalur residual dan LayerNorm sendiri."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan kunci antara pre-LN dan post-LN pada kedalaman?",
+      "options": [
+        "Pre-LN memakai matematika attention berbeda",
+        "Pre-LN hanya bekerja untuk encoder",
+        "Pre-LN menjaga sinyal residual tidak ternormalisasi sehingga gradien merambat bersih ke embedding; post-LN menaruh norm setelah residual add, yang mengecilkan gradien pada kedalaman dan butuh warmup",
+        "Post-LN lebih cepat di GPU"
+      ],
+      "correct": 2,
+      "explanation": "Pre-LN berlatih stabil tanpa warmup pada learning rate umum; post-LN adalah yang dikirim paper 2017 dan membutuhkan warmup."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan causal mask di multi head attention?",
+      "options": [
+        "Membuang token acak",
+        "Menyetel segitiga atas logit attention ke negatif tak hingga agar token i tidak dapat memperhatikan token di posisi lebih besar dari i",
+        "Menormalisasi skor attention",
+        "Memilih urutan terpanjang di batch"
+      ],
+      "correct": 1,
+      "explanation": "Lupa causal mask melatih model yang bisa membaca token masa depan; mask adalah satu-satunya bagian yang menegakkan kausalitas."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa memakai proyeksi QKV fused alih-alih tiga linear terpisah?",
+      "options": [
+        "Itu menghindari softmax",
+        "Itu mengubah ekspresivitas model",
+        "Itu menghapus residual",
+        "Satu linear selebar 3 kali d_model meruntuhkan tiga peluncuran kernel dan tiga matmul menjadi satu, lebih cepat di setiap akselerator dan cocok dengan implementasi referensi GPT-2"
+      ],
+      "correct": 3,
+      "explanation": "Matematika sama, kernel lebih sedikit; implementasi referensi GPT-2, LLaMA, dan Mistral semuanya mengirim proyeksi fused."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana dropout TIDAK boleh ditempatkan di transformer block?",
+      "options": [
+        "Pada jalur identitas residual itu sendiri, karena itu merusak identitas aditif yang membuat gradien mengalir pada kedalaman",
+        "Di dalam ekspansi feed forward",
+        "Pada output softmax attention",
+        "Setelah linear MLP kedua"
+      ],
+      "correct": 0,
+      "explanation": "Dropout berada di output attention dan update residual MLP, tidak pernah di cabang identitas residual."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mendaftarkan causal mask sebagai buffer alih-alih mengalokasikannya per panggilan forward?",
+      "options": [
+        "Buffer hanya berjalan di GPU",
+        "Buffer dienkripsi",
+        "Buffer meningkatkan akurasi numerik",
+        "Mask hanya bergantung pada panjang konteks maksimum, jadi mengalokasikannya sekali saat konstruksi dan memotong jendela aktif per panggilan menghindari hot spot alokator pada konteks panjang"
+      ],
+      "correct": 3,
+      "explanation": "Alokasikan sekali dengan register_buffer, potong per forward; jika tidak, mask menjadi biaya alokasi per panggilan."
+    }
+  ]
+}

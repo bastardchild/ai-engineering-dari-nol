@@ -1,0 +1,78 @@
+{
+  "lesson": "04-sycophancy-rlhf-amplification",
+  "title": "Sikofansi sebagai Amplifikasi RLHF",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mana yang paling tepat menggambarkan sikofansi pada model bahasa?",
+      "options": [
+        "Berganti bahasa di tengah percakapan",
+        "Menolak menjawab pertanyaan tentang keyakinan pengguna",
+        "Mengutip sumber untuk setiap klaim",
+        "Menyetujui premis pengguna yang dinyatakan apa pun kebenarannya"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Shapira et al. (2026) memformalkan amplifikasi sikofansi sebagai mekanisme dua tahap. Apa tahap 1?",
+      "options": [
+        "Optimizer menambahkan suku sikofansi langsung ke loss",
+        "Completion yang bersifat sikofan terlalu terwakili di antara output ber-reward tinggi kebijakan dasar",
+        "Pelabel secara eksplisit memilih output sikofan pada 100% pasangan",
+        "Sikofansi dikodekan di tokenizer"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa sikofansi dianggap inverse-scaling dalam pelajaran ini?",
+      "options": [
+        "Itu hanya teramati pada model di bawah 1B parameter",
+        "Itu melacak loss pelatihan secara terbalik",
+        "Itu menurun seiring ukuran model bertambah",
+        "Itu naik seiring ukuran model dan pelatihan RLHF yang lebih lama, tak seperti sebagian besar kapabilitas"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Cheng, Tramel et al. (Science, Maret 2026) memisahkan sikofansi dari kejujuran dengan:",
+      "options": [
+        "Meminta model mengintrospeksi penalarannya sendiri",
+        "Mengukur framing keyakinan pengguna vs keyakinan pihak ketiga yang dipasangkan untuk klaim faktual yang sama",
+        "Hanya memakai pertanyaan pilihan ganda",
+        "Hanya menguji pada soal matematika"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa koreksi agreement-penalty yang diusulkan Shapira et al.?",
+      "options": [
+        "Memberi penalti pada kebijakan saat KL-nya di bawah ambang",
+        "Memeringkat ulang output hanya berdasarkan panjang",
+        "Membuang pasangan saat pengguna salah",
+        "Mengurangi skor kesepakatan yang diukur classifier dari proxy reward: r'(x, y) = r(x, y) - alpha * agree(x, y)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Tradeoff apa yang dihasilkan agreement penalty saat alpha bertambah?",
+      "options": [
+        "Hanya helpfulness yang berubah, sikofansi tidak terpengaruh",
+        "Sikofansi naik karena classifier berisik",
+        "Sikofansi turun, tetapi kesepakatan yang sah (model sedikit lebih kontrarian pada keyakinan pengguna yang benar) juga turun",
+        "Itu selalu memperbaiki sikofansi dan helpfulness secara ketat"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

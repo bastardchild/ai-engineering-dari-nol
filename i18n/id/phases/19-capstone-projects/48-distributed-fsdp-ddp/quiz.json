@@ -1,0 +1,78 @@
+{
+  "lesson": "48-distributed-fsdp-ddp",
+  "title": "Distributed Data Parallel dan FSDP dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dua collective op apa yang menjadi inti wrapper DDP dari nol?",
+      "options": [
+        "reduce_scatter saja",
+        "barrier dan barrier",
+        "send dan recv",
+        "broadcast saat konstruksi agar setiap rank mulai dari parameter sama, dan all_reduce setelah backward agar setiap rank berakhir dengan gradien rata-rata"
+      ],
+      "correct": 3,
+      "explanation": "Broadcast saat init menjaga rank sinkron di langkah nol. All-reduce setelah backward menjaga mereka sinkron di setiap langkah berikutnya."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa lesson ini berjalan di CPU tanpa CUDA?",
+      "options": [
+        "Memakai tensor simulasi",
+        "Tidak memakai torch.distributed sama sekali",
+        "torch.distributed menyertakan backend gloo yang menjalankan kolektif lewat socket biasa, jadi worker torch.multiprocessing di CPU membentuk process group nyata; hanya tag device yang berubah di mesin GPU",
+        "Itu stub"
+      ],
+      "correct": 2,
+      "explanation": "Gloo adalah backend kolektif CPU. Call site yang sama bekerja pada nccl di GPU; permukaan API identik."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dibuktikan test manual_all_reduce_matches_single_process?",
+      "options": [
+        "Bahwa CUDA tidak diperlukan",
+        "Bahwa optimizer konvergen",
+        "Tidak ada",
+        "Bahwa menjumlahkan gradien per rank dan membaginya dengan world_size memulihkan gradien yang akan dihitung satu proses pada input terkatenasi, dalam noise floating point"
+      ],
+      "correct": 3,
+      "explanation": "Reduksi mean cross entropy pada batch penuh sama dengan rata-rata mean per rank. Sum-and-divide adalah operasi yang benar; test membuatnya terlihat."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan sketsa FSDP dalam lesson ini per parameter pada setiap forward pass?",
+      "options": [
+        "Menghitung hash",
+        "Menginisialisasi ulang parameter",
+        "Tidak ada",
+        "Memad flat parameter ke kelipatan world_size, memotong, all_gather slice di setiap rank, membuang pad, dan memverifikasi rekonstruksi cocok dengan aslinya"
+      ],
+      "correct": 3,
+      "explanation": "Setiap rank memiliki 1/world_size dari setiap parameter. Gather membangun ulang tensor penuh untuk komputasi; FSDP produksi menimpa gather dengan pekerjaan layer sebelumnya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa gloo all_gather berukuran world_size shard sama besar bahkan saat panjang parameter tidak habis dibagi world_size?",
+      "options": [
+        "Mempercepat jaringan",
+        "Pilihan acak",
+        "Itu bug",
+        "all_gather Gloo membutuhkan ukuran tensor output sama per rank, jadi flat parameter di-pad kanan ke kelipatan world_size sebelum dipotong dan padding dibuang setelah gather"
+      ],
+      "correct": 3,
+      "explanation": "Gloo (dan nccl) all_gather mengharapkan output berukuran sama. Padding adalah perbaikan termurah; sketsa memangkas hasilnya kembali ke panjang asli."
+    },
+    {
+      "stage": "post",
+      "question": "Membaca output demo, param_sum_spread mendekati nol antar rank memberi tahu apa?",
+      "options": [
+        "Tidak ada yang bermakna",
+        "Bahwa setiap rank mengakhiri run pada nilai parameter sama, yang berarti broadcast saat konstruksi dan all-reduce setelah setiap backward keduanya bekerja; jika salah satunya rusak spread akan tumbuh seiring langkah",
+        "Bahwa loss rendah",
+        "Bahwa jaringan cepat"
+      ],
+      "correct": 1,
+      "explanation": "Invarian DDP adalah paritas parameter antar rank. Spread adalah auditnya; demo menegaskan nilainya tetap di bawah 1e-3."
+    }
+  ]
+}

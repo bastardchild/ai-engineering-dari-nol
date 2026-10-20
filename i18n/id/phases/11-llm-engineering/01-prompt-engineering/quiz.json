@@ -1,0 +1,66 @@
+{
+  "lesson": "01-prompt-engineering",
+  "title": "Prompt Engineering: Teknik & Pola",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa kesalahan paling umum yang dilakukan orang saat menulis prompt untuk LLM?",
+      "options": [
+        "Tidak memakai cukup contoh",
+        "Menulis instruksi yang kabur dan kurang spesifik sehingga model menebak-nebak format, cakupan, dan batasan",
+        "Memakai API yang salah",
+        "Memakai terlalu banyak token"
+      ],
+      "correct": 1,
+      "explanation": "LLM mengikuti instruksi secara literal. 'Buatkan saya email marketing' tidak memberi model batasan apa pun. Menentukan tone, audiens, panjang, format, dan batasan menghasilkan hasil yang jauh lebih baik."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa empat komponen inti dari prompt yang efektif?",
+      "options": [
+        "System, user, assistant, function",
+        "Query, document, answer, score",
+        "Peran, konteks, batasan, dan format output",
+        "Input, output, model, temperature"
+      ],
+      "correct": 2,
+      "explanation": "Prompt efektif menentukan: siapa model seharusnya (peran), apa yang harus diketahui (konteks), apa yang boleh dan tidak boleh dilakukan (batasan), dan bagaimana menyusun respons (format output)."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu harus menyertakan instruksi format output dalam prompt?",
+      "options": [
+        "Itu mencegah halusinasi",
+        "Tanpa instruksi format, model memilih strukturnya sendiri, yang bervariasi antar panggilan dan sulit di-parse secara programatik",
+        "Itu membuat prompt lebih pendek",
+        "Itu mengurangi biaya API"
+      ],
+      "correct": 1,
+      "explanation": "LLM bersifat non-deterministik. Tanpa instruksi format eksplisit, satu panggilan mungkin mengembalikan bullet point, berikutnya prosa, berikutnya markdown. Menentukan format memastikan output konsisten dan dapat di-parse."
+    },
+    {
+      "stage": "post",
+      "question": "Apa tujuan system prompt?",
+      "options": [
+        "Untuk menetapkan aturan perilaku, peran, dan batasan persisten yang berlaku untuk seluruh percakapan",
+        "Untuk mendefinisikan arsitektur model",
+        "Untuk mengautentikasi panggilan API",
+        "Untuk mengompresi riwayat percakapan"
+      ],
+      "correct": 0,
+      "explanation": "System prompt menetapkan persona, aturan, dan batasan model untuk seluruh sesi. Ia berjalan sebelum setiap giliran user dan merupakan mekanisme utama untuk mengontrol perilaku model di produksi."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu harus menguji apakah perubahan prompt benar-benar meningkatkan kualitas output?",
+      "options": [
+        "Jalankan prompt pada test set yang beragam dan ukur perubahan pada metrik yang ditentukan (akurasi, kepatuhan format, relevansi)",
+        "Tanyakan ke model apakah ia bekerja lebih baik",
+        "Periksa waktu respons API",
+        "Baca beberapa output dan ambil kesimpulan"
+      ],
+      "correct": 0,
+      "explanation": "Mengevaluasi perubahan prompt pada beberapa contoh tidak andal. Harness evaluasi sistematis dengan test case beragam dan metrik yang ditentukan menunjukkan apakah perubahan membantu di seluruh distribusi, bukan hanya contoh pilihan."
+    }
+  ]
+}

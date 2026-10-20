@@ -1,0 +1,78 @@
+{
+  "lesson": "70-task-spec-format",
+  "title": "Format Task Spec",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa membekukan skema task record sebelum menulis kode scoring?",
+      "options": [
+        "Itu mengunci kontrak agar metrik, runner, dan post-processor sepakat pada nama field",
+        "Itu memungkinkan nama metrik baru sembarang tanpa perubahan lanjutan",
+        "Itu membuat parser JSON lebih cepat",
+        "Itu menghapus kebutuhan validator"
+      ],
+      "correct": 0,
+      "explanation": "Skema adalah kontrak yang dibaca setiap konsumen hilir. Menguncinya memungkinkan komponen berubah independen tanpa merusak sisanya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kosakata tertutup yang diterima field metric_name?",
+      "options": [
+        "String apa pun yang dipilih penulis task",
+        "Hanya exact_match dan f1",
+        "Apa pun yang dikonfigurasi runner untuk dikenali",
+        "exact_match, f1, bleu_4, rouge_l, accuracy, code_exec"
+      ],
+      "correct": 3,
+      "explanation": "Lesson ini mematok kosakata metrik ke enam nama. Menambah satu membutuhkan lesson baru dan entri validator baru."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan validator saat melihat field top-level tak dikenal pada record?",
+      "options": [
+        "Mencatat peringatan tetapi menerima record",
+        "Membuangnya dan melanjutkan",
+        "Mengganti namanya menjadi metadata.unknown",
+        "Mengembalikan error validasi dan menolak record"
+      ],
+      "correct": 3,
+      "explanation": "Field tak dikenal adalah bahaya kompatibilitas maju. Validator menolaknya agar skema tetap satu-satunya sumber kebenaran."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa contoh few-shot dilampirkan ke task record alih-alih dihitung runner?",
+      "options": [
+        "Few-shot hanya dipakai saat fine-tuning",
+        "Niat penulis adalah bagian dari eval; mengikat contoh ke task menghapus variasi per model dalam konstruksi prompt",
+        "Itu menghemat disk",
+        "Runner tidak punya file I/O"
+      ],
+      "correct": 1,
+      "explanation": "Komposisi few-shot adalah bagian definisi eval, bukan antarmuka model. Menaruhnya di task berarti setiap model melihat prompt yang sama."
+    },
+    {
+      "stage": "check",
+      "question": "Pasangan kategori-metrik mana yang ilegal menurut validator?",
+      "options": [
+        "code_exec + code_exec",
+        "summary + rouge_l",
+        "arithmetic + exact_match",
+        "mcq + bleu_4"
+      ],
+      "correct": 3,
+      "explanation": "BLEU pada satu huruf tidak bermakna. Validator menegakkan bahwa task mcq hanya memakai exact_match atau accuracy."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dikembalikan aturan post_process extract_letter saat generasi `Answer: C is correct`?",
+      "options": [
+        "Answer",
+        "String kosong",
+        "String penuh tanpa perubahan",
+        "C"
+      ],
+      "correct": 3,
+      "explanation": "extract_letter mengembalikan karakter pertama yang cocok dengan [A-E] dalam generasi. String memiliki C di awal badan."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "22-voice-agents-pipecat-livekit",
+  "title": "Voice Agent: Pipecat dan LiveKit",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dua arah aliran apa yang dipakai pipeline Pipecat?",
+      "options": [
+        "Read dan write",
+        "Hot dan cold",
+        "Inbound dan outbound",
+        "DOWNSTREAM (source ke sink) dan UPSTREAM (feedback, cancel, barge-in)"
+      ],
+      "correct": 3,
+      "explanation": "Frame mengalir downstream dari source ke sink dan upstream untuk kontrol serta pembatalan."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa pipeline voice Pipecat kanonis?",
+      "options": [
+        "VAD -> STT -> LLM -> TTS -> transport",
+        "Audio -> JSON -> SQL -> response",
+        "LLM -> embed -> retrieve -> answer",
+        "TTS -> STT -> LLM -> VAD"
+      ],
+      "correct": 0,
+      "explanation": "VAD mendeteksi aktivitas suara, STT mentranskripsi, LLM merespons, TTS berbicara, transport mengirim."
+    },
+    {
+      "stage": "check",
+      "question": "Dua kelas voice agent apa yang disediakan LiveKit Agents?",
+      "options": [
+        "BatchAgent dan StreamAgent",
+        "TextAgent dan SpeechAgent",
+        "MultimodalAgent (audio langsung) dan VoicePipelineAgent (kaskade STT/LLM/TTS)",
+        "LocalAgent dan CloudAgent"
+      ],
+      "correct": 2,
+      "explanation": "MultimodalAgent memakai audio langsung (gaya Realtime); VoicePipelineAgent memakai STT->LLM->TTS untuk kendali tingkat teks."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu barge-in dan bagaimana ditangani?",
+      "options": [
+        "Lonjakan biaya LLM; kurangi token",
+        "Pengguna menyela saat agent berbicara; frame cancel UPSTREAM menghentikan TTS di tengah ucapan",
+        "Kegagalan captcha; ulangi",
+        "Gangguan penyedia; ganti region"
+      ],
+      "correct": 1,
+      "explanation": "Barge-in adalah interupsi pengguna; pembatalan UPSTREAM adalah cara Pipecat menanganinya dengan bersih."
+    },
+    {
+      "stage": "check",
+      "question": "Latency end-to-end berapa yang digambarkan pelajaran sebagai premium?",
+      "options": [
+        "Sekitar 450-600 ms",
+        "Sekitar 1500 ms",
+        "Sekitar 50 ms",
+        "Sekitar 5000 ms"
+      ],
+      "correct": 0,
+      "explanation": "Stack premium berada di sekitar 450-600 ms; 800-1200 ms umum; di atas 1500 ms terasa rusak."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang salah jika confidence STT diabaikan?",
+      "options": [
+        "Panggilan jadi lebih murah",
+        "Latency membaik",
+        "TTS menjadi lebih cepat",
+        "Transkrip berconfidence rendah disuapkan ke LLM seolah kebenaran, menghasilkan jawaban salah; gerbang berdasarkan confidence atau minta konfirmasi"
+      ],
+      "correct": 3,
+      "explanation": "Memperlakukan STT berconfidence rendah sebagai kebenaran adalah mode kegagalan voice agent teratas."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran menyarankan menjumlahkan latency komponen sebelum merilis?",
+      "options": [
+        "Latency diwajibkan WebRTC",
+        "Setiap komponen menambah 50-200 ms; jumlahnya menentukan apakah pengalaman terasa rusak",
+        "Penyedia menagih berdasarkan latency",
+        "Itu memenuhi persyaratan kepatuhan"
+      ],
+      "correct": 1,
+      "explanation": "Jumlahkan rantai (VAD + STT + LLM + TTS + transport) sebelum merilis; targetnya ketat."
+    }
+  ]
+}

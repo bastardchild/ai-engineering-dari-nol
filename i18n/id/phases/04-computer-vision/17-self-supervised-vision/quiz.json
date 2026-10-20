@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa SimCLR membutuhkan batch size 512-8192 sementara training ImageNet supervised bekerja dengan batch 256?",
+      "options": ["Setiap sampel membutuhkan banyak contoh negatif untuk menghasilkan sinyal kontrastif yang berguna; batch itu sendiri adalah kumpulan negatif. Batch kecil membuat loss InfoNCE kekurangan negatif dan training kolaps atau mandek", "Batch norm mewajibkannya", "Loss kontrastif membagi dengan batch size", "SimCLR lebih lambat"],
+      "correct": 0,
+      "explanation": "Loss InfoNCE memeringkat pasangan positif terhadap semua sampel lain dalam batch. Batch 32 memberikan 30 negatif per positif; 1024 memberikan 2046. Lebih banyak negatif = sinyal kontrastif lebih tajam. MoCo memperkenalkan antrean momentum fitur masa lalu agar negatif efektif melampaui ukuran batch; ini trik standar ketika memori GPU membatasi batch size."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang mencegah DINO kolaps ke output konstan?",
+      "options": ["Batch size besar", "Jadwal momentum", "Augmentasi kuat saja", "Kombinasi centring (mengurangi mean EMA per dimensi dari output teacher) dan sharpening (suhu teacher rendah); centring mencegah satu dimensi mendominasi, sharpening mencegah output kolaps menjadi seragam"],
+      "correct": 3,
+      "explanation": "DINO tidak memakai negatif eksplisit. Tanpa centring, satu dimensi output dapat mendominasi dan student belajar selalu memprediksinya. Tanpa sharpening (suhu teacher rendah), output teacher menjadi hampir seragam dan student belajar mencocokkan keseragaman, yang juga kolaps. Keduanya bersama-sama menjaga output beragam antar dimensi dan memuncak per sampel."
+    },
+    {
+      "stage": "post",
+      "question": "MAE memask 75% patch. BERT memask 15% token. Mengapa berbeda?",
+      "options": ["75% bersifat arbitrer", "BERT mewajibkan 15% secara desain", "Patch gambar berentropi rendah — tetangganya sangat berkorelasi — sehingga memask hanya 15% akan mudah dipecahkan dengan ekstrapolasi lokal. Memask 75% memaksa encoder mempelajari fitur semantik global untuk merekonstruksi patch yang hilang", "Token teks lebih besar daripada patch gambar"],
+      "correct": 2,
+      "explanation": "Rasio mask harus cocok dengan kepadatan informasi modalitas. Teks: 15% cukup karena setiap token memiliki banyak penyelesaian yang masuk akal. Gambar: piksel bertetangga hampir saling menentukan, sehingga rasio mask rendah dapat dipecahkan tanpa pembelajaran representasi nyata. 75% milik MAE dikalibrasi untuk memaksa pemahaman semantik."
+    },
+    {
+      "stage": "post",
+      "question": "Setelah pretraining self-supervised, evaluasi 'linear probe' melatih apa saja?",
+      "options": ["MLP classifier head penuh", "Seluruh encoder", "Positional embedding", "Satu classifier linear di atas fitur encoder yang dibekukan; ini memisahkan kualitas fitur dari dinamika fine-tuning"],
+      "correct": 3,
+      "explanation": "Linear probe membekukan encoder dan mencocokkan Linear(features -> num_classes) pada dataset hilir berlabel. Akurasinya adalah ukuran langsung keterpisahan linear ruang fitur — proksi kualitas fitur. Fine-tuning seluruh backbone menambahkan kapasitas non-linear dan biasanya menaikkan akurasi beberapa poin, tetapi mencampur efek optimasi. Kedua angka dilaporkan dalam makalah SSL."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa MAE memakai desain encoder-decoder asimetris (encoder besar pada 25% patch terlihat, decoder kecil pada semua token)?",
+      "options": ["Decoder memerlukan backbone sendiri", "Batasan memori", "Token termask membingungkan self-attention", "Encoder tidak pernah memproses token mask; decoder kecil hanya menangani rekonstruksi. Ini membuat FLOPs encoder sebanding dengan patch terlihat (1/4 input penuh) dan memungkinkan pretraining berjalan 3x lebih cepat daripada desain naif yang memproses semua token melalui encoder penuh"],
+      "correct": 3,
+      "explanation": "Kemenangan efisiensi kunci di MAE: encoder mahal hanya melihat patch terlihat, yaitu 25% input. Token mask hanya muncul di decoder dangkal. Ini membuat pretraining kira-kira 3x lebih cepat daripada BEiT (yang memproses semua token melalui encoder) dengan akurasi hilir yang sama atau lebih baik."
+    }
+  ]
+}

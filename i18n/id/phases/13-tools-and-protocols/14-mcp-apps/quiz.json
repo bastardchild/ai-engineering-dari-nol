@@ -1,0 +1,78 @@
+{
+  "lesson": "14-mcp-apps",
+  "title": "MCP Apps pada Protokol Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Di mana MCP App modern sebaiknya mengikat resource UI-nya ke sebuah tool?",
+      "options": [
+        "Hanya di hasil teks final",
+        "Di stream HTTP GET mandiri",
+        "Di cookie sesi MCP",
+        "Di definisi tool yang dikembalikan tools/list"
+      ],
+      "correct": 3,
+      "explanation": "Nested _meta.ui.resourceUri pada definisi tool memungkinkan host memuat awal dan meninjau UI sebelum invocation."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien 2026-07-28 mengumumkan dukungan MCP Apps?",
+      "options": [
+        "Dengan notifications/initialized",
+        "Dengan Mcp-Session-Id",
+        "Di io.modelcontextprotocol/clientCapabilities.extensions pada setiap request",
+        "Dengan menerima semua resource ui://"
+      ],
+      "correct": 2,
+      "explanation": "Ekstensi bersifat opt-in melalui peta kemampuan klien per-request."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diinisialisasi ui/initialize?",
+      "options": [
+        "Sesi server tingkat protokol",
+        "Registrasi klien OAuth",
+        "Jembatan postMessage Apps antara iframe dan host",
+        "Kanal GET Streamable HTTP"
+      ],
+      "correct": 2,
+      "explanation": "ui/initialize milik dialek jembatan Apps dan terpisah dari handshake inti MCP yang telah dihapus."
+    },
+    {
+      "stage": "check",
+      "question": "Respons resource mana yang paling aman untuk App bawaan yang tidak bergantung pengguna?",
+      "options": [
+        "Tanpa resultType dan tanpa kebijakan cache",
+        "resultType complete, ttlMs terbatas, cacheScope public, dan CSP deny-first",
+        "Token sesi yang disematkan di HTML",
+        "ttlMs tanpa batas dan domain CSP wildcard"
+      ],
+      "correct": 1,
+      "explanation": "Hasil complete, cache hint eksplisit, dan CSP sempit membuat kebijakan wire dan browser dapat diperiksa."
+    },
+    {
+      "stage": "post",
+      "question": "Host menerima body resources/read untuk satu URI tetapi header Mcp-Name berbeda. Apa yang harus terjadi?",
+      "options": [
+        "Membuka kedua resource",
+        "Mengutamakan header",
+        "Mengutamakan body",
+        "Mengembalikan HTTP 400 dengan error JSON-RPC -32020"
+      ],
+      "correct": 3,
+      "explanation": "Header routing dan body harus cocok sebelum dukungan versi atau kebijakan fitur dievaluasi; transport mengembalikan HTTP 400 dengan error JSON-RPC -32020."
+    },
+    {
+      "stage": "post",
+      "question": "Apa fallback yang benar untuk host tanpa dukungan MCP Apps?",
+      "options": [
+        "Mengembalikan HTML sebagai chrome host tepercaya",
+        "Menjaga tool tetap dapat dipakai dengan output teks atau terstruktur biasa dan menghilangkan binding UI",
+        "Membuat sesi tersembunyi dan mencoba ulang",
+        "Memberikan ekstensi secara otomatis"
+      ],
+      "correct": 1,
+      "explanation": "Ekstensi opsional tidak boleh membuat tool yang mendasarinya tidak dapat dipakai oleh klien yang tidak menegosiasikannya."
+    }
+  ]
+}

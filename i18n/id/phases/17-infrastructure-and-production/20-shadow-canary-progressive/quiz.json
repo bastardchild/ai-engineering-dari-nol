@@ -1,0 +1,78 @@
+{
+  "lesson": "20-shadow-canary-progressive",
+  "title": "Shadow Traffic, Canary Rollout, dan Progressive Deployment untuk LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana urutan yang benar untuk shadow, canary, dan A/B testing pada rollout LLM?",
+      "options": [
+        "Lewati shadow sepenuhnya",
+        "Shadow (perbandingan tanpa dampak), lalu canary (traffic live progresif dengan gate), lalu A/B untuk alternatif yang berbeda setelah stabilitas terkonfirmasi",
+        "Canary dulu, lalu shadow, lalu A/B",
+        "A/B dulu, lalu shadow, lalu canary"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Set lima metrik mana yang dipakai pelajaran ini sebagai gate progresi canary?",
+      "options": [
+        "Suhu GPU, kecepatan kipas, kedalaman antrean, biaya, latensi",
+        "Hanya throughput",
+        "Persentil latensi, biaya per permintaan, tingkat error/penolakan, distribusi panjang output, tingkat umpan balik pengguna",
+        "Hanya akurasi pada eval offline"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa variansi akurasi antar-run yang dikutip pelajaran ini untuk input identik pada LLM?",
+      "options": [
+        "Di bawah 0.1%",
+        "Hingga sekitar 15%, akibat non-asosiativitas floating point GPU plus variansi ukuran batch",
+        "Selalu 50%",
+        "Output identik antar-run"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Untuk apa shadow mode, dalam kerangka pelajaran ini?",
+      "options": [
+        "Tes kualitas lengkap yang menggantikan eval",
+        "Smoke test yang menangkap ledakan biaya, regresi panjang, perubahan penolakan, dan error keras — bukan jaminan kualitas",
+        "Pengganti rollback",
+        "Langkah rollout produksi terakhir"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana desain rollback yang benar menurut pelajaran ini?",
+      "options": [
+        "SSH manual ke tiap pod",
+        "Redeploy dengan digest model baru, memakan waktu berjam-jam",
+        "Balik flag kebijakan dan kembalikan digest model yang dipin dalam hitungan detik — tanpa redeploy",
+        "Tunggu jendela rilis berikutnya"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa biaya dicantumkan sebagai gate bersama latensi dan kualitas?",
+      "options": [
+        "Model 20% lebih baik bisa 3x lebih mahal per panggilan; merilisnya tanpa gate biaya merusak unit economics",
+        "Biaya sama di semua provider",
+        "Biaya otomatis dibatasi setiap provider",
+        "Biaya hanya metrik pencitraan"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

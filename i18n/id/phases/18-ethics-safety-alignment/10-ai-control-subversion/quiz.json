@@ -1,0 +1,78 @@
+{
+  "lesson": "10-ai-control-subversion",
+  "title": "AI Control - Keselamatan Meski Ada Subversion",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mana yang paling tepat menangkap perbedaan alignment dan AI control?",
+      "options": [
+        "Keduanya sinonim",
+        "Control soal hardware; alignment soal software",
+        "Alignment bertanya apakah U bisa dipercaya; control bertanya apakah kita bisa memakai U dengan aman tanpa mempercayainya",
+        "Control menggantikan fungsi loss sementara alignment mengubah optimizer"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diasumsikan threat model AI Control?",
+      "options": [
+        "U kuat tetapi tak dipercaya, T lemah tetapi dipercaya, H adalah tenaga manusia terpercaya yang terbatas",
+        "Hanya U yang ada",
+        "U dan T keduanya adversarial",
+        "Ketiga sumber daya (U, T, H) dipercaya"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa risiko utama Untrusted Monitoring yang dihindari Trusted Editing?",
+      "options": [
+        "T tidak bisa mengedit teks",
+        "Contention hardware",
+        "Dua instance U bisa berkolusi atau berbagi prior, jadi protokol harus membelanjakan anggaran untuk ketahanan kolusi",
+        "Manusia tidak bisa diaudit"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Pada tugas code-backdoor Greenblatt et al. (ICML 2024), apa yang dicapai Trusted Editing dibanding Untrusted Monitoring?",
+      "options": [
+        "Itu hanya menang pada anggaran manusia nol",
+        "Keduanya persis setara",
+        "Itu secara ketat lebih buruk",
+        "Itu mendominasi Pareto secara ketat: usefulness lebih tinggi di setiap level keselamatan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mana yang BUKAN salah satu dari tiga batas fundamental control dalam pelajaran ini?",
+      "options": [
+        "Control menghasilkan model aligned sebagai produk sampingan",
+        "Model lemah yang dipercaya pada akhirnya tertinggal dari U",
+        "Control bisa gagal pada level kapabilitas lebih tinggi jika U bisa memanipulasi T atau bernalar tentang distribusi audit H",
+        "Manusia tidak berskala"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diargumentasikan Control Safety Case?",
+      "options": [
+        "Bahwa U bisa dipercaya",
+        "Bahwa T lebih kapabel daripada U",
+        "Bahwa di bawah asumsi worst-case tentang U, protokol deployment membatasi probabilitas hasil yang tidak dapat diterima",
+        "Bahwa model lolos tes jailbreak manual"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/26-sandbox-runner-denylist",
+  "title": "Sandbox Runner dengan Denylist dan Path Jail",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca lesson: apa alasan terkuat sandbox memeriksa bentuk argv untuk invokasi interpreter seperti python3 -c?",
+      "options": [
+        "Interpreter tidak bisa disandbox dengan aman sama sekali.",
+        "Interpreter lambat dan membuang anggaran agen.",
+        "Interpreter dengan -c adalah panggilan shell dengan nama lain dan melewati denylist executable.",
+        "Model menulis kode lebih baik tanpanya."
+      ],
+      "correct": 2,
+      "explanation": "python3 -c, bash -c, node -e, dan sejenisnya secara fungsional identik dengan memberi model sebuah shell. Memblokir nama executable saja tidak cukup."
+    },
+    {
+      "stage": "check",
+      "question": "Sandbox dikonfigurasi dengan project_root=/work. Argumen path datang sebagai ./src/main.py. Bagaimana pemeriksaan jail dilakukan?",
+      "options": [
+        "os.path.realpath dari path absolut hasil join diperiksa untuk prefix /work.",
+        "Sandbox menolak setiap path relatif.",
+        "Pencocokan prefix string literal terhadap /work.",
+        "Sandbox menjalankan subprocess dan memeriksa working directory setelah fakta."
+      ],
+      "correct": 0,
+      "explanation": "realpath menyelesaikan symlink. Pemeriksaan prefix literal bisa dilewati symlink di dalam project root yang menunjuk ke luar. realpath plus prefix-or-equal adalah pemeriksaan yang aman."
+    },
+    {
+      "stage": "check",
+      "question": "SandboxResult kembali dengan denied=True, timed_out=False, exit_code=-100. Apa interpretasi kanonisnya?",
+      "options": [
+        "Sandbox tidak pernah menjalankan subprocess; panggilan ditolak sebelum exec.",
+        "Subprocess mengembalikan -100 secara eksplisit.",
+        "Subprocess mulai dan dibunuh SIGKILL.",
+        "Timeout wall-clock menyala."
+      ],
+      "correct": 0,
+      "explanation": "exit_code sentinel -100 dipasangkan dengan denied=True berarti sandbox short-circuit sebelum subprocess.run dipanggil."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa sandbox lebih memilih shell=False secara default dan menolak metakarakter shell?",
+      "options": [
+        "subprocess tidak menerima shell=True di macOS.",
+        "Itu membuat test suite lebih sederhana.",
+        "Parsing shell mengekspos seluruh DSL shell ke model, yang merupakan permukaan yang ingin dikecilkan sandbox.",
+        "shell=True lebih lambat di CPython."
+      ],
+      "correct": 2,
+      "explanation": "shell=True mengubah argv menjadi string yang diinterpretasikan shell. Pipe, redirect, command substitution, dan globbing semuanya tersedia. Sandbox tidak bisa menolak payload secara bermakna setelah parsing shell berjalan."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu ingin menambah batas memori per proses ke sandbox. Sandbox lesson ini tidak mengimplementasikannya. Apa langkah berikutnya yang benar?",
+      "options": [
+        "Lewati: denylist cukup untuk memory bomb.",
+        "Naikkan timeout wall-clock untuk mengompensasi.",
+        "Pakai os.setrlimit(RLIMIT_AS) di preexec_fn yang diteruskan ke subprocess.run.",
+        "Tambahkan batas ke denylist sebagai string."
+      ],
+      "correct": 2,
+      "explanation": "subprocess.run menerima preexec_fn (POSIX) atau mekanisme serupa. setrlimit(RLIMIT_AS) membatasi ruang alamat anak. Sandbox lesson ini tidak mengirimkannya; demo end-to-end lesson 29 membahas cara melapisi batas tingkat container di atasnya."
+    },
+    {
+      "stage": "post",
+      "question": "Model memanggil sandbox dengan argv=['cat', 'src/../src/main.py']. File ada di bawah project_root. Haruskah panggilan lolos path jail?",
+      "options": [
+        "Tergantung apakah pengguna root.",
+        "Ya: realpath meruntuhkan src/../src menjadi src dan path hasilnya ada di dalam project_root.",
+        "Tidak: argv ditolak gate regex sebelum sandbox melihatnya.",
+        "Tidak, setiap .. dalam path adalah penolakan otomatis."
+      ],
+      "correct": 1,
+      "explanation": "realpath menormalisasi path. Sandbox tidak menolak token .. secara menyeluruh; ia memeriksa target hasil resolve. Ini disengaja: path sah kadang memang melewati ..."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "lesson": "02-few-shot-cot",
+  "title": "Few-Shot, Chain-of-Thought, Tree-of-Thought",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan kunci antara zero-shot dan few-shot prompting?",
+      "options": [
+        "Zero-shot hanya memberi instruksi; few-shot menyertakan contoh demonstrasi input-output sebelum query sebenarnya",
+        "Zero-shot tidak memakai system prompt",
+        "Few-shot memakai model berbeda",
+        "Zero-shot lebih cepat"
+      ],
+      "correct": 0,
+      "explanation": "Few-shot prompting menyertakan contoh yang sudah dikerjakan (demonstrasi) yang menunjukkan pola yang diharapkan kepada model. Ini seperti menunjukkan cara mengisi formulir sebelum meminta seseorang mengisi formulirnya sendiri."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan prompting 'Chain of Thought'?",
+      "options": [
+        "Ia menginstruksikan model untuk menunjukkan langkah penalaran perantara sebelum memberi jawaban akhir, meningkatkan akurasi pada masalah multi-langkah",
+        "Ia menghasilkan respons lebih panjang",
+        "Ia merangkai beberapa panggilan API",
+        "Ia menghubungkan beberapa model secara berurutan"
+      ],
+      "correct": 0,
+      "explanation": "Prompting CoT (misalnya 'Mari berpikir langkah demi langkah') memberi model 'kertas coretan' untuk mengerjakan masalah. Pada soal matematika GSM8K, ini saja meningkatkan akurasi GPT-4o dari 78% menjadi 91%."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana Tree-of-Thought berbeda dari Chain-of-Thought?",
+      "options": [
+        "Ia mengeksplorasi beberapa jalur penalaran secara paralel dan mengevaluasi jalur mana yang menghasilkan jawaban terbaik",
+        "Ia memakai struktur data tree untuk penyimpanan",
+        "Ia memakai model berbeda",
+        "Ia hanya chain of thought yang lebih panjang"
+      ],
+      "correct": 0,
+      "explanation": "CoT mengikuti satu jalur penalaran. Tree-of-Thought menghasilkan beberapa jalur kandidat, mengevaluasinya (mungkin dengan LLM itu sendiri), dan memilih yang terbaik. Ini membantu pada masalah di mana jalur penalaran pertama mungkin salah."
+    },
+    {
+      "stage": "post",
+      "question": "Saat memilih contoh few-shot, apa yang paling penting?",
+      "options": [
+        "Memakai contoh terpendek",
+        "Memilih contoh beragam yang mencakup kasus berbeda dan menunjukkan format serta pola penalaran persis yang kamu inginkan",
+        "Memakai sebanyak mungkin contoh",
+        "Memakai contoh dari test set"
+      ],
+      "correct": 1,
+      "explanation": "Kualitas contoh mengalahkan kuantitas. 3-5 contoh beragam dan terformat baik yang mencakup edge case berbeda mengajarkan pola kepada model lebih baik daripada 20 contoh berulang yang membuang token context window."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa prompting CoT meningkatkan akurasi meskipun model memiliki pengetahuan yang sama dengan atau tanpa CoT?",
+      "options": [
+        "Ia memakai lebih banyak komputasi",
+        "Ia mengaktifkan kemampuan tersembunyi model",
+        "Ia mengubah bobot model",
+        "Menghasilkan token perantara menciptakan konteks efektif yang lebih besar untuk jawaban akhir, memungkinkan model mengondisikan pada penalarannya sendiri"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa CoT, model harus melompat langsung ke jawaban dalam satu token. Dengan CoT, setiap langkah perantara adalah token yang dikondisikan model untuk langkah berikutnya. Model pada dasarnya 'berpikir keras,' membangun jalan menuju jawaban."
+    }
+  ]
+}

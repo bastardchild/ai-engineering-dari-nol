@@ -1,0 +1,78 @@
+{
+  "lesson": "16-red-team-tooling-garak-llamaguard-pyrit",
+  "title": "Tooling Red-Team - Garak, Llama Guard, PyRIT",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Peran apa yang dimainkan Llama Guard dalam deployment 2026 yang tipikal?",
+      "options": [
+        "Scaffolder penalaran untuk chain-of-thought",
+        "Reward model untuk RLHF",
+        "Alternatif tokenizer",
+        "Classifier keselamatan input dan/atau output lintas kategori bahaya MLCommons, ditempatkan sebelum dan sesudah LLM"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa kategori bahaya MLCommons yang dicakup Llama Guard 3?",
+      "options": [
+        "3",
+        "40",
+        "14",
+        "7"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana arsitektur Garak diorganisasi?",
+      "options": [
+        "Probe (pembangkit serangan), Detector (penilai output), Harness (manajer kampanye)",
+        "Embedding, retriever, reranker",
+        "Tool, resource, prompt",
+        "Router, agent, antrean"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Untuk apa PyRIT terutama dirancang, dan bagaimana bedanya dengan Garak?",
+      "options": [
+        "PyRIT menjalankan kampanye multi-turn mendalam (rantai converter, orkestrator seperti Crescendo dan TAP, scoring) sementara Garak menjalankan ribuan probe satu giliran",
+        "Keduanya identik dalam cakupan dan audiens",
+        "PyRIT varian Llama Guard; Garak varian Prompt-Guard",
+        "PyRIT pelatih reward model; Garak tokenizer"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana konfigurasi stack red-team default 2026 yang direkomendasikan?",
+      "options": [
+        "Pakai PAIR alih-alih tooling apa pun",
+        "Jalankan Garak sekali saat peluncuran saja",
+        "Ganti evaluasi LLM dengan review manual saja",
+        "Pasang Llama Guard di kedua sisi model, jalankan Garak tiap malam untuk regresi, dan jalankan PyRIT untuk kampanye pra-rilis"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Jebakan evaluasi apa yang dibagi Llama Guard, Garak, dan PyRIT?",
+      "options": [
+        "Ketiganya butuh akses white-box",
+        "Ketiganya hanya berjalan dalam bahasa Inggris",
+        "Ketiganya tidak bisa berjalan di GPU",
+        "Tingkat serangan/pertahanan yang dilaporkan bergantung pada identitas juri dan kebasian probe; kamu harus menyebut juri dan menyegarkan probe saat model ditambal"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

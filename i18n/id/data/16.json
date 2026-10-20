@@ -1,0 +1,135 @@
+{
+  "phase": {
+    "16": {
+      "name": "Multi-Agent & Swarm",
+      "desc": "Koordinasi, emergence, dan kecerdasan kolektif."
+    }
+  },
+  "lessons": {
+    "phases/16-multi-agent-and-swarms/01-why-multi-agent": {
+      "name": "Mengapa Multi-Agent",
+      "summary": "Satu agent menabrak dinding. Langkah cerdasnya bukan agent yang lebih besar — melainkan lebih banyak agent.",
+      "keywords": "Batas atas single-agent · Solusi multi-agent · Sistem nyata yang melakukannya · Spektrum · Empat pola multi-agent · Kapan TIDAK memakai multi-agent · Langkah 1: Single agent yang kelebihan beban · Langkah 2: Agent spesialis · Langkah 3: Koordinasi lewat pesan · Langkah 4: Bandingkan"
+    },
+    "phases/16-multi-agent-and-swarms/02-fipa-acl-heritage": {
+      "name": "Warisan FIPA-ACL dan Speech Act",
+      "summary": "Sebelum MCP, sebelum A2A, ada FIPA-ACL. Pada 2000 Foundation for Intelligent Physical Agents IEEE meratifikasi bahasa komunikasi agent dengan dua puluh performative, dua c…",
+      "keywords": "Speech act dalam satu paragraf · Dua puluh performative FIPA (daftar sebagian) · Pesan FIPA-ACL kanonik · Dua platform warisan · Mengapa FIPA memudar · Kebangkitan LLM adalah FIPA-lite · Trade-off, dinyatakan lugas · Protokol interaksi yang layak diporting · Apa yang rusak saat ontology dihilangkan · Spesifikasi 2026, dipetakan ke warisan speech act"
+    },
+    "phases/16-multi-agent-and-swarms/03-communication-protocols": {
+      "name": "Protokol Komunikasi",
+      "summary": "Agent yang tidak bisa berbicara bahasa yang sama bukanlah tim. Mereka orang asing yang berteriak ke kehampaan.",
+      "keywords": "Lanskap protokol · MCP (Rekap) · A2A (Agent2Agent Protocol) · ACP (Agent Communication Protocol) · ANP (Agent Network Protocol) · Perbandingan (Dikoreksi) · Cara mereka bekerja bersama · Langkah 1: Tipe pesan inti · Langkah 2: Agent Card dan registry A2A · Langkah 3: Siklus hidup task A2A · Langkah 4: Audit trail bergaya ACP · Langkah 5: Verifikasi identitas bergaya ANP · Langkah 6: Gateway protokol · Langkah 7: Rangkai semuanya · Implementasi nyata · Memilih protokol yang tepat"
+    },
+    "phases/16-multi-agent-and-swarms/04-primitive-model": {
+      "name": "Model Primitif Multi-Agent",
+      "summary": "Empat primitif, tidak lebih — agent, handoff, shared state, orchestrator — merentang ruang desain empat dimensi, dan framework multi-agent utama yang dikirim …",
+      "keywords": "Empat primitif · Bagaimana setiap framework 2026 memetakan ke sana · Mengapa ini penting · Insight stateless · Anatomi satu primitif · Apa yang berubah antar framework"
+    },
+    "phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern": {
+      "name": "Pola Supervisor / Orchestrator-Worker",
+      "summary": "Satu agent pemimpin merencanakan dan mendelegasikan; worker spesialis mengeksekusi di konteks paralel dan melapor kembali. Ini adalah pola di balik sistem Research Anthropic (Claude Opus 4 sebagai le…",
+      "keywords": "Polanya · Mengapa menang · Pelajaran engineering (Anthropic 2025) · Pergeseran graph-native · Failure mode · Kapan supervisor salah"
+    },
+    "phases/16-multi-agent-and-swarms/06-hierarchical-architecture": {
+      "name": "Arsitektur Hierarchical dan Decomposition Drift",
+      "summary": "Hierarchical adalah supervisor bersarang. Agent manager di atas sub-manager di atas worker. `Process.hierarchical` CrewAI adalah versi buku teks: `manager_llm` mendelegasikan secara dinamis ta…",
+      "keywords": "Bentuknya · Di mana bersinar · Di mana rusak · Pertanyaan penentu · Implementasi framework berbasis role · Implementasi framework berbasis graph"
+    },
+    "phases/16-multi-agent-and-swarms/07-society-of-mind-debate": {
+      "name": "Society of Mind dan Debat Multi-Agent",
+      "summary": "Premis Minsky (1986) — kecerdasan adalah masyarakat spesialis — ditemukan ulang setiap dekade. Pada 2023 Du et al. mengubahnya menjadi algoritma konkret: beberapa instance LLM …",
+      "keywords": "Algoritma Du et al. 2023 · Dua knob independen · Mengapa berhasil · Debat heterogen · NLSOM — ekstensi 129 agent · Failure mode"
+    },
+    "phases/16-multi-agent-and-swarms/08-role-specialization": {
+      "name": "Spesialisasi Peran — Planner / Critic / Executor / Verifier",
+      "summary": "Dekomposisi multi-agent paling umum pada 2026: satu agent merencanakan, satu mengeksekusi, satu mengkritik atau memverifikasi. MetaGPT (arXiv:2308.00352) memformalkannya sebagai SOP yang dikodekan ke role…",
+      "keywords": "Empat peran kanonik · Pola SOP MetaGPT · Dehallucination komunikatif ChatDev · Mengapa verifier paling penting · Critic vs verifier · Anti-pola · Pemetaan framework"
+    },
+    "phases/16-multi-agent-and-swarms/09-parallel-swarm-networks": {
+      "name": "Swarm Paralel dan Arsitektur Berjaringan",
+      "summary": "Berbeda dengan supervisor: tidak ada pengambil keputusan pusat. Agent membaca event bus bersama, mengambil pekerjaan secara asinkron, dan menulis hasil kembali. LangGraph secara eksplisit mendukung \"Swarm Architecture\"…",
+      "keywords": "Bentuknya · Kapan swarm cocok · Kapan swarm gagal · Matrix (arXiv:2511.21686) · Swarm di framework graph · Failure mode: starvation dan hot-spotting · Kaitan content-based routing"
+    },
+    "phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection": {
+      "name": "Group Chat dan Pemilihan Pembicara",
+      "summary": "Orchestration percakapan bersama menempatkan N agent dalam satu percakapan; fungsi selector (LLM, round-robin, atau kustom) memilih siapa yang berbicara berikutnya. Ini adalah arketipe multi-agent emergent…",
+      "keywords": "Bentuknya · Tiga varian selector · API ConversableAgent · Terminasi · Lineage: fork dan merger · Kapan GroupChat cocok · Kapan gagal · Group chat vs supervisor"
+    },
+    "phases/16-multi-agent-and-swarms/11-handoffs-and-routines": {
+      "name": "Handoff dan Routine (Orchestration Stateless)",
+      "summary": "Swarm dari OpenAI (Oktober 2024) menyuling orchestration multi-agent menjadi dua primitif: **routine** (instruksi + tool sebagai system prompt) dan **handoff** (tool yang mengembalikan…",
+      "keywords": "Dua primitif · Mengapa viral · Trade stateless · Kapan Swarm/handoff cocok · Kapan Swarm kesulitan · OpenAI Agents SDK (Maret 2025) · Swarm vs GroupChat"
+    },
+    "phases/16-multi-agent-and-swarms/12-a2a-protocol": {
+      "name": "A2A — Protokol Agent-to-Agent",
+      "summary": "Google mengumumkan A2A pada April 2025; pada April 2026 spesifikasinya ada di https://a2a-protocol.org/latest/specification/ dan 150+ organisasi mendukungnya. A2A adalah pelengkap horizontal …",
+      "keywords": "Empat elemen · Pembagian MCP/A2A · Alur discovery · Auth · 150+ organisasi per April 2026 · Di mana A2A menang · Di mana A2A kesulitan · A2A vs ACP, ANP, NLIP"
+    },
+    "phases/16-multi-agent-and-swarms/13-shared-memory-blackboard": {
+      "name": "Pola Shared Memory dan Blackboard",
+      "summary": "Dua pendekatan hidup berdampingan dalam sistem multi-agent 2026: **message pool** (semua melihat pesan semua orang, seperti di AutoGen GroupChat atau MetaGPT) dan **blackboard dengan subscr…",
+      "keywords": "Dua topologi utama · Kapan masing-masing menang · Memory poisoning, dalam satu skenario · Mengapa ini struktural · Preseden blackboard (Hayes-Roth, 1985) · Proyeksi vs tampilan penuh · Pola write contention · Verifier yang tidak bisa menulis"
+    },
+    "phases/16-multi-agent-and-swarms/14-consensus-and-bft": {
+      "name": "Konsensus dan Byzantine Fault Tolerance",
+      "summary": "BFT sistem terdistribusi klasik bertemu LLM stokastik. Pada 2025-2026 muncul tiga arah riset: **CP-WBFT** (arXiv:2511.10400) menimbang setiap suara dengan probe keyakinan; *…",
+      "keywords": "Apa yang diberikan BFT klasik · Tiga serangan spesifik LLM · Respons 2025-2026 · Empiris: \"Can AI Agents Agree?\" (arXiv:2603.01213) · Protokol inti, disederhanakan · Penyetelan threshold · Di mana konsensus tidak membantu"
+    },
+    "phases/16-multi-agent-and-swarms/15-voting-debate-topology": {
+      "name": "Voting, Self-Consistency, dan Topologi Debat",
+      "summary": "Agregasi termurah: ambil sampel N agent independen, lakukan majority vote. Self-consistency Wang et al. 2022 melakukannya dengan satu model yang di-sample N kali. Multi-agent memperluasnya dengan **he…",
+      "keywords": "Self-consistency, baseline single-model · Multi-agent vote, ekstensi heterogen · Empat topologi · Coordination tax (MultiAgentBench) · Multi-Agent Debate Strategies (\"Should we be going MAD?\") · Pola emergent AgentVerse · Heterogenitas: knob sebenarnya yang menggerakkan akurasi · Metode jury · Kapan vote-with-debate mendominasi · Kapan vote-with-debate merugikan"
+    },
+    "phases/16-multi-agent-and-swarms/16-negotiation-bargaining": {
+      "name": "Negosiasi dan Bargaining",
+      "summary": "Agent menegosiasikan sumber daya, harga, alokasi tugas, dan syarat. Set benchmark 2026 sudah jelas: NegotiationArena (arXiv:2402.05863) menunjukkan LLM dapat meningkatkan payoff ~20% lewat per…",
+      "keywords": "Contract Net dalam satu paragraf · Mengapa OG-Narrator menang · Temuan NegotiationArena · Penyembunyian chain-of-thought · Bhattacharya et al. 2025 — peringkat model · Alokasi tugas via Contract Net + LLM · LLM-Stakeholders Interactive Negotiation · Aturan narasi-vs-mekanisme"
+    },
+    "phases/16-multi-agent-and-swarms/17-generative-agents-simulation": {
+      "name": "Generative Agent dan Simulasi Emergent",
+      "summary": "Park et al. 2023 (UIST '23, arXiv:2304.03442) mengisi **Smallville**, sandbox berisi 25 agent, dengan arsitektur tiga bagian: **memory stream** (log bahasa natural), **refle…",
+      "keywords": "Tiga komponen · Mengapa ketiganya penting (ablasi) · Emergence Hari Valentine · Failure mode yang terdokumentasi · Aturan implementasi tiga komponen · Generative agent di luar Smallville · Mengapa ini penting untuk engineering multi-agent"
+    },
+    "phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination": {
+      "name": "Theory of Mind dan Koordinasi Emergent",
+      "summary": "Li et al. (arXiv:2310.10701) menunjukkan bahwa agent LLM dalam game teks kooperatif memperlihatkan **Theory of Mind (ToM) tingkat tinggi yang emergent** — bernalar tentang apa yang dipercaya agent lain…",
+      "keywords": "Arti ToM · Tes Sally-Anne, singkat · Pengukuran koordinasi Riedl · Ilusi koordinasi · Agent minimal yang sadar ToM · Mengapa long-horizon merugikan · Di mana ToM gagal di produksi · Koordinasi yang benar-benar bisa kamu ukur"
+    },
+    "phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco": {
+      "name": "Swarm Optimization (PSO, ACO)",
+      "summary": "Optimasi terinspirasi alam kembali bangkit lewat LLM. **LMPSO** (arXiv:2504.09247) memakai PSO di mana kecepatan setiap partikel adalah prompt dan LLM menghasilkan kandidat berikutnya; s…",
+      "keywords": "Penyegaran PSO (Kennedy & Eberhart 1995) · PSO pada output LLM — LMPSO · Model Swarms · Penyegaran ACO (Dorigo 1992) · AMRO-S — ACO untuk routing agent · Kapan memakai PSO / ACO untuk LLM · Mengapa bio-inspired masih menang · Batas praktis"
+    },
+    "phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo": {
+      "name": "MARL — MADDPG, QMIX, MAPPO",
+      "summary": "Warisan reinforcement learning dari koordinasi multi-agent, yang masih membentuk sistem agent LLM pada 2026. **MADDPG** (Lowe et al., NeurIPS 2017, arXiv:1706.02275) memperkenalk…",
+      "keywords": "Tiga lingkungan yang dipakai paper · MADDPG (2017) — pola CTDE · QMIX (2018) — dekomposisi nilai · MAPPO (2022) — default yang terlewat · Mengapa engineer agent LLM harus peduli · CTDE sebagai pola desain di luar RL · Masalah non-stationarity · Apa yang TIDAK dibahas lesson ini"
+    },
+    "phases/16-multi-agent-and-swarms/21-agent-economies": {
+      "name": "Ekonomi Agent, Insentif Token, Reputasi",
+      "summary": "Agent otonom long-horizon (kurva kerja 1 jam hingga 8 jam METR) membutuhkan agensi ekonomi. **Stack 5 lapis** yang muncul: **DePIN** (compute fisik) → **Identity** (W3C DID…",
+      "keywords": "Stack ekonomi agent 5 lapis · Bittensor, Fetch.ai, Gonka — apa yang berjalan · Atribusi kredit Shapley-value · Lelang second-price untuk agregasi · Modal reputasi · LaMAS terdesentralisasi AAMAS 2025 · Di mana ekonominya ambruk · Kapan ekonomi agent masuk akal"
+    },
+    "phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints": {
+      "name": "Scaling Produksi — Queue, Checkpoint, Durability",
+      "summary": "Menskalakan sistem multi-agent ke ribuan run bersamaan membutuhkan **durable execution** — work queue plus checkpoint, sehingga worker mana pun dapat melanjutkan run mana pun setelah crash apa pun, asal…",
+      "keywords": "Durable execution, polanya · Runtime checkpoint per langkah · Queue per agent MegaAgent · Async vs thread-per-job · Kontra-argumen Bedi · Semantik exactly-once · Deployment rainbow · Checklist produksi kanonik"
+    },
+    "phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink": {
+      "name": "Failure Mode — MAST, Groupthink, Monoculture",
+      "summary": "Taksonomi referensi untuk 2026 adalah **MAST** (Cemri et al., NeurIPS 2025, arXiv:2503.13657), yang diturunkan dari 1.642 trace eksekusi pada 7 MAS open-source canggih dan menunjukkan …",
+      "keywords": "Kategori MAST · Keluarga groupthink (arXiv:2508.05687) · Contoh berantai — retry storm · Memory poisoning (dibahas ulang) · STRATUS — agent spesialis untuk deteksi kegagalan · Audit failure mode · Kapan sistem gagal diam-diam · Kegagalan vs kegagalan lambat"
+    },
+    "phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks": {
+      "name": "Benchmark Evaluasi dan Koordinasi",
+      "summary": "Lima benchmark 2025-2026 mencakup ruang evaluasi multi-agent. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) mengevaluasi topologi star/chain/tree/graph dengan mile…",
+      "keywords": "MultiAgentBench (MARBLE) — ACL 2025 · COMMA — informasi asimetris multimodal · MedAgentBoard — stress test domain · AgentArch — arsitektur enterprise · SWE-bench Pro — uji realitas · AAAI 2026 WMAC · Baca klaim benchmark dengan skeptis — checklist 2026 · Apa yang tidak diukur dengan baik oleh semua benchmark"
+    },
+    "phases/16-multi-agent-and-swarms/25-case-studies-2026-sota": {
+      "name": "Studi Kasus dan State of the Art 2026",
+      "summary": "Tiga referensi kelas produksi untuk dipelajari menyeluruh, masing-masing menggambarkan irisan berbeda dari engineering multi-agent. **Sistem Research Anthropic** (orchestrator-worker, 15x …",
+      "keywords": "Sistem Research Anthropic · MetaGPT / ChatDev · Ekosistem OpenClaw / Moltbook · Lanskap framework April 2026 · Pola umum di ketiga kasus · Memilih referensi untuk proyek berikutnya · Ringkasan state of the art 2026"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "24-agent-observability-platforms",
+  "title": "Observabilitas Agent: Langfuse, Phoenix, Opik",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Lisensi apa yang dipakai Langfuse setelah modul komersialnya di-open-source pada Juni 2025?",
+      "options": [
+        "Apache 2.0",
+        "GPLv3",
+        "Elastic License 2.0",
+        "MIT"
+      ],
+      "correct": 3,
+      "explanation": "Langfuse berlisensi MIT, termasuk LLM-as-a-judge, annotation queue, prompt experiment, dan Playground setelah Juni 2025."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kekuatan utama Arize Phoenix menurut pelajaran?",
+      "options": [
+        "Evaluasi mendalam khusus agent: trace clustering, deteksi anomali, relevansi retrieval RAG, auto-instrumentation OpenInference",
+        "Loop optimasi otomatis",
+        "Versioning prompt",
+        "Analisis statis kode"
+      ],
+      "correct": 0,
+      "explanation": "Phoenix berfokus pada drift perilaku dan evaluasi RAG dengan auto-instrumentation OpenInference."
+    },
+    {
+      "stage": "check",
+      "question": "Platform mana yang memasangkan optimasi prompt otomatis dengan guardrail (redaksi PII, batasan topikal) dan deteksi halusinasi LLM-judge?",
+      "options": [
+        "Langfuse",
+        "Phoenix",
+        "Jaeger",
+        "Opik"
+      ],
+      "correct": 3,
+      "explanation": "Opik berpusat pada loop optimasi + guardrail."
+    },
+    {
+      "stage": "check",
+      "question": "Platform mana yang disarankan pelajaran untuk solusi all-in-one dengan manajemen prompt?",
+      "options": [
+        "Opik",
+        "Datadog APM",
+        "Phoenix",
+        "Langfuse"
+      ],
+      "correct": 3,
+      "explanation": "Langfuse mencakup tracing + manajemen prompt + eval + session replay secara end-to-end."
+    },
+    {
+      "stage": "check",
+      "question": "Apa kata pelajaran tentang benchmark platform yang diterbitkan vendor?",
+      "options": [
+        "Itu definitif",
+        "Anggap sebagai indikasi arah; ukur korpusmu sendiri",
+        "Hanya milik Opik yang andal",
+        "Itu dilarang OpenTelemetry"
+      ],
+      "correct": 1,
+      "explanation": "Bahkan celah 14x yang dikutip antara Opik dan Langfuse harus diukur pada data sendiri sebelum memutuskan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa tracing tanpa evaluasi dianggap logging yang mahal?",
+      "options": [
+        "Penyedia menagih span",
+        "Kamu melihat run tetapi tidak menilainya, sehingga regresi tak terlihat dan bisection mustahil",
+        "Disk lebih mahal daripada CPU",
+        "Span tidak dapat di-replay"
+      ],
+      "correct": 1,
+      "explanation": "Eval-lah yang mengubah trace menjadi sinyal kualitas yang dapat ditindaklanjuti."
+    },
+    {
+      "stage": "post",
+      "question": "Apa peringatan pelajaran tentang LLM-judge buatan sendiri?",
+      "options": [
+        "CRITIC berlaku: judge butuh pijakan eksternal untuk verifikasi faktual atau ia hanya meloloskan begitu saja",
+        "Mereka harus berjalan di GPU",
+        "Mereka dilarang Apache 2.0",
+        "Mereka hanya bekerja di TypeScript"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa verifikasi eksternal berbasis tool, LLM-judge cenderung meloloskan begitu saja (CRITIC, Pelajaran 5)."
+    }
+  ]
+}

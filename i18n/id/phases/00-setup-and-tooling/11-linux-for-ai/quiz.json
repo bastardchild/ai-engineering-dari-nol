@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang direpresentasikan simbol '~' dalam path file Linux?",
+      "options": ["Direktori root sistem file", "Direktori file sementara", "Direktori home pengguna saat ini", "Direktori tempat program sistem terinstal"],
+      "correct": 2,
+      "explanation": "Tilde (~) adalah singkatan untuk direktori home pengguna saat ini, biasanya /home/username di Linux. 'cd ~' membawamu pulang dari mana saja."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tujuan 'sudo' sebelum sebuah perintah?",
+      "options": ["Menjalankan perintah dengan hak akses root (administrator)", "Menjalankan perintah di environment sandbox", "Mempercepat eksekusi perintah", "Mencatat output perintah ke file sistem"],
+      "correct": 0,
+      "explanation": "sudo (superuser do) menaikkan hak aksesmu ke level root untuk sementara pada satu perintah. Diperlukan untuk operasi tingkat sistem seperti menginstal paket dengan apt."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mendapat 'Permission denied' saat mencoba menjalankan skrip shell. Perintah apa yang memperbaikinya?",
+      "options": ["chown root script.sh", "mv script.sh /usr/bin/", "chmod +x script.sh", "sudo rm script.sh"],
+      "correct": 2,
+      "explanation": "chmod +x menambahkan izin eksekusi ke file. Tanpa bit eksekusi, shell menolak menjalankan skrip meskipun kamu pemiliknya."
+    },
+    {
+      "stage": "post",
+      "question": "Di mesin GPU jarak jauh, data pelatihanmu memenuhi disk. Perintah mana yang menunjukkan direktori terbesar yang memakan ruang?",
+      "options": ["ls -la /", "cat /proc/meminfo", "du -h --max-depth=1 / | sort -hr | head -20", "free -h"],
+      "correct": 2,
+      "explanation": "du -h menampilkan penggunaan disk per direktori, --max-depth=1 membatasi ke direktori tingkat atas, dan sort -hr mengurutkan berdasarkan ukuran menurun. Ini mengungkap direktori mana yang paling banyak memakan ruang."
+    },
+    {
+      "stage": "post",
+      "question": "Apa perbedaan utama antara versi 'sed -i' di macOS dan Linux?",
+      "options": ["sed di Linux lebih cepat daripada sed di macOS", "sed di Linux tidak mendukung regular expression", "sed di macOS tidak dapat mengubah file secara in-place", "sed di macOS memerlukan argumen string kosong setelah -i ('sed -i \"\"'), sedangkan Linux tidak"],
+      "correct": 3,
+      "explanation": "macOS memakai BSD sed yang memerlukan 'sed -i \"\" pattern file', sedangkan Linux memakai GNU sed yang menerima 'sed -i pattern file'. Ini jebakan umum saat memindahkan skrip antar sistem."
+    }
+  ]
+}

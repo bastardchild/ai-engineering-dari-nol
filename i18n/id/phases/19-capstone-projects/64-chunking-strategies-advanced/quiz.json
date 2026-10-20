@@ -1,0 +1,78 @@
+{
+  "lesson": "64-chunking-strategies-advanced",
+  "title": "Strategi Chunking, Dibandingkan",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa pilihan chunking adalah batas atas kualitas retrieval, bukan sekadar hyperparameter?",
+      "options": [
+        "Karena LLM tidak pernah membaca chunk",
+        "Karena BM25 tidak berperan di RAG modern",
+        "Karena tidak ada embedding, reranker, atau LLM hilir yang dapat memulihkan span jawaban yang terpotong menjadi bagian tidak koheren",
+        "Karena model embedding ditetapkan saat training"
+      ],
+      "correct": 2,
+      "explanation": "Jika chunk yang memuat span jawaban tidak koheren, embedding bergerak ke cluster salah dan komponen hilir tidak dapat memperbaiki kerusakannya."
+    },
+    {
+      "stage": "pre",
+      "question": "Strategi mana yang menjadi default satu strategi terkuat saat kamu tidak punya pengetahuan awal tentang korpus?",
+      "options": [
+        "Sentence packer",
+        "Fixed-window",
+        "Recursive split",
+        "Structural markdown"
+      ],
+      "correct": 2,
+      "explanation": "Recursive split beradaptasi per wilayah dengan mencoba separator terkuat dulu lalu fallback, sehingga bertahan pada struktur yang tidak konsisten."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur recall@k dalam lesson ini?",
+      "options": [
+        "Apakah chunk top-k memuat string query literal",
+        "Cosine similarity antara query dan chunk top-k",
+        "Jumlah dokumen unik di top-k",
+        "Apakah ada chunk top-k yang tumpang tindih dengan span jawaban emas"
+      ],
+      "correct": 3,
+      "explanation": "Setiap query membawa offset emas; recall@k bernilai 1 jika ada chunk top-k yang tumpang tindih dengan span emas, selain itu 0; dirata-ratakan lintas query."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa chunking fixed-window gagal parah pada korpus kode atau YAML?",
+      "options": [
+        "Itu memotong identifier dan pasangan key-value menjadi dua, menghasilkan chunk yang ter-embed sebagai noise",
+        "Itu kehilangan karakter Unicode",
+        "Itu tidak dapat diparalelkan",
+        "Itu menghasilkan chunk lebih besar dari jendela konteks model embedding"
+      ],
+      "correct": 0,
+      "explanation": "Potongan tingkat karakter di dalam simbol menghancurkan makna yang seharusnya ditangkap model embedding."
+    },
+    {
+      "stage": "check",
+      "question": "Apa kriteria terminasi centroid drift dalam semantic chunking?",
+      "options": [
+        "Cosine similarity antara vektor mean berjalan dan kalimat berikutnya turun di bawah ambang",
+        "Jumlah karakter melebihi maksimum",
+        "Jumlah kalimat melebihi batas hardcoded",
+        "Chunker telah menghabiskan seluruh anggaran embedding"
+      ],
+      "correct": 0,
+      "explanation": "Semantic chunking memotong saat centroid berjalan tidak lagi cocok dengan kalimat berikutnya menurut ambang similarity yang dikonfigurasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan stale-embedding apa yang diperkenalkan semantic chunking yang tidak dimiliki empat strategi lain?",
+      "options": [
+        "Chunk terlalu kecil untuk konteks embedding",
+        "Batas chunk berubah setiap kali chunk-model diganti, membutuhkan rebuild terkoordinasi",
+        "Chunk tidak lagi dapat diindeks BM25",
+        "Chunk kehilangan offset awal dan akhir"
+      ],
+      "correct": 1,
+      "explanation": "Clustering semantik bergantung pada model embedding; menukar model mengubah batas, jadi chunk-model harus dipin terpisah atau dibangun ulang bersama model retrieval."
+    }
+  ]
+}

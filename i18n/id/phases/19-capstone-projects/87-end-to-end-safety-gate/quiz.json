@@ -1,0 +1,78 @@
+{
+  "lesson": "87-end-to-end-safety-gate",
+  "title": "Capstone 87 — Safety Gate End-to-End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Di mana tiga checkpoint berada dalam siklus hidup request?",
+      "options": [
+        "Ketiganya berjalan sebelum model dipanggil",
+        "Pre-gen berjalan pada prompt sebelum model, during-gen memfilter stream, post-gen berjalan pada output selesai",
+        "Hanya post-gen berjalan; pre-gen dan during-gen adalah alias",
+        "Ketiganya berjalan setelah model selesai"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tujuan filtering during-gen?",
+      "options": [
+        "Untuk menaikkan throughput token",
+        "Untuk membuffer chunk dan menghentikan stream lebih awal saat kelanjutan berbahaya yang diketahui muncul, sebelum pengguna melihatnya",
+        "Untuk mengganti prompt dengan penolakan",
+        "Untuk menerjemahkan output ke bahasa lain"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana agregator memutuskan aksi final?",
+      "options": [
+        "Dengan hanya melihat rules engine",
+        "Dengan mengambil severity maksimum lintas sinyal detector, token-filter, classifier, dan rules lalu memetakannya ke block, redact, warn, atau allow",
+        "Dengan merata-ratakan keyakinan setiap sinyal",
+        "Dengan memanggil model kedua kali"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa gate mengeluarkan RequestTrace terstruktur per request?",
+      "options": [
+        "Untuk memperlambat sistem",
+        "Untuk menggantikan logging",
+        "Untuk memberi reviewer jejak audit per checkpoint agar regresi di lapisan mana pun dapat dilacak ke modul yang tepat",
+        "Untuk mereplikasi trace ke prompt"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi saat keyakinan pre-gen melebihi ambang block?",
+      "options": [
+        "Model tetap dipanggil untuk kelengkapan",
+        "Gate memunculkan exception",
+        "Gate mengembalikan penolakan kebijakan dan melewati during-gen serta post-gen sepenuhnya",
+        "Gate menurunkan ambang dan mencoba ulang"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa demo sengaja membiarkan sebagian prompt encoding-trick mencapai during-gen?",
+      "options": [
+        "Karena encoding trick bukan serangan nyata",
+        "Karena pipeline input tidak selalu menormalisasinya tepat waktu; filter during-gen adalah pertahanan berlapis yang menangkap kelanjutan yang bocor",
+        "Karena rules engine menangani encoding",
+        "Karena model tetap menolaknya"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

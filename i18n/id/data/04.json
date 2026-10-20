@@ -1,0 +1,150 @@
+{
+  "phase": {
+    "4": {
+      "name": "Computer Vision",
+      "desc": "Dari piksel menuju pemahaman — gambar, video, 3D, VLM, dan world model."
+    }
+  },
+  "lessons": {
+    "phases/04-computer-vision/01-image-fundamentals": {
+      "name": "Dasar-Dasar Gambar: Piksel, Kanal, Ruang Warna",
+      "summary": "Gambar adalah tensor berisi sampel cahaya. Setiap model vision yang akan kamu gunakan berawal dari satu fakta ini.",
+      "keywords": "Pipeline preprocessing lengkap dalam sekilas · Piksel adalah sampel, bukan kotak · Mengapa tiga kanal · Dua konvensi layout: HWC dan CHW · Rentang byte dan dtype · Ruang warna dan alasan keberadaannya · Aspect ratio, resizing, dan interpolasi · Langkah 1: Bangun tensor gambar dan periksa shape-nya · Langkah 2: Pisahkan kanal dan ubah urutan layout · Langkah 3: Konversi grayscale dan HSV · Langkah 4: Normalisasi, standardisasi, dan balikkan · Langkah 5: Resize dari nol"
+    },
+    "phases/04-computer-vision/02-convolutions-from-scratch": {
+      "name": "Konvolusi dari Nol",
+      "summary": "Konvolusi adalah layer dense kecil yang kamu geser melintasi gambar, dengan bobot yang sama di setiap posisi.",
+      "keywords": "Satu kernel, digeser · Rumus ukuran output · Padding · Stride · Beberapa kanal input · Trik im2col · Receptive field · Langkah 1: Pad sebuah array · Langkah 2: Konvolusi 2D dengan loop bersarang · Langkah 3: Verifikasi dengan kernel rancangan tangan · Langkah 4: im2col · Langkah 5: Konvolusi cepat via im2col + matmul · Langkah 6: Kumpulan kernel rancangan tangan"
+    },
+    "phases/04-computer-vision/03-cnns-lenet-to-resnet": {
+      "name": "CNN: LeNet hingga ResNet",
+      "summary": "Setiap CNN besar dalam tiga puluh tahun terakhir adalah resep conv–nonlinearity–downsample yang sama dengan satu ide baru ditempelkan. Pelajari ide-idenya secara berurutan.",
+      "keywords": "Empat ide yang mengubah vision · LeNet-5 (1998) · AlexNet (2012) · VGG (2014) · Inception (2014, tahun yang sama) · Masalah degradasi · ResNet (2015) · Mengapa residual penting di luar vision · Langkah 1: LeNet-5 · Langkah 2: Blok VGG · Langkah 3: BasicBlock ResNet · Langkah 4: ResNet kecil · Langkah 5: Bandingkan efisiensi parameter terhadap fitur"
+    },
+    "phases/04-computer-vision/04-image-classification": {
+      "name": "Klasifikasi Gambar",
+      "summary": "Classifier adalah fungsi dari piksel ke distribusi probabilitas atas kelas. Sisanya hanyalah plumbing.",
+      "keywords": "Pipeline klasifikasi · Cross-entropy, logit, dan softmax · Mengapa augmentasi bekerja · Mixup dan cutmix · Label smoothing · Evaluasi di luar akurasi · Langkah 1: Dataset sintetis deterministik · Langkah 2: Normalisasi dan augmentasi · Langkah 3: Mixup · Langkah 4: Loop training · Langkah 5: Satukan semuanya · Langkah 6: Baca confusion matrix"
+    },
+    "phases/04-computer-vision/05-transfer-learning": {
+      "name": "Transfer Learning & Fine-Tuning",
+      "summary": "Orang lain sudah menghabiskan sejuta jam GPU untuk mengajari jaringan seperti apa edge, tekstur, dan bagian objek. Kamu sebaiknya meminjam fitur-fitur itu sebelum melatih milikmu sendiri.",
+      "keywords": "Ekstraksi fitur vs fine-tuning · Mengapa freezing bisa bekerja · Learning rate diskriminatif · Masalah BatchNorm · Desain head · LR decay per layer · Apa yang dievaluasi · Langkah 1: Muat backbone terlatih dan periksa isinya · Langkah 2: Ekstraksi fitur — bekukan semuanya, ganti head · Langkah 3: Fine-tuning diskriminatif · Langkah 4: Penanganan BatchNorm · Langkah 5: Loop fine-tuning end-to-end minimal · Langkah 6: Progressive unfreezing"
+    },
+    "phases/04-computer-vision/06-object-detection-yolo": {
+      "name": "Deteksi Objek — YOLO dari Nol",
+      "summary": "Deteksi adalah klasifikasi plus regresi, dijalankan di setiap posisi pada feature map, lalu dibersihkan dengan non-maximum suppression.",
+      "keywords": "Deteksi sebagai prediksi dense · Mengapa grid dan anchor · Decoding prediksi · IoU · Non-maximum suppression · Loss · Metrik deteksi · Langkah 1: IoU · Langkah 2: Non-max suppression · Langkah 3: Encoding dan decoding box · Langkah 4: Head YOLO minimal · Langkah 5: Penugasan ground-truth · Langkah 6: Tiga loss · Langkah 7: Pipeline inferensi"
+    },
+    "phases/04-computer-vision/07-semantic-segmentation-unet": {
+      "name": "Semantic Segmentation — U-Net",
+      "summary": "Segmentasi adalah klasifikasi di setiap piksel. U-Net membuatnya bekerja dengan memasangkan encoder downsampling dan decoder upsampling serta menyambungkan skip connection di antara keduanya.",
+      "keywords": "Semantic vs instance vs panoptic · Bentuk U-Net · Upsample transposed vs bilinear · Cross-entropy pada grid piksel · Dice loss dan mengapa kamu membutuhkannya · Metrik evaluasi · Trade-off resolusi input · Langkah 1: Blok encoder · Langkah 2: Blok down dan up · Langkah 3: U-Net · Langkah 4: Loss · Langkah 5: Metrik IoU · Langkah 6: Dataset sintetis untuk verifikasi end-to-end · Langkah 7: Loop training"
+    },
+    "phases/04-computer-vision/08-instance-segmentation-mask-rcnn": {
+      "name": "Instance Segmentation — Mask R-CNN",
+      "summary": "Tambahkan cabang mask kecil ke detektor Faster R-CNN dan kamu punya instance segmentation. Bagian sulitnya adalah RoIAlign, dan itu lebih sulit daripada kelihatannya.",
+      "keywords": "Arsitektur · Mengapa RoIAlign, bukan RoIPool · RPN dalam satu paragraf · Mask head · Loss · Format output · Langkah 1: RoIAlign dari nol · Langkah 2: Bandingkan dengan RoIAlign torchvision · Langkah 3: Muat Mask R-CNN terlatih · Langkah 4: Jalankan inferensi · Langkah 5: Tukar head untuk jumlah kelas kustom · Langkah 6: Bekukan yang tidak perlu dilatih"
+    },
+    "phases/04-computer-vision/09-image-generation-gans": {
+      "name": "Pembuatan Gambar — GAN",
+      "summary": "GAN adalah dua jaringan neural dalam permainan tetap. Satu menggambar, satu mengkritik. Keduanya membaik bersama sampai gambarnya bisa menipu kritik.",
+      "keywords": "Dua jaringan · Permainan · Loss non-saturating · Aturan arsitektur DCGAN · Mode kegagalan dan cirinya · Evaluasi · Langkah 1: Generator · Langkah 2: Discriminator · Langkah 3: Langkah training · Langkah 4: Loop training lengkap pada bentuk sintetis · Langkah 5: Sampling · Langkah 6: Normalisasi spektral"
+    },
+    "phases/04-computer-vision/10-image-generation-diffusion": {
+      "name": "Pembuatan Gambar — Model Diffusion",
+      "summary": "Model diffusion belajar melakukan denoising. Latih ia menghilangkan sedikit noise dari gambar ber-noise, ulangi mundur seribu kali, dan kamu punya generator gambar.",
+      "keywords": "Proses forward · Lompatan closed-form · Proses reverse · Loss training · Sampler (DDPM) · Mengapa 1000 langkah · DDIM: sampling 20x lebih cepat · Time conditioning · Langkah 1: Noise schedule · Langkah 2: Diffusion forward (q_sample) · Langkah 3: U-Net kecil dengan time conditioning · Langkah 4: Loop training · Langkah 5: Sampler (DDPM) · Langkah 6: Sampler DDIM (deterministik, ~20x lebih cepat)"
+    },
+    "phases/04-computer-vision/11-stable-diffusion": {
+      "name": "Stable Diffusion — Arsitektur & Fine-Tuning",
+      "summary": "Stable Diffusion adalah DDPM yang berjalan di ruang latent dari VAE terlatih, dikondisikan pada teks lewat cross-attention, disampling dengan solver ODE deterministik yang cepat, dan diarahkan …",
+      "keywords": "Pipeline · Classifier-free guidance (CFG) · Geometri ruang latent · Arsitektur U-Net · Fine-tuning LoRA · Scheduler yang akan kamu temui · Langkah 1: Text-to-image · Langkah 2: Ganti scheduler · Langkah 3: Image-to-image · Langkah 4: Inpainting · Langkah 5: Memuat LoRA · Langkah 6: Training LoRA (sketsa)"
+    },
+    "phases/04-computer-vision/12-video-understanding": {
+      "name": "Pemahaman Video — Pemodelan Temporal",
+      "summary": "Video adalah urutan gambar plus fisika yang menghubungkannya. Setiap model video memperlakukan waktu sebagai sumbu tambahan (conv 3D), sebagai sequence untuk di-attend (transformer), atau…",
+      "keywords": "Tiga keluarga arsitektur · 2D + pool · Konvolusi 3D · Transformer spatio-temporal · Sampling frame · Evaluasi · Dataset yang akan kamu temui · Langkah 1: Frame sampler · Langkah 2: Baseline 2D+pool · Langkah 3: Conv 3D bergaya I3D yang diinflasi · Langkah 4: Conv (2+1)D terfaktorisasi"
+    },
+    "phases/04-computer-vision/13-3d-vision-nerf": {
+      "name": "Vision 3D: Point Cloud, NeRF",
+      "summary": "Vision 3D hadir dalam dua rasa. Point cloud adalah output mentah sensor. NeRF adalah medan volumetrik yang dipelajari. Keduanya menjawab \"apa ada di mana dalam ruang.\"",
+      "keywords": "Point cloud · Arsitektur PointNet · Neural Radiance Fields (NeRF) · Positional encoding di NeRF · Volumetric rendering · Apa yang menggantikan NeRF · Dataset dan benchmark · Langkah 1: Classifier PointNet · Langkah 2: Positional encoding · Langkah 3: MLP NeRF kecil · Langkah 4: Volumetric rendering sepanjang ray"
+    },
+    "phases/04-computer-vision/14-vision-transformers": {
+      "name": "Vision Transformer (ViT)",
+      "summary": "Potong gambar menjadi patch, perlakukan setiap patch sebagai kata, jalankan transformer standar. Jangan menoleh ke belakang.",
+      "keywords": "Pipeline · Patch embedding · Class token · Positional embedding · Blok encoder transformer · Mengapa pre-LN · Trade-off ukuran patch · Resep DeiT untuk melatih ViT pada ImageNet-1k · Swin vs ConvNeXt · Pretraining MAE · Langkah 1: Patch embedding · Langkah 2: Blok transformer · Langkah 3: ViT · Langkah 4: Sanity check — inferensi satu gambar"
+    },
+    "phases/04-computer-vision/15-real-time-edge": {
+      "name": "Vision Real-Time: Deployment di Edge",
+      "summary": "Inferensi edge adalah disiplin membuat model berakurasi 90 berjalan pada 30 fps di perangkat dengan RAM 2 GB. Setiap poin persentase akurasi ditukar dengan milidetik …",
+      "keywords": "Tiga anggaran · Disiplin pengukuran · FLOPs sebagai proksi · Kuantisasi dalam satu paragraf · Pruning dan distilasi · Runtime inferensi · Pemilih arsitektur edge · Langkah 1: Ukur latency dengan benar · Langkah 2: Jumlah parameter dan FLOP · Langkah 3: Kuantisasi statis post-training · Langkah 4: Ekspor ke ONNX · Langkah 5: Benchmark dan bandingkan rezim"
+    },
+    "phases/04-computer-vision/16-vision-pipeline-capstone": {
+      "name": "Bangun Pipeline Vision Lengkap",
+      "summary": "Sistem vision produksi adalah rangkaian model dan aturan yang disatukan dengan kontrak data. Potongannya sudah ada di phase ini; capstone merangkainya menjadi satu kesatuan end-to-end.",
+      "keywords": "Pipeline · Kontrak data dengan Pydantic · Ke mana latency pergi · Mode kegagalan · Batching · Langkah 1: Kontrak data · Langkah 2: Class Pipeline minimal · Langkah 3: Sambungkan detektor dan classifier · Langkah 4: Layanan FastAPI · Langkah 5: Benchmark pipeline"
+    },
+    "phases/04-computer-vision/17-self-supervised-vision": {
+      "name": "Vision Self-Supervised — SimCLR, DINO, MAE",
+      "summary": "Label adalah bottleneck vision terawasi. Pretraining self-supervised menghilangkannya: pelajari fitur visual dari 100 juta gambar tanpa label, fine-tune pada 10 ribu gambar berlabel.",
+      "keywords": "Tiga keluarga · Pembelajaran kontrastif (SimCLR) · Teacher-student (DINO) · Rekonstruksi termask (MAE) · Mengapa 75% dan bukan 15% · Evaluasi linear-probe · Langkah 1: Pipeline augmentasi dua tampilan · Langkah 2: Loss InfoNCE · Langkah 3: Sanity check InfoNCE · Langkah 4: Masking gaya MAE"
+    },
+    "phases/04-computer-vision/18-open-vocab-clip": {
+      "name": "Vision Open-Vocabulary — CLIP",
+      "summary": "Latih encoder gambar dan encoder teks bersama-sama agar pasangan (gambar, caption) yang cocok mendarat di titik yang sama dalam ruang bersama. Itulah seluruh triknya.",
+      "keywords": "Dua tower · Tujuannya · SigLIP: loss yang lebih baik · Klasifikasi zero-shot · Di mana model gaya CLIP dipakai pada 2026 · Langkah 1: Model dua tower kecil · Langkah 2: Loss kontrastif · Langkah 3: Classifier zero-shot · Langkah 4: Sanity check"
+    },
+    "phases/04-computer-vision/19-ocr-document-understanding": {
+      "name": "OCR & Pemahaman Dokumen",
+      "summary": "OCR adalah pipeline tiga tahap — deteksi kotak teks, kenali karakternya, lalu tata letaknya. Setiap sistem OCR modern mengubah urutan tahap ini atau menggabungkannya.",
+      "keywords": "Pipeline klasik · CTC dalam satu paragraf · Model end-to-end modern · Parsing layout · Metrik evaluasi · Langkah 1: CTC loss + decoder greedy · Langkah 2: Pengenal CRNN kecil · Langkah 3: OCR sintetis · Langkah 4: Sketsa training"
+    },
+    "phases/04-computer-vision/20-image-retrieval-metric": {
+      "name": "Retrieval Gambar & Metric Learning",
+      "summary": "Sistem retrieval merangking kandidat berdasarkan jarak di ruang embedding. Metric learning adalah disiplin membentuk ruang itu agar jaraknya bermakna sesuai keinginanmu.",
+      "keywords": "Retrieval dalam sekilas · Empat keluarga loss · Triplet loss secara formal · Cosine similarity vs L2 · Recall@K · FAISS dalam satu paragraf · Retrieval level instance vs level kategori · Langkah 1: Triplet loss · Langkah 2: Semi-hard mining · Langkah 3: Recall@K · Langkah 4: Satukan semuanya"
+    },
+    "phases/04-computer-vision/21-keypoint-pose": {
+      "name": "Deteksi Keypoint & Estimasi Pose",
+      "summary": "Pose adalah sekumpulan keypoint terurut. Detektor keypoint adalah regresor heatmap. Sisanya pembukuan.",
+      "keywords": "Top-down vs bottom-up · Regresi heatmap · Lokalisasi sub-piksel · Part Affinity Fields (PAF) · Keypoint COCO · 2D vs 3D · Langkah 1: Target heatmap Gaussian · Langkah 2: Head keypoint kecil · Langkah 3: Inferensi — ekstrak koordinat keypoint · Langkah 4: Dataset keypoint sintetis · Langkah 5: Training"
+    },
+    "phases/04-computer-vision/22-3d-gaussian-splatting": {
+      "name": "3D Gaussian Splatting dari Nol",
+      "summary": "Sebuah scene adalah awan berisi jutaan Gaussian 3D. Masing-masing punya posisi, orientasi, skala, opasitas, dan warna yang bergantung pada arah pandang. Rasterize semuanya, backprop…",
+      "keywords": "Apa yang dibawa sebuah Gaussian · Rasterisasi, bukan ray marching · Langkah proyeksi · Aturan alpha-compositing · Mengapa ini dapat didiferensialkan · Densifikasi dan pruning · Spherical harmonics dalam satu paragraf · Stack produksi 2026 · Varian 4D dan generatif · Langkah 1: Gaussian 2D · Langkah 2: Rasterizer splatting 2D · Langkah 3: Scene splat 2D yang dapat dilatih · Langkah 4: Fit Gaussian 2D ke gambar target · Langkah 5: Dari 2D ke 3D · Langkah 6: Evaluasi spherical harmonics"
+    },
+    "phases/04-computer-vision/23-diffusion-transformers-rectified-flow": {
+      "name": "Diffusion Transformer & Rectified Flow",
+      "summary": "U-Net bukan rahasia diffusion. Ganti dengan transformer, tukar noise schedule dengan aliran garis lurus, dan tiba-tiba kamu punya SD3, FLUX, dan setiap text-to-image 2026.",
+      "keywords": "Dari U-Net ke transformer · Rectified flow dalam satu paragraf · Conditioning AdaLN · Encoder teks di SD3 dan FLUX · Classifier-free guidance masih berlaku · Consistency, Turbo, Schnell, LCM · Lanskap model pada 2026 · Mengapa pergeseran fase ini penting · Langkah 1: Blok DiT dengan AdaLN · Langkah 2: DiT kecil · Langkah 3: Training rectified flow · Langkah 4: Sampler Euler · Langkah 5: Smoke test end-to-end"
+    },
+    "phases/04-computer-vision/24-sam3-open-vocab-segmentation": {
+      "name": "SAM 3 & Segmentasi Open-Vocabulary",
+      "summary": "Beri model prompt teks dan sebuah gambar, lalu dapatkan mask untuk setiap objek yang cocok. SAM 3 menjadikannya satu forward pass.",
+      "keywords": "Tiga generasi · Promptable Concept Segmentation · Komponen arsitektur kunci · Training dalam skala besar · SAM 3.1 Object Multiplex · Di mana Grounded SAM masih penting pada 2026 · YOLO-World vs SAM 3 · Efisiensi SAM-MI · Format output untuk ketiga model · Langkah 1: Konstruksi prompt · Langkah 2: Helper post-processing · Langkah 3: Antarmuka segmentasi open-vocab terpadu · Langkah 4: Penggunaan SAM 3 di Hugging Face (referensi) · Langkah 5: Ukur apa yang Grounded SAM 2 berikan gratis"
+    },
+    "phases/04-computer-vision/25-vision-language-models": {
+      "name": "Vision-Language Model (ViT-MLP-LLM)",
+      "summary": "Encoder vision mengubah gambar menjadi token. Proyektor MLP memetakan token itu ke ruang embedding LLM. Model bahasa melakukan sisanya. Pola itu — ViT-MLP-LLM — adalah…",
+      "keywords": "Arsitektur ViT-MLP-LLM · DeepStack · Tiga tahap training · Perbandingan keluarga model (awal 2026) · Agen visual · Kemampuan agentic + varian RoPE · Masalah alignment · Fine-tuning dengan LoRA / QLoRA · Penalaran spasial masih lemah · Langkah 1: Proyektor · Langkah 2: Rakit ViT-MLP-LLM end-to-end · Langkah 3: Komputasi CMER · Langkah 4: Classifier VLM mainan (dapat dijalankan)"
+    },
+    "phases/04-computer-vision/26-monocular-depth": {
+      "name": "Estimasi Kedalaman Monokular & Geometri",
+      "summary": "Depth map adalah gambar satu kanal di mana setiap piksel adalah jarak dari kamera. Memprediksinya dari satu frame RGB dulu mustahil tanpa stereo atau LiDAR. Pada 2026, beberapa…",
+      "keywords": "Kedalaman relatif vs metrik · Pola encoder-decoder · Mengapa satu gambar bisa menghasilkan depth · Apa yang tidak bisa dilakukan monocular depth · Depth Anything V3 pada 2026 · Marigold — diffusion untuk depth · Intrinsik dan kamera pinhole · Evaluasi · Langkah 1: Metrik depth · Langkah 2: Alignment skala dan shift · Langkah 3: Angkat depth menjadi point cloud · Langkah 4: Smoke test dengan scene depth sintetis · Langkah 5: Penggunaan Depth Anything V2 (referensi)"
+    },
+    "phases/04-computer-vision/27-multi-object-tracking": {
+      "name": "Multi-Object Tracking & Memori Video",
+      "summary": "Tracking adalah deteksi plus asosiasi. Deteksi setiap frame. Cocokkan deteksi frame ini dengan track frame sebelumnya berdasarkan ID.",
+      "keywords": "Tracking-by-detection · Kalman filter dalam satu paragraf · Algoritma Hungarian · Ide kunci ByteTrack · Tracking berbasis memori SAM 2 · SAM 3.1 Object Multiplex · Tiga metrik yang perlu diketahui · Langkah 1: Matriks biaya berbasis IoU · Langkah 2: Tracker gaya SORT minimal · Langkah 3: Uji trajectory sintetis · Langkah 4: Metrik ID-switch"
+    },
+    "phases/04-computer-vision/28-world-models-video-diffusion": {
+      "name": "World Model & Video Diffusion",
+      "summary": "Model video yang memprediksi detik-detik berikutnya dari sebuah scene adalah simulator dunia. Kondisikan prediksi itu pada aksi dan kamu punya game engine yang dipelajari.",
+      "keywords": "Tiga keluarga pemodelan dunia · Arsitektur DiT video · Conditioning pada aksi: model aksi latent · Plausibilitas fisik · World model untuk autonomous driving · Stack robotika: VLM + model video + inverse dynamics · Evaluasi · Lanskap model pada 2026 · Langkah 1: Patchify 3D untuk video · Langkah 2: Rotary position encoding 3D · Langkah 3: Blok divided attention · Langkah 4: Susun DiT video kecil · Langkah 5: Periksa shape"
+    }
+  }
+}

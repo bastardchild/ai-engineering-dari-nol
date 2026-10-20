@@ -1,0 +1,78 @@
+{
+  "lesson": "06-sglang-radixattention",
+  "title": "Serving Prefix-Cache — RadixAttention dan Penggunaan Ulang KV",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Struktur data inti apa yang menopang penggunaan ulang KV cache SGLang?",
+      "options": [
+        "Radix tree yang tiap node-nya memiliki rentang token dan blok KV-nya",
+        "Skip list dengan kunci request id",
+        "Tabel hash dengan kunci prompt lengkap",
+        "B-tree berisi skor attention"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa penjadwalan FCFS salah untuk traffic yang berat prefix di SGLang?",
+      "options": [
+        "FCFS adalah kebijakan SGLang yang direkomendasikan",
+        "FCFS bisa mengevict cabang prefix panas sebelum permintaan long-prefix berikutnya tiba, sehingga penggunaan ulang radix tree rusak",
+        "FCFS hanya berjalan di GPU AMD",
+        "FCFS tidak kompatibel dengan PagedAttention"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Granularitas eviction apa yang dipakai scheduler cache-aware SGLang agar sesuai bentuk radix?",
+      "options": [
+        "Hanya per permintaan",
+        "Eviction acak",
+        "Token tunggal",
+        "Cabang utuh, mulai dari leaf yang paling jarang dipakai"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa tuas paling langsung bagi engineer untuk menjaga prefix bersama radix tree tetap mudah ditemukan?",
+      "options": [
+        "Selalu pakai static batching",
+        "Perbaiki urutan template prompt agar konten tak berubah (system, tools, skema) selalu di depan",
+        "Turunkan knob utilisasi memori GPU",
+        "Nonaktifkan continuous batching"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pola beban kerja mana yang TIDAK diharapkan pelajaran ini dimenangkan RadixAttention?",
+      "options": [
+        "Agent dengan skema tool bersama",
+        "Generasi sekali jalan dengan prompt unik tanpa system prompt bersama",
+        "RAG dengan preamble retrieval bersama",
+        "Beban kerja suara dengan preamble berulang"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Deployment ProjectDiscovery menaikkan hit rate prefix-cache dari 7% ke 74% dengan melakukan apa?",
+      "options": [
+        "Menambah jumlah GPU dari 8 ke 16",
+        "Menonaktifkan continuous batching",
+        "Memindahkan konten dinamis keluar dari prefix yang bisa di-cache",
+        "Berpindah dari vLLM ke SGLang tanpa mengubah prompt sama sekali"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

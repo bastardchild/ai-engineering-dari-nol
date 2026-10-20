@@ -1,0 +1,90 @@
+{
+  "lesson": "15-constitutional-safety-harness",
+  "title": "Capstone 15 — Harness Keselamatan Konstitusional + Range Red-Team",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa arti keselamatan berlapis dalam capstone ini?",
+      "options": [
+        "Defense in depth di seluruh sanitasi input, policy rail, gerbang classifier, model, filter output, dan tier HITL",
+        "Menjalankan satu classifier kuat hanya pada input",
+        "Satu regex berbasis aturan atas output",
+        "Review manual setiap respons"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Classifier mana yang menangani cakupan multibahasa sekitar 132 bahasa?",
+      "options": [
+        "Llama Guard 4",
+        "Nemotron 3 Content Safety",
+        "X-Guard",
+        "ShieldGemma-2"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa over-refusal diukur pada suite benign seperti XSTest?",
+      "options": [
+        "Untuk melacak blok false-positive agar model tetap membantu sambil meningkatkan harmlessness",
+        "Untuk mensertifikasi framework guardrail",
+        "Untuk menggantikan skor red-team",
+        "Untuk benchmark throughput token"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa loop self-critique konstitusional dalam capstone ini?",
+      "options": [
+        "Model reward RLHF yang dilatih dari nol",
+        "LLM critic menilai draft terhadap konstitusi tertulis, meminta model menulis ulang output yang ditolak, dan SFT berjalan pada pasangan yang diperbaiki",
+        "Satu forward pass melalui Llama Guard 4",
+        "Reranker atas prompt jailbreak kandidat"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana jailbreak yang berhasil dinilai tingkat keparahannya dalam temuan?",
+      "options": [
+        "Berdasarkan model yang menghasilkan respons",
+        "Memakai CVSS 4.0 dengan attack vector, complexity, dan impact, plus timeline pengungkapan",
+        "Berdasarkan jumlah token mentah prompt",
+        "Pada skala 1-10 yang disetel manual oleh operator"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Enam keluarga serangan apa yang dijalankan range red-team?",
+      "options": [
+        "PSI, KL, MMD, KS, JS, dan Wasserstein",
+        "PAIR, TAP, GCG, encoding (ASCII/base64/rot13), persona multi-turn, dan code-switch multibahasa",
+        "Brute-force, dictionary, replay, MITM, phishing, dan CSRF",
+        "BLEU, ROUGE, METEOR, BERTScore, CometKiwi, dan chrF"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa otomasi range (cron + alert) menjadi bagian rubrik?",
+      "options": [
+        "Cron satu-satunya cara memanggil OPA",
+        "Otomasi diwajibkan untuk menonaktifkan Llama Guard 4",
+        "Run manual secara eksplisit diwajibkan",
+        "Probe terjadwal berkelanjutan menangkap drift pada attack success rate dan regresi over-refusal seiring waktu"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

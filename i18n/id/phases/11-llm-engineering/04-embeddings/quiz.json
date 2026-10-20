@@ -1,0 +1,66 @@
+{
+  "lesson": "04-embeddings",
+  "title": "Embedding & Representasi Vektor",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang diselesaikan embedding yang tidak bisa diselesaikan pencarian kata kunci?",
+      "options": [
+        "Embedding memakai penyimpanan lebih sedikit",
+        "Embedding menangkap makna semantik, mencocokkan 'payment didn't go through' dengan 'charge was declined' meskipun tidak berbagi kata",
+        "Embedding lebih cepat",
+        "Embedding bekerja offline"
+      ],
+      "correct": 1,
+      "explanation": "Pencarian kata kunci memperlakukan kata sebagai simbol independen. Embedding memetakan teks ke vektor berdimensi tinggi di mana kemiripan semantik = kedekatan geometris. Teks dengan makna sama mengelompok bersama terlepas dari pilihan kata."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur cosine similarity antara dua vektor embedding?",
+      "options": [
+        "Sudut antara vektor, menunjukkan seberapa mirip arahnya terlepas dari magnitudo",
+        "Jarak Euclidean",
+        "Jumlah komponennya",
+        "Jumlah dimensi yang cocok"
+      ],
+      "correct": 0,
+      "explanation": "Cosine similarity = dot(A,B) / (|A|*|B|). Nilainya berkisar dari -1 (berlawanan) hingga 1 (arah identik). Dua teks dengan makna sama akan memiliki vektor yang menunjuk ke arah hampir sama, memberi cosine similarity mendekati 1."
+    },
+    {
+      "stage": "post",
+      "question": "Apa dimensi tipikal model embedding teks modern?",
+      "options": [
+        "2-10 dimensi",
+        "768-3072 dimensi",
+        "50-100 dimensi",
+        "100.000+ dimensi"
+      ],
+      "correct": 1,
+      "explanation": "Model embedding modern (OpenAI text-embedding-3, BGE, E5) menghasilkan vektor dengan 768 hingga 3072 dimensi. Dimensi lebih tinggi menangkap lebih banyak nuansa tetapi lebih mahal untuk disimpan dan dicari."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu harus mengevaluasi kualitas embedding memakai benchmark retrieval alih-alih hanya memeriksa skor kemiripan?",
+      "options": [
+        "Skor kemiripan tidak memakai cosine distance",
+        "Benchmark retrieval lebih cepat",
+        "Skor kemiripan selalu salah",
+        "Nilai kemiripan absolut bervariasi antar model; yang penting adalah apakah dokumen relevan berperingkat lebih tinggi daripada yang tidak relevan (precision@k, recall)"
+      ],
+      "correct": 3,
+      "explanation": "Cosine similarity 0.85 bisa berarti 'sangat mirip' untuk satu model dan 'agak mirip' untuk model lain. Metrik retrieval (precision@k, recall) mengukur yang benar-benar penting: apakah dokumen yang tepat muncul kembali?"
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu akan memakai model embedding lokal/open-source alih-alih yang berbasis API?",
+      "options": [
+        "Saat kamu membutuhkan privasi data, operasi offline, biaya lebih rendah dalam skala besar, atau fine-tuning khusus domain",
+        "Model API tidak mendukung batching",
+        "Model lokal menghasilkan embedding berkualitas lebih tinggi",
+        "Model lokal selalu lebih baik"
+      ],
+      "correct": 0,
+      "explanation": "Embedding API (OpenAI, Cohere) mudah tetapi mengirim datamu ke luar. Model lokal (BGE, E5, Nomic) menjaga data tetap privat, menghilangkan biaya per panggilan dalam skala besar, dan dapat di-fine-tune pada data khusus domain."
+    }
+  ]
+}

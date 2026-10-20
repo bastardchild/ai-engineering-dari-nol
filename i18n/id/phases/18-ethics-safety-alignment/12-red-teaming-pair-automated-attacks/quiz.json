@@ -1,0 +1,78 @@
+{
+  "lesson": "12-red-teaming-pair-automated-attacks",
+  "title": "Red-Teaming: PAIR dan Serangan Otomatis",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa red-teaming manual tidak cukup untuk mengevaluasi model frontier?",
+      "options": [
+        "Penguji manual tidak bisa membaca output model",
+        "Itu tidak berskala; attack success rate butuh sampel statistik terhadap target yang bergerak pada setiap rilis model",
+        "Prompt manual selalu diblokir filter",
+        "Pengujian manual menghasilkan terlalu banyak false positive"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "PAIR singkatan dari apa, dan apa fungsinya?",
+      "options": [
+        "Pre-Action Inspection Reasoning; scaffolding defensif",
+        "Persuasive Adversarial Iterative Reward; menggantikan RM dengan persuader",
+        "Pairwise Adversarial Inference Routing; merutekan serangan lintas model",
+        "Prompt Automatic Iterative Refinement; LLM penyerang mengusulkan jailbreak secara iteratif untuk target, dengan percobaan sebelumnya sebagai umpan balik in-context"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa PAIR lebih efisien daripada GCG untuk target black-box?",
+      "options": [
+        "GCG memerlukan akses gradien white-box dan menghasilkan sufiks tak terbaca yang tidak bisa memakai umpan balik in-context; PAIR bersifat black-box dan bahasa alami dengan in-context learning",
+        "PAIR mengabaikan respons target",
+        "GCG hanya menyerang model open-source",
+        "PAIR memakai model penyerang yang lebih besar daripada GCG"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa Attack Success Rate (ASR) harus dilaporkan dengan anggaran query dan identitas juri sekaligus?",
+      "options": [
+        "Karena juri selalu sepakat",
+        "Karena ASR bervariasi dengan berapa banyak query yang diizinkan bagi penyerang dan LLM mana yang menilai respons sebagai jailbreak",
+        "Karena anggaran hanya ditetapkan JailbreakBench",
+        "Karena ASR diwajibkan regulasi kontrol ekspor"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Serangan otomatis mana yang paling tepat digambarkan sebagai 'tree-of-attacks dengan pruning'?",
+      "options": [
+        "GCG",
+        "TAP",
+        "PAP",
+        "AutoDAN"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Benchmark terstandar mana yang memakai 510 perilaku di 7 kategori dengan tes bahaya semantik dan fungsional?",
+      "options": [
+        "TruthfulQA",
+        "WMDP",
+        "HarmBench",
+        "JailbreakBench"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

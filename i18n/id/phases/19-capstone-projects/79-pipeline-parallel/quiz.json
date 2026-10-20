@@ -1,0 +1,78 @@
+{
+  "lesson": "79-pipeline-parallel",
+  "title": "Pipeline Parallel dan Analisis Bubble",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu pipeline bubble?",
+      "options": [
+        "Paket jaringan",
+        "Bug di NCCL",
+        "Waktu idle di awal dan akhir pipeline: stage tanpa kerja sampai microbatch pertama mencapainya, dan setelah microbatch terakhir meninggalkannya",
+        "Memory leak"
+      ],
+      "correct": 2,
+      "explanation": "Dengan M microbatch dan N stage, bubble per stage adalah (N-1)/(M+N-1). Memilih M jauh lebih besar dari N mengecilkannya."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa memori aktivasi GPipe proporsional terhadap M?",
+      "options": [
+        "Batas hardware",
+        "Batas compiler",
+        "Bug",
+        "Aktivasi semua M microbatch harus ditahan sampai backward yang cocok; tidak ada yang dibebaskan sampai drain dimulai"
+      ],
+      "correct": 3,
+      "explanation": "GPipe mengisi pipeline dengan semua forward sebelum backward apa pun. Setiap microbatch in-flight membawa aktivasi sampai backward-nya mulai."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana 1F1B membaik atas GPipe?",
+      "options": [
+        "Throughput lebih tinggi",
+        "Bubble sama tetapi memori aktivasi terbatas; begitu forward mb 0 mencapai stage terakhir, backward-nya mulai dan aktivasi dibebaskan",
+        "Model lebih kecil",
+        "Bubble lebih kecil"
+      ],
+      "correct": 1,
+      "explanation": "Megatron-LM dan PipeDream memakai 1F1B untuk membatasi memori aktivasi berdasarkan kedalaman pipeline, bukan jumlah microbatch."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa compute sama per stage lebih penting daripada jumlah parameter sama?",
+      "options": [
+        "Memori selaras",
+        "Estetika",
+        "Stage paling lambat menggating setiap siklus; stage lain idle menunggunya. Layer embedding punya banyak parameter tetapi sedikit compute, jadi partisi berdasarkan jumlah parameter membuat pipeline tidak seimbang",
+        "Lebih mudah dikodekan"
+      ],
+      "correct": 2,
+      "explanation": "Megatron-LM mengekspos --num-layers-per-stage sebagai daftar untuk memungkinkan jumlah layer tidak rata saat biaya per layer berbeda."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang salah jika setiap stage memanggil send sebelum recv?",
+      "options": [
+        "Bubble lebih besar",
+        "Lambat",
+        "Deadlock di wire; perbaikan standar adalah menyelang-nyeling rank genap send-first dan rank ganjil recv-first",
+        "Memory leak"
+      ],
+      "correct": 2,
+      "explanation": "Pasangan send/recv sinkron membutuhkan satu sisi menerima saat sisi lain mengirim. Lesson menjadwalkan rank secara eksplisit agar polanya terlihat."
+    },
+    {
+      "stage": "post",
+      "question": "Pipeline plus ZeRO-1 menggabungkan dua kemenangan memori apa?",
+      "options": [
+        "Aktivasi saja",
+        "Tidak ada",
+        "Sharding parameter per stage (setiap rank hanya memegang satu stage layer) plus sharding optimiser per rank (setiap rank hanya memegang 1/N optimiser state untuk stage-nya)",
+        "Kompresi dan kuantisasi"
+      ],
+      "correct": 2,
+      "explanation": "Pipeline memecah layer lintas rank; ZeRO memecah optimiser state di dalam grup data-parallel pada setiap rank pipeline. Kedua kemenangan bertumpuk."
+    }
+  ]
+}

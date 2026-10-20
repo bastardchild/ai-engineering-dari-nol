@@ -1,0 +1,102 @@
+{
+  "lesson": "01-text-processing",
+  "title": "Pemrosesan Teks — Tokenization, Stemming, Lemmatization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa model bahasa memerlukan preprocessing sebelum training?",
+      "options": [
+        "Model membaca string secara langsung",
+        "Preprocessing meningkatkan pemanfaatan GPU",
+        "Model mengonsumsi token integer diskret, bukan teks mentah",
+        "Preprocessing hanya diperlukan untuk bahasa tanpa spasi"
+      ],
+      "correct": 2,
+      "explanation": "Model beroperasi pada ID token integer; preprocessing menjembatani bahasa kontinu ke input diskret."
+    },
+    {
+      "stage": "pre",
+      "question": "Operasi preprocessing mana yang merupakan pengupasan sufiks berbasis aturan?",
+      "options": [
+        "POS tagging",
+        "Stemming",
+        "Lemmatization",
+        "Tokenization"
+      ],
+      "correct": 1,
+      "explanation": "Stemming memotong sufiks dengan aturan; cepat tetapi bisa salah."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikembalikan langkah 1a Porter stemmer untuk kata 'ponies'?",
+      "options": [
+        "poni",
+        "ponies",
+        "pony",
+        "ponie"
+      ],
+      "correct": 0,
+      "explanation": "Aturan 'ies' mengganti sufiks dengan 'i', menghasilkan 'poni'; langkah 1b pada Porter sungguhan membersihkannya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa lemmatization biasanya memerlukan POS tag?",
+      "options": [
+        "Penanganan Unicode",
+        "Konteks gramatikal mendisambiguasi bentuk seperti 'better' (ADJ) versus 'better' (VERB)",
+        "Untuk mengurangi penggunaan memori",
+        "Kecepatan"
+      ],
+      "correct": 1,
+      "explanation": "Lemma bergantung pada peran gramatikal; tanpa tag, pencariannya ambigu."
+    },
+    {
+      "stage": "check",
+      "question": "Saat menerjemahkan tag POS Penn Treebank NLTK ke tag WordNet, tag yang dimulai dengan 'V' dipetakan ke apa?",
+      "options": [
+        "'r' (adverb)",
+        "'a' (adjective)",
+        "'v' (verb)",
+        "'n' (noun)"
+      ],
+      "correct": 2,
+      "explanation": "Tag Penn Treebank berprefiks verba dipetakan ke 'v' WordNet."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu 'training/inference mismatch' dalam preprocessing NLP?",
+      "options": [
+        "Masalah memori GPU",
+        "Training dan serving menerapkan preprocessing berbeda, sehingga model melihat distribusi yang tidak dikenalnya saat inferensi",
+        "Mencampur library tokenizer dalam satu notebook",
+        "Batch size berbeda antara train dan test"
+      ],
+      "correct": 1,
+      "explanation": "Preprocessing berbeda saat training vs inferensi adalah kegagalan NLP produksi paling umum."
+    },
+    {
+      "stage": "post",
+      "question": "Alat mana yang akan kamu pakai dalam pipeline transformer alih-alih preprocessing klasik?",
+      "options": [
+        "NLTK word_tokenize",
+        "Tokenizer milik model itu sendiri (misalnya melalui tokenizers / transformers)",
+        "spaCy en_core_web_sm",
+        "Tokenizer regex"
+      ],
+      "correct": 1,
+      "explanation": "Model transformer dikirim dengan tokenizer berpasangan; preprocessing klasik dilewati."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menyematkan versi NLTK dan spaCy di requirements?",
+      "options": [
+        "Versi lebih baru lebih lambat",
+        "Versi lama mendukung lebih banyak bahasa",
+        "Perilaku tokenizer dan lemmatizer bergeser antar rilis minor, diam-diam mengubah distribusi training",
+        "Kompatibilitas lisensi"
+      ],
+      "correct": 2,
+      "explanation": "Peningkatan library dapat mengubah output tokenisasi, menjauh dari distribusi training."
+    }
+  ]
+}

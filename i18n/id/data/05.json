@@ -1,0 +1,155 @@
+{
+  "phase": {
+    "5": {
+      "name": "NLP: Dasar hingga Lanjutan",
+      "desc": "Bahasa adalah antarmuka menuju kecerdasan."
+    }
+  },
+  "lessons": {
+    "phases/05-nlp-foundations-to-advanced/01-text-processing": {
+      "name": "Pemrosesan Teks: Tokenisasi, Stemming, Lemmatization",
+      "summary": "Bahasa bersifat kontinu. Model bersifat diskret. Preprocessing adalah jembatannya.",
+      "keywords": "Langkah 1: tokenizer kata berbasis regex · Langkah 2: Porter stemmer (hanya langkah 1a) · Langkah 3: lemmatizer berbasis lookup · Langkah 4: sambungkan semuanya · NLTK · spaCy · Kapan memilih yang mana · Dua mode kegagalan yang tidak pernah diperingatkan orang"
+    },
+    "phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf": {
+      "name": "Bag of Words, TF-IDF & Representasi Teks",
+      "summary": "Hitung dulu, berpikir kemudian. TF-IDF masih mengalahkan embedding pada tugas yang terdefinisi baik pada 2026.",
+      "keywords": "Langkah 1: bangun kosakata · Langkah 2: bag of words · Langkah 3: term frequency dan document frequency · Langkah 4: TF-IDF · Langkah 5: normalisasi L2 per baris · Kapan TF-IDF masih menang (per 2026) · Kapan TF-IDF gagal · Hybrid: embedding berbobot TF-IDF"
+    },
+    "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec": {
+      "name": "Word Embedding: Word2Vec dari Nol",
+      "summary": "Sebuah kata ditentukan oleh kata-kata yang sering muncul bersamanya. Latih jaringan dangkal berdasarkan ide itu dan geometri pun muncul.",
+      "keywords": "Langkah 1: pasangan training dari korpus · Langkah 2: tabel embedding · Langkah 3: objective negative sampling · Langkah 4: latih pada korpus mainan · Langkah 5: trik analogi · Kapan Word2Vec masih menang pada 2026 · Di mana Word2Vec gagal"
+    },
+    "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword": {
+      "name": "GloVe, FastText & Subword Embedding",
+      "summary": "Word2Vec melatih satu embedding per kata. GloVe memfaktorkan matriks co-occurrence. FastText meng-embed potongan-potongannya. BPE menjembatani ke transformer.",
+      "keywords": "GloVe: faktorkan matriks co-occurrence · FastText: embedding yang sadar subword · BPE: kosakata subword yang dipelajari · Kapan memilih yang mana"
+    },
+    "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis": {
+      "name": "Analisis Sentimen",
+      "summary": "Tugas NLP kanonis. Sebagian besar yang perlu kamu tahu tentang klasifikasi teks klasik muncul di sini.",
+      "keywords": "Langkah 1: mini-dataset sungguhan · Langkah 2: Naive Bayes multinomial dari nol · Langkah 3: regresi logistik dari nol · Langkah 4: menangani negasi (mode kegagalannya) · Langkah 5: metrik evaluasi yang penting · Kapan beralih ke transformer · Jebakan reproduksibilitas (lagi)"
+    },
+    "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition": {
+      "name": "Named Entity Recognition (NER)",
+      "summary": "Tarik nama-namanya keluar. Terdengar mudah sampai kamu berhadapan dengan batas yang ambigu, entitas bersarang, dan jargon domain.",
+      "keywords": "Langkah 1: helper tagging BIO · Langkah 2: fitur buatan tangan · Langkah 3: baseline sederhana berbasis aturan + kamus · Langkah 4: langkah CRF (sketsa, bukan implementasi penuh) · Langkah 5: apa yang ditambahkan BiLSTM-CRF · NER berbasis LLM (opsi 2026) · Di mana NER klasik masih menang · Di mana ia runtuh"
+    },
+    "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing": {
+      "name": "POS Tagging & Parsing Sintaksis",
+      "summary": "Tata bahasa sempat tidak populer. Lalu setiap pipeline LLM perlu memvalidasi ekstraksi terstruktur, dan ia kembali.",
+      "keywords": "Langkah 1: baseline tag paling sering · Langkah 2: tagger HMM bigram · Langkah 3: mengapa tagger modern mengalahkan ini · Langkah 4: sketsa dependency parsing · Di mana ini masih penting pada 2026"
+    },
+    "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text": {
+      "name": "Klasifikasi Teks — CNN & RNN untuk Teks",
+      "summary": "Konvolusi mempelajari n-gram. Rekurensi mengingat. Keduanya sudah digantikan attention. Keduanya masih penting pada hardware terbatas.",
+      "keywords": "Langkah 1: TextCNN di PyTorch · Langkah 2: Classifier LSTM · Langkah 3: demo vanishing gradient (intuisi) · Langkah 4: mengapa ini masih belum cukup"
+    },
+    "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence": {
+      "name": "Model Sequence-to-Sequence",
+      "summary": "Dua RNN berpura-pura menjadi penerjemah. Bottleneck yang mereka temui adalah alasan attention ada.",
+      "keywords": "Langkah 1: encoder · Langkah 2: decoder · Langkah 3: loop training dengan teacher forcing · Langkah 4: loop inferensi (greedy) · Langkah 5: bottleneck, didemonstrasikan · Kapan masih memilih seq2seq berbasis RNN · Exposure bias dan mitigasinya"
+    },
+    "phases/05-nlp-foundations-to-advanced/10-attention-mechanism": {
+      "name": "Mekanisme Attention — Terobosan Besar",
+      "summary": "Decoder berhenti menyipitkan mata pada ringkasan terkompresi dan mulai melihat seluruh sumber. Semua setelah ini adalah attention plus rekayasa.",
+      "keywords": "Langkah 1: attention aditif (Bahdanau) · Langkah 2: Luong dot dan general · Langkah 3: contoh numerik yang dikerjakan · Langkah 4: mengapa ini jembatan menuju transformer · Kapan attention klasik masih penting · Jebakan bobot attention sebagai penjelasan"
+    },
+    "phases/05-nlp-foundations-to-advanced/11-machine-translation": {
+      "name": "Terjemahan Mesin",
+      "summary": "Terjemahan adalah tugas yang membiayai riset NLP selama tiga puluh tahun dan terus membiayainya sekarang.",
+      "keywords": "Langkah 1: panggilan MT terlatih · Langkah 2: BLEU dan chrF · Hierarki evaluasi tiga tingkat (2026) · Langkah 3: apa yang rusak di produksi · Langkah 4: fine-tuning untuk sebuah domain"
+    },
+    "phases/05-nlp-foundations-to-advanced/12-text-summarization": {
+      "name": "Ringkasan Teks",
+      "summary": "Sistem ekstraktif memberi tahu apa yang dokumen katakan. Sistem abstraktif memberi tahu apa yang penulis maksud. Tugas berbeda, jebakan berbeda.",
+      "keywords": "Langkah 1: TextRank (ekstraktif) · Langkah 2: abstraktif dengan BART · Langkah 3: evaluasi ROUGE · Di luar ROUGE (evaluasi ringkasan 2026) · Langkah 4: masalah faktualitas"
+    },
+    "phases/05-nlp-foundations-to-advanced/13-question-answering": {
+      "name": "Sistem Question Answering",
+      "summary": "Tiga sistem membentuk QA modern. Ekstraktif menemukan span. Retrieval-augmented mendasarkannya pada dokumen. Generatif menghasilkan jawaban. Setiap asisten AI modern adalah campuran ketiganya…",
+      "keywords": "Langkah 1: QA ekstraktif dengan model terlatih · Langkah 2: pipeline retrieval-augmented (sketsa) · Langkah 3: generatif dengan RAG · Langkah 4: evaluasi yang mencerminkan dunia nyata · RAGAS: framework evaluasi produksi 2026"
+    },
+    "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search": {
+      "name": "Information Retrieval & Pencarian",
+      "summary": "BM25 presisi tapi rapuh. Dense menyebar jaring lebar tapi melewatkan kata kunci. Hybrid adalah default 2026. Sisanya tuning.",
+      "keywords": "Langkah 1: BM25 dari nol · Langkah 2: retrieval dense dengan bi-encoder · Langkah 3: Reciprocal Rank Fusion · Langkah 4: pencarian hybrid + rerank · Langkah 5: evaluasi · Pelajaran yang diperoleh dengan susah payah dari RAG produksi 2026"
+    },
+    "phases/05-nlp-foundations-to-advanced/15-topic-modeling": {
+      "name": "Topic Modeling: LDA, BERTopic",
+      "summary": "LDA: dokumen adalah campuran topik, topik adalah distribusi atas kata. BERTopic: dokumen mengelompok di ruang embedding, cluster adalah topik. Tujuan sama, dekomposisi berbeda…",
+      "keywords": "Langkah 1: LDA via scikit-learn · Langkah 2: BERTopic (produksi) · Langkah 3: evaluasi"
+    },
+    "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer": {
+      "name": "Pembangkitan Teks",
+      "summary": "Jika sebuah kata mengejutkan, modelnya buruk. Perplexity mengubah kejutan menjadi angka. Smoothing menjaganya tetap finite.",
+      "keywords": "Permainan prediksi · Langkah 1: hitungan trigram · Langkah 2: Laplace smoothing · Langkah 3: Kneser-Ney (bigram, terinterpolasi) · Langkah 4: membangkitkan teks dengan sampling · Langkah 5: perplexity"
+    },
+    "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural": {
+      "name": "Chatbot: dari Berbasis Aturan ke Neural",
+      "summary": "ELIZA membalas dengan pencocokan pola. DialogFlow memetakan intent. GPT menjawab dari bobot. Claude menjalankan tool dan memverifikasi. Setiap era memecahkan kegagalan terburuk era sebelumnya.",
+      "keywords": "Setengah abad berskrip, 1950-2001 · Langkah 1: pencocokan pola berbasis aturan · Langkah 2: berbasis retrieval (FAQ) · Langkah 3: generasi neural (baseline) · Langkah 4: loop agen LLM · Langkah 5: routing hybrid"
+    },
+    "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp": {
+      "name": "NLP Multibahasa",
+      "summary": "Satu model, 100+ bahasa, nol data training untuk sebagian besarnya. Cross-lingual transfer adalah keajaiban praktis dekade 2020-an.",
+      "keywords": "Langkah 1: klasifikasi cross-lingual zero-shot · Langkah 2: ruang embedding multibahasa · Langkah 3: strategi fine-tuning few-shot · Pajak tokenisasi (apa yang salah pada bahasa low-resource)"
+    },
+    "phases/05-nlp-foundations-to-advanced/19-subword-tokenization": {
+      "name": "Tokenisasi Subword: BPE, WordPiece, Unigram, SentencePiece",
+      "summary": "Tokenizer kata tersedak pada kata yang belum pernah dilihat. Tokenizer karakter meledakkan panjang sequence. Tokenizer subword mengambil jalan tengah. Setiap LLM modern berjalan di atasnya.",
+      "keywords": "Langkah 1: BPE dari nol · Langkah 2: encode dengan merge yang dipelajari · Langkah 3: SentencePiece dalam praktik · Langkah 4: tiktoken untuk kosakata kompatibel OpenAI"
+    },
+    "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding": {
+      "name": "Output Terstruktur & Constrained Decoding",
+      "summary": "Minta JSON ke LLM. Dapatkan JSON hampir selalu. Di produksi, \"hampir\" adalah masalahnya. Constrained decoding mengubah \"hampir\" menjadi \"selalu\" dengan menyunting logit sebelum sampling.",
+      "keywords": "Hasil yang berlawanan intuisi · Jebakan yang membuatmu rugi · Langkah 1: generasi terbatas regex dari nol · Langkah 2: Outlines untuk JSON Schema · Langkah 3: Instructor untuk Pydantic yang agnostik provider · Langkah 4: API native vendor"
+    },
+    "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment": {
+      "name": "NLI & Textual Entailment",
+      "summary": "\"t entails h\" berarti manusia yang membaca t akan menyimpulkan h benar. NLI adalah tugas memprediksi entailment / contradiction / neutral. Membosankan di permukaan, menopang di produksi…",
+      "keywords": "Langkah 1: jalankan model NLI terlatih · Langkah 2: klasifikasi zero-shot · Langkah 3: pemeriksaan faithfulness untuk RAG · Langkah 4: classifier NLI buatan sendiri (konseptual)"
+    },
+    "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive": {
+      "name": "Embedding Model: Pendalaman",
+      "summary": "Word2Vec memberimu satu vektor per kata. Model embedding modern memberimu satu vektor per passage, lintas bahasa, dengan tampilan sparse, dense, dan multi-vektor, berukuran sesuai index-mu. P…",
+      "keywords": "Leaderboard MTEB hanya bercerita sebagian · Pola tiga tingkat · Langkah 1: baseline — embedding dense dengan Sentence-BERT · Langkah 2: Pemotongan Matryoshka · Langkah 3: Multifungsi BGE-M3 · Langkah 4: Evaluasi MTEB pada tugas kustom · Langkah 5: cosine buatan sendiri dari nol"
+    },
+    "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag": {
+      "name": "Strategi Chunking untuk RAG",
+      "summary": "Konfigurasi chunking memengaruhi kualitas retrieval sebanyak pilihan model embedding (Vectara NAACL 2025). Salah chunking, dan sebanyak apa pun reranking tidak akan menyelamatkanmu.",
+      "keywords": "Aturan yang mengalahkan setiap default · Langkah 1: chunking tetap dan rekursif · Langkah 2: chunking semantik · Langkah 3: parent-document · Langkah 4: retrieval kontekstual (pola Anthropic) · Langkah 5: evaluasi"
+    },
+    "phases/05-nlp-foundations-to-advanced/24-coreference-resolution": {
+      "name": "Resolusi Coreference",
+      "summary": "\"Dia meneleponnya. Ia tidak menjawab. Dokter itu sedang makan siang.\" Tiga rujukan untuk dua orang dan tak satu pun namanya disebut. Resolusi coreference mencari tahu siapa siapa.",
+      "keywords": "Langkah 1: coreference neural terlatih (AllenNLP / spaCy-experimental) · Langkah 2: resolver pronomina berbasis aturan (pengajaran) · Langkah 3: menggunakan LLM untuk coreference · Langkah 4: evaluasi"
+    },
+    "phases/05-nlp-foundations-to-advanced/25-entity-linking": {
+      "name": "Entity Linking & Disambiguasi",
+      "summary": "NER menemukan \"Paris.\" Entity linking memutuskan: Paris, Prancis? Paris Hilton? Paris, Texas? Paris (pangeran Troya)? Tanpa linking, knowledge graph-mu tetap ambigu.",
+      "keywords": "Dua pengukuran · Langkah 1: bangun indeks alias dari redirect Wikipedia · Langkah 2: disambiguasi berbasis konteks · Langkah 3: berbasis embedding (gaya BLINK) · Langkah 4: entity linking generatif (konsep) · Langkah 5: evaluasi pada AIDA-CoNLL"
+    },
+    "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg": {
+      "name": "Relation Extraction & Pembangunan Knowledge Graph",
+      "summary": "NER menemukan entitasnya. Entity linking menambatkannya. Relation extraction menemukan edge di antara mereka. Knowledge graph adalah jumlah node, edge, dan provenance-nya.",
+      "keywords": "Langkah 1: ekstraksi berbasis pola · Langkah 2: klasifikasi relasi terawasi · Langkah 3: ekstraksi dengan prompt LLM plus anchoring · Langkah 4: kanonikalisasi ke ontologi tertutup · Langkah 5: bangun graph kecil dan query"
+    },
+    "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks": {
+      "name": "Evaluasi LLM: RAGAS, DeepEval, G-Eval",
+      "summary": "Exact-match dan F1 melewatkan kesetaraan semantik. Review manusia tidak skalabel. LLM-as-judge adalah jawaban produksi — dengan kalibrasi cukup agar angkanya bisa dipercaya.",
+      "keywords": "Langkah 1: faithfulness dengan NLI (gaya RAGAS) · Langkah 2: relevansi jawaban · Langkah 3: metrik kustom G-Eval · Langkah 4: gate CI · Langkah 5: eval mainan dari nol"
+    },
+    "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation": {
+      "name": "Evaluasi Long-Context: NIAH, RULER, LongBench, MRCR",
+      "summary": "Gemini 3 Pro mengiklankan konteks 10 juta token. Pada 1 juta token, MRCR 8-needle turun ke 26,3%. Diiklankan ≠ bisa dipakai. Evaluasi long-context memberi tahu kapasitas aktual model…",
+      "keywords": "Apa yang sebenarnya dilaporkan · Langkah 1: NIAH kustom untuk domainmu · Langkah 2: varian multi-needle · Langkah 3: penelusuran variabel multi-hop (gaya RULER) · Langkah 4: LongBench v2 pada stack-mu"
+    },
+    "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking": {
+      "name": "Dialogue State Tracking",
+      "summary": "\"Saya mau restoran murah di utara... sebenarnya sedang saja... dan tambahkan Italia.\" Tiga giliran, tiga pembaruan state. DST menjaga dict slot-value tetap sinkron agar pemesanan…",
+      "keywords": "Mode kegagalan klasik · Langkah 1: ekstraktor slot berbasis aturan · Langkah 2: loop pembaruan state · Langkah 3: DST digerakkan LLM dengan output terstruktur · Langkah 4: evaluasi JGA · Langkah 5: menangani koreksi"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "27-prompt-injection-defense",
+  "title": "Prompt Injection dan Pertahanan PVE",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu indirect prompt injection?",
+      "options": [
+        "Model salah klik",
+        "Pengguna mengetik 'abaikan semua aturan' secara langsung",
+        "Instruksi yang disematkan dalam data yang diambil agent (halaman, PDF, email, catatan memori) yang menimpa prompt developer saat diserap",
+        "Salah ketik di system prompt"
+      ],
+      "correct": 2,
+      "explanation": "Greshake et al. mencetuskan indirect prompt injection: konten hasil retrieval yang dikendalikan penyerang membawa instruksi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kata pelajaran tentang memproses prompt hasil retrieval setara dengan?",
+      "options": [
+        "Pass analisis statis",
+        "Eksekusi kode arbitrer pada permukaan tool-use agent",
+        "Kebebasan berbicara",
+        "Panggilan fungsi murni"
+      ],
+      "correct": 1,
+      "explanation": "Kerangka Greshake: instruksi hasil retrieval bisa mengenai tool apa pun yang dapat diakses agent."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu dari lima kelas eksploitasi yang didemonstrasikan?",
+      "options": [
+        "Persistent memory poisoning",
+        "Cache invalidation",
+        "Pencurian data",
+        "Worming"
+      ],
+      "correct": 1,
+      "explanation": "Kelima kelas itu adalah pencurian data, worming, persistent memory poisoning, kontaminasi ekosistem, dan penggunaan tool arbitrer."
+    },
+    {
+      "stage": "check",
+      "question": "Apa kepanjangan PVE?",
+      "options": [
+        "Pre-Vectorize-Embed",
+        "Prompt-Validator-Executor: validator murah dan cepat berjalan pada setiap panggilan tool sebelum model utama yang mahal berkomitmen",
+        "Provider-Verifier-Encoder",
+        "Plan-Verify-Execute, dialek HTN"
+      ],
+      "correct": 1,
+      "explanation": "PVE membungkus setiap invokasi tool dengan validator murah sebelum komitmen model utama."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa 'system prompt bilang abaikan instruksi tidak dipercaya' tidak cukup?",
+      "options": [
+        "Terlalu pendek",
+        "Itu instruction-following, bukan enforcement; model tetap bisa ditimpa konten injeksi yang cukup persuasif",
+        "Penyedia membuangnya",
+        "Itu terenkripsi"
+      ],
+      "correct": 1,
+      "explanation": "Pertahanan nyata butuh penandaan sumber, allowlist, safety per langkah, dan validasi gaya PVE, bukan sekadar prompting."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu overtrust of retrieved memory?",
+      "options": [
+        "Memuat model yang salah",
+        "Agent kemarin menulis catatan memori beracun; agent hari ini membacanya dan mengeksekusi ulang injeksi",
+        "Lupa membersihkan indeks",
+        "Caching terlalu agresif"
+      ],
+      "correct": 1,
+      "explanation": "Persistent memory poisoning berarti injeksi bertahan antar sesi jika memori diperlakukan sebagai tepercaya."
+    },
+    {
+      "stage": "post",
+      "question": "Metadata apa yang disarankan pelajaran untuk dilampirkan pada setiap konten?",
+      "options": [
+        "Jumlah token",
+        "Hanya timestamp",
+        "Kunci enkripsi",
+        "Tag sumber: user_message vs tool_output vs retrieved; validator menolak direktif dalam konten hasil retrieval"
+      ],
+      "correct": 3,
+      "explanation": "Penandaan provenance memungkinkan validator memperlakukan konten sesuai tingkat kepercayaannya."
+    }
+  ]
+}

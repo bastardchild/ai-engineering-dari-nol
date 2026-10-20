@@ -1,0 +1,48 @@
+{
+  "lesson": "06-mcp-fundamentals",
+  "title": "Dasar-Dasar MCP: Request Stateless dan JSON-RPC",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang menciptakan state protokol di antara dua request MCP 2026-07-28?",
+      "options": ["Koneksi HTTP", "Tidak ada di inti protokol", "Mcp-Session-Id", "Proses stdio"],
+      "correct": 1,
+      "explanation": "Inti protokol modern bersifat stateless. Setiap request membawa versi dan kemampuannya sendiri."
+    },
+    {
+      "stage": "check",
+      "question": "Dua field params._meta mana yang wajib ada pada setiap request modern?",
+      "options": ["clientInfo dan cacheScope", "protocolVersion dan clientCapabilities", "sessionId dan capabilities", "serverInfo dan ttlMs"],
+      "correct": 1,
+      "explanation": "Versi protokol dan kemampuan klien wajib diisi. Identitas klien disarankan."
+    },
+    {
+      "stage": "check",
+      "question": "Method apa yang wajib diimplementasikan setiap server MCP modern untuk discovery di awal?",
+      "options": ["tools/list", "initialize", "server/discover", "notifications/initialized"],
+      "correct": 2,
+      "explanation": "server/discover mengumumkan versi yang didukung, kemampuan, instruksi, dan identitas server."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arti kode error -32022?",
+      "options": ["Error internal", "Ketidakcocokan header", "Method tidak ditemukan", "Versi protokol tidak didukung"],
+      "correct": 3,
+      "explanation": "UnsupportedProtocolVersionError menyertakan versi yang diminta dan versi yang didukung server."
+    },
+    {
+      "stage": "post",
+      "question": "Hasil mana yang memerlukan ttlMs dan cacheScope di MCP 2026-07-28?",
+      "options": ["Sebuah error JSON-RPC", "Hasil tools/list", "Hasil tools/call", "Notifikasi pembatalan"],
+      "correct": 1,
+      "explanation": "Hasil list dan resources/read adalah hasil yang dapat di-cache dengan cache hint wajib."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana server seharusnya memilih kemampuan untuk request saat ini?",
+      "options": ["Membacanya dari Mcp-Session-Id", "Menyimpulkannya dari proses", "Menggunakan ulang deklarasi request pertama", "Membacanya dari metadata request saat ini"],
+      "correct": 3,
+      "explanation": "Server tidak boleh menyimpulkan kemampuan modern dari koneksi atau state request sebelumnya."
+    }
+  ]
+}

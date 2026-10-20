@@ -1,0 +1,102 @@
+{
+  "lesson": "15-topic-modeling",
+  "title": "Topic Modeling — LDA dan BERTopic",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diasumsikan LDA tentang setiap dokumen?",
+      "options": [
+        "Setiap dokumen milik tepat satu topik",
+        "Dokumen adalah kalimat",
+        "Setiap dokumen adalah campuran topik; setiap topik adalah distribusi atas kata",
+        "Dokumen independen dari topik"
+      ],
+      "correct": 2,
+      "explanation": "Cerita generatif LDA adalah mixed-membership: setiap dokumen memiliki distribusi topik, setiap topik distribusi kata."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dipakai BERTopic untuk membentuk klaster topik?",
+      "options": [
+        "Menjalankan BM25 lalu k-means",
+        "Menyandikan dokumen dengan sentence transformer, mengurangi dimensi dengan UMAP, lalu mengklaster dengan HDBSCAN",
+        "Melatih LSTM end-to-end",
+        "Softmax langsung atas kosakata"
+      ],
+      "correct": 1,
+      "explanation": "BERTopic = embedding + UMAP + HDBSCAN, dengan TF-IDF berbasis kelas untuk kata topik."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa LDA scikit-learn mengharapkan hitungan mentah (CountVectorizer), bukan TF-IDF?",
+      "options": [
+        "LDA tidak dapat menangani float",
+        "Model probabilistik LDA didefinisikan atas hitungan term integer; TF-IDF mendistorsi distribusi yang mendasarinya",
+        "Batasan memori",
+        "TF-IDF terlalu lambat"
+      ],
+      "correct": 1,
+      "explanation": "Likelihood LDA mengasumsikan hitungan; memberikan nilai TF-IDF melanggar asumsi model."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arti label -1 HDBSCAN dalam output BERTopic?",
+      "options": [
+        "Klaster stopword",
+        "Klaster outlier berisi dokumen yang tidak dapat ditetapkan dengan yakin oleh algoritma berbasis kepadatan",
+        "Kategori yang dicadangkan",
+        "Topik teratas"
+      ],
+      "correct": 1,
+      "explanation": "HDBSCAN menandai titik yang tidak terklaster dengan -1; di BERTopic ini adalah dokumen yang tidak cocok dengan topik mana pun."
+    },
+    {
+      "stage": "check",
+      "question": "Metrik koherensi mana yang menjadi default umum untuk evaluasi model topik?",
+      "options": [
+        "BLEU",
+        "Koherensi c_v melalui NPMI atas jendela geser kata topik teratas",
+        "Akurasi",
+        "Hanya perplexity"
+      ],
+      "correct": 1,
+      "explanation": "Koherensi c_v (Roder dkk., 2015) adalah metrik koherensi topik otomatis kanonik."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan LDA biasanya lebih cocok daripada BERTopic?",
+      "options": [
+        "Ketika embedding berisik",
+        "Ketika kamu memerlukan satu topik per dokumen",
+        "Dokumen panjang di mana distribusi topik mixed-membership berguna dan embedding akan memotong input",
+        "Pada tweet pendek"
+      ],
+      "correct": 2,
+      "explanation": "Dokumen panjang diuntungkan oleh model mixed-membership LDA; encoder BERT memotong input."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa BERTopic biasanya menang pada teks pendek (tweet, judul)?",
+      "options": [
+        "Teks pendek memiliki lebih sedikit topik",
+        "Ia mendukung lebih banyak bahasa",
+        "Kemiripan semantik dalam ruang embedding menangkap makna di mana hitungan bag-of-words terlalu sparse",
+        "Ia lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "Embedding BERT menyediakan kemiripan semantik untuk teks pendek di mana statistik tumpang tindih kata gagal."
+    },
+    {
+      "stage": "post",
+      "question": "Apa mode kegagalan LDA umum yang topiknya harus kamu pantau?",
+      "options": [
+        "Topik yang cocok sempurna dengan kategori berlabel",
+        "Topik dengan terlalu sedikit dokumen",
+        "Topik sampah yang menyerap stopword atau istilah sangat sering",
+        "Campuran dokumen yang berjumlah 1"
+      ],
+      "correct": 2,
+      "explanation": "LDA dapat membuat topik sampah yang menyerap stopword; min_df/max_df yang lebih ketat dan penyaringan stopword meredakannya."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "37-runtime-feedback-loops",
+  "title": "Loop Umpan Balik Runtime",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dipaksa dilakukan feedback runner terhadap agent?",
+      "options": [
+        "Bereaksi terhadap output yang dibayangkan",
+        "Bereaksi terhadap fakta: catatan stdout/stderr/exit/durasi terstruktur yang ditangkap ke dalam loop pada setiap perintah",
+        "Melewati verifikasi",
+        "Memakai model berbeda"
+      ],
+      "correct": 1,
+      "explanation": "Runner menutup celah antara 'test lulus' (dibayangkan) dan 'test benar-benar berjalan dan keluar nol' (tercatat)."
+    },
+    {
+      "stage": "pre",
+      "question": "Bagaimana feedback berbeda dari telemetri?",
+      "options": [
+        "Feedback untuk giliran berikutnya dari run ini; telemetri untuk operator yang meninjau run sepanjang waktu (file berbeda, retensi berbeda)",
+        "Mereka hal yang sama",
+        "Telemetri berbayar",
+        "Telemetri memakai OTel; feedback memakai GraphQL"
+      ],
+      "correct": 0,
+      "explanation": "Keduanya berbagi field tetapi hidup di file berbeda dengan retensi berbeda; feedback intra-run, telemetri lintas-run."
+    },
+    {
+      "stage": "check",
+      "question": "Field mana yang WAJIB muncul di setiap catatan feedback?",
+      "options": [
+        "exit_code (dan exit null harus menolak memajukan loop)",
+        "embedding_vector",
+        "model_id",
+        "prompt_cache_token"
+      ],
+      "correct": 0,
+      "explanation": "exit_code adalah sinyal sukses yang tak ambigu; exit null berarti tidak ada kemajuan."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana runner memotong output besar?",
+      "options": [
+        "Kompresi gzip",
+        "Sampling acak",
+        "Hanya 10 baris pertama",
+        "Head + tail deterministik dengan penanda 'truncated N lines' agar output yang sama selalu menghasilkan catatan yang sama"
+      ],
+      "correct": 3,
+      "explanation": "Pemotongan deterministik menjaga catatan dapat di-replay sambil membatasi biaya token; bagian ekor membawa ringkasan kegagalan."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa redaksi dilakukan saat menulis, bukan saat membaca?",
+      "options": [
+        "Redaksi saat baca merusak JSON",
+        "File di disk adalah yang dijangkau penyerang; meredaksi hanya saat baca meninggalkan rahasia di file JSONL",
+        "Itu lebih cepat",
+        "Kompresi"
+      ],
+      "correct": 1,
+      "explanation": "Redaksi baris yang cocok dengan Bearer, password=, api_key=, AKIA..., xox[baprs]- sebelum append; audit polanya tiap kuartal."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diberikan parent_command_id ke workbench?",
+      "options": [
+        "I/O file lebih cepat",
+        "Memori lebih rendah",
+        "Retry terhubung ke percobaan induknya sehingga reviewer dan audit melihat rantai kegagalan; tanpanya retry tampak seperti keberhasilan independen",
+        "Inferensi lebih murah"
+      ],
+      "correct": 2,
+      "explanation": "Keterkaitan induk membuat rantai retry terlihat oleh reviewer (Pelajaran 39) dan gerbang verifikasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa membatasi feedback_record.jsonl di 1 MB dengan rotasi?",
+      "options": [
+        "Disk terlalu lambat",
+        "Agent hanya membaca file saat ini; rotasi menjaga biaya runtime terbatas sementara artefak CI menangkap seluruh set",
+        "JSON tidak menangani file lebih besar",
+        "Penyedia menagih per byte"
+      ],
+      "correct": 1,
+      "explanation": "File saat ini yang terbatas + riwayat yang dirotasi adalah pola yang sama dengan logrotate; biaya di hot loop dapat diprediksi."
+    }
+  ]
+}

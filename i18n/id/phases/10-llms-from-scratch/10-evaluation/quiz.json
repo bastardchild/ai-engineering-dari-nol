@@ -1,0 +1,66 @@
+{
+  "lesson": "10-evaluation",
+  "title": "Evaluasi: Benchmark, Eval, LM Harness",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa benchmark seperti MMLU menjadi kurang berguna untuk membandingkan model frontier?",
+      "options": [
+        "Mereka menguji subjek yang salah",
+        "MMLU dirancang untuk model lebih kecil",
+        "Model frontier sudah menjenuhkan MMLU (skor 86-89%), memampatkan leaderboard ke rentang di mana perbedaan hanyalah noise statistik",
+        "Pertanyaannya terlalu mudah"
+      ],
+      "correct": 2,
+      "explanation": "Ketika GPT-4, Claude 3, dan Llama 3 semuanya mendapat 86-89% pada MMLU, perbedaan 1 poin tidak bermakna. Benchmark tidak lagi membedakan model, namun masih mendominasi budaya leaderboard."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu Hukum Goodhart dalam konteks evaluasi LLM?",
+      "options": [
+        "Ketika sebuah ukuran menjadi target, ia berhenti menjadi ukuran yang baik -- model dan tim mengoptimalkan benchmark alih-alih kemampuan nyata",
+        "Hukum tentang scaling model",
+        "Teorema tentang mekanisme attention",
+        "Aturan tentang jadwal learning rate"
+      ],
+      "correct": 0,
+      "explanation": "Lab mengoptimalkan skor benchmark (kontaminasi data, prompting khusus benchmark). Skor naik, tetapi kemampuan dunia nyata belum tentu meningkat. Eval khusus tugasmu sendiri adalah satu-satunya ukuran yang andal."
+    },
+    {
+      "stage": "post",
+      "question": "Apa pendekatan evaluasi LLM-as-judge?",
+      "options": [
+        "Membuat manusia menilai setiap respons",
+        "Memakai LLM kuat (misalnya GPT-4) untuk menilai respons terhadap rubrik, menggantikan evaluasi manusia yang mahal dalam skala besar",
+        "Melatih classifier terpisah untuk evaluasi",
+        "Memakai model untuk mengevaluasi dirinya sendiri"
+      ],
+      "correct": 1,
+      "explanation": "LLM-as-judge memakai model cakap untuk menilai respons terhadap kriteria yang ditentukan. Ia lebih murah dan cepat daripada evaluasi manusia, meski memiliki bias (misalnya lebih menyukai respons bertele-tele) yang harus dikalibrasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa membangun suite evaluasi kustom penting alih-alih mengandalkan benchmark publik?",
+      "options": [
+        "Benchmark publik selalu salah",
+        "Eval kustom lebih mudah dibangun",
+        "Benchmark publik terlalu mahal",
+        "Benchmark publik menguji kemampuan umum; aplikasimu memiliki persyaratan spesifik yang hanya dapat diukur oleh eval kustom"
+      ],
+      "correct": 3,
+      "explanation": "Model dengan skor 90% pada MMLU bisa gagal pada tugas spesifikmu (misalnya mengekstrak tanggal dari dokumen hukum dalam formatmu). Hanya eval kustom dengan datamu, edge case-mu, dan kriteria suksesmu yang mengukur hal yang penting."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu kontaminasi data dalam konteks benchmark LLM?",
+      "options": [
+        "Ketika data training rusak",
+        "Ketika pertanyaan benchmark muncul di data pre-training model, menggelembungkan skor tanpa mencerminkan kemampuan sebenarnya",
+        "Ketika data evaluasi salah label",
+        "Ketika model menghasilkan data yang salah"
+      ],
+      "correct": 1,
+      "explanation": "Jika pertanyaan MMLU muncul di korpus training, model menghafal jawabannya alih-alih bernalar. Ini menggelembungkan skor dan membuat perbandingan benchmark tidak andal. Ini masalah yang tumbuh seiring meluasnya korpus training."
+    }
+  ]
+}

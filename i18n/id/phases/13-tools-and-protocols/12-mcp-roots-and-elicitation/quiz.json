@@ -1,0 +1,78 @@
+{
+  "lesson": "12-mcp-roots-and-elicitation",
+  "title": "Scope Eksplisit dan Elicitation Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Jaminan keamanan apa yang disediakan MCP Roots?",
+      "options": [
+        "Panduan workspace yang informasional, bukan otorisasi atau sandboxing",
+        "Isolasi sistem operasi untuk setiap proses server",
+        "Bukti bahwa pemanggil memiliki setiap file di bawah root",
+        "Pencegahan otomatis terhadap escape symbolic link"
+      ],
+      "correct": 0,
+      "explanation": "Roots bersifat informasional dan sudah deprecated pada 2026-07-28. Server tetap memerlukan otorisasi, containment, dan sandboxing."
+    },
+    {
+      "stage": "check",
+      "question": "Apa pengganti modern yang paling jelas ketika scope workspace berubah per panggilan tool?",
+      "options": [
+        "Nilai tersembunyi yang disimpan di bawah sesi transport",
+        "Request roots/list yang dikirim setelah mutasi",
+        "Nama clientInfo yang dilaporkan sendiri",
+        "Argumen URI workspace eksplisit yang diotorisasi server"
+      ],
+      "correct": 3,
+      "explanation": "Handle eksplisit terlihat dan dapat di-replay, tetapi server tetap harus mengotorisasinya untuk principal yang terautentikasi."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana elicitation mode form dikirimkan pada MCP 2026-07-28?",
+      "options": [
+        "Sebagai redirect HTTP dari server/discover",
+        "Melalui notifications/roots/list_changed",
+        "Sebagai request balik lewat stream Mcp-Session-Id",
+        "Di dalam inputRequests pada hasil input_required"
+      ],
+      "correct": 3,
+      "explanation": "MRTR menyematkan elicitation/create di inputRequests, lalu klien mencoba ulang operasi asli dengan inputResponses. Elicitation {} dan elicitation.form mendukung mode form; dukungan hanya-URL mengembalikan -32021 dengan data.requiredCapabilities.elicitation.form."
+    },
+    {
+      "stage": "check",
+      "question": "Nilai mana yang tidak boleh dikumpulkan melalui elicitation mode form?",
+      "options": [
+        "Konfirmasi aksi destruktif berupa boolean",
+        "ID catatan yang dipilih dari enum",
+        "Token akses API",
+        "Preferensi tampilan yang tidak sensitif"
+      ],
+      "correct": 2,
+      "explanation": "Rahasia dan kredensial tidak boleh melewati klien MCP. Gunakan alur mode URL yang terikat dengan hati-hati untuk interaksi eksternal yang sensitif."
+    },
+    {
+      "stage": "post",
+      "question": "Pengguna menolak elicitation penghapusan. Apa hasil yang aman?",
+      "options": [
+        "Menghapus karena model sudah memilih catatan itu",
+        "Menganggap konten yang hilang sebagai persetujuan implisit",
+        "Mengembalikan hasil penolakan lengkap yang bukan error dan mempertahankan catatan",
+        "Mengulang dialog yang sama sampai pengguna menerima"
+      ],
+      "correct": 2,
+      "explanation": "Penolakan adalah penolakan eksplisit. Itu tidak boleh diubah menjadi persetujuan, prompt error berulang, atau mutasi."
+    },
+    {
+      "stage": "post",
+      "question": "Desain mana yang dengan aman mengikat konfirmasi destruktif ke apa yang dilihat pengguna?",
+      "options": [
+        "Meng-encode ID catatan terpilih dengan Base64 tanpa tanda tangan",
+        "Menandatangani principal, digest argumen asli, kandidat id, fase, dan masa berlaku, lalu memeriksa ulang target live",
+        "Memakai clientInfo sebagai identitas pengguna otoritatif",
+        "Mempercayai ID catatan apa pun yang dikembalikan dengan aksi accept"
+      ],
+      "correct": 1,
+      "explanation": "State yang terlindungi integritas mencegah manipulasi. Klaim nonce satu kali atomik yang dibagikan mencegah replay, sedangkan pemeriksaan live terakhir menangani race sebelum mutasi."
+    }
+  ]
+}

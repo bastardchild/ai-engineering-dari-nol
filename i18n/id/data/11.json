@@ -1,0 +1,95 @@
+{
+  "phase": {
+    "11": {
+      "name": "Rekayasa LLM",
+      "desc": "Buat LLM benar-benar bekerja di produksi."
+    }
+  },
+  "lessons": {
+    "phases/11-llm-engineering/01-prompt-engineering": {
+      "name": "Prompt Engineering: Teknik & Pola",
+      "summary": "Kebanyakan orang menulis prompt seperti sedang mengirim pesan ke teman. Lalu mereka heran kenapa model 200 miliar parameter memberi jawaban biasa-biasa saja. Prompt engineering bukan soal trik. Ia…",
+      "keywords": "Anatomi Prompt · Role Prompting: Kenapa \"You are an expert X\" Berhasil · Kejelasan Instruksi: Spesifik Mengalahkan Samar · Kontrol Format Output · Spesifikasi Constraint · Temperature dan Sampling · Context Window: Apa yang Muat di Mana · Pola Prompt · Anti-Pattern · Desain Prompt Lintas Model · Langkah 1: Pustaka Template Prompt · Langkah 2: Prompt Builder · Langkah 3: Harness Pengujian Multi-Model · Langkah 4: Perbandingan dan Penilaian Prompt · Langkah 5: Runner Test Suite · Langkah 6: Jalankan Semuanya · OpenAI: Temperature dan System Message · Anthropic: System Message + Assistant Prefill · Google: Gemini dengan Safety Settings · Template Prompt Provider-Agnostic"
+    },
+    "phases/11-llm-engineering/02-few-shot-cot": {
+      "name": "Few-Shot, CoT, Tree-of-Thought",
+      "summary": "Memberi tahu model apa yang harus dilakukan itu prompting. Menunjukkan cara berpikirnya itu engineering. Selisih antara akurasi 78% dan 91% pada model yang sama, tugas yang sama, data yang sama bukan karena model yang lebih baik…",
+      "keywords": "Zero-Shot vs Few-Shot: Kapan Contoh Mengalahkan Instruksi · Pemilihan Contoh: Mirip Mengalahkan Acak · Chain-of-Thought: Memberi Model Kertas Coretan · Self-Consistency: Ambil Banyak Sampel, Pilih Satu · Tree-of-Thought: Eksplorasi Bercabang · ReAct: Berpikir + Bertindak · Structured Prompting: Tag XML, Delimiter, Header · Prompt Chaining: Dekomposisi Sekuensial · Perbandingan Performa · Langkah 1: Penyimpanan Contoh Few-Shot · Langkah 2: Prompt Builder Chain-of-Thought · Langkah 3: Voting Self-Consistency · Langkah 4: Solver Tree-of-Thought · Langkah 5: Pipeline Lengkap · Prompt Few-Shot Berbasis Template · Prompt Terkompilasi · Perbandingan: Dari Nol vs Framework"
+    },
+    "phases/11-llm-engineering/03-structured-outputs": {
+      "name": "Structured Output",
+      "summary": "LLM kamu mengembalikan string. Aplikasimu butuh JSON. Celah itu telah menjatuhkan lebih banyak sistem produksi daripada halusinasi model mana pun. Structured output adalah jembatan antara bahasa alami…",
+      "keywords": "Spektrum Structured Output · JSON Schema: Bahasa Kontrak · Pola Pydantic · Function Calling / Tool Use · Mode Kegagalan Umum · Langkah 1: Validator JSON Schema · Langkah 2: Model Bergaya Pydantic ke Schema · Langkah 3: Filter Token Terkendali · Langkah 4: Pipeline Ekstraksi · Langkah 5: Jalankan Pipeline Lengkap · OpenAI Structured Outputs · Anthropic Tool Use · Library Instructor"
+    },
+    "phases/11-llm-engineering/04-embeddings": {
+      "name": "Embeddings & Representasi Vektor",
+      "summary": "Teks itu diskret. Matematika itu kontinu. Setiap kali kamu meminta LLM mencari dokumen \"serupa\", membandingkan makna, atau mencari melampaui kata kunci, kamu bergantung pada jembatan antara dua dunia…",
+      "keywords": "Apa Itu Embedding? · Terobosan Word2Vec · Dari Kata ke Kalimat · Model Embedding Modern · Metrik Kemiripan · Vector Database dan HNSW · Strategi Chunking · Bi-Encoder vs Cross-Encoder · Matryoshka Embedding · Kuantisasi Biner · Langkah 1: Chunking Teks · Langkah 2: Membangun Embedding dari Nol · Langkah 3: Fungsi Kemiripan · Langkah 4: Indeks Vektor dengan Pencarian Brute-Force · Langkah 5: Mesin Semantic Search · Langkah 6: Membandingkan Metrik Kemiripan"
+    },
+    "phases/11-llm-engineering/05-context-engineering": {
+      "name": "Context Engineering",
+      "summary": "Prompt engineering hanyalah sebagian kecil. Context engineering adalah keseluruhan permainannya. Prompt adalah string yang kamu ketik. Konteks adalah segala hal yang masuk ke window model: instruksi sistem…",
+      "keywords": "Context Window adalah Sumber Daya Langka · Lost-in-the-Middle · Komponen Konteks · Strategi Kompresi Konteks · Sistem Memori · Perakitan Konteks Dinamis · Langkah 1: Penghitung Token · Langkah 2: Manajer Anggaran Konteks · Langkah 3: Pengurutan Ulang Lost-in-the-Middle · Langkah 4: Kompresor Riwayat Percakapan · Langkah 5: Pemilih Tool Dinamis · Langkah 6: Pipeline Perakitan Konteks Lengkap · Konteks yang Dikelola Harness · Pemuatan Konteks Dinamis · Memori Jangka Panjang Assistant · RAG sebagai Context Engineering"
+    },
+    "phases/11-llm-engineering/06-rag": {
+      "name": "RAG: Retrieval-Augmented Generation",
+      "summary": "LLM kamu tahu segalanya hingga batas waktu training-nya. Ia tidak tahu apa pun tentang dokumen perusahaanmu, codebase-mu, atau catatan rapat minggu lalu. RAG mengatasinya dengan mengambil bagian yang relevan…",
+      "keywords": "Pola RAG · Kenapa RAG Mengalahkan Fine-Tuning · Model Embedding · Kemiripan Vektor · Strategi Chunking · Vector Database · Pipeline Lengkap · Angka Nyata · Langkah 1: Chunking Dokumen · Langkah 2: Embedding TF-IDF · Langkah 3: Pencarian Cosine Similarity · Langkah 4: Konstruksi Prompt · Langkah 5: Pipeline RAG Lengkap · Langkah 6: Generasi (simulasi)"
+    },
+    "phases/11-llm-engineering/07-advanced-rag": {
+      "name": "RAG Lanjutan: Chunking, Reranking",
+      "summary": "RAG dasar mengambil top-k chunk paling mirip. Itu berhasil untuk pertanyaan sederhana. Ia runtuh pada penalaran multi-hop, kueri ambigu, dan korpus besar. RAG lanjutan adalah…",
+      "keywords": "Hybrid Search: Semantik + Kata Kunci · Reciprocal Rank Fusion (RRF) · Reranking · Transformasi Query · Parent-Child Chunking · Filtering Metadata · Evaluasi · Langkah 1: Implementasi BM25 · Langkah 2: Reciprocal Rank Fusion · Langkah 3: Pipeline Hybrid Search · Langkah 4: Reranker Sederhana · Langkah 5: HyDE (Hypothetical Document Embeddings) · Langkah 6: Parent-Child Chunking · Langkah 7: Evaluasi Faithfulness"
+    },
+    "phases/11-llm-engineering/08-fine-tuning-lora": {
+      "name": "Fine-Tuning dengan LoRA & QLoRA",
+      "summary": "Fine-tuning penuh model 7B membutuhkan VRAM 56GB. Kamu tidak punya itu. Kebanyakan perusahaan juga tidak. LoRA memungkinkanmu melakukan fine-tuning model yang sama di 6GB dengan melatih kurang dari 1% …",
+      "keywords": "LoRA: Low-Rank Adaptation · Faktor Skala: Alpha · Di Mana LoRA Diterapkan · Pemilihan Rank · QLoRA: Kuantisasi 4-Bit + LoRA · Pertanyaan Kualitas · Biaya Dunia Nyata · Stack PEFT 2026 · Menggabungkan Adapter · Kapan TIDAK Melakukan Fine-Tune · Langkah 1: Layer LoRA · Langkah 2: Linear Layer Terbungkus LoRA · Langkah 3: Menyuntikkan LoRA ke Model · Langkah 4: Menghitung Parameter · Langkah 5: Menggabungkan Bobot Kembali · Langkah 6: Kuantisasi QLoRA Tersimulasi · Langkah 7: Loop Training · Langkah 8: Demo Lengkap"
+    },
+    "phases/11-llm-engineering/09-function-calling": {
+      "name": "Function Calling & Penggunaan Tool",
+      "summary": "LLM tidak bisa melakukan apa pun. Mereka menghasilkan teks. Itu seluruh kemampuannya. Mereka tidak bisa mengecek cuaca, melakukan query ke database, mengirim email, menjalankan kode, atau membaca file. Setiap \"AI a…",
+      "keywords": "Loop Function Calling · Definisi Tool: Kontrak JSON Schema · Perbandingan Provider · Tool Choice: Auto, Required, Specific · Parallel Function Calling · Structured Output vs Function Calling · Keamanan: Aturan yang Tidak Bisa Ditawar · Penanganan Error · MCP: Model Context Protocol · Langkah 1: Definisikan Registry Tool · Langkah 2: Implementasikan 5 Tool · Langkah 3: Daftarkan Semua Tool · Langkah 4: Bangun Loop Function Calling · Langkah 5: Validasi Argumen · Langkah 6: Jalankan Demo · OpenAI Function Calling · Anthropic Tool Use · Integrasi MCP"
+    },
+    "phases/11-llm-engineering/10-evaluation": {
+      "name": "Evaluasi & Pengujian",
+      "summary": "Kamu tidak akan pernah men-deploy aplikasi web tanpa pengujian. Kamu tidak akan pernah merilis migrasi database tanpa rencana rollback. Tapi saat ini, kebanyakan tim merilis aplikasi LLM hanya dengan membaca 10 …",
+      "keywords": "Taksonomi Eval · LLM-as-Judge: Pekerja Utama · Desain Rubrik · Pipeline Eval · Dataset Eval: Fondasinya · Ukuran Sampel dan Keyakinan · Regression Testing · Biaya Eval · Anti-Pattern · Tool Nyata · Langkah 1: Definisikan Struktur Data Eval · Langkah 2: Bangun Scorer LLM-as-Judge · Langkah 3: Bangun Metrik Otomatis · Langkah 4: Bangun Kalkulator Interval Keyakinan · Langkah 5: Bangun Runner Eval dan Laporan Perbandingan · Langkah 6: Jalankan Demo · Integrasi promptfoo · Integrasi DeepEval · Pola Integrasi CI/CD"
+    },
+    "phases/11-llm-engineering/11-caching-cost": {
+      "name": "Caching, Rate Limiting & Biaya",
+      "summary": "Kebanyakan startup AI tidak mati karena model yang buruk. Mereka mati karena unit economics yang buruk. Satu panggilan GPT-4o berbiaya sepersekian sen. Sepuluh ribu pengguna yang melakukan sepuluh panggilan per hari berbiaya …",
+      "keywords": "Anatomi Biaya Panggilan LLM · Caching Provider: Diskon Bawaan · Semantic Caching: Layer Kustommu · Exact Caching: Hash dan Match · Rate Limiting: Melindungi Anggaranmu · Routing Model: Model Tepat untuk Pekerjaan Tepat · Pelacakan Biaya: Tahu ke Mana Uang Pergi · Batching: Diskon Massal · Alert Anggaran dan Circuit Breaker · Stack Optimasi · Penghematan Nyata: Sebelum dan Sesudah · Langkah 1: Kalkulator Biaya · Langkah 2: Exact Cache · Langkah 3: Semantic Cache · Langkah 4: Rate Limiter · Langkah 5: Pelacak Biaya · Langkah 6: Model Router · Langkah 7: Jalankan Demo · Anthropic Prompt Caching · OpenAI Automatic Caching · OpenAI Batch API · Semantic Cache Produksi dengan Redis"
+    },
+    "phases/11-llm-engineering/12-guardrails": {
+      "name": "Guardrails & Keamanan",
+      "summary": "Aplikasi LLM kamu akan diserang. Bukan mungkin. Pasti. Percobaan prompt injection pertama terhadap sistem produksimu akan datang dalam 48 jam setelah peluncuran. Pertanyaannya bukan…",
+      "keywords": "Guardrail Sandwich · Taksonomi Serangan · Guardrail Input · Guardrail Output · Stack Filtering Konten · Tool yang Dipakai · Defense-in-Depth · Studi Kasus Serangan Nyata · Kebenaran Jujur · Langkah 1: Guardrail Input · Langkah 2: Guardrail Output · Langkah 3: Pipeline Guardrail · Langkah 4: Dashboard Monitoring · Langkah 5: Jalankan Demo · OpenAI Moderation API · LlamaGuard · NeMo Guardrails · Guardrails AI"
+    },
+    "phases/11-llm-engineering/13-production-app": {
+      "name": "Membangun Aplikasi LLM Produksi",
+      "summary": "Kamu sudah membangun prompt, embedding, pipeline RAG, function calling, layer caching, dan guardrails. Secara terpisah. Dalam isolasi. Seperti berlatih tangga nada gitar tanpa pernah memainkan…",
+      "keywords": "Arsitektur Produksi · Stack · Streaming: Kenapa Penting · Penanganan Error: Tiga Layer · Observability: Apa yang Diukur · A/B Testing Prompt di Produksi · Contoh Arsitektur Nyata · Scaling · Proyeksi Biaya · Checklist Deployment · Langkah 1: Infrastruktur Inti · Langkah 2: Manajemen Prompt · Langkah 3: Semantic Cache · Langkah 4: Guardrails · Langkah 5: LLM Caller dengan Retry dan Streaming · Langkah 6: Pipeline Request · Langkah 7: Jalankan Demo Lengkap · FastAPI Server (Deployment Produksi) · Integrasi API Nyata · Deployment Docker"
+    },
+    "phases/11-llm-engineering/14-model-context-protocol": {
+      "name": "Model Context Protocol (MCP)",
+      "summary": "MCP memberi host AI satu protokol untuk menemukan dan memanggil tool, resource, dan prompt. Revisi 2026-07-28 membuat protokol itu stateless: capability dan konteks versinya…",
+      "keywords": "Tiga primitif server · Request stateless menggantikan handshake · Discovery dan pemilihan versi · Hasil bersifat eksplisit · Format wire dan transport · Input client tanpa request dari server · Langkah 1: daftarkan permukaan server · Langkah 2: lampirkan metadata ke setiap request · Langkah 3: opsional discovery sebelum listing · Langkah 4: petakan request yang sama ke HTTP · Langkah 5: tegakkan keamanan di luar state protokol"
+    },
+    "phases/11-llm-engineering/15-prompt-caching": {
+      "name": "Prompt Caching & Context Caching",
+      "summary": "System prompt-mu 4.000 token. Konteks RAG-mu 20.000 token. Kamu mengirim keduanya di setiap request. Kamu juga membayar keduanya — setiap kali. Prompt caching memungkinkan provider menyimpan…",
+      "keywords": "Layout ramah cache · Perhitungan titik impas · Langkah 1: Anthropic prompt caching dengan marker eksplisit · Langkah 2: TTL diperpanjang satu jam · Langkah 3: OpenAI automatic caching · Langkah 4: Gemini explicit context caching · Langkah 5: mengukur hit rate di produksi"
+    },
+    "phases/11-llm-engineering/16-langgraph-state-machines": {
+      "name": "State Machine Agent — Graph, Node, Checkpoint",
+      "summary": "Loop ReAct yang ditulis tangan hanyalah `while True`. Loop yang sama yang ditulis sebagai graph eksplisit adalah sesuatu yang bisa kamu checkpoint, interrupt, cabangkan, dan jelajahi mundur. Agent…",
+      "keywords": "Empat kekuatan super · Reducer adalah intinya · Graph ReAct dalam empat node · StateGraph vs Send (fanout) · Subgraph · Langkah 1: state dan node · Langkah 2: jalankan dengan thread · Langkah 3: tambahkan interrupt human-in-the-loop · Langkah 4: time-travel untuk debugging · Langkah 5: ganti checkpointer untuk produksi"
+    },
+    "phases/11-llm-engineering/17-agent-framework-tradeoffs": {
+      "name": "Trade-off Framework Agent",
+      "summary": "Setiap framework menjual demo yang sama (agent riset menyusun laporan) dan menyembunyikan bug yang sama (skema state bentrok dengan layer orkestrasi). Pilih framework yang abstraksinya…",
+      "keywords": "Apa arti \"abstraction\" sebenarnya · Pertanyaan state · Pertanyaan branching · Pertanyaan observability · Biaya dan latency · Interoperabilitas"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "21-ab-testing-llm-features",
+  "title": "A/B Testing Fitur LLM — GrowthBook, Statsig, dan Masalah Vibes",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan tepat antara eval dan A/B test dalam pelajaran ini?",
+      "options": [
+        "Hanya A/B test yang diperlukan",
+        "Eval menjawab \"apakah model bisa mengerjakan tugasnya?\" pada set berlabel; A/B test menjawab \"apakah pengguna peduli?\" dengan traffic acak live",
+        "Eval menghadap pengguna; A/B test offline",
+        "Keduanya bisa saling menggantikan"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan CUPED untuk sebuah eksperimen?",
+      "options": [
+        "Menonaktifkan koreksi perbandingan berganda",
+        "Mengeliminasi variansi periode pra-lewat regresi sebelum membandingkan periode pasca, biasanya menurunkan variansi 30-70% dan menaikkan ukuran sampel efektif",
+        "Menambah ukuran sampel dengan merekrut lebih banyak pengguna",
+        "Menggantikan sequential testing sepenuhnya"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa kamu perlu koreksi perbandingan berganda (Bonferroni atau Benjamini-Hochberg) saat menjalankan banyak A/B?",
+      "options": [
+        "Itu mempercepat eksperimen",
+        "Itu hanya perlu untuk sequential test",
+        "Itu diwajibkan GDPR",
+        "Menjalankan 20 tes pada keyakinan 95% menghasilkan satu false positive secara kebetulan; koreksi mengendalikan family-wise error atau false discovery rate"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dideteksi SRM (sample ratio mismatch)?",
+      "options": [
+        "Performa tokenizer yang lambat",
+        "Kebocoran PII",
+        "Bug hash penugasan yang menghasilkan pembagian terkirim menyimpang dari yang dimaksud (misalnya 47/53 saat menargetkan 50/50)",
+        "Memory leak di platform eksperimen"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa non-determinisme LLM mengharuskan buffering ukuran sampel?",
+      "options": [
+        "Non-determinisme mengurangi sampel yang dibutuhkan",
+        "Itu melanggar asumsi IID; ukuran sampel efektif turun, jadi kalikan ukuran yang dibutuhkan sekitar 1.3-1.5x sebagai margin keamanan",
+        "Itu tidak relevan untuk perhitungan power",
+        "Itu hanya penting secara offline"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana pelajaran ini membandingkan Statsig dan GrowthBook?",
+      "options": [
+        "GrowthBook tertutup",
+        "Set fitur identik",
+        "Statsig hanya warehouse-native",
+        "Statsig adalah SaaS all-in-one (diakuisisi OpenAI September 2025, $1.1B); GrowthBook adalah open-source MIT, warehouse-native, dengan engine Bayesian/Frequentist/Sequential dan CUPED/SRM/BH"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

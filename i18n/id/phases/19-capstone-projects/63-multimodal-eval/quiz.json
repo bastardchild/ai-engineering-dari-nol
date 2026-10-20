@@ -1,0 +1,78 @@
+{
+  "lesson": "63-multimodal-eval",
+  "title": "Evaluasi Multimodal",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa training loss saja tidak cukup mengukur kualitas model multimodal?",
+      "options": [
+        "Loss adalah string",
+        "Nilai loss acak",
+        "Training loss mengukur kecocokan pada distribusi training; permukaan eval (retrieval, VQA, captioning) mengukur apakah model menggeneralisasi ke task held-out",
+        "Loss sulit dihitung"
+      ],
+      "correct": 2,
+      "explanation": "Minimisasi loss perlu tetapi tidak cukup. Metrik held-out pada tiga permukaan task mengukur apa yang benar-benar bisa dilakukan model."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur R@5 dalam eval retrieval 100 sampel?",
+      "options": [
+        "Fraksi query yang kecocokan benarnya mendarat di 5 kandidat teratas yang diambil dari 100",
+        "Akurasi lima persen",
+        "Lima query per detik",
+        "Caption kelima selalu benar"
+      ],
+      "correct": 0,
+      "explanation": "R@K = fraksi query dengan target di K kandidat berperingkat teratas. Lebih tinggi lebih baik."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa BLEU-4 mengambil rata-rata geometrik presisi 1- hingga 4-gram alih-alih rata-rata aritmetik?",
+      "options": [
+        "Rata-rata geometrik lebih besar",
+        "PyTorch hanya mendukung rata-rata geometrik",
+        "Aritmetik lebih lambat",
+        "Rata-rata geometrik nol jika ada presisi n-gram nol, yang merupakan properti pencocokan ketat yang diinginkan BLEU; smoothing menangani kasus nol"
+      ],
+      "correct": 3,
+      "explanation": "Rata-rata geometrik menegakkan bahwa SEMUA orde n-gram berkontribusi; presisi 4-gram nol meruntuhkan skor sebelum smoothing."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilindungi brevity penalty di BLEU-4?",
+      "options": [
+        "Memory leak",
+        "Caption panjang dihukum",
+        "Caption pendek memanfaatkan presisi tinggi dengan mengeluarkan hanya token aman berfrekuensi tinggi; BP < 1 saat generated < panjang referensi",
+        "Error tokenizer"
+      ],
+      "correct": 2,
+      "explanation": "Tanpa BP caption satu kata yang cocok dengan satu kata referensi akan bernilai 1.0. BP mengecilkan skor untuk generasi terlalu pendek."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa BLEU multi-referensi biasanya memberi skor lebih tinggi daripada BLEU satu referensi pada generasi yang sama?",
+      "options": [
+        "Setiap n-gram dalam generasi dapat cocok dengan referensi mana pun, jadi hitungan terpotong lebih tinggi saat lebih banyak referensi tersedia",
+        "Satu referensi rusak",
+        "Referensi memakan memori ekstra",
+        "Matematikanya berbeda"
+      ],
+      "correct": 0,
+      "explanation": "Lebih banyak referensi memberi n-gram lebih banyak kesempatan untuk cocok; hitungan terpotong tumbuh dan presisi naik."
+    },
+    {
+      "stage": "post",
+      "question": "Permukaan eval mana yang tidak memakai embedding model dan hanya pencocokan tingkat id?",
+      "options": [
+        "Cosine similarity",
+        "BLEU-4",
+        "VQA exact match: id jawaban yang diprediksi dibandingkan langsung dengan id referensi tanpa langkah embedding",
+        "Retrieval"
+      ],
+      "correct": 2,
+      "explanation": "VQA exact match adalah perbandingan integer setelah model mengeluarkan token jawabannya; tidak ada embedding atau matematika similarity."
+    }
+  ]
+}

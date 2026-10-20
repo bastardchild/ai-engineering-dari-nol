@@ -1,0 +1,90 @@
+{
+  "lesson": "29-production-runtimes",
+  "title": "Runtime Produksi: Queue, Event, Cron",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Enam bentuk runtime apa yang didaftar pelajaran?",
+      "options": [
+        "Map, filter, reduce, fold, scan, group",
+        "Request-response, streaming, durable execution, queue-based, event-driven, scheduled",
+        "REST, gRPC, GraphQL, WebSocket, SSE, MQTT",
+        "Read, write, exec, fork, exit, wait"
+      ],
+      "correct": 1,
+      "explanation": "Itulah enam bentuk runtime; pilih bentuknya sebelum memilih framework."
+    },
+    {
+      "stage": "pre",
+      "question": "Kapan request-response tidak cocok?",
+      "options": [
+        "Pada layanan internal",
+        "Saat tugas memakan waktu lebih dari sekitar 30 detik dan pengguna menutup koneksi sementara worker menumpuk",
+        "Pada REST API",
+        "Pada klasifikasi 1 detik"
+      ],
+      "correct": 1,
+      "explanation": "HTTP sinkron hanya layak untuk tugas pendek; tugas panjang butuh bentuk queue/durable/event."
+    },
+    {
+      "stage": "check",
+      "question": "Apa properti inti durable execution?",
+      "options": [
+        "Biaya token lebih rendah",
+        "Inferensi lebih cepat",
+        "Dukungan voice native",
+        "State di-checkpoint setelah setiap langkah sehingga runtime bisa melanjutkan dari langkah sukses terakhir saat gagal"
+      ],
+      "correct": 3,
+      "explanation": "Checkpoint-and-resume adalah pembedanya; LangGraph adalah referensi pelajaran."
+    },
+    {
+      "stage": "check",
+      "question": "Observasi Anthropic mana yang membenarkan runtime berbasis queue untuk agent berhorizon panjang?",
+      "options": [
+        "Tugas harus berjalan sinkron",
+        "Tugas selalu selesai dalam 5 detik",
+        "Pengumuman computer use: puluhan hingga ratusan langkah per tugas adalah normal",
+        "Cron menyelesaikan segalanya"
+      ],
+      "correct": 2,
+      "explanation": "Anthropic menandai puluhan hingga ratusan langkah per tugas sebagai normal; workload itu butuh queue atau runtime durable."
+    },
+    {
+      "stage": "check",
+      "question": "Apa maksud pelajaran dengan 'observability is load-bearing'?",
+      "options": [
+        "Penyedia mewajibkannya untuk penagihan",
+        "Log itu indah",
+        "Disk menjadi penuh",
+        "Tanpa span OTel GenAI dan backend Langfuse/Phoenix/Opik, kamu tidak bisa men-debug agent multi-langkah yang gagal di langkah 40"
+      ],
+      "correct": 3,
+      "explanation": "Observabilitas bukan opsional untuk agent multi-langkah; ia adalah pembeda antara debugging dan mengulang dari awal."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa worker queue harus punya dead-letter queue (DLQ)?",
+      "options": [
+        "DLQ membuat job lebih cepat",
+        "Tanpa DLQ, job yang gagal hilang diam-diam",
+        "DLQ terenkripsi",
+        "DLQ diwajibkan AWS"
+      ],
+      "correct": 1,
+      "explanation": "Job gagal tanpa DLQ akan lenyap; DLQ adalah tempat parkir untuk job gagal."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang disarankan pelajaran untuk dipasangkan dengan agent berbentuk cron?",
+      "options": [
+        "Durable execution agar run malam yang gagal dilanjutkan pada tick berikutnya",
+        "WebRTC",
+        "Autoscaler GPU",
+        "Streaming SSE"
+      ],
+      "correct": 0,
+      "explanation": "Cron + durable execution pulih dengan bersih dari run terjadwal yang gagal."
+    }
+  ]
+}

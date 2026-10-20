@@ -1,0 +1,150 @@
+{
+  "phase": {
+    "17": {
+      "name": "Infrastruktur & Produksi",
+      "desc": "Mengirim AI ke dunia nyata."
+    }
+  },
+  "lessons": {
+    "phases/17-infrastructure-and-production/01-managed-llm-platforms": {
+      "name": "Platform LLM Terkelola — Bedrock, Azure OpenAI, Vertex AI",
+      "summary": "Tiga hyperscaler, tiga strategi berbeda. AWS Bedrock adalah marketplace model — Claude, Llama, Titan, Stability, Cohere di balik satu API. Azure OpenAI adalah kemitraan eksklusif dengan OpenAI…",
+      "keywords": "Tiga strategi · Kesenjangan latensi dalam skala besar · Ekonomi Provisioned Throughput · Permukaan FinOps — pembeda sesungguhnya · Lock-in adalah risiko 2026 · Data residency, BAA, dan industri teregulasi · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/02-inference-platform-economics": {
+      "name": "Ekonomi Platform Inference — Fireworks, Together, Baseten, Modal",
+      "summary": "Pasar inference 2026 bukan lagi sewa waktu GPU. Pasar ini terbelah menjadi custom silicon (Groq, Cerebras, SambaNova), platform GPU (Baseten, Together, Fireworks, Modal), dan A…",
+      "keywords": "Tiga segmen · Fireworks — platform GPU yang dioptimalkan untuk latensi · Together — dioptimalkan untuk keluasan · Baseten — dioptimalkan untuk polesan enterprise · Modal — dioptimalkan untuk native Python · Replicate — keluasan multimodal · Anyscale — native Ray · Per-token versus per-menit — kapan masing-masing menang · Custom engine adalah moat sesungguhnya · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes": {
+      "name": "Autoscaling GPU di Kubernetes — Karpenter, KAI Scheduler",
+      "summary": "Tiga lapisan, bukan satu. Karpenter menyediakan node secara dinamis (di bawah satu menit, 40% lebih cepat dari Cluster Autoscaler). KAI Scheduler menangani gang scheduling, kesadaran topologi, …",
+      "keywords": "Lapisan 1 — provisioning node (Karpenter) · Lapisan 2 — gang scheduling (KAI Scheduler) · Lapisan 3 — sinyal tingkat aplikasi · Kapan memakai apa · Prefill/decode terdisagregasi mempersulit semuanya · Cold start juga penting di sini · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/04-vllm-serving-internals": {
+      "name": "Internal Mesin Serving — PagedAttention, Continuous Batching, Chunked Prefill",
+      "summary": "Throughput mesin serving modern bertumpu pada tiga default yang saling bertumpuk, bukan satu trik. PagedAttention selalu aktif. Continuous batching menyuntikkan request baru ke batch aktif…",
+      "keywords": "PagedAttention sebagai sistem memori virtual · Continuous batching di tingkat iterasi · Chunked prefill melindungi ekor TTFT · Ketiga default saling berinteraksi · Periksa matriks kompatibilitas · Angka yang perlu kamu ingat · Seperti apa wujud schedulernya"
+    },
+    "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding": {
+      "name": "Speculative Decoding EAGLE-3 di Produksi",
+      "summary": "Speculative decoding memasangkan model draft yang cepat dengan model target. Draft mengusulkan K token; target memverifikasi dalam satu forward; token yang diterima gratis. Pada 2026, EAG…",
+      "keywords": "Apa yang sebenarnya dibeli speculative decoding · Mengapa alpha satu-satunya metrik yang penting · Generasi EAGLE sekilas · Resep produksi 2026 · Jebakan produksi: ekor P99 · Di mana EAGLE-3 sudah dipakai · Matematika titik impas dalam satu baris · Kapan tidak memakai speculative decoding"
+    },
+    "phases/17-infrastructure-and-production/06-sglang-radixattention": {
+      "name": "Serving dengan Prefix Cache — RadixAttention dan Penggunaan Ulang KV",
+      "summary": "Perlakukan KV cache sebagai sumber daya kelas satu yang dapat dipakai ulang dan disimpan dalam radix tree, lalu penjadwalan ikut berubah: alih-alih FCFS (first-come, first-served) seperti penjadwalan vLLM, …",
+      "keywords": "Radix tree sebagai indeks KV · Penjadwalan sadar cache · Angka benchmark yang perlu kamu hafal · Jebakan urutan · Di mana RadixAttention menang dan kalah · Mengapa ini masalah scheduler, bukan sekadar kernel · Interaksi dengan vLLM"
+    },
+    "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell": {
+      "name": "Kompilasi Inference Khusus Hardware — FP8 dan NVFP4 di Blackwell",
+      "summary": "Kompilasi inference khusus hardware menukar portabilitas dengan throughput, dan TensorRT-LLM — khusus NVIDIA, disetel untuk Blackwell — adalah contoh paling jelas bahwa pertukaran itu membayar…",
+      "keywords": "Mengapa FP8 masih menjadi batas bawah untuk KV cache · Primitif khusus Blackwell yang dipakai TRT-LLM · Angka yang perlu kamu hafal · Berapa biaya kualitas FP4 sebenarnya · Mengapa ini keputusan lock-in NVIDIA · Resep praktis 2026 · Bonus disagregasi"
+    },
+    "phases/17-infrastructure-and-production/08-inference-metrics-goodput": {
+      "name": "Metrik Inference — TTFT, TPOT, ITL, Goodput, P99",
+      "summary": "Empat metrik menentukan apakah deployment inference berjalan. TTFT adalah prefill ditambah antrean ditambah jaringan. TPOT (setara ITL) adalah biaya decode per token yang terikat memori. End-t…",
+      "keywords": "TTFT — time to first token · TPOT / ITL — latensi antar-token · Latensi E2E · Throughput · Goodput — metrik yang sebenarnya kamu pedulikan · Mengapa mean adalah statistik yang salah · Angka referensi — Llama-3.1-8B-Instruct di TRT-LLM, 2026 · Jebakan pengukuran · Menyusun SLO · Cara mengukur"
+    },
+    "phases/17-infrastructure-and-production/09-production-quantization": {
+      "name": "Quantization Produksi — AWQ, GPTQ, GGUF, FP8, NVFP4",
+      "summary": "Format quantization bukan pilihan universal — ini fungsi dari hardware, mesin serving, dan beban kerja. GGUF Q4_K_M atau Q5_K_M menguasai CPU dan edge, dikirim lewat llama.cpp …",
+      "keywords": "Enam format · GGUF — default CPU/edge · GPTQ — multi-LoRA di vLLM · AWQ — default GPU datacenter · FP8 — jalan tengah yang andal · MXFP4 / NVFP4 — agresif di Blackwell · Jebakan kalibrasi · Jebakan KV cache · AWQ INT4 berbahaya untuk reasoning · Panduan memilih 2026"
+    },
+    "phases/17-infrastructure-and-production/10-cold-start-mitigation": {
+      "name": "Mitigasi Cold Start untuk LLM Serverless",
+      "summary": "Image model 20 GB butuh 5-10 menit (7B) hingga 20+ menit (70B) dari dingin sampai melayani. Di dunia serverless sejati, itu bukan pemanasan — itu gangguan layanan. Mitigasi beroperasi…",
+      "keywords": "Lapisan 1 — image node pra-terisi (Bottlerocket) · Lapisan 2 — streaming model (Run:ai Model Streamer) · Lapisan 3 — snapshot memori GPU (Modal) · Lapisan 4 — warm pool (min_workers=1) · Lapisan 5 — pemuatan bertingkat (ServerlessLLM) · Lapisan 6 — live migration (pola bonus) · Matematika warm pool · Ukur sebelum mengoptimalkan · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/11-multi-region-kv-locality": {
+      "name": "Serving LLM Multi-Region dan Lokalitas KV Cache",
+      "summary": "Load balancing round-robin justru merugikan inference LLM yang di-cache. Request yang tidak mendarat di node pemegang prefix-nya membayar biaya prefill penuh — sekitar 800 ms di P…",
+      "keywords": "Routing sadar cache · Angka · Lintas region punya kendala baru — latensi jaringan · \"Cross-region inference\" komersial tidak membantu di sini · Higiene DR — masalah 32% file hilang · Data residency bersifat ortogonal · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/12-edge-inference": {
+      "name": "Inference di Edge — ANE, Hexagon, WebGPU, Jetson",
+      "summary": "Kendala inti di edge adalah bandwidth memori, bukan komputasi. DRAM mobile berada di 50-90 GB/s; HBM3 datacenter melampaui 2-3 TB/s — selisih 30-50x. Decode terikat memori sehingga selisih itu d…",
+      "keywords": "Bandwidth adalah plafon sesungguhnya · Apple Neural Engine (M4 / A18) · Qualcomm Hexagon (Snapdragon X Elite / 8 Gen 4) · NPU Intel / AMD (Lunar Lake, Ryzen AI 300) · WebGPU + WebLLM · Keluarga NVIDIA Jetson · Pilihan quantization per target · Jebakan konteks panjang di edge · Voice adalah aplikasi pembunuh · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/13-llm-observability": {
+      "name": "Pemilihan Stack Observability LLM",
+      "summary": "Pasar observability 2026 terbagi menjadi dua kategori. Platform pengembangan (LangSmith, Langfuse, Comet Opik) membundel monitoring dengan eval, manajemen prompt, session replay…",
+      "keywords": "Dua kategori · Langfuse — keseimbangan OSS · Phoenix (Arize) — telemetry-first, native OpenTelemetry · Arize AX — strategi skala · LangSmith — LangChain/LangGraph lebih dulu · Helicone — minimum viable berbasis proxy · Opik (Comet) — platform dev OSS · SigNoz — APM penuh berbasis OpenTelemetry · Perekat: OpenTelemetry + konvensi semantik GenAI · Jebakan: instrumentasi di lapisan yang salah · Sampling — kamu tidak bisa menyimpan semuanya · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/14-prompt-semantic-caching": {
+      "name": "Ekonomi Prompt Caching dan Semantic Caching",
+      "summary": "**Snapshot harga per 2026-04.** Klaim numerik di bawah mencerminkan rate card vendor saat pelajaran ini diterbitkan; verifikasi terhadap dokumen tertaut sebelum mengutipnya…",
+      "keywords": "L2 — prompt/prefix caching dari provider · L1 — semantic caching tingkat aplikasi · Anti-pola paralelisasi · Anti-pola konten dinamis · Tumpuk batch + cache untuk beban kerja semalam · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/15-batch-apis": {
+      "name": "Batch API — Diskon 50% sebagai Standar Industri",
+      "summary": "Setiap provider besar menyediakan batch API asinkron dengan diskon 50% dan waktu penyelesaian sekitar 24 jam. OpenAI, Anthropic, Google, dan sebagian besar platform inference (tier batch Fireworks, …",
+      "keywords": "Tiga batch API · Semantik: asinkron, bukan lambat · Tumpuk dengan caching · Triase beban kerja · Jebakan interaktivitas parsial · Jebakan skema output · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/16-model-routing": {
+      "name": "Model Routing sebagai Primitif Pengurang Biaya",
+      "summary": "Broker dinamis mengevaluasi setiap request (jenis tugas, panjang token, kemiripan embedding, keyakinan) dan mengirim kueri sederhana ke model murah, menaikkan yang kompleks ke fro…",
+      "keywords": "Empat sinyal routing · Tiga pola · Implementasi · Kurva harga 2026 · Drift adalah risiko sesungguhnya · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode": {
+      "name": "Prefill/Decode Terdisagregasi — NVIDIA Dynamo dan llm-d",
+      "summary": "Prefill terikat komputasi; decode terikat memori. Menjalankan keduanya di GPU yang sama membuang salah satu sumber daya. Disagregasi memisahkan keduanya ke pool terpisah dan mentransfer KV cache antar…",
+      "keywords": "Mengapa bottleneck-nya berbeda · Arsitekturnya · Dynamo vs llm-d · Ekonomi · Kapan TIDAK melakukan disagregasi · Router terintegrasi dengan Fase 17 · 11 · MoE di Blackwell adalah tempat angka sesungguhnya · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache": {
+      "name": "Stack Serving Produksi — KV Offloading dan Routing Sadar Cache",
+      "summary": "Stack serving produksi menyatukan router, mesin, dan observability ke dalam satu deployment Kubernetes — dan memperlakukan KV cache sebagai sumber daya yang bisa keluar dari GPU. KV offloading mengekstrak…",
+      "keywords": "vLLM production-stack · API KV Offloading Connector (v0.9.0+) · Offload CPU native vs LMCache · Perilaku benchmark · Kapan LMCache menentukan · Kapan TIDAK mengaktifkan · Integrasi dengan serving terdisagregasi · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/19-ai-gateways": {
+      "name": "Gateway AI — LiteLLM, Portkey, Kong, Bifrost",
+      "summary": "Gateway berada di antara aplikasimu dan penyedia model. Fitur intinya adalah routing provider, fallback, retry, rate limiting, referensi secret, observability, guardrail. Pasar …",
+      "keywords": "Enam fitur inti · LiteLLM — OSS MIT, Python · Portkey — posisi control plane · Kong AI Gateway — strategi skala · Bifrost (Maxim AI) · Cloudflare AI Gateway / Vercel AI Gateway · Self-hosted vs terkelola · Anggaran latensi · Semantik rate limit penting · Gateway + observability + routing saling melengkapi · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/20-shadow-canary-progressive": {
+      "name": "Deployment Shadow, Canary, dan Progresif",
+      "summary": "Rollout LLM menggabungkan bagian tersulit dari deployment software: tidak ada unit test, mode kegagalan yang menyebar, sinyal yang tertunda. Urutannya adalah (1) mode shadow — duplikasi request produksi k…",
+      "keywords": "Mode shadow · Rollout canary · Non-determinisme adalah varians baru · Biaya adalah variabel · Rollback adalah senjata · Tooling · Irama metrik · Langkah A/B opsional · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/21-ab-testing-llm-features": {
+      "name": "A/B Testing Fitur LLM — GrowthBook dan Statsig",
+      "summary": "A/B testing tradisional tidak dirancang untuk LLM yang non-deterministik. Perbedaan krusialnya: eval menjawab \"apakah model bisa mengerjakan tugasnya?\" A/B test menjawab \"apakah pengguna peduli?\" Keduanya r…",
+      "keywords": "Eval vs A/B test · Apa yang diuji · CUPED — pengurangan varians · Sequential testing · Koreksi perbandingan berganda · SRM — sample ratio mismatch · Statsig vs GrowthBook · Non-determinisme mempersulit power · Hasil kasus nyata · Anti-pola: merilis berdasarkan firasat · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/22-load-testing-llm-apis": {
+      "name": "Load Testing API LLM — k6, LLMPerf, GenAI-Perf",
+      "summary": "Load tester tradisional tidak dirancang untuk respons streaming, panjang output bervariasi, metrik tingkat token, atau saturasi GPU. Dua jebakan menggigit sebagian besar tim. Jebakan GIL: Loc…",
+      "keywords": "Jebakan GIL (Locust) · Jebakan keseragaman prompt · Empat pola beban · Pemetaan tool 2026 · Gate SLA di CI · Distribusi prompt yang realistis · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/23-sre-for-ai": {
+      "name": "SRE untuk AI — Respons Insiden Multi-Agent",
+      "summary": "AI SRE memakai LLM yang di-grounding pada data infrastruktur (log, runbook, topologi layanan) lewat RAG untuk mengotomasi fase investigasi, dokumentasi, dan koordinasi. Arsitek 2026…",
+      "keywords": "Arsitektur multi-agent · Cakupan auto-remediation · Evaluasi adversarial (NeuBird Hawkeye) · Memori operasional · Prediksi pra-insiden · Produk pada 2026 · Runbook sebagai kode · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/24-chaos-engineering-llm": {
+      "name": "Chaos Engineering untuk Produksi LLM",
+      "summary": "Chaos engineering untuk LLM adalah disiplin tersendiri pada 2026. Prasyarat sebelum menjalankan eksperimen di produksi: SLI/SLO terdefinisi, observability trace+metric+log, rollback otomatis…",
+      "keywords": "Prasyarat · Empat bidang + umpan balik · Guardrail wajib · Lima eksperimen khusus LLM · Irama · Tooling · Mulai kecil · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/25-security-secrets-audit": {
+      "name": "Keamanan — Secret, Pembersihan PII, Audit Log",
+      "summary": "Hilangkan secret sprawl lewat vault terpusat (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault). Jangan pernah menyimpan kredensial di file konfigurasi, file env di VCS, spreadsheet. …",
+      "keywords": "Vault terpusat + pengambilan peran IAM · Kebijakan rotasi ≤ 90 hari · Secret scanning · Postur zero-trust · Pembersihan PII / PHI · Guardrail input + output · Whitelist egress jaringan · Audit log · Insiden Vercel 2026 · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/26-compliance-frameworks": {
+      "name": "Kepatuhan — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001",
+      "summary": "Cakupan multi-framework adalah syarat minimum untuk kesepakatan enterprise 2026. **EU AI Act**: berlaku sejak 1 Agustus 2024. Sebagian besar persyaratan high-risk ditegakkan 2 Agustus 2026. Denda hingga…",
+      "keywords": "Tujuh framework · Linimasa EU AI Act · GDPR — redaksi real-time adalah standar · HIPAA — BAA bukan opsional · SOC 2 Type II · Pemetaan lintas framework · ISO 42001 — baru muncul · Profil referensi OpenAI · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/27-finops-llms": {
+      "name": "FinOps untuk LLM — Unit Economics dan Atribusi Multi-Tenant",
+      "summary": "FinOps tradisional patah pada belanja LLM. Biaya adalah transaksi token, bukan uptime sumber daya. Tag tidak memetakan — panggilan API adalah transaksi, bukan aset. Keputusan engineering (pr…",
+      "keywords": "Tiga dimensi atribusi · Empat lapisan token · Tangga enforcement · Pola atribusi · Biaya per X adalah metrik unit · Bentuk trace atribusi biaya · Tumpukan penghematan berlapis · Angka yang perlu kamu ingat"
+    },
+    "phases/17-infrastructure-and-production/28-self-hosted-serving-selection": {
+      "name": "Pemilihan Serving Self-Hosted — Mencocokkan Mesin dengan Hardware dan Skala",
+      "summary": "Pemilihan mesin adalah fungsi dari hardware, skala, dan ekosistem — bukan bacaan leaderboard. Empat mesin mendominasi inference self-hosted pada 2026: llama.cpp, Ollama, vLLM, SGLang, …",
+      "keywords": "Lima mesin · Keputusan hardware lebih dulu · Keputusan skala kedua · Keputusan beban kerja ketiga · Jebakan maintenance TGI · Pola pipeline · Catatan Ollama · Self-hosted vs terkelola adalah keputusan terpisah · Angka yang perlu kamu ingat"
+    }
+  }
+}

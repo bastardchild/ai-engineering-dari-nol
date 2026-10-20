@@ -1,0 +1,435 @@
+{
+  "phase": {
+    "19": {
+      "name": "Proyek Capstone",
+      "desc": "17 produk end-to-end + 9 jalur deep-build. 20-40 jam per proyek; 4-12 pelajaran per jalur."
+    }
+  },
+  "lessons": {
+    "phases/19-capstone-projects/01-terminal-native-coding-agent": {
+      "name": "Agent Coding Native Terminal",
+      "summary": "Pada 2026 bentuk agent coding sudah mapan. Harness TUI, rencana stateful, permukaan tool tersandbox, loop yang merencanakan, bertindak, mengamati, pulih. Claude Code, Cursor 3, dan…",
+      "keywords": "Harness TUI · Rencana stateful · Permukaan tool tersandbox · Loop plan-act-observe-recover · Sandbox eksekusi · Demo yang berhenti sendiri"
+    },
+    "phases/19-capstone-projects/02-rag-over-codebase": {
+      "name": "RAG atas Codebase (Pencarian Semantik Lintas Repo)",
+      "summary": "Setiap organisasi engineering serius pada 2026 menjalankan pencarian kode internal yang memahami makna, bukan sekadar string. Sourcegraph Amp, jawaban codebase Cursor, Augment enterprise, dan…",
+      "keywords": "Chunking kode · Embedding AST · Pencarian semantik lintas repo · Hybrid retrieval · Reranking · Evaluasi retrieval"
+    },
+    "phases/19-capstone-projects/03-realtime-voice-assistant": {
+      "name": "Asisten Suara Real-Time (ASR → LLM → TTS)",
+      "summary": "Agent suara yang terasa tepat punya latensi end-to-end di bawah 800 ms, tahu kapan kamu berhenti bicara, menangani barge-in, dan bisa memanggil tool tanpa tersendat. Retell, Vapi, Liv…",
+      "keywords": "ASR streaming · Deteksi akhir tutur · Barge-in · Latensi end-to-end · Orkestrasi LLM · TTS streaming"
+    },
+    "phases/19-capstone-projects/04-multimodal-document-qa": {
+      "name": "QA Dokumen Multimodal (Vision-First)",
+      "summary": "Frontier document-QA 2026 bergerak menjauh dari OCR-lalu-teks menuju vision-first late interaction. ColPali, ColQwen2.5, dan ColQwen3-omni memperlakukan setiap halaman PDF sebagai gambar, emb…",
+      "keywords": "Vision-first · Late interaction · ColPali · ColQwen · Embedding halaman PDF · Retrieval multimodal"
+    },
+    "phases/19-capstone-projects/05-autonomous-research-agent": {
+      "name": "Agent Riset Otonom (Kelas AI-Scientist)",
+      "summary": "AI-Scientist-v2 dari Sakana menerbitkan makalah lengkap. Agent Laboratory menjalankan eksperimen. Allen AI membagikan trace. Bentuk 2026 adalah pencarian pohon plan-execute-verify atas eksperimen,…",
+      "keywords": "Plan-execute-verify · Tree search · Generator hipotesis · Retrieval literatur · Penulisan makalah · Evaluasi otomatis"
+    },
+    "phases/19-capstone-projects/06-devops-troubleshooting-agent": {
+      "name": "Agent Troubleshooting DevOps untuk Kubernetes",
+      "summary": "DevOps Agent AWS sudah GA, Resolve AI menerbitkan playbook K8s-nya, NeuBird mendemokan monitoring semantik, dan Metoro mengikat AI SRE ke SLO per layanan. Bentuk produksinya sudah mapan…",
+      "keywords": "Kubernetes · Playbook SRE · Monitoring semantik · SLO per layanan · Investigasi insiden · Auto-remediation"
+    },
+    "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline": {
+      "name": "Pipeline Fine-Tuning End-to-End",
+      "summary": "Model 8B yang dilatih pada datamu sendiri, di-align dengan DPO pada preferensimu sendiri, di-quantize, speculative-decoded, dan disajikan dengan $/1 juta token yang terukur. Stack terbuka 2026 adalah Axolotl v…",
+      "keywords": "Fine-tuning 8B · DPO · Quantization · Speculative decoding · Serving · Biaya per 1 juta token"
+    },
+    "phases/19-capstone-projects/08-production-rag-chatbot": {
+      "name": "Chatbot RAG Produksi (Vertikal Teregulasi)",
+      "summary": "Harvey, Glean, Mendable, dan LlamaCloud semuanya menjalankan bentuk produksi yang sama pada 2026. Ingest dengan docling atau Unstructured dan ColPali untuk visual. Hybrid search. Re-rank dengan bge-r…",
+      "keywords": "Ingest dokumen · Docling · ColPali · Hybrid search · Reranking · Kepatuhan vertikal teregulasi"
+    },
+    "phases/19-capstone-projects/09-code-migration-agent": {
+      "name": "Agent Migrasi Kode (Upgrade Tingkat Repo)",
+      "summary": "MigrationBench Amazon (Java 8 ke 17) dan migrator Py2-ke-Py3 App Engine Google menetapkan standar 2026. OpenRewrite Moderne melakukan penulisan ulang AST deterministik dalam skala besar. Grit menargetkan…",
+      "keywords": "Rewriting AST · OpenRewrite · MigrationBench · Upgrade Java · Migrasi Python · Validasi test"
+    },
+    "phases/19-capstone-projects/10-multi-agent-software-team": {
+      "name": "Tim Rekayasa Perangkat Lunak Multi-Agent",
+      "summary": "Bentuk 2026 dari tim engineering multi-agent sudah konvergen: seorang arsitek merencanakan, N coder bekerja di worktree paralel, reviewer menjadi gate, tester memverifikasi. Factory SWE-AF ar…",
+      "keywords": "Arsitek · Worktree paralel · Reviewer gate · Tester · Orkestrasi multi-agent · SWE-AF"
+    },
+    "phases/19-capstone-projects/11-llm-observability-dashboard": {
+      "name": "Dashboard Observability & Eval LLM",
+      "summary": "Langfuse menjadi open-core. Arize Phoenix menerbitkan pemetaan semconv GenAI 2026. Helicone dan Braintrust sama-sama memperkuat atribusi biaya per pengguna. OpenLLMetry Traceloop…",
+      "keywords": "Langfuse · Arize Phoenix · OpenTelemetry GenAI · Atribusi biaya per pengguna · Trace · Eval dashboard"
+    },
+    "phases/19-capstone-projects/12-video-understanding-pipeline": {
+      "name": "Pipeline Pemahaman Video (Scene → QA)",
+      "summary": "Twelve Labs memprodukkan Marengo + Pegasus. VideoDB mengirim API CRUD-untuk-video. Molmo 2 dari AI2 menerbitkan checkpoint VLM terbuka. Konteks panjang Gemini menangani video berjam-jam secara native…",
+      "keywords": "Video understanding · Marengo · Pegasus · VLM · Konteks panjang · QA video"
+    },
+    "phases/19-capstone-projects/13-mcp-server-with-registry": {
+      "name": "Server MCP Stateless dengan Registry dan Tata Kelola",
+      "summary": "MCP produksi bukan satu proses server. Ini rantai kontrak: metadata yang dapat dipublikasikan, discovery live, envelope request stateless, otorisasi, kebijakan, audit, dan deplo…",
+      "keywords": "Cacheable discovery · Persetujuan adalah catatan, bukan scope magis · 1. Metadata publikasi model · 2. Implementasikan discovery live · 3. Implementasikan envelope stateless · 4. Bangun permukaan tool · 5. Tambahkan listing sadar cache · 6. Tambahkan otorisasi dan kebijakan · 7. Pisahkan registry dan validasi runtime · 8. Tambahkan bukti audit · 9. Uji penskalaan horizontal · 10. Lewati wire sesungguhnya"
+    },
+    "phases/19-capstone-projects/14-speculative-decoding-server": {
+      "name": "Server Inference Speculative-Decoding",
+      "summary": "Speculative decoding — draft murah mengusulkan token, model target memverifikasinya dalam satu pass — kini optimisasi siap produksi, bukan trik riset. EAGLE-3 di vLLM …",
+      "keywords": "Speculative decoding · Model draft · EAGLE-3 · Verifikasi target · Throughput · Latensi"
+    },
+    "phases/19-capstone-projects/15-constitutional-safety-harness": {
+      "name": "Harness Keselamatan Konstitusional + Range Red-Team",
+      "summary": "Constitutional Classifiers Anthropic, Llama Guard 4 Meta, ShieldGemma-2 Google, Nemotron 3 Content Safety NVIDIA, dan X-Guard untuk cakupan multibahasa mendefinisikan 2026 …",
+      "keywords": "Constitutional Classifiers · Llama Guard 4 · ShieldGemma-2 · Nemotron 3 Content Safety · X-Guard · Red-team range"
+    },
+    "phases/19-capstone-projects/16-github-issue-to-pr-agent": {
+      "name": "Agent Otonom GitHub Issue-ke-PR",
+      "summary": "Beri label pada issue, dapatkan PR — bentuk produk 2026 untuk agent coding otonom: jalankan agent di sandbox cloud, verifikasi test lulus, dan posting PR siap review dengan alasannya. AW…",
+      "keywords": "GitHub issue · Sandbox cloud · Verifikasi test · PR siap review · Alasan perubahan · Otomasi coding"
+    },
+    "phases/19-capstone-projects/17-personal-ai-tutor": {
+      "name": "Tutor AI Personal (Adaptif, Multimodal)",
+      "summary": "Khanmigo (Khan Academy), Duolingo Max, Google LearnLM / Gemini for Education, Quizlet Q-Chat, dan Synthesis Tutor semuanya mengirim tutoring multimodal adaptif dalam skala besar pada 2026. The …",
+      "keywords": "Tutoring adaptif · Multimodal · Khanmigo · LearnLM · Personalisasi · Evaluasi pembelajaran"
+    },
+    "phases/19-capstone-projects/20-agent-harness-loop-contract": {
+      "name": "Kontrak Loop Harness Agent",
+      "summary": "Harness adalah agent-nya. Model adalah koprosesor. Pelajaran ini membekukan kontrak loop yang bisa kamu sambungkan ke model apa pun.",
+      "keywords": "Kontrak loop · Harness agent · Model sebagai koprosesor · Titik sambung · Determinisme · Observability"
+    },
+    "phases/19-capstone-projects/21-tool-registry-schema-validation": {
+      "name": "Registry Tool dengan Validasi Skema",
+      "summary": "Tool yang tidak bisa divalidasi agent adalah tool yang tidak bisa dipanggil agent. Bangun registry dan pemeriksa skema sebelum membangun tool-nya.",
+      "keywords": "Registry tool · Validasi skema · JSON Schema · Kontrak tool · Discovery · Keamanan tool"
+    },
+    "phases/19-capstone-projects/22-jsonrpc-stdio-transport": {
+      "name": "JSON-RPC 2.0 di Atas Stdio Berbatas Baris Baru",
+      "summary": "Transport antara klien model dan server tool adalah JSON-RPC di atas stdio. Menulisnya sendiri sekali mengajarkan berapa biaya setiap lapisan framing.",
+      "keywords": "JSON-RPC 2.0 · stdio · Newline-delimited framing · Handshake · Korelasi request-id · Error handling"
+    },
+    "phases/19-capstone-projects/23-function-call-dispatcher": {
+      "name": "Dispatcher Function Call",
+      "summary": "Dispatcher adalah tempat harness membayar setiap janji yang dibuat skema. Timeout, retry, dedupe, pemetaan error. Semuanya di satu sambungan.",
+      "keywords": "Function call · Dispatcher · Timeout · Retry · Dedupe · Pemetaan error"
+    },
+    "phases/19-capstone-projects/24-plan-execute-control-flow": {
+      "name": "Alur Kontrol Plan-Execute",
+      "summary": "Rencana yang tidak bisa bertahan dari kegagalan adalah skrip. Skrip yang bisa merencanakan ulang adalah agent. Bangun replanner-nya lebih dulu.",
+      "keywords": "Plan-execute · Replanning · Kontrol alur · Penanganan kegagalan · State agent · Determinisme"
+    },
+    "phases/19-capstone-projects/25-verification-gates-observation-budget": {
+      "name": "Gate Verifikasi dan Anggaran Observasi",
+      "summary": "Harness agent tanpa lapisan verifikasi adalah angan-angan berbalut jas. Pelajaran ini membangun rantai gate deterministik yang memutuskan apakah sebuah tool call boleh berjalan, bagaimana…",
+      "keywords": "Gate verifikasi · Anggaran observasi · Rantai deterministik · Kebijakan tool call · Bukti · Audit"
+    },
+    "phases/19-capstone-projects/26-sandbox-runner-denylist": {
+      "name": "Sandbox Runner dengan Denylist dan Path Jail",
+      "summary": "Gate verifikasi memutuskan apakah tool call harus berjalan. Sandbox memutuskan apa yang terjadi saat berjalan. Pelajaran ini mengirim runner subprocess yang menolak eksekusi berbahaya…",
+      "keywords": "Sandbox runner · Denylist · Path jail · Subprocess · Isolasi · Keamanan eksekusi"
+    },
+    "phases/19-capstone-projects/27-eval-harness-fixture-tasks": {
+      "name": "Harness Eval dengan Tugas Fixture",
+      "summary": "Agent coding hanya sebagus rangkaian tugas yang kamu pakai untuk mengukurnya. Pelajaran ini membangun harness evaluasi yang menerima folder tugas fixture, menjalankan masing-masing melalui c…",
+      "keywords": "Eval harness · Tugas fixture · Runner · Metrik · Reproduksibilitas · Skor"
+    },
+    "phases/19-capstone-projects/28-observability-otel-traces": {
+      "name": "Observability dengan Span OTel GenAI dan Metrik Prometheus",
+      "summary": "Harness agent tanpa observability adalah kotak hitam yang memakan biaya. Pelajaran ini menulis sendiri span builder yang memancarkan record sesuai konvensi semantik OpenTelemetry GenAI…",
+      "keywords": "OpenTelemetry · Span GenAI · Metrik Prometheus · Trace · Atribut semantik · Biaya"
+    },
+    "phases/19-capstone-projects/29-end-to-end-coding-task-demo": {
+      "name": "Agent Coding End-to-End di Harness",
+      "summary": "Hasil akhir Track A. Pelajaran ini menyatukan rantai gate, sandbox, eval harness, dan span OTel menjadi satu agent coding yang berfungsi dan memperbaiki b…",
+      "keywords": "Integrasi end-to-end · Gate · Sandbox · Eval harness · Span OTel · Demo"
+    },
+    "phases/19-capstone-projects/30-bpe-tokenizer-from-scratch": {
+      "name": "Tokenizer BPE dari Nol",
+      "summary": "Byte masuk, id keluar, id kembali ke byte yang sama. Bangun tokenizer yang masih menjadi titik awal setiap model teks modern.",
+      "keywords": "BPE · Byte-level · Merge rule · Vocab · Encode/decode · Round-trip"
+    },
+    "phases/19-capstone-projects/31-tokenized-dataset-sliding-window": {
+      "name": "Dataset Ter-tokenisasi dengan Sliding Window",
+      "summary": "Pretraining adalah fungsi dari token id ke gradien. Pelajaran ini membangun konveyor yang memasok id-nya.",
+      "keywords": "Token id · Sliding window · Dataloader · Shift labels · Batch · Pretraining"
+    },
+    "phases/19-capstone-projects/32-token-positional-embeddings": {
+      "name": "Embedding Token dan Posisional",
+      "summary": "Id adalah integer. Model menginginkan vektor. Dua tabel lookup berada di antaranya, dan pilihan tabel posisional membentuk apa yang bisa dipelajari model.",
+      "keywords": "Token embedding · Positional embedding · Tabel lookup · Dimensi model · Vektor · Inisialisasi"
+    },
+    "phases/19-capstone-projects/33-multihead-self-attention": {
+      "name": "Self-Attention Multi-Head",
+      "summary": "Satu proyeksi linear, tiga tampilan, H head paralel, satu mask. Blok attention seperti yang benar-benar dipakai model.",
+      "keywords": "Multi-head · QKV · Causal mask · Softmax · Proyeksi output · Attention"
+    },
+    "phases/19-capstone-projects/34-transformer-block": {
+      "name": "Blok Transformer dari Nol",
+      "summary": "Satu blok adalah unit setiap LLM decoder modern. Layer norm, multi head attention, residual, MLP, residual. Varian pre-LN berlatih stabil tanpa warmup. Varian post-LN…",
+      "keywords": "Causal multi head attention · MLP · Koneksi residual melakukan dua hal"
+    },
+    "phases/19-capstone-projects/35-gpt-model-assembly": {
+      "name": "Perakitan Model GPT",
+      "summary": "Dua belas blok bertumpuk, token embedding, position embedding yang dipelajari, LayerNorm akhir, dan language model head yang diikat. Itulah keseluruhan model GPT 124 juta parameter. Th…",
+      "keywords": "Weight tying · Position embedding dipelajari, bukan sinusoidal · Generasi: temperature, top-k, multinomial"
+    },
+    "phases/19-capstone-projects/36-training-loop-eval": {
+      "name": "Loop Pelatihan dan Evaluasi",
+      "summary": "Loop yang tidak mengukur adalah loop yang berbohong. Pelajaran ini membangun loop pelatihan yang menggerakkan model GPT: AdamW dengan pemisahan weight decay, warmup plus learning rate cosine…",
+      "keywords": "Keselarasan loss · Pemisahan decay AdamW · Jadwal warmup plus cosine · Evaluasi held-out · Sampling kualitatif sebagai sinyal awal"
+    },
+    "phases/19-capstone-projects/37-loading-pretrained-weights": {
+      "name": "Memuat Bobot Pretrained",
+      "summary": "Melatih model 124 juta parameter dari nol adalah keputusan anggaran; memuat checkpoint terbitan adalah urusan hari Selasa. Pelajaran ini memuat bobot bergaya GPT-2 pretrained dari sa…",
+      "keywords": "Konvensi penamaan GPT-2 · Konvensi penamaan lokal · Fixture stub"
+    },
+    "phases/19-capstone-projects/38-classifier-finetuning": {
+      "name": "Fine-Tuning Classifier dengan Tukar Head",
+      "summary": "Capstone pertama Track B. Model bahasa pretrained adalah tumpukan blok self-attention yang berakhir pada head prediksi token. Saat kamu ingin spam vs ham, head-nya salah tetapi…",
+      "keywords": "Tukar head · Classifier · Fine-tuning · Label · Evaluasi · Spam vs ham"
+    },
+    "phases/19-capstone-projects/39-instruction-tuning-sft": {
+      "name": "Instruction Tuning dengan Supervised Fine-Tuning",
+      "summary": "Model base pretrained bisa memperpanjang sekuens tetapi tidak bisa mengikuti instruksi. Supervised fine-tuning adalah perubahan terkecil yang memperbaikinya: beri model contoh berpasangan…",
+      "keywords": "SFT · Instruction tuning · Pasangan prompt-response · Masking loss · Data chat · Evaluasi"
+    },
+    "phases/19-capstone-projects/40-dpo-from-scratch": {
+      "name": "Direct Preference Optimization dari Nol",
+      "summary": "Reward model dan PPO adalah stack RLHF klasik. DPO meruntuhkan stack itu menjadi satu loss tersupervisi yang mencocokkan policy langsung terhadap pasangan preferensi. Pelajaran ini menurunkan…",
+      "keywords": "DPO · Pasangan preferensi · Policy · Reference model · Loss · RLHF"
+    },
+    "phases/19-capstone-projects/41-eval-pipeline": {
+      "name": "Pipeline Evaluasi Lengkap",
+      "summary": "Pelatihan adalah bagian yang bisa kamu pantau dengan kurva loss. Evaluasi adalah bagian yang harus kamu rancang. Pelajaran ini membangun pipeline eval terpadu yang menerima model bahasa terlatih apa pun…",
+      "keywords": "Pipeline eval · Metrik · Bonus · Entropy · Kalibrasi · Laporan"
+    },
+    "phases/19-capstone-projects/42-large-corpus-downloader": {
+      "name": "Downloader Korpus Besar",
+      "summary": "Melatih model bahasa dimulai jauh sebelum forward pass pertama. Korpus harus mendarat di disk, terdekompresi, terdeduplikasi, dan dapat dialamatkan, dengan cerita resume sudah w…",
+      "keywords": "Streaming dengan `urllib` · Resume dengan `Range` · MinHash plus LSH · Manifest shard sebagai kontrak"
+    },
+    "phases/19-capstone-projects/43-hdf5-tokenized-corpus": {
+      "name": "Korpus Ter-tokenisasi HDF5",
+      "summary": "Korpus yang diunduh harus mendarat dalam tata letak yang bisa di-stream trainer dengan kecepatan baris. JSONL di disk tidak bertahan dengan 16 worker dataloader. HDF5 dengan int… yang dapat di-resize dan chunked",
+      "keywords": "HDF5 yang dapat di-resize dengan benar · Penulisan ter-shard · Pembacaan memory-mapped · Dataloader sliding-window"
+    },
+    "phases/19-capstone-projects/44-cosine-lr-warmup": {
+      "name": "LR Cosine dengan Warmup Linear",
+      "summary": "Jadwal learning rate adalah keputusan terpenting kedua setelah fungsi loss. AdamW dengan cosine decay dan warmup linear adalah default modern untuk pelatihan model bahasa…",
+      "keywords": "Formula warmup · Formula cosine · Floor setelah total step · Logging gradient norm bersama rate"
+    },
+    "phases/19-capstone-projects/45-gradient-clipping-amp": {
+      "name": "Gradient Clipping dan Mixed Precision",
+      "summary": "Optimizer dan jadwal dari pelajaran sebelumnya mengasumsikan gradien waras. Biasanya tidak. Satu batch buruk bisa melonjakkan gradient norm tiga orde besaran.…",
+      "keywords": "Norma L2 global · autocast dan GradScaler · Deteksi NaN dan Inf · Diagnostik scaling factor"
+    },
+    "phases/19-capstone-projects/46-gradient-accumulation": {
+      "name": "Akumulasi Gradien",
+      "summary": "Latih pada batch efektif yang tidak mampu kamu bayar, satu micro-batch setiap kali. Skalakan loss, tahan langkah optimizer, dan biarkan gradien menumpuk.",
+      "keywords": "Bukti ekuivalensi dalam kode · Ke mana biayanya pergi · Langkah 1: cek ekuivalensi · Langkah 2: pola sync-on-last-step · Langkah 3: kurva throughput"
+    },
+    "phases/19-capstone-projects/47-checkpoint-save-resume": {
+      "name": "Simpan dan Resume Checkpoint",
+      "summary": "Interupsi pelatihan membunuh run; checkpoint membuatnya lanjut. Simpan model, optimizer, scheduler, riwayat loss, penghitung step, dan state RNG, secara atomik, sehingga kill kapan pun menyisakan…",
+      "keywords": "Lima bucket state · Penyimpanan atomik · Checkpoint ter-shard · Resume melanjutkan di tengah epoch · Langkah 1: tangkap dan pulihkan state RNG · Langkah 2: simpan atomik · Langkah 3: round trip checkpoint penuh · Langkah 4: varian ter-shard · Langkah 5: demo resume"
+    },
+    "phases/19-capstone-projects/48-distributed-fsdp-ddp": {
+      "name": "Data Parallel Terdistribusi dan FSDP dari Nol",
+      "summary": "Pelatihan multi-rank adalah dua kolektif dan satu aturan. Broadcast parameter saat startup, rata-ratakan gradien setelah backward, jangan pernah biarkan rank berbeda pendapat soal step…",
+      "keywords": "Dua kolektif yang penting · Rata-rata gradien cocok dengan gradien satu proses · Sketsa FSDP · CPU dan backend gloo · Langkah 1: hidupkan process group · Langkah 2: broadcast saat konstruksi · Langkah 3: all-reduce gradien setelah backward · Langkah 4: buktikan ekuivalensi · Langkah 5: round trip FSDP"
+    },
+    "phases/19-capstone-projects/49-lm-eval-harness": {
+      "name": "Harness Evaluasi Model Bahasa",
+      "summary": "Model yang bagus pada tugas yang tidak bisa kamu definisikan adalah model yang bagus secara kebetulan. Harness adalah definisi tugas, metrik, runner, dan leaderboard, dalam satu…",
+      "keywords": "Spesifikasi tugas · Lima tugas fixture · Kontrak metrik · Adapter model · Runner · Langkah 1: seed tugas fixture · Langkah 2: muat tugas · Langkah 3: implementasikan metrik · Langkah 4: tulis runner · Langkah 5: keluarkan JSON"
+    },
+    "phases/19-capstone-projects/50-hypothesis-generator": {
+      "name": "Generator Hipotesis",
+      "summary": "Agent riset yang menanyakan pertanyaan sama dua kali membuang token. Triknya adalah memaksa setiap draft mendarat di tempat yang baru.",
+      "keywords": "Generator hipotesis · Diferensiasi · Sampling · Kritik · Diversitas · Token"
+    },
+    "phases/19-capstone-projects/51-literature-retrieval": {
+      "name": "Retrieval Literatur",
+      "summary": "Hipotesis itu murah. Mengetahui apakah seseorang sudah membuktikannya adalah bagian yang mahal. Bangun lapisan retrieval yang menjawab pertanyaan itu sebelum runner menyalakan sandbox.",
+      "keywords": "Retrieval literatur · Pencarian semantik · Sitasi · Deduplikasi · Relevansi · Grounding"
+    },
+    "phases/19-capstone-projects/52-experiment-runner": {
+      "name": "Runner Eksperimen",
+      "summary": "Loop hanya sejujur pengukurannya. Bangun runner yang menerima spec, menjalankannya di subprocess tersandbox, dan mengeluarkan blob metrik json yang bisa dipercaya evaluator.",
+      "keywords": "Runner eksperimen · Spec · Subprocess tersandbox · Metrik JSON · Reproduksibilitas · Timeout"
+    },
+    "phases/19-capstone-projects/53-result-evaluator": {
+      "name": "Evaluator Hasil",
+      "summary": "Runner menghasilkan angka. Evaluator memutuskan apakah angka itu peningkatan, regresi, atau noise. Bangun jalur vonis yang mengubah metrik menjadi kesimpulan satu baris…",
+      "keywords": "Evaluator hasil · Peningkatan · Regresi · Noise · Signifikansi · Vonis"
+    },
+    "phases/19-capstone-projects/54-paper-writer": {
+      "name": "Penulis Makalah",
+      "summary": "Kerangka LaTeX adalah kontrak antara peneliti dan penyusun huruf. Jika kontraknya rusak, dokumen tidak terkompilasi, dan kegagalannya berisik. Bangun kerangka fi…",
+      "keywords": "LaTeX · Kerangka makalah · Kompilasi · Sitasi · Struktur · Validasi"
+    },
+    "phases/19-capstone-projects/55-critic-loop": {
+      "name": "Loop Kritik",
+      "summary": "Kritik yang mengembalikan \"looks good\" pada percobaan pertama itu rusak. Kritik yang selalu mengembalikan \"needs work\" juga rusak. Kritik yang menarik adalah yang konvergen, dan kamu harus…",
+      "keywords": "Loop kritik · Konvergensi · Revisi · Ambang · Umpan balik · Iterasi"
+    },
+    "phases/19-capstone-projects/56-iteration-scheduler": {
+      "name": "Scheduler Iterasi",
+      "summary": "Loop riset tanpa scheduler adalah antrean yang berhalusinasi. Scheduler adalah tempat loop memutuskan apa yang berhenti dieksplorasi, dan keputusan itu adalah seluruh permainannya.",
+      "keywords": "Scheduler iterasi · Eksplorasi · Berhenti · Prioritas · Anggaran · Keputusan"
+    },
+    "phases/19-capstone-projects/57-end-to-end-research-demo": {
+      "name": "Demo Riset End-to-End",
+      "summary": "Demo adalah tempat setiap kontrak yang kamu tulis sebelumnya harus menyatu. Jika salah satunya bocor, demo adalah pelajaran yang menangkapnya.",
+      "keywords": "Demo end-to-end · Integrasi · Kontrak · Kegagalan · Verifikasi · Pipeline"
+    },
+    "phases/19-capstone-projects/58-vision-encoder-patches": {
+      "name": "Patch Vision Encoder",
+      "summary": "Model vision yang membaca piksel butuh tokenizer untuk piksel. Patch embedding adalah tokenizer itu. Potong gambar menjadi grid kotak, ratakan setiap kotak, proyeksikan melalui o…",
+      "keywords": "Mengapa patch, bukan piksel · Mengapa proyeksi linear cukup · Trik `Conv2d` · Position embedding · Ekuivalensi sebagai sanity check"
+    },
+    "phases/19-capstone-projects/59-vit-transformer": {
+      "name": "Encoder Vision Transformer",
+      "summary": "Patch saja tidak melihat. Transformer pre-LN 12 lapis dengan 12 attention head mengubah sekuens token patch menjadi sekuens token kontekstual, dengan token CLS mengumpulkan…",
+      "keywords": "Pre-LN vs post-LN · Multi-head self-attention · Mengapa ekspansi feed-forward 4x · Pakai causal mask atau tidak? · Apa yang dipelajari token CLS"
+    },
+    "phases/19-capstone-projects/60-projection-layer-modality-align": {
+      "name": "Lapisan Proyeksi untuk Penyelarasan Modalitas",
+      "summary": "Encoder vision menghasilkan token gambar. Decoder teks mengonsumsi token teks. Keduanya hidup di ruang vektor berbeda. MLP dua lapis kecil memproyeksikan token gambar ke ruang embedding teks…",
+      "keywords": "Pooling sebelum proyeksi · Mengapa dua lapis, bukan satu · Loss penyelarasan cosine · Encoder dibekukan adalah triknya"
+    },
+    "phases/19-capstone-projects/61-cross-attention-fusion": {
+      "name": "Fusi Cross-Attention",
+      "summary": "Lapisan proyeksi menyelaraskan satu vektor gambar dengan satu vektor caption. Decoder vision-language nyata membutuhkan setiap token teks untuk berhubungan dengan setiap token patch, sehingga model dapat mengelompokkan…",
+      "keywords": "Bentuk mask · Mengapa tidak ada mask di cross-attention · Key/value caching · Komposisi blok"
+    },
+    "phases/19-capstone-projects/62-vision-language-pretraining": {
+      "name": "Pretraining Vision-Language",
+      "summary": "Encoder, proyeksi, dan decoder sudah terhubung. Sekarang latih semuanya bersama. Dua objektif menggerakkan pembelajaran: loss kontrastif gambar-teks (InfoNCE) yang menarik pasangan yang cocok bersama…",
+      "keywords": "InfoNCE dalam satu paragraf · Temperature penting · Loss language modeling · Menggabungkan loss · Mengapa 50 langkah cukup untuk demo"
+    },
+    "phases/19-capstone-projects/63-multimodal-eval": {
+      "name": "Evaluasi Multimodal",
+      "summary": "Pelatihan adalah separuh loop. Separuh lainnya adalah pengukuran. Pelajaran ini membangun tiga permukaan evaluasi dari primitif: retrieval gambar-caption dilaporkan sebagai R@1, R@5, R@10; visua…",
+      "keywords": "Recall@K dari matriks kemiripan · Exact match VQA · BLEU-4 · Suite eval sintetis"
+    },
+    "phases/19-capstone-projects/64-chunking-strategies-advanced": {
+      "name": "Strategi Chunking, Dibandingkan",
+      "summary": "Chunking memutuskan apa yang bisa dimunculkan retriever-mu. Salah batas, tidak ada model embedding, reranker, atau LLM yang bisa memperbaiki kerusakan di hilir.",
+      "keywords": "Fixed-window · Kalimat · Pemecahan rekursif · Clustering semantik · Header markdown struktural · Bagaimana recall@k mengukur pilihan batas"
+    },
+    "phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense": {
+      "name": "Retrieval Hybrid dengan BM25 dan Dense Embedding",
+      "summary": "Retrieval leksikal dan semantik gagal pada distribusi kueri yang berlawanan. Retrieval hybrid dengan reciprocal rank fusion tidak menginterpolasi, ia memilih - dan pilihan itu menang pada setiap kueri…",
+      "keywords": "BM25 dalam satu paragraf · Dense retrieval dalam satu paragraf · Reciprocal rank fusion, formula terbitannya · Mengapa fusi mengalahkan interpolasi berbobot skor"
+    },
+    "phases/19-capstone-projects/66-reranker-cross-encoder": {
+      "name": "Reranker Cross-Encoder",
+      "summary": "Bi-encoder menyematkan kueri dan dokumen secara terpisah. Cross-encoder menyatukannya dan membaca keduanya sekaligus. Cross-encoder adalah pembaca terpintar dan terlambat. Dipakai sebagai…",
+      "keywords": "Bentuk input cross-encoder · Mengapa pelajaran ini melatih yang kecil · Latensi vs kualitas"
+    },
+    "phases/19-capstone-projects/67-query-rewriting-hyde": {
+      "name": "Query Rewriting: HyDE, Multi-Query, dan Dekomposisi",
+      "summary": "Kueri yang diketik pengguna bukan kueri yang diinginkan retriever-mu. Rewriting menjembatani celah sebelum retrieval, sehingga indeks melihat sesuatu yang lebih dekat dengan bentuk jawabannya.",
+      "keywords": "HyDE secara detail · Ekspansi multi-query secara detail · Dekomposisi secara detail · Mengapa ketiganya ada"
+    },
+    "phases/19-capstone-projects/68-rag-eval-precision-recall": {
+      "name": "Evaluasi RAG: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance",
+      "summary": "Jika kamu tidak bisa menilai retrieval dan jawabanmu pada saat yang sama, kamu tidak bisa merilis sistemnya. Keduanya bukan metrik yang sama dan prompt yang sama gagal pada sumbu berbeda.",
+      "keywords": "Precision@k · Recall@k · MRR (Mean Reciprocal Rank) · nDCG@k · Faithfulness · Relevansi jawaban"
+    },
+    "phases/19-capstone-projects/69-end-to-end-rag-system": {
+      "name": "Sistem RAG End-to-End",
+      "summary": "Enam pelajaran komponen. Satu pipeline. Satu loop eval. Satu demo yang berhenti sendiri. Inilah sistem yang kamu kirim.",
+      "keywords": "Pilihan penyambungan · Generator jawaban dengan sitasi · Demo yang berhenti sendiri"
+    },
+    "phases/19-capstone-projects/70-task-spec-format": {
+      "name": "Format Spesifikasi Tugas",
+      "summary": "Harness eval hanya sebaik kontrak yang dipatuhi tugas-tugasnya. Bekukan bentuk JSONL dan kosakata metrik sebelum kamu menulis satu pun fungsi penilaian.",
+      "keywords": "Bentuk JSONL · Kosakata metrik · Kontrak tugas · Validasi · Fixture · Runner"
+    },
+    "phases/19-capstone-projects/71-classical-metrics": {
+      "name": "Metrik Klasik",
+      "summary": "BLEU, ROUGE-L, F1, exact-match, akurasi. Lima metrik yang masih menyumbang sebagian besar angka eval LLM yang diterbitkan. Implementasikan masing-masing dari prinsip pertama agar kamu tahu apa yang diukur angka itu…",
+      "keywords": "BLEU · ROUGE-L · F1 · Exact match · Akurasi · Implementasi dari nol"
+    },
+    "phases/19-capstone-projects/72-code-exec-metric": {
+      "name": "Metrik Eksekusi Kode",
+      "summary": "Kode yang dihasilkan benar saat lulus test. Harness eval harus mengekstrak kode, menjalankannya tanpa membuat host crash, dan menghitung pass-rate secara jujur. Pelajaran ini membangun itu…",
+      "keywords": "Ekstraksi kode · Eksekusi test · Pass-rate · Isolasi · Timeout · Sandbox"
+    },
+    "phases/19-capstone-projects/73-perplexity-calibration": {
+      "name": "Perplexity dan Kalibrasi",
+      "summary": "Jika modelmu bilang 90 persen yakin pada seribu jawaban dan hanya enam ratus yang benar, model itu tidak terkalibrasi dengan baik. Kalibrasi adalah separuh eval yang tepercaya. Separuh lainnya adalah p…",
+      "keywords": "Perplexity · Kalibrasi · Brier score · Kurva reliabilitas · ECE · Kepercayaan"
+    },
+    "phases/19-capstone-projects/74-leaderboard-aggregation": {
+      "name": "Agregasi Leaderboard",
+      "summary": "Skor per tugas itu mudah. Peringkat per model lintas tugas heterogen lebih sulit. Signifikansi statistik pada leaderboard seribu prediksi adalah bagian yang semua orang lewati. Ini…",
+      "keywords": "Agregasi skor · Peringkat model · Signifikansi statistik · Bootstrap · Interval kepercayaan · Leaderboard"
+    },
+    "phases/19-capstone-projects/75-end-to-end-eval-runner": {
+      "name": "Runner Eval End-to-End",
+      "summary": "Lima pelajaran plumbing, satu pelajaran untuk merekatkannya. Runner membaca spec tugas dari pelajaran 70, memanggil model lewat adapter, menilai dengan pelajaran 71 dan 72, melampirkan c…",
+      "keywords": "Runner eval · Adapter model · Spec tugas · Metrik · Kalibrasi · Laporan"
+    },
+    "phases/19-capstone-projects/76-collective-ops-from-scratch": {
+      "name": "Operasi Kolektif dari Nol",
+      "summary": "Empat operasi kolektif yang menopang pelatihan terdistribusi adalah allreduce, broadcast, allgather, dan reduce_scatter. Setiap primitif lain yang ditawarkan framework pelatihan…",
+      "keywords": "Ring allreduce dalam dua pass · Queue mesh sebagai pengganti NCCL · Verifikasi terhadap gloo"
+    },
+    "phases/19-capstone-projects/77-data-parallel-ddp": {
+      "name": "Data Parallel DDP dari Nol",
+      "summary": "DistributedDataParallel adalah hook di atas allreduce. Bungkus model, broadcast parameter awal dari rank 0 agar setiap rank mulai identik, pasang hook backward pada setiap…",
+      "keywords": "Tiga operasi yang dibutuhkan DDP · Mengapa mean, bukan sum · Mengapa bucket gradien · Mengapa pin seed"
+    },
+    "phases/19-capstone-projects/78-zero-parameter-sharding": {
+      "name": "Sharding State Optimizer ZeRO",
+      "summary": "Adam menyimpan dua estimasi momen per parameter, keduanya dalam float32. Model 7B parameter membawa 56 GB state optimizer. ZeRO stage 1 memecahnya ke N rank; setiap rank memiliki 1…",
+      "keywords": "Tahapan ZeRO · Matematika memori, angka nyata · Mengapa reduce_scatter mengalahkan allreduce-lalu-shard"
+    },
+    "phases/19-capstone-projects/79-pipeline-parallel": {
+      "name": "Pipeline Parallel dan Analisis Bubble",
+      "summary": "Tensor parallelism memecah perkalian matriks lintas rank. Pipeline parallelism memecah model lintas rank, satu stage per rank. Microbatch mengalir melalui pipeline. Efisiensi…",
+      "keywords": "Jadwal GPipe · Jadwal 1F1B · Mengapa komputasi setara per stage penting · Microbatch versus batch"
+    },
+    "phases/19-capstone-projects/80-checkpoint-sharded-resume": {
+      "name": "Checkpoint Ter-shard dan Resume Atomik",
+      "summary": "Job pelatihan 70B parameter dijeda oleh kegagalan node setiap beberapa jam. Format checkpoint memutuskan apakah kamu kehilangan 30 menit atau 30 jam. Checkpoint ter-shard menulis setiap…",
+      "keywords": "Skema manifest · Penulisan atomik · Tiga mode kegagalan yang harus ditahan skema · Mengapa file per rank, bukan satu file besar"
+    },
+    "phases/19-capstone-projects/81-end-to-end-distributed-train": {
+      "name": "Pelatihan Terdistribusi End-to-End",
+      "summary": "Pelajaran 76 sampai 80 masing-masing membangun satu bagian. Ini perakitannya: GPT kecil yang dilatih lintas 4 rank simulasi dengan DDP untuk sinkronisasi gradien, ZeRO-1 untuk sharding state optimizer, dan…",
+      "keywords": "GPT mini · Aturan komposisi · Mengapa GPT kecil dan bukan sekadar MLP · Berhenti sendiri berarti exit 0"
+    },
+    "phases/19-capstone-projects/82-jailbreak-taxonomy": {
+      "name": "Taksonomi Jailbreak",
+      "summary": "Harness keamanan tanpa taksonomi adalah lempar koin. Namai serangannya sebelum kamu mempertahankannya.",
+      "keywords": "Taksonomi jailbreak · Kategori serangan · Pola prompt · Tingkat keparahan · Pertahanan · Dokumentasi"
+    },
+    "phases/19-capstone-projects/83-prompt-injection-detector": {
+      "name": "Detektor Prompt Injection",
+      "summary": "Detektor adalah fungsi dari prompt ke keyakinan dan kategori. Selain itu hanyalah firasat.",
+      "keywords": "Detektor prompt injection · Keyakinan · Kategori · Kalibrasi · False positive · Evaluasi"
+    },
+    "phases/19-capstone-projects/84-refusal-evaluation": {
+      "name": "Evaluasi Refusal",
+      "summary": "Kegunaan pada prompt jinak dan refusal pada prompt berbahaya adalah dua metrik, bukan satu. Ukur keduanya.",
+      "keywords": "Refusal · Helpfulness · Prompt jinak · Prompt berbahaya · Over-refusal · Evaluasi"
+    },
+    "phases/19-capstone-projects/85-content-classifier-integration": {
+      "name": "Integrasi Classifier Konten",
+      "summary": "Classifier di sisi output menjawab pertanyaan berbeda dari aturan di sisi input. Keduanya membutuhkan policy router.",
+      "keywords": "Classifier konten · Policy router · Sisi input · Sisi output · Ambang · Eskalasi"
+    },
+    "phases/19-capstone-projects/86-constitutional-rules-engine": {
+      "name": "Mesin Aturan Konstitusional",
+      "summary": "Aturan adalah nama, predikat, dan penjelasan. Apa pun yang kehilangan salah satu dari ketiganya adalah firasat, bukan aturan.",
+      "keywords": "Mesin aturan · Predikat · Penjelasan · Konstitusi · Evaluasi · Audit"
+    },
+    "phases/19-capstone-projects/87-end-to-end-safety-gate": {
+      "name": "Gate Keamanan End-to-End",
+      "summary": "Pra-generasi, saat-generasi, pasca-generasi. Tiga checkpoint, satu vonis, jejak audit per request.",
+      "keywords": "Gate keamanan · Pra-generasi · Saat-generasi · Pasca-generasi · Jejak audit · Vonis"
+    }
+  }
+}

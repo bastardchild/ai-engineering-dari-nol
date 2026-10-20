@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu sifat Markov?",
+      "options": [
+        "Semua state sama mungkinnya di setiap langkah",
+        "State berikutnya hanya bergantung pada state saat ini, bukan pada riwayat state sebelumnya",
+        "Proses selalu kembali ke state awalnya",
+        "Proses harus memiliki jumlah state terbatas"
+      ],
+      "correct": 1,
+      "explanation": "Sifat Markov (memorylessness) berarti P(X_{t+1} = j | X_t = i, X_{t-1}, ...) = P(X_{t+1} = j | X_t = i). Masa depan hanya bergantung pada posisimu sekarang, bukan bagaimana kamu sampai di sana. Ini memungkinkan representasi ringkas via matriks transisi."
+    },
+    {
+      "stage": "pre",
+      "question": "Dalam random walk 1D, bagaimana jarak yang diharapkan dari titik asal berskala terhadap jumlah langkah n?",
+      "options": [
+        "Logaritmik: proporsional terhadap log(n)",
+        "Sebagai akar kuadrat: proporsional terhadap sqrt(n)",
+        "Ia tetap konstan terlepas dari n",
+        "Linear: proporsional terhadap n"
+      ],
+      "correct": 1,
+      "explanation": "Setiap langkah adalah +/-1 dengan probabilitas sama. Variansi setelah n langkah adalah n, jadi standar deviasinya (jarak khas dari titik asal) adalah sqrt(n). Setelah 10.000 langkah, jarak yang diharapkan sekitar 100, bukan 10.000."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu distribusi stasioner dari rantai Markov?",
+      "options": [
+        "Distribusi seragam di semua state",
+        "Distribusi awal state",
+        "Distribusi state setelah tepat satu transisi",
+        "Distribusi yang tidak berubah di bawah matriks transisi: pi * P = pi"
+      ],
+      "correct": 3,
+      "explanation": "Distribusi stasioner pi memenuhi pi * P = pi -- menerapkan matriks transisi membiarkannya tidak berubah. Ia merepresentasikan fraksi waktu jangka panjang yang dihabiskan di setiap state. Untuk rantai irreducible dan aperiodik, distribusi awal apa pun konvergen ke pi."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam Langevin dynamics x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z, apa yang terjadi saat temperature T mendekati 0?",
+      "options": [
+        "Proses divergen ke tak terhingga",
+        "Proses menjadi random walk murni",
+        "Proses menjadi gradient descent murni (optimization deterministik)",
+        "Proses membeku di posisi awal"
+      ],
+      "correct": 2,
+      "explanation": "Pada T = 0, suku noise sqrt(2*T*dt)*z menghilang, menyisakan x_{t+1} = x_t - dt * grad(U), yaitu gradient descent standar. Pada T tinggi, noise mendominasi dan prosesnya hampir random walk. T menengah menyeimbangkan eksplorasi dan eksploitasi."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam diffusion model, apa yang dilakukan forward process pada sampel data selama T langkah?",
+      "options": [
+        "Ia mempertajam gambar dengan menghilangkan noise di setiap langkah",
+        "Ia secara bertahap menambahkan Gaussian noise hingga sampel menjadi noise murni, mengikuti rantai Markov",
+        "Ia mengompresi gambar ke resolusi lebih rendah",
+        "Ia menerapkan transformasi yang dipelajari untuk menghasilkan data baru"
+      ],
+      "correct": 1,
+      "explanation": "Forward process adalah rantai Markov: x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise. Setelah T langkah, x_T kira-kira N(0, I) -- noise Gaussian murni. Reverse process (dipelajari oleh neural network) kemudian menghilangkan noise langkah demi langkah untuk menghasilkan data baru."
+    }
+  ]
+}

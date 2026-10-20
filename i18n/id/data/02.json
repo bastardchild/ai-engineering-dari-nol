@@ -1,0 +1,100 @@
+{
+  "phase": {
+    "2": {
+      "name": "Dasar-Dasar ML",
+      "desc": "ML klasik — masih tulang punggung sebagian besar AI produksi."
+    }
+  },
+  "lessons": {
+    "phases/02-ml-fundamentals/01-what-is-machine-learning": {
+      "name": "Apa Itu Machine Learning",
+      "summary": "Machine learning mengajari komputer menemukan pola dalam data alih-alih menulis aturan secara manual.",
+      "keywords": "Belajar dari Data, Bukan Aturan · Tiga Jenis Machine Learning · Di Luar Tiga Besar · Klasifikasi vs Regresi · Alur Kerja ML · Split Training, Validation, dan Test · Overfitting vs Underfitting · Tradeoff Bias-Variance · Teorema No Free Lunch · Kapan TIDAK Memakai Machine Learning · Langkah 1: Classifier Nearest Centroid dari Nol · Langkah 2: Latih pada Data Sintetis · Langkah 3: Bandingkan dengan Baseline · Mengapa Ini Penting · Langkah 4: Apa yang Tidak Bisa Dilakukan Classifier Centroid"
+    },
+    "phases/02-ml-fundamentals/02-linear-regression": {
+      "name": "Regresi Linear dari Nol",
+      "summary": "Regresi linear menarik garis lurus terbaik melalui datamu. Ia adalah \"hello world\" machine learning.",
+      "keywords": "Model · Fungsi Biaya (Mean Squared Error) · Gradient Descent · Persamaan Normal (Solusi Closed-Form) · Regresi Linear Berganda · Regresi Polinomial · Skor R-Squared · Pratinjau Regularisasi (Ridge Regression) · Langkah 1: Buat data sampel · Langkah 2: Regresi linear dari nol dengan gradient descent · Langkah 3: Persamaan normal (solusi closed-form) · Langkah 4: Regresi linear berganda · Langkah 5: Regresi polinomial · Langkah 6: Ridge regression (regularisasi L2)"
+    },
+    "phases/02-ml-fundamentals/03-logistic-regression": {
+      "name": "Regresi Logistik & Klasifikasi",
+      "summary": "Regresi logistik melengkungkan garis lurus menjadi kurva S untuk menjawab pertanyaan ya-atau-tidak dengan probabilitas.",
+      "keywords": "Mengapa Regresi Linear Gagal untuk Klasifikasi · Fungsi Sigmoid · Regresi Logistik = Model Linear + Sigmoid · Binary Cross-Entropy Loss · Gradient Descent untuk Regresi Logistik · Decision Boundary · Klasifikasi Multi-Kelas dengan Softmax · Metrik Evaluasi · Langkah 1: Fungsi sigmoid dan pembuatan data · Langkah 2: Regresi logistik dari nol · Langkah 3: Confusion matrix dan metrik dari nol · Langkah 4: Analisis decision boundary · Langkah 5: Multi-kelas dengan softmax · Langkah 6: Penyetelan threshold"
+    },
+    "phases/02-ml-fundamentals/04-decision-trees": {
+      "name": "Decision Tree & Random Forest",
+      "summary": "Decision tree hanyalah flowchart. Tapi hutan dari pohon-pohon itu adalah salah satu alat paling kuat di ML.",
+      "keywords": "Apa yang dilakukan decision tree · Kriteria split: mengukur impurity · Cara kerja splitting · Kondisi berhenti · Decision tree untuk regresi · Random forest: kekuatan ensemble · Feature importance · Kapan tree mengalahkan neural network · Langkah 1: Gini impurity dan entropy · Langkah 2: Temukan split terbaik · Langkah 3: Bangun class DecisionTree · Langkah 4: Bangun class RandomForest"
+    },
+    "phases/02-ml-fundamentals/05-support-vector-machines": {
+      "name": "Support Vector Machine",
+      "summary": "Temukan jalan terlebar antara dua kelas. Itu seluruh idenya.",
+      "keywords": "Classifier margin maksimum · Support vector: sedikit yang kritis · Soft margin: menangani noise dengan parameter C · Hinge loss: fungsi loss SVM · Melatih SVM linear dengan gradient descent · Formulasi dual dan kernel trick · SVM untuk regresi (SVR) · Mengapa SVM kalah dari deep learning (dan kapan masih menang) · Langkah 1: Hinge loss dan gradient · Langkah 2: SVM linear via gradient descent · Langkah 3: Fungsi kernel · Langkah 4: Identifikasi margin dan support vector"
+    },
+    "phases/02-ml-fundamentals/06-knn-and-distances": {
+      "name": "KNN & Metrik Jarak",
+      "summary": "Simpan semuanya. Prediksi dengan melihat tetanggamu. Algoritma paling sederhana yang benar-benar bekerja.",
+      "keywords": "Cara kerja KNN · Memilih K · Metrik jarak · KNN berbobot · Kutukan dimensionalitas · KD-tree: pencarian tetangga terdekat yang cepat · Ball tree: lebih baik untuk dimensi sedang · Lazy learning vs eager learning · KNN untuk regresi · Langkah 1: Fungsi jarak · Langkah 2: Classifier dan regressor KNN · Langkah 3: KD-tree untuk pencarian efisien · Langkah 4: Feature scaling"
+    },
+    "phases/02-ml-fundamentals/07-unsupervised-learning": {
+      "name": "Unsupervised Learning: K-Means, DBSCAN",
+      "summary": "Tanpa label, tanpa guru. Algoritma menemukan struktur sendiri.",
+      "keywords": "Clustering: Mengelompokkan Hal Serupa · K-Means: Andalan Utama · Memilih K · DBSCAN: Clustering Berbasis Kepadatan · Hierarchical Clustering · Gaussian Mixture Model (GMM) · Kapan Pakai yang Mana · Deteksi Anomali dengan Clustering · Langkah 1: K-Means dari nol · Langkah 2: Metode elbow dan silhouette score · Langkah 3: DBSCAN dari nol · Langkah 4: Gaussian Mixture Model (algoritma EM) · Langkah 5: Buat data uji dan jalankan semuanya"
+    },
+    "phases/02-ml-fundamentals/08-feature-engineering": {
+      "name": "Feature Engineering & Seleksi",
+      "summary": "Satu feature yang baik bernilai seribu data point.",
+      "keywords": "Pipeline Feature · Feature Numerik · Feature Kategorikal · Feature Teks · Nilai Hilang · Interaksi Feature · Seleksi Feature · Langkah 1: Transformasi numerik dari nol · Langkah 2: Encoding kategorikal dari nol · Langkah 3: Feature teks dari nol · Langkah 4: Imputasi nilai hilang dari nol · Langkah 5: Seleksi feature dari nol · Langkah 6: Pipeline lengkap dan demo"
+    },
+    "phases/02-ml-fundamentals/09-model-evaluation": {
+      "name": "Evaluasi Model: Metrik, Cross-Validation",
+      "summary": "Model hanya sebaik cara kamu mengukurnya.",
+      "keywords": "Train, Validation, Test · Cross-Validation K-Fold · Metrik Klasifikasi · Metrik Regresi · Learning Curve · Validation Curve · Kesalahan Evaluasi Umum · Langkah 1: Split train/validation/test · Langkah 2: K-fold dan stratified K-fold cross-validation · Langkah 3: Confusion matrix dan metrik klasifikasi · Langkah 4: Metrik regresi · Langkah 5: Learning curve · Langkah 6: Classifier sederhana untuk pengujian, plus demo lengkap"
+    },
+    "phases/02-ml-fundamentals/10-bias-variance": {
+      "name": "Bias, Variance & Learning Curve",
+      "summary": "Setiap error model berasal dari salah satu dari tiga sumber: bias, variance, atau noise. Kamu hanya bisa mengontrol dua yang pertama.",
+      "keywords": "Bias: Error Sistematis · Variance: Sensitivitas terhadap Data Training · Dekomposisi · Kompleksitas Model vs Error · Regularisasi sebagai Kontrol Bias-Variance · Double Descent: Perspektif Modern · Mendiagnosis Model Kamu · Strategi Praktis · Metode Ensemble dan Reduksi Variance · Learning Curve · Cara Menghasilkan Learning Curve · Langkah 1: Buat Data Sintetis dari Fungsi yang Diketahui · Langkah 2: Bootstrap Sampling dan Pencocokan Polinomial · Langkah 3: Menghitung Bias^2, Dekomposisi Variance · Langkah 4: Learning Curve · Langkah 5: Sapuan Regularisasi · Validation Curve: Sapu Kompleksitas Model · Learning Curve: Sapu Ukuran Training Set · Cross-Validation dengan Sapuan Regularisasi · Menyatukan Semuanya: Alur Diagnostik Lengkap"
+    },
+    "phases/02-ml-fundamentals/11-ensemble-methods": {
+      "name": "Metode Ensemble: Boosting, Bagging, Stacking",
+      "summary": "Sekelompok weak learner, digabungkan dengan benar, menjadi strong learner. Ini bukan metafora. Ini teorema.",
+      "keywords": "Mengapa Ensemble Bekerja · Bagging (Bootstrap Aggregating) · Boosting (Koreksi Error Berurutan) · AdaBoost · Gradient Boosting · XGBoost: Mengapa Ia Mendominasi Data Tabular · Stacking (Meta-Learning) · Voting · Langkah 1: Decision Stump (Base Learner) · Langkah 2: AdaBoost dari Nol · Langkah 3: Gradient Boosting dari Nol · Langkah 4: Bandingkan dengan sklearn · Kapan Pakai Setiap Metode · Stack Produksi untuk Data Tabular"
+    },
+    "phases/02-ml-fundamentals/12-hyperparameter-tuning": {
+      "name": "Hyperparameter Tuning",
+      "summary": "Hyperparameter adalah tombol yang kamu putar sebelum training dimulai. Memutarnya dengan baik membedakan model biasa dan model hebat.",
+      "keywords": "Parameter vs Hyperparameter · Grid Search · Random Search · Bayesian Optimization · Early Stopping · Learning Rate Scheduler · Kepentingan Hyperparameter · Strategi Praktis · Integrasi Cross-Validation · Tips Praktis · Langkah 1: Grid Search dari Nol · Langkah 2: Random Search dari Nol · Langkah 3: Bayesian Optimization (Disederhanakan) · Langkah 4: Bandingkan Semua Metode · Optuna dalam Praktik · Optuna dengan Pruning · Tuner Bawaan sklearn · Kesalahan Umum dalam Hyperparameter Tuning"
+    },
+    "phases/02-ml-fundamentals/13-ml-pipelines": {
+      "name": "Pipeline ML & Pelacakan Eksperimen",
+      "summary": "Model bukan produk. Pipeline adalah produknya. Pipeline mencakup segalanya dari data mentah hingga prediksi terdeploy, dan setiap langkah harus reproducible.",
+      "keywords": "Apa Itu Pipeline · Data Leakage: Pembunuh Diam-diam · Pipeline sklearn · ColumnTransformer: Pipeline Berbeda untuk Kolom Berbeda · Pelacakan Eksperimen · Versioning Model · Versioning Data dengan DVC · Eksperimen yang Reproducible · Dari Notebook ke Pipeline Produksi · Kesalahan Pipeline Umum · Langkah 1: Transformer Kustom · Langkah 2: Pipeline dari Nol · Langkah 3: Cross-Validation dengan Pipeline · Langkah 4: Pipeline Produksi Lengkap dengan sklearn"
+    },
+    "phases/02-ml-fundamentals/14-naive-bayes": {
+      "name": "Naive Bayes",
+      "summary": "Asumsi \"naive\" itu salah, dan ia tetap bekerja. Itulah indahnya.",
+      "keywords": "Teorema Bayes (Ulasan Singkat) · Asumsi Independensi Naive · Mengapa Masih Bekerja · Matematikanya Langkah demi Langkah · Tiga Varian · Kapan Pakai Setiap Varian · Laplace Smoothing · Komputasi dalam Ruang Log · Naive Bayes vs Regresi Logistik · Pipeline Klasifikasi · MultinomialNB · GaussianNB · Demo: Klasifikasi Teks · Demo: Feature Kontinu · Kecepatan Prediksi · TF-IDF dengan Naive Bayes · BernoulliNB untuk Teks Pendek · Kalibrasi Probabilitas NB · Jebakan Umum · Kapan Naive Bayes Gagal"
+    },
+    "phases/02-ml-fundamentals/15-time-series": {
+      "name": "Dasar-Dasar Time Series",
+      "summary": "Kinerja masa lalu memang memprediksi hasil masa depan -- jika kamu memeriksa stationarity dulu.",
+      "keywords": "Apa yang Membuat Time Series Berbeda · Komponen Time Series · Stationarity · Autokorelasi · Feature Lag: Mengubah Time Series menjadi Supervised Learning · Validasi Walk-Forward · Intuisi ARIMA · Kapan Pakai Apa · Horizon dan Strategi Peramalan · Kesalahan Umum dalam Time Series · Pembuat Feature Lag · Cross-Validation Walk-Forward · Model Autoregresif Sederhana · Pemeriksaan Stationarity · Autokorelasi · TimeSeriesSplit sklearn · Metrik Evaluasi · Feature Rolling · Baseline yang Harus Kamu Kalahkan · Tips Praktis"
+    },
+    "phases/02-ml-fundamentals/16-anomaly-detection": {
+      "name": "Deteksi Anomali",
+      "summary": "Normal mudah didefinisikan. Abnormal adalah apa pun yang tidak cocok.",
+      "keywords": "Jenis Anomali · Kerangka Unsupervised · Supervised vs Unsupervised: Tradeoff · Metode Z-Score · Metode IQR · Isolation Forest · Local Outlier Factor (LOF) · Perbandingan · Tantangan Evaluasi · Pipeline Deteksi Anomali · Detektor Z-Score · Detektor IQR · Isolation Forest dari Nol · Skenario Demo · Parameter Contamination sklearn · One-Class SVM · Pendekatan Autoencoder (Pratinjau) · Ensemble Deteksi Anomali · Pertimbangan Produksi · Memilih Threshold · Skala ke Produksi"
+    },
+    "phases/02-ml-fundamentals/17-imbalanced-data": {
+      "name": "Menangani Data Tidak Seimbang",
+      "summary": "Ketika 99% datamu \"normal\", akurasi adalah kebohongan.",
+      "keywords": "Mengapa Akurasi Gagal · Metrik yang Lebih Baik · Pipeline Data Tidak Seimbang · SMOTE: Synthetic Minority Oversampling Technique · Perbandingan Strategi Sampling · Class Weight · Penyetelan Threshold · Cost-Sensitive Learning · Flowchart Keputusan · Langkah 1: Buat dataset tidak seimbang · Langkah 2: SMOTE dari nol · Langkah 3: Random oversampling dan undersampling · Langkah 4: Regresi logistik dengan class weight · Langkah 5: Penyetelan threshold · Langkah 6: Fungsi evaluasi · Langkah 7: Bandingkan semua pendekatan"
+    },
+    "phases/02-ml-fundamentals/18-feature-selection": {
+      "name": "Seleksi Feature",
+      "summary": "Feature lebih banyak bukan lebih baik. Feature yang tepat lebih baik.",
+      "keywords": "Tiga Kategori Seleksi Feature · Variance Threshold · Mutual Information · Recursive Feature Elimination (RFE) · Regularisasi L1 (Lasso) · Feature Importance Berbasis Tree · Permutation Importance · Tabel Perbandingan · Flowchart Keputusan · Langkah 1: Buat data sintetis dengan struktur feature yang diketahui · Langkah 2: Variance threshold · Langkah 3: Mutual information (diskret) · Langkah 4: Recursive Feature Elimination · Langkah 5: Seleksi feature L1 · Langkah 6: Importance berbasis tree (decision tree sederhana) · Langkah 7: Jalankan semua metode dan bandingkan"
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "phase": {
+    "10": {
+      "name": "LLM dari Nol",
+      "desc": "Bangun, latih, dan pahami large language model."
+    }
+  },
+  "lessons": {
+    "phases/10-llms-from-scratch/01-tokenizers": {
+      "name": "Tokenizer: BPE, WordPiece, SentencePiece",
+      "summary": "LLM-mu tidak membaca bahasa Inggris. Ia membaca integer. Tokenizer menentukan apakah integer itu membawa makna atau menyia-nyiakannya.",
+      "keywords": "Tiga Pendekatan yang Gagal (dan Satu yang Menang) · BPE: Byte Pair Encoding · Byte-Level BPE (GPT-2, GPT-3, GPT-4) · WordPiece (BERT) · SentencePiece (Llama, T5) · Tradeoff Ukuran Vocabulary · Pajak Multibahasa · Langkah 1: Tokenizer Character-Level · Langkah 2: Tokenizer BPE dari Nol · Langkah 3: Roundtrip Encode dan Decode · Langkah 4: Bandingkan dengan tiktoken · Langkah 5: Analisis Vocabulary · tiktoken (OpenAI) · tokenizers Hugging Face · Memuat Tokenizer Llama"
+    },
+    "phases/10-llms-from-scratch/02-building-a-tokenizer": {
+      "name": "Membangun Tokenizer dari Nol",
+      "summary": "Pelajaran 01 memberimu mainan. Pelajaran ini memberimu senjata.",
+      "keywords": "Pipeline Lengkap · Byte-Level BPE · Pra-tokenisasi · Token Khusus · Template Chat · Kecepatan · Langkah 1: Encoding Byte-Level · Langkah 2: Pre-Tokenizer dengan Regex · Langkah 3: BPE pada Sekuens Byte · Langkah 4: Penanganan Token Khusus · Langkah 5: Kelas Tokenizer Lengkap · Langkah 6: Uji Multibahasa · Membandingkan Tokenizer Nyata"
+    },
+    "phases/10-llms-from-scratch/03-data-pipelines": {
+      "name": "Pipeline Data untuk Pre-Training",
+      "summary": "Model adalah cermin. Ia memantulkan data apa pun yang kamu berikan. Beri ia sampah, ia memantulkan sampah dengan kelancaran sempurna.",
+      "keywords": "Dari Mana Data Berasal · Pembersihan Data · Deduplikasi dengan MinHash · Sequence Packing · Hukum Scaling Chinchilla · Langkah 1: Pembersihan Teks · Langkah 2: Deduplikasi MinHash · Langkah 3: Tokenisasi dan Packing Sekuens · Langkah 4: DataLoader untuk Pelatihan · Langkah 5: Statistik Dataset · Bandingkan dengan HuggingFace Datasets"
+    },
+    "phases/10-llms-from-scratch/04-pre-training-mini-gpt": {
+      "name": "Pre-Training Mini GPT (124M)",
+      "summary": "GPT-2 Small punya 124 juta parameter. Itu 12 lapisan transformer, 12 head attention, dan embedding 768 dimensi. Kamu bisa melatihnya dari nol di satu GPU dalam beberapa…",
+      "keywords": "Arsitektur GPT · Blok Transformer · Attention: Mekanisme Inti · KV Cache: Mengapa Inferensi Cepat · Prefill vs Decode: Dua Fase Inferensi · Training Loop · GPT-2 Small: Angka-angkanya · Langkah 1: Lapisan Embedding · Langkah 2: Self-Attention dengan Causal Mask · Langkah 3: Multi-Head Attention · Langkah 4: Blok Transformer · Langkah 5: Model GPT Lengkap · Langkah 6: Training Loop · Langkah 7: Generasi Teks · Demo Pelatihan dan Generasi Lengkap"
+    },
+    "phases/10-llms-from-scratch/05-scaling-distributed": {
+      "name": "Pelatihan Terdistribusi, FSDP, DeepSpeed",
+      "summary": "Model 124M-mu dilatih di satu GPU. Sekarang coba 7 miliar parameter. Modelnya tidak muat di memori. Datanya butuh berminggu-minggu di satu mesin. Pelatihan terdistribusi bukan opsional…",
+      "keywords": "Mengapa Distribusi Diperlukan · Data Parallelism · Tensor Parallelism · Pipeline Parallelism · FSDP: Fully Sharded Data Parallel · DeepSpeed ZeRO · Pelatihan Mixed Precision · Megatron-LM dan 3D Parallelism · Langkah 1: Simulasi Data Parallelism · Langkah 2: Simulasi Tensor Parallelism · Langkah 3: Simulasi Pipeline Parallelism · Langkah 4: Kalkulator Memori · Langkah 5: Simulasi Mixed Precision · Jalankan Semua Simulasi"
+    },
+    "phases/10-llms-from-scratch/06-instruction-tuning-sft": {
+      "name": "Instruction Tuning — SFT",
+      "summary": "Model base memprediksi token berikutnya. Itu saja. Ia tidak mengikuti instruksi, menjawab pertanyaan, atau menolak permintaan berbahaya. SFT adalah jembatan antara prediktor token dan…",
+      "keywords": "Apa yang Sebenarnya Dilakukan SFT · Format Data · Mengapa Berhasil · Masked Loss · Hyperparameter Pelatihan · Catastrophic Forgetting · Angka Nyata · Langkah 1: Dataset Instruksi · Langkah 2: Tokenisasi dengan Template Chat · Langkah 3: Masked Cross-Entropy Loss · Langkah 4: Training Loop SFT · Langkah 5: Bandingkan Model Base vs SFT · Langkah 6: Ukur Catastrophic Forgetting · Demo Pipeline SFT Lengkap"
+    },
+    "phases/10-llms-from-scratch/07-rlhf": {
+      "name": "RLHF — Reward Model + PPO",
+      "summary": "SFT mengajari model mengikuti instruksi. Tetapi ia tidak mengajari model respons mana yang LEBIH BAIK. Dua jawaban yang benar secara tata bahasa dan faktual bisa berbeda jauh…",
+      "keywords": "Tiga Tahap · Reward Model · PPO: Proximal Policy Optimization · Tujuan PPO secara Detail · Reward Hacking · Pipeline RLHF Nyata · Langkah 1: Data Preferensi Sintetis · Langkah 2: Arsitektur Reward Model · Langkah 3: Loss Bradley-Terry · Langkah 4: Loop PPO Sederhana · Langkah 5: Perbandingan Skor Reward · Demo Pipeline RLHF Lengkap"
+    },
+    "phases/10-llms-from-scratch/08-dpo": {
+      "name": "DPO — Direct Preference Optimization",
+      "summary": "RLHF berhasil. Ia juga menuntut pelatihan tiga model (SFT, reward model, policy), mengelola ketidakstabilan PPO, dan menyetel penalti KL. DPO bertanya: bagaimana jika kamu bisa melewati semua itu…",
+      "keywords": "Wawasan Kunci · Loss DPO · Mengapa DPO Lebih Sederhana · Kapan DPO Mengalahkan RLHF · Kapan RLHF Mengalahkan DPO · Melampaui DPO: KTO, ORPO, SimPO · Deployment DPO Nyata · Langkah 1: Dataset Preferensi · Langkah 2: Log-Probabilitas Sekuens · Langkah 3: Loss DPO · Langkah 4: Training Loop DPO · Langkah 5: Bandingkan DPO vs RLHF · Langkah 6: Analisis Sensitivitas Beta · Demo Pipeline DPO Lengkap"
+    },
+    "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement": {
+      "name": "Constitutional AI & Self-Improvement",
+      "summary": "RLHF butuh manusia di dalam loop. Constitutional AI menggantikan sebagian besar dari mereka dengan model itu sendiri. Tulis daftar prinsip, minta model mengkritik outputnya sendiri terhadap prinsip-prinsip itu…",
+      "keywords": "Loop Constitutional AI · Apa yang Sebenarnya Dilakukan Konstitusi · GRPO: Group-Relative Policy Optimization · Mengapa GRPO Penting untuk Reasoning · Process Reward Model vs Outcome Reward Model · Self-Improvement: Pengganda Umpan Balik · Kapan Menggunakan Apa · Langkah 1: Konstitusi · Langkah 2: Kritik Diri dan Revisi · Langkah 3: Reward Berbasis Aturan · Langkah 4: Advantage Relatif-Grup · Langkah 5: Pembaruan GRPO · Langkah 6: Putaran Self-Improvement"
+    },
+    "phases/10-llms-from-scratch/10-evaluation": {
+      "name": "Evaluasi — Benchmark, Eval",
+      "summary": "Hukum Goodhart: ketika suatu ukuran menjadi target, ia berhenti menjadi ukuran yang baik. Setiap lab frontier memanipulasi benchmark. Skor MMLU naik sementara model masih tidak bisa menghitung…",
+      "keywords": "Lanskap Eval · Mengapa Benchmark Rusak · Perplexity: Pemeriksaan Kesehatan Cepat · LLM-as-Judge · Rating ELO dari Perbandingan Berpasangan · Framework Eval · Membangun Eval Kustom · Langkah 1: Framework Eval Minimal · Langkah 2: Fungsi Penilaian · Langkah 3: Sistem Rating ELO · Langkah 4: Perhitungan Perplexity · Langkah 5: Agregasi Hasil · Langkah 6: Jalankan Pipeline Lengkap · Langkah 7: Turnamen ELO · Langkah 8: Perbandingan Perplexity · lm-evaluation-harness (EleutherAI) · promptfoo · RAGAS untuk evaluasi RAG"
+    },
+    "phases/10-llms-from-scratch/11-quantization": {
+      "name": "Kuantisasi: INT8, GPTQ, AWQ, GGUF",
+      "summary": "Model 70B dalam FP16 butuh 140GB. Dua A100 hanya untuk bobot. Kuantisasi ke FP8: satu GPU 80GB. INT4: sebuah MacBook.",
+      "keywords": "Format Angka: Apa Fungsi Setiap Bit · Cara Kerja Kuantisasi · Hierarki Sensitivitas · PTQ vs QAT · GPTQ, AWQ, GGUF · Pengukuran Kualitas · Angka Nyata · Langkah 1: Representasi Format Angka · Langkah 2: Kuantisasi Simetris (Per-Tensor dan Per-Channel) · Langkah 3: Pengukuran Kualitas · Langkah 4: Sapuan Bit-Width · Langkah 5: Eksperimen Sensitivitas · Langkah 6: GPTQ Tersimulasi · Langkah 7: Simulasi AWQ · Langkah 8: Pipeline Lengkap · Kuantisasi dengan GPTQModel · Kuantisasi ke AWQ dengan LLM Compressor · Konversi ke GGUF · Menyajikan model terkuantisasi"
+    },
+    "phases/10-llms-from-scratch/12-inference-optimization": {
+      "name": "Optimasi Inferensi",
+      "summary": "Dua fase mendefinisikan inferensi LLM. Prefill memproses prompt-mu secara paralel -- terikat komputasi. Decode menghasilkan token satu per satu -- terikat memori. Setiap optimasi menyasar salah…",
+      "keywords": "Prefill vs Decode · KV Cache · Continuous Batching · PagedAttention · Speculative Decoding · Prefix Caching · Mesin Inferensi · Framework Ops:Byte · Langkah 1: KV Cache dari Nol · Langkah 2: Attention dengan KV Cache · Langkah 3: Simulator Continuous Batching · Langkah 4: Prefix Cache · Langkah 5: Simulator Speculative Decoding · Langkah 6: Profiler Memori KV Cache"
+    },
+    "phases/10-llms-from-scratch/13-building-complete-llm-pipeline": {
+      "name": "Membangun Pipeline LLM Lengkap",
+      "summary": "Semua dari Pelajaran 01 sampai 12 adalah satu tahap dari satu pipeline. Pelajaran ini adalah perancah yang mengubah tahap-tahap itu menjadi satu proses end-to-end: tokenisasi, pre-train, scaling, SFT,…",
+      "keywords": "Dua Belas Tahap · Manifest · Pengetikan Artefak · Gerbang Eval · Orkestrator · Pelacakan Eksperimen dan Penyimpanan Artefak · Penghitungan Biaya · Reproducibility vs Determinisme · Rencana Rollback · Resep Produksi yang Diamati pada 2026"
+    },
+    "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs": {
+      "name": "Model Terbuka: Bedah Arsitektur",
+      "summary": "Kamu membangun GPT-2 Small dari nol di Pelajaran 04. Model terbuka frontier pada 2026 adalah keluarga yang sama dengan lima atau enam perubahan konkret. RMSNorm alih-alih LayerNorm. SwiGLU alih-alih…",
+      "keywords": "Inti yang Invarian · Enam Tombol yang Benar-benar Berpengaruh · Tombol 1: RMSNorm · Tombol 2: RoPE · Tombol 3: SwiGLU · Tombol 4: Attention Head Sharing · Tombol 5: Mixture of Experts · Tombol 6: Pre-norm tetap · Diff Model per Model · Membaca config.json · Anggaran Memori Aktivasi · Anggaran KV Cache · Kapan Tiap Model Menang"
+    },
+    "phases/10-llms-from-scratch/15-speculative-decoding-eagle3": {
+      "name": "Speculative Decoding dan EAGLE-3",
+      "summary": "Fase 7 · Pelajaran 16 membuktikan matematikanya: aturan penolakan Leviathan mempertahankan distribusi verifier secara persis. Pelajaran ini adalah pandangan training-stack atas speculative decoding produksi 2026…",
+      "keywords": "Invarian: rejection sampling Leviathan · Apa yang menentukan speedup · Perkembangan dua tahun · Rollback KV cache · Arsitektur draft pada 2026 · Langkah 1: aturan penolakan · Langkah 2: distribusi residual · Langkah 3: langkah spekulatif lengkap · Langkah 4: pembukuan rollback KV · Langkah 5: pemeriksaan Leviathan · Langkah 6: speedup vs. α"
+    },
+    "phases/10-llms-from-scratch/16-differential-attention-v2": {
+      "name": "Differential Attention (V2)",
+      "summary": "Attention softmax menyebarkan sedikit probabilitas ke setiap token yang tidak cocok. Selama 100k token, noise itu menumpuk dan menenggelamkan sinyal. Differential Transformer (Ye dkk.…",
+      "keywords": "Noise floor softmax · Ide diferensial · Mengapa ini setara dengan noise-canceling ber-head · V1 vs V2: perbedaannya · Kapan memakainya · Bagaimana ia bertumpuk dengan tombol 2026 lainnya · Langkah 1: attention softmax standar · Langkah 2: bagi Q, K menjadi dua bagian · Langkah 3: dua cabang softmax + pengurangan · Langkah 4: pengukuran pembatalan noise · Langkah 5: akuntansi parameter V1 vs V2"
+    },
+    "phases/10-llms-from-scratch/17-native-sparse-attention": {
+      "name": "Native Sparse Attention (DeepSeek NSA)",
+      "summary": "Pada 64k token, attention memakan 70-80% latensi decode. Setiap lab model terbuka punya rencana memperbaikinya. NSA dari DeepSeek (best paper ACL 2025) adalah yang bertahan: tiga cabang attention paralel…",
+      "keywords": "Tiga cabang paralel · Mengapa ini \"natively trainable\" · Kernel selaras perangkat keras · Anggaran komputasi · Bagaimana perbandingannya · Langkah 1: kompres token menjadi blok · Langkah 2: attention cabang terkompresi · Langkah 3: pemilihan blok top-k · Langkah 4: sliding-window attention · Langkah 5: gate + gabungkan · Langkah 6: penghitungan komputasi"
+    },
+    "phases/10-llms-from-scratch/18-multi-token-prediction": {
+      "name": "Multi-Token Prediction (MTP)",
+      "summary": "Setiap LLM autoregresif dari GPT-2 sampai Llama 3 dilatih dengan satu loss per posisi: prediksi token berikutnya. DeepSeek-V3 menambahkan loss kedua per posisi: prediksi token setelah itu…",
+      "keywords": "Resep MTP sekuensial · Mengapa sekuensial, bukan paralel · Akuntansi parameter · Imbalan speculative decoding · Hubungan dengan EAGLE · Langkah 1: tabel embedding bersama · Langkah 2: kombinasi per-kedalaman · Langkah 3: blok transformer pada kedalaman k · Langkah 4: output head bersama · Langkah 5: loss per-kedalaman · Langkah 6: akuntansi parameter"
+    },
+    "phases/10-llms-from-scratch/19-dualpipe-parallelism": {
+      "name": "DualPipe Parallelism",
+      "summary": "DeepSeek-V3 dilatih pada 2.048 GPU H800 dengan expert MoE tersebar antar-node. Komunikasi all-to-all expert lintas-node memakan biaya 1 GPU-jam komunikasi untuk setiap 1 GPU-jam komputasi…",
+      "keywords": "Penyegaran pipeline parallelism · Ide 1: dekomposisi chunk · Ide 2: penjadwalan dua arah · Jadwal yang ditelusuri manual · Akuntansi bubble · DualPipeV — penyempurnaannya · Artinya untuk pelatihan 14,8T token · Posisinya di stack"
+    },
+    "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough": {
+      "name": "Bedah Arsitektur DeepSeek-V3",
+      "summary": "Fase 10 · Pelajaran 14 menyebut enam tombol arsitektural yang diputar setiap model terbuka. DeepSeek-V3 (Desember 2024, total 671B parameter, 37B aktif) memutar keenamnya dan menambahkan empat lagi: M…",
+      "keywords": "Inti invarian, lagi · Kejutan: MLA alih-alih GQA · Routing: load balancing tanpa auxiliary loss · MTP: pelatihan lebih padat + draft gratis · Pelatihan: DualPipe · Config, bidang demi bidang · Akuntansi parameter · Rasio 671B / 37B · Posisi DeepSeek-V3 · Penerusnya: R1, V4"
+    },
+    "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer": {
+      "name": "Jamba — Hybrid SSM-Transformer",
+      "summary": "State space model (SSM) dan transformer menginginkan hal berbeda. Transformer membeli kualitas via attention dengan biaya kuadratik. SSM membeli inferensi linear-time dan memori konstan via…",
+      "keywords": "SSM dalam satu halaman · Blok Jamba · Mengapa rasio 1:7 · Positional encoding · Anggaran memori · Mamba-3: baseline SSM murni pada 2026 · Kapan memilih hybrid · Lanskap kompetitif"
+    },
+    "phases/10-llms-from-scratch/22-async-hogwild-inference": {
+      "name": "Inferensi Async dan Hogwild!",
+      "summary": "Speculative decoding (Fase 10 · 15) memparalelkan token dalam satu sekuens. Framework multi-agen memparalelkan seluruh sekuens tetapi memaksa koordinasi eksplisit (voting,…",
+      "keywords": "Persiapan · Mengapa koordinasi muncul · Penamaannya · RoPE membuat ini terkelola · Matematika wall-time · Contoh konkret · Kapan memilih Hogwild! · Kapan tidak · Status eksperimental · Langkah 1: cache bersama · Langkah 2: loop worker · Langkah 3: heuristik koordinasi · Langkah 4: speedup terukur · Langkah 5: uji tekanan koordinasi"
+    },
+    "phases/10-llms-from-scratch/25-speculative-decoding": {
+      "name": "Speculative Decoding dan EAGLE",
+      "summary": "LLM frontier yang menghasilkan satu token membutuhkan forward pass penuh atas miliaran parameter. Forward pass itu sangat kelebihan kapasitas: sebagian besar waktu model yang jauh lebih kecil…",
+      "keywords": "Setup Dua Model · Aturan Eksakness · Speedup yang Diharapkan · Melatih Draft: Distilasi · EAGLE: Tree Drafting + Penggunaan Ulang Fitur · Verifikasi Tree Attention · Kapan Menang, Kapan Tidak"
+    },
+    "phases/10-llms-from-scratch/34-gradient-checkpointing": {
+      "name": "Gradient Checkpointing dan Rekomputasi Aktivasi",
+      "summary": "Backprop menyimpan setiap aktivasi perantara. Pada 70B parameter dan konteks 128K itu 3 TB aktivasi per rank. Checkpointing menukar FLOP dengan memori: hitung ulang alih-alih…",
+      "keywords": "Apa yang Sebenarnya Dibutuhkan Backward · Checkpointing Penuh Naif · Checkpointing Selektif (Korthikanti 2022) · Offload · Model Biaya Rekomputasi · Model Penghematan Memori · Kapan Tidak Melakukan Checkpoint · Pola Implementasi · Interaksi dengan TP / PP / FP8 · Langkah 1: Model Mainan dengan Segmen · Langkah 2: Backward Naif yang Butuh Semua Aktivasi · Langkah 3: Memori Checkpoint-Every-k · Langkah 4: Model Biaya · Langkah 5: Estimator Memori · Langkah 6: Ukuran Segmen Optimal · Langkah 7: Keputusan Checkpoint Selektif"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "feateng-pre-1",
+      "stage": "pre",
+      "question": "Mengapa feature engineering sering lebih berdampak daripada memilih algoritma yang lebih canggih?",
+      "options": [
+        "Feature engineering membuat kode berjalan lebih cepat",
+        "Feature engineering menghapus kebutuhan akan set test",
+        "Algoritma canggih tidak bisa memproses data mentah",
+        "Fitur yang bagus memunculkan pola yang disembunyikan data mentah, sehingga model sederhana pun jadi efektif"
+      ],
+      "correct": 3,
+      "explanation": "Representasi data lebih penting daripada algoritmanya. Fitur yang dirancang baik seperti BMI (berat/tinggi^2) langsung memunculkan pola yang relevan, membuat logistic regression pun kompetitif dengan ensemble yang kompleks."
+    },
+    {
+      "id": "feateng-pre-2",
+      "stage": "pre",
+      "question": "Apa itu one-hot encoding?",
+      "options": [
+        "Mengganti tiap kategori dengan frekuensinya di dataset",
+        "Membuat satu kolom biner per kategori, dengan tepat satu kolom bernilai 1 per baris",
+        "Meng-encode variabel target sebagai probabilitas",
+        "Mengubah semua fitur menjadi nilai antara 0 dan 1"
+      ],
+      "correct": 1,
+      "explanation": "One-hot encoding membuat kolom biner untuk setiap kategori unik. Untuk fitur warna dengan nilai merah/biru/hijau, dihasilkan tiga kolom: is_red, is_blue, is_green."
+    },
+    {
+      "id": "feateng-post-1",
+      "stage": "post",
+      "question": "Apa risiko data leakage pada target encoding?",
+      "options": [
+        "Model jadi terlalu lambat untuk dilatih",
+        "Kategori diganti dengan rata-rata target, yang bisa membocorkan informasi dari set test jika tidak dihitung hanya pada data training",
+        "Metode ini hanya bekerja dengan target biner",
+        "Metode ini menciptakan terlalu banyak fitur"
+      ],
+      "correct": 1,
+      "explanation": "Target encoding mengganti tiap kategori dengan rata-rata target untuk kategori itu. Jika dihitung pada seluruh dataset (termasuk data test), label test bocor ke fitur training dan estimasi performa jadi terlalu tinggi."
+    },
+    {
+      "id": "feateng-post-2",
+      "stage": "post",
+      "question": "TF-IDF memberi bobot pada kata berdasarkan inverse document frequency. Apa efeknya?",
+      "options": [
+        "Semua kata mendapat bobot sama tanpa peduli frekuensi",
+        "Kata langka yang khas mendapat bobot lebih tinggi, sedangkan kata umum mendapat bobot lebih rendah",
+        "Hanya kata paling sering di tiap dokumen yang dipertahankan",
+        "Kata umum seperti 'the' mendapat bobot tinggi karena sering muncul"
+      ],
+      "correct": 1,
+      "explanation": "IDF = log(total dokumen / dokumen yang memuat kata). Kata umum (muncul di banyak dokumen) mendapat IDF rendah. Kata langka yang khas mendapat IDF tinggi sehingga lebih berpengaruh dalam representasi."
+    },
+    {
+      "id": "feateng-post-3",
+      "stage": "post",
+      "question": "Kamu punya dua fitur dengan korelasi 0.98. Mengapa mungkin kamu menghapus salah satunya?",
+      "options": [
+        "Fitur yang sangat berkorelasi selalu membuat model crash",
+        "Keduanya redundan -- membawa informasi yang hampir sama, dan menyimpan keduanya menambah risiko overfitting tanpa sinyal baru",
+        "Fitur yang berkorelasi membuat data jadi non-stasioner",
+        "Korelasi di atas 0.5 berarti fitur mengukur hal yang berbeda"
+      ],
+      "correct": 1,
+      "explanation": "Fitur dengan r=0.98 hampir redundan. Menyimpan keduanya menambah duplikat berisik yang menaikkan dimensionalitas, risiko overfitting, dan multikolinearitas tanpa memberi informasi baru tentang target."
+    }
+  ]
+}

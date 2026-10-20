@@ -1,0 +1,78 @@
+{
+  "lesson": "69-end-to-end-rag-system",
+  "title": "Sistem RAG End-to-End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa integration test satu-satunya nilai jujur untuk pipeline RAG enam komponen?",
+      "options": [
+        "Komponen berjalan di mesin berbeda",
+        "Chunker satu-satunya komponen yang penting",
+        "Server produksi tidak bisa menjalankan test per tahap",
+        "Metrik terisolasi tiap tahap tidak memprediksi metrik sistem karena tiap tahap berinteraksi dengan tahap berikutnya; satu-satunya nilai valid adalah menjalankan seluruh pipeline end to end terhadap qrels yang sama"
+      ],
+      "correct": 3,
+      "explanation": "Kemenangan terisolasi tidak menyusun; pipeline dinilai pada output gabungan."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa peran refuse-on-low-confidence di generator jawaban?",
+      "options": [
+        "Itu mencatat setiap penolakan ke disk",
+        "Itu mengembalikan 'Saya tidak tahu' saat skor reranker top-1 di bawah ambang spesifik korpus, mencegah jawaban halusinasi saat konteks yang diambil tidak membahas query",
+        "Itu memblokir query lebih dari 100 token",
+        "Itu memicu retrieval ulang dengan chunker berbeda"
+      ],
+      "correct": 1,
+      "explanation": "Skor peringkat-1 yang konsisten rendah adalah model memberi tahu bahwa tidak ada di korpus yang menjawab query ini; tolak daripada berhalusinasi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa triple training rerank dijaga terpisah dari query eval?",
+      "options": [
+        "Untuk mencegah kebocoran train-test; jika query eval tumpang tindih dengan set training rerank, eval terlihat ajaib dan regression test tidak menangkap drift nyata",
+        "Karena RRF tidak bisa menggabungkan daftar yang tumpang tindih",
+        "Karena cross-encoder membutuhkan kosakata berbeda",
+        "Untuk menghemat memori GPU"
+      ],
+      "correct": 0,
+      "explanation": "Pemisahan ketat adalah higiene dasar; jika tidak, metrik rerank tidak memprediksi perilaku produksi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa tujuan exit code demo yang berhenti sendiri?",
+      "options": [
+        "Itu diwajibkan Python",
+        "Reranker memakainya sebagai sinyal training",
+        "Kosmetik",
+        "Itu mengodekan lulus/gagal terhadap ambang metrik; smoke test CI dapat memasang demo ke pipeline dan menggating merge pada exit non-nol"
+      ],
+      "correct": 3,
+      "explanation": "Exit code 0 berarti ambang terpenuhi; non-nol berarti regresi. Itu kontrak yang dikonsumsi gate CI."
+    },
+    {
+      "stage": "check",
+      "question": "Seperti apa citation anchor di pipeline ini?",
+      "options": [
+        "Envelope JSON-RPC",
+        "[doc_id:chunk_index]",
+        "Tautan Markdown dengan URL sumber",
+        "Vektor embedding literal"
+      ],
+      "correct": 1,
+      "explanation": "Generator mengeluarkan tuple (doc_id, chunk_index) sebagai anchor agar UI atau auditor hilir dapat memetakan setiap klaim kembali ke chunk sumbernya."
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan mana yang tidak terlihat oleh mock generator dan harus diuji dengan LLM nyata sebelum rilis?",
+      "options": [
+        "Latensi",
+        "Halusinasi: mock generator hanya mengeluarkan teks dari chunk yang diambil dan tidak dapat mengarang konten; LLM nyata dapat mengabaikan chunk dan menghasilkan jawaban tidak berpijak",
+        "Tokenisasi",
+        "Ukuran indeks vektor"
+      ],
+      "correct": 1,
+      "explanation": "Mock tidak dapat menguji keamanan generator terhadap konten halusinasi; hanya penggantian model nyata yang bisa."
+    }
+  ]
+}

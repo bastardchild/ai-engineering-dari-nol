@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa arti 'optimization' dalam konteks melatih neural network?",
+      "options": ["Menemukan bobot model yang meminimalkan fungsi loss", "Membuat kode berjalan lebih cepat", "Mengurangi jumlah parameter dalam model", "Memilih perangkat keras terbaik untuk pelatihan"],
+      "correct": 0,
+      "explanation": "Melatih neural network ADALAH optimization. Fungsi loss mengukur seberapa salah model, dan optimization menemukan nilai bobot yang membuatnya sekecil mungkin."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang terjadi jika learning rate terlalu besar selama gradient descent?",
+      "options": ["Pelatihan konvergen lebih cepat ke global minimum", "Optimizer melewati minimum dan loss divergen (memantul atau meningkat)", "Model otomatis menurunkan learning rate", "Gradient menjadi nol"],
+      "correct": 1,
+      "explanation": "Learning rate yang terlalu besar membuat setiap langkah melewati lembah, berpotensi memantul antar dinding atau divergen sepenuhnya. Loss meningkat alih-alih menurun."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana Adam berbeda dari gradient descent biasa?",
+      "options": ["Adam menghitung turunan kedua eksak sedangkan GD memakai turunan pertama", "Adam memakai learning rate tetap sedangkan GD memakai laju adaptif", "Adam memproses seluruh dataset per langkah sedangkan GD memakai mini-batch", "Adam melacak rata-rata bergerak gradient dan gradient kuadrat untuk memberi setiap bobot learning rate adaptifnya sendiri"],
+      "correct": 3,
+      "explanation": "Adam memelihara estimasi momen pertama (arah gradient) dan momen kedua (magnitudo gradient) per bobot. Membagi dengan sqrt(momen kedua) memberi langkah kecil untuk bobot dengan gradient besar dan langkah besar untuk bobot dengan gradient kecil."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa noise dalam mini-batch SGD dianggap bermanfaat dan bukan sekadar gangguan?",
+      "options": ["Noise membuat fungsi loss konveks", "Noise membantu optimizer keluar dari local minimum dangkal dan saddle point yang membuat optimizer tanpa noise tersangkut", "Noise tidak bermanfaat; ia selalu memperlambat konvergensi", "Noise mengurangi penggunaan memori selama pelatihan"],
+      "correct": 1,
+      "explanation": "Noise stokastik dari mini-batch acak memberikan perturbasi acak yang dapat mendorong optimizer keluar dari local minimum dangkal dan saddle point, mengarah ke generalisasi lebih baik."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan jadwal learning rate cosine annealing?",
+      "options": ["Menaikkan learning rate sepanjang pelatihan mengikuti kurva cosinus", "Mulai dengan learning rate tinggi lalu menurunkannya secara halus mengikuti kurva cosinus, dengan warmup opsional", "Bergantian learning rate antara dua nilai tetap", "Mengatur learning rate ke cosinus nomor epoch saat ini"],
+      "correct": 1,
+      "explanation": "Cosine annealing menurunkan learning rate secara halus dari lr_max ke lr_min mengikuti kurva setengah cosinus. Ini memberi langkah besar di awal untuk kemajuan cepat dan langkah kecil di akhir untuk konvergensi halus."
+    }
+  ]
+}

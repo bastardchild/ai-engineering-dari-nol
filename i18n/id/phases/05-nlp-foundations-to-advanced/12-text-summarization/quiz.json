@@ -1,0 +1,102 @@
+{
+  "lesson": "12-text-summarization",
+  "title": "Text Summarization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan perilaku kunci antara summarization ekstraktif dan abstraktif?",
+      "options": [
+        "Ekstraktif hanya multibahasa",
+        "Ekstraktif mengembalikan kalimat kata demi kata dari sumber; abstraktif menghasilkan teks baru dan dapat berhalusinasi",
+        "Ekstraktif memakai TF-IDF; abstraktif memakai Word2Vec",
+        "Ekstraktif lebih lambat daripada abstraktif"
+      ],
+      "correct": 1,
+      "explanation": "Ekstraktif mengangkat kalimat kata demi kata; abstraktif menulis ulang dan berisiko halusinasi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur ROUGE?",
+      "options": [
+        "Perplexity tingkat token",
+        "Kemiripan embedding",
+        "Tumpang tindih n-gram dan longest-common-subsequence antara ringkasan sistem dan referensi",
+        "Waktu baca"
+      ],
+      "correct": 2,
+      "explanation": "ROUGE-1/2/L mengukur tumpang tindih unigram, bigram, dan LCS dengan referensi."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana TextRank menilai kalimat dalam summarization ekstraktif?",
+      "options": [
+        "Dengan menjalankan iterasi bergaya PageRank atas graf di mana edge adalah bobot kemiripan kalimat",
+        "Dengan cosine embedding terhadap pertanyaan",
+        "Dengan membandingkan ke ringkasan referensi",
+        "Dengan jumlah kata mentah"
+      ],
+      "correct": 0,
+      "explanation": "TextRank memakai PageRank atas graf kemiripan kalimat; kalimat yang sangat terhubung mendapat skor tertinggi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mengaktifkan stemming saat menghitung ROUGE?",
+      "options": [
+        "Tanpa stemming, 'running' dan 'run' dihitung sebagai token berbeda dan ROUGE kurang menghitung tumpang tindih sebenarnya",
+        "Stemming menormalisasi kapitalisasi",
+        "Stemming diwajibkan paket rouge-score",
+        "Untuk mempercepat ROUGE"
+      ],
+      "correct": 0,
+      "explanation": "Stemming menggabungkan varian morfologis sehingga ROUGE menghargai bentuk yang setara secara semantik."
+    },
+    {
+      "stage": "check",
+      "question": "Metrik 2026 mana yang dirancang khusus untuk mendeteksi halusinasi ringkasan melalui entailment NLI?",
+      "options": [
+        "Pemeriksaan faithfulness (misalnya FactCC atau RAGAS faithfulness) memakai NLI antara klaim sumber dan ringkasan",
+        "BLEU",
+        "chrF",
+        "ROUGE-L"
+      ],
+      "correct": 0,
+      "explanation": "Penilaian faithfulness berbasis NLI menandai klaim dalam ringkasan yang tidak dientail oleh sumber."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa summarization ekstraktif lebih disukai untuk konten yang berdekatan dengan kepatuhan?",
+      "options": [
+        "Ekstraktif mendukung output lebih panjang",
+        "Output diangkat kata demi kata dari sumber, menghilangkan kelas halusinasi abstraktif",
+        "Ia lebih cepat",
+        "Skor ROUGE lebih tinggi"
+      ],
+      "correct": 1,
+      "explanation": "Ekstraksi kata demi kata tidak dapat mengarang konten, yang penting di tempat faktualitas diatur."
+    },
+    {
+      "stage": "post",
+      "question": "Manakah dari ini jenis halusinasi abstraktif yang harus dipantau?",
+      "options": [
+        "Kalimat panjang",
+        "Entity swap (misalnya 'John Smith' menjadi 'John Brown'), pergeseran angka, pembalikan polaritas, atau penemuan fakta",
+        "Pergeseran tanda baca",
+        "Penghapusan stopword"
+      ],
+      "correct": 1,
+      "explanation": "Entity swap, pergeseran numerik, pembalikan polaritas, dan fakta yang dikarang adalah mode kegagalan abstraktif kanonik."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu memilih checkpoint Pegasus daripada BART-large-CNN?",
+      "options": [
+        "Saat mengevaluasi BLEU",
+        "Saat membutuhkan output ekstraktif",
+        "Untuk domain seperti abstrak ilmiah di mana objektif pretraining gap-sentence Pegasus lebih cocok",
+        "Ketika input pendek"
+      ],
+      "correct": 2,
+      "explanation": "Objektif gap-sentence Pegasus unggul pada summarization domain panjang (misalnya pubmed)."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa penting memiliki split train, validation, dan test terpisah dalam machine learning?",
+      "options": ["Agar setiap split memakai format file berbeda", "Agar dataset lebih kecil sehingga pelatihan lebih cepat", "Untuk mendistribusikan data ke beberapa GPU", "Untuk mengevaluasi performa model pada data yang belum pernah dilihat dan mencegah overfitting"],
+      "correct": 3,
+      "explanation": "Set pelatihan mengajari model, set validasi menyetel hyperparameter selama pelatihan, dan set pengujian memberikan evaluasi akhir yang tidak bias pada data yang belum pernah dilihat model."
+    },
+    {
+      "stage": "pre",
+      "question": "Untuk apa Hugging Face Hub terutama dipakai dalam alur kerja AI/ML?",
+      "options": ["Mengelola virtual environment Python", "Mengontrol versi kode sumber seperti GitHub", "Menjalankan job pelatihan GPU di cloud", "Meng-host dan membagikan dataset, model, serta artefak ML"],
+      "correct": 3,
+      "explanation": "Hugging Face Hub adalah platform untuk meng-host dan membagikan model terlatih, dataset, dan demo ML. Library 'datasets' menyediakan cara standar untuk memuat data darinya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa keunggulan format Parquet dibanding CSV untuk menyimpan dataset ML?",
+      "options": ["Parquet mendukung lebih banyak tipe data daripada CSV", "File Parquet dapat dibaca manusia di editor teks apa pun", "Parquet memakai penyimpanan kolumnar untuk ukuran file lebih kecil dan pembacaan lebih cepat", "File Parquet dapat diedit di aplikasi spreadsheet"],
+      "correct": 2,
+      "explanation": "Parquet adalah format biner kolumnar yang lebih terkompresi daripada CSV dan memungkinkan pembacaan cepat per kolom. Ini format penyimpanan pilihan untuk dataset ML."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan 'streaming=True' saat memuat dataset dengan library Hugging Face datasets?",
+      "options": ["Mengubah dataset menjadi format video streaming", "Mengaktifkan pembaruan real-time saat data baru ditambahkan ke Hub", "Memuat data baris demi baris tanpa mengunduh seluruh dataset ke disk", "Mengunduh dataset lebih cepat memakai koneksi paralel"],
+      "correct": 2,
+      "explanation": "Mode streaming membuat IterableDataset yang mengambil baris sesuai permintaan. Penggunaan memori tetap konstan berapa pun ukuran dataset, yang penting untuk dataset yang terlalu besar untuk disimpan di disk."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus memakai DVC (Data Version Control) alih-alih hanya .gitignore untuk file besar?",
+      "options": ["Saat kamu perlu mereproduksi eksperimen persis di berbagai mesin dengan data berversi", "Saat proyekmu hanya berisi file CSV", "Saat dataset-mu lebih kecil dari 1 MB", "Saat kamu bekerja sendiri pada proyek pribadi"],
+      "correct": 0,
+      "explanation": "DVC melacak versi data dengan file pointer kecil di git sementara data sebenarnya disimpan di penyimpanan remote (S3, GCS). Ini memastikan siapa pun dapat mereproduksi eksperimen persis dengan data yang sama."
+    }
+  ]
+}

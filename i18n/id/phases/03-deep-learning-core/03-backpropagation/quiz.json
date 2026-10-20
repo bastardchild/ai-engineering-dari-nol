@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa itu chain rule dalam konteks neural network?",
+      "options": ["Teknik untuk membatch data", "Metode untuk menginisialisasi bobot", "Aturan untuk merangkai layer menjadi satu", "Jika y = f(g(x)), maka dy/dx = f'(g(x)) * g'(x) -- kalikan turunan sepanjang jalur"],
+      "correct": 3,
+      "explanation": "Chain rule memungkinkanmu menghitung turunan fungsi komposit dengan mengalikan turunan lokal di tiap langkah. Backpropagation menerapkannya secara sistematis melalui computational graph.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa backpropagation lebih efisien daripada menghitung tiap gradient secara terpisah?",
+      "options": ["Ia memakai memori lebih sedikit", "Ia menghitung semua gradient dalam satu backward pass, bukan satu forward pass per parameter", "Ia hanya bekerja pada jaringan kecil", "Ia menghindari pemakaian chain rule"],
+      "correct": 1,
+      "explanation": "Menghitung gradient secara terpisah butuh satu forward pass per parameter (jutaan pass untuk jaringan besar). Backpropagation menghitung semua gradient dalam satu backward pass dengan memakai ulang nilai perantara yang disimpan saat forward pass.",
+      "stage": "pre"
+    },
+    {
+      "question": "Pada backward pass, mengapa kita memakai '+=' alih-alih '=' saat mengakumulasi gradient?",
+      "options": ["Itu konvensi Python", "Sebuah nilai bisa dipakai di beberapa operasi, jadi gradient-nya adalah jumlah gradient dari semua jalur", "Itu membuat kode berjalan lebih cepat", "Itu mencegah overflow"],
+      "correct": 1,
+      "explanation": "Ketika sebuah Value dipakai sebagai input beberapa operasi (misalnya x dipakai di x*w1 dan x*w2), gradient totalnya adalah jumlah gradient yang mengalir balik dari tiap operasi. Memakai += mengakumulasinya dengan benar.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa penyebab vanishing gradient pada jaringan sigmoid yang dalam?",
+      "options": ["Fungsi loss-nya kurang tepat", "Jaringan punya parameter terlalu banyak", "Learning rate terlalu kecil", "Turunan sigmoid maksimal 0.25 sehingga gradient menyusut eksponensial melewati layer-layer"],
+      "correct": 3,
+      "explanation": "Turunan sigmoid memuncak di 0.25 (saat z=0). Tiap layer mengalikan gradient paling banyak 0.25, jadi setelah 10 layer gradient-nya paling banyak 0.25^10 = ~0.000001 dari sinyal aslinya.",
+      "stage": "post"
+    },
+    {
+      "question": "Mengapa topological sort penting pada backward pass?",
+      "options": ["Ia mengurangi pemakaian memori", "Ia mempercepat forward pass", "Ia memastikan gradient tiap node terakumulasi penuh sebelum diteruskan ke anak-anaknya", "Ia membuat kode lebih rapi"],
+      "correct": 2,
+      "explanation": "Topological sort memastikan kita memproses node dalam urutan yang benar: gradient sebuah node harus terakumulasi penuh dari semua jalur hilir sebelum kita meneruskannya. Tanpa urutan ini, gradient akan tidak lengkap.",
+      "stage": "post"
+    }
+  ]
+}

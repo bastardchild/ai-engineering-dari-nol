@@ -1,0 +1,78 @@
+{
+  "lesson": "01-instruction-following-alignment-signal",
+  "title": "Instruction-Following sebagai Sinyal Alignment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa model bahasa pra-terlatih mentah sering merespons 'tulis fungsi Python yang membalik list' dengan prompt lain alih-alih kode?",
+      "options": [
+        "Temperature-nya default nol",
+        "Kosakatanya tidak punya token Python",
+        "Model dilatih melengkapi teks gaya web, tempat prompt berlanjut dengan prompt lain",
+        "Model tidak bisa merepresentasikan signature fungsi tanpa fine-tuning"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Loss apa yang dipakai reward model InstructGPT pada label preferensi berpasangan?",
+      "options": [
+        "Cross-entropy antara reward prediksi dan reward sebenarnya",
+        "Mean squared error pada skor pelabel",
+        "Hinge loss dengan margin tetap",
+        "Bradley-Terry: -log sigmoid(r(x, y_w) - r(x, y_l))"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terutama dilindungi oleh penalti KL di tahap 3 InstructGPT?",
+      "options": [
+        "Catastrophic forgetting statistik tokenizer",
+        "Optimizer menemukan string adversarial ber-reward tinggi yang mengeksploitasi reward model",
+        "Context window meluap saat sampling",
+        "Ketidakstabilan numerik pada update gradien PPO"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Masalah apa yang dimasukkan PPO-ptx ke objektif RL untuk dimitigasi?",
+      "options": [
+        "Alignment tax: regresi pada benchmark yang tidak disasar RLHF",
+        "Ketidakcocokan tokenizer antara SFT dan RM",
+        "Suku KL menjadi negatif",
+        "Reward model mengalami drift selama PPO"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "InstructGPT 1.3B lebih disukai daripada GPT-3 dasar 175B sekitar 70% waktu. Apa artinya tentang alignment dan kapabilitas?",
+      "options": [
+        "Alignment adalah sumbu berbeda dari kapabilitas, dan model dasar menetapkan lantai kapabilitas",
+        "Tingkat preferensi di atas 50% membuktikan proxy reward sama dengan nilai manusia",
+        "Kapabilitas dan alignment adalah sumbu yang sama pada skala besar",
+        "Model dasar yang lebih besar selalu kalah dari model kecil yang aligned"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Reward model di InstructGPT diinisialisasi dari mana?",
+      "options": [
+        "Model pra-terlatih dasar dengan LM head utuh",
+        "Model SFT dengan LM head diganti head skalar",
+        "Transformer encoder-only terpisah",
+        "Regressor skalar acak tanpa pra-training"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "15-crewai-role-based-crews",
+  "title": "Tim Agent Berbasis Peran — Role, Task, Process",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa empat primitif CrewAI?",
+      "options": [
+        "Tool, Prompt, Model, Memory",
+        "Agent, Task, Crew, Process",
+        "Node, Edge, Reducer, Checkpointer",
+        "Actor, Message, Inbox, Runtime"
+      ],
+      "correct": 1,
+      "explanation": "Agent, Task, Crew, dan Process adalah empat primitifnya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa titik awal produksi yang disarankan menurut dokumentasi CrewAI?",
+      "options": [
+        "Sequential process",
+        "Flow",
+        "Crew",
+        "Hierarchical process"
+      ],
+      "correct": 1,
+      "explanation": "Dokumentasi menyarankan memulai aplikasi produksi dengan Flow; lipat Crew sebagai sub-langkah saat otonomi sepadan biayanya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan Crew dan Flow?",
+      "options": [
+        "Flow tidak punya agent",
+        "Crew berbayar, Flow gratis",
+        "Crew otonom dan digerakkan LLM; Flow digerakkan event, dimiliki kode, deterministik, dan dapat diuji",
+        "Crew hanya berjalan di GPU"
+      ],
+      "correct": 2,
+      "explanation": "Crew mengutamakan otonomi; Flow mengutamakan determinisme."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu dari empat jenis memori yang disediakan CrewAI?",
+      "options": [
+        "Quantized",
+        "Entity",
+        "Long-term",
+        "Short-term"
+      ],
+      "correct": 0,
+      "explanation": "Short-term, long-term, entity, dan contextual adalah keempatnya. Memori quantized bukan konsep CrewAI."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu backstory bloat dan bagaimana pelajaran menyarankan menanganinya?",
+      "options": [
+        "Backstory agent sepanjang 2000 kata mendesak budget konteks; jaga tetap ringkas",
+        "Menyimpan terlalu banyak crew; arsipkan yang lama",
+        "Panggilan Bedrock lambat; ganti region",
+        "Terlalu banyak tool; hapus sebagian"
+      ],
+      "correct": 0,
+      "explanation": "Backstory membentuk nada dan pertimbangan tetapi memakan konteks jika kebesaran."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan process Hierarchical layak dipilih dibanding Sequential?",
+      "options": [
+        "Saat kamu punya 4+ spesialis yang membutuhkan Agent manajer untuk merutekan di antara mereka",
+        "Selalu",
+        "Saat kamu punya satu tugas",
+        "Saat kamu tidak punya tool"
+      ],
+      "correct": 0,
+      "explanation": "Hierarchical menambahkan Agent manajer; hanya layak saat beberapa spesialis butuh routing dinamis."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran memperingatkan agar tidak memakai Crew bebas di produksi?",
+      "options": [
+        "Variabilitas output tinggi dan debugging menyakitkan tanpa pembungkus Flow",
+        "Crew tidak didukung",
+        "Crew lebih mahal daripada Flow",
+        "Crew tidak punya memori"
+      ],
+      "correct": 0,
+      "explanation": "Otonomi Crew membuat replay dan audit di produksi menyakitkan; bungkus dengan Flow saat merilis."
+    }
+  ]
+}

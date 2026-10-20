@@ -1,0 +1,66 @@
+{
+  "lesson": "03-structured-outputs",
+  "title": "Structured Outputs: JSON, Validasi Schema, Constrained Decoding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa mendapatkan output JSON terstruktur dari LLM itu menantang?",
+      "options": [
+        "JSON terlalu kompleks untuk LLM",
+        "LLM hanya mengeluarkan teks biasa",
+        "LLM tidak dapat menghasilkan JSON",
+        "LLM menghasilkan teks bebas token demi token dan dapat menghasilkan JSON tidak valid (kurung hilang, tipe salah, teks tambahan) kapan saja"
+      ],
+      "correct": 3,
+      "explanation": "LLM menghasilkan token secara autoregresif. Mereka mungkin menambahkan koma di akhir, lupa menutup kurung, menyertakan format markdown di sekitar JSON, atau berhalusinasi field tambahan. Setiap token independen, jadi validitas struktural tidak dijamin."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu constrained decoding?",
+      "options": [
+        "Membatasi ukuran kosakata model",
+        "Memakai model lebih kecil",
+        "Mengompresi output",
+        "Membatasi token mana yang dapat dihasilkan model pada setiap langkah untuk memastikan output sesuai grammar atau schema"
+      ],
+      "correct": 3,
+      "explanation": "Constrained decoding memask token tidak valid pada setiap langkah generasi. Setelah kurung kurawal pembuka, hanya key JSON valid yang diizinkan. Setelah titik dua, hanya token nilai valid. Ini menjamin validitas struktural pada level token."
+    },
+    {
+      "stage": "post",
+      "question": "Apa manfaat memakai model Pydantic untuk validasi output LLM?",
+      "options": [
+        "Mereka mendefinisikan schema bertipe yang otomatis memvalidasi, mem-parse, dan menolak output LLM yang cacat dengan pesan error yang jelas",
+        "Mereka membuat panggilan API lebih cepat",
+        "Mereka mengurangi penggunaan token",
+        "Mereka meningkatkan akurasi model"
+      ],
+      "correct": 0,
+      "explanation": "Pydantic menegakkan tipe, field wajib, batasan nilai, dan struktur bersarang. Ketika LLM menghasilkan output tidak valid, Pydantic memberi pesan error spesifik yang dapat dikirim kembali ke model untuk koreksi diri."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang harus kamu lakukan ketika LLM mengembalikan JSON tidak valid meskipun sudah diberi instruksi?",
+      "options": [
+        "Beralih ke model lain",
+        "Memperbaiki JSON secara manual",
+        "Menerapkan loop retry yang mengirim error validasi kembali ke model sebagai konteks untuk percobaan yang diperbaiki",
+        "Menaikkan temperature"
+      ],
+      "correct": 2,
+      "explanation": "Loop retry dengan umpan balik error bekerja baik: parse output, tangkap error validasi, kirim pesan error kembali sebagai konteks ('Outputmu memiliki error ini: ... Tolong perbaiki'). Sebagian besar model mengoreksi diri pada percobaan kedua."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus memakai JSON mode native API vs ekstraksi JSON berbasis prompt?",
+      "options": [
+        "Selalu pakai ekstraksi berbasis prompt",
+        "Selalu pakai JSON mode native",
+        "Pakai mode native untuk struktur terjamin; pakai berbasis prompt untuk ekstraksi kompleks di mana kamu perlu model bernalar tentang apa yang harus diekstrak",
+        "Keduanya menghasilkan hasil identik"
+      ],
+      "correct": 2,
+      "explanation": "JSON mode native (response_format OpenAI, tool_use Anthropic) menjamin struktur JSON valid. Ekstraksi berbasis prompt lebih fleksibel untuk penalaran kompleks tentang field mana yang diisi. Pakai mode native saat struktur paling penting."
+    }
+  ]
+}

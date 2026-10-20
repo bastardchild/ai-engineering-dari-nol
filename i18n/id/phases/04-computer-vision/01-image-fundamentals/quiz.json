@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebuah file di disk didekode menjadi array NumPy dengan shape (224, 224, 3) dan dtype uint8. Apa yang direpresentasikan setiap angka?",
+      "options": ["Nilai kecerahan floating-point yang siap dimasukkan ke jaringan convolutional", "Sampel intensitas cahaya pada satu posisi grid, terkuantisasi ke salah satu dari 256 level per channel", "Jumlah foton per detektor, dinormalisasi ke seluruh rentang dinamis sensor", "Probabilitas bahwa sebuah piksel memiliki warna tersebut, antara 0 dan 1"],
+      "correct": 1,
+      "explanation": "Citra uint8 menyimpan bilangan bulat 8-bit dalam [0, 255]. Setiap bilangan adalah satu sampel intensitas cahaya yang terkuantisasi pada satu posisi (baris, kolom, channel). Nilai itu bukan probabilitas dan bukan float; kamu harus membaginya dengan 255 dan melakukan standardisasi sebelum memasukkannya ke model pretrained."
+    },
+    {
+      "stage": "pre",
+      "question": "Kamu memuat gambar dengan Pillow dan mendapatkan array dengan shape (480, 640, 3). Kamu memberikannya sebagai tensor batch (1, 480, 640, 3) ke PyTorch Conv2d dengan in_channels=3. Apa yang terjadi?",
+      "options": ["PyTorch memunculkan RuntimeError: Conv2d mengharapkan NCHW, melihat 480 channel padahal weight mengharapkan 3, lalu menolak berjalan", "Akurasi turun beberapa persen tetapi inferensi tetap berjalan", "Tidak terjadi apa-apa — PyTorch mendeteksi layout secara otomatis", "Conv layer pertama memperlakukan tinggi sebagai sumbu channel, menghasilkan feature map yang tidak bermakna"],
+      "correct": 0,
+      "explanation": "Conv2d PyTorch menegakkan pemeriksaan jumlah channel yang ketat terhadap tensor weight. Input HWC yang di-batch (1, 480, 640, 3) diinterpretasikan sebagai NCHW dengan C=480, yang tidak cocok dengan 3 channel yang diharapkan weight, sehingga PyTorch memunculkan RuntimeError sebelum komputasi apa pun. Kegagalan keras ini adalah fitur — ia memaksamu memperbaiki layout. Kamu harus melakukan permute ke NCHW (`.permute(0, 3, 1, 2)`) sebelum memberikannya ke PyTorch."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa model pretrained ImageNet mengharapkan input yang distandardisasi dengan mean=[0.485, 0.456, 0.406] dan std=[0.229, 0.224, 0.225]?",
+      "options": ["Nilai itu diwajibkan oleh fungsi aktivasi ReLU", "Itu adalah nilai RGB dari pemandangan alami rata-rata", "Nilai itu membuat input menjadi zero-mean unit-variance secara ketat untuk gambar apa pun", "Itu adalah mean dan standar deviasi per-channel dari training set ImageNet dalam ruang [0, 1], sehingga mengurangkannya memusatkan distribusi yang dipakai model saat dilatih"],
+      "correct": 3,
+      "explanation": "Angka-angka tersebut adalah statistik korpus training ImageNet yang dihitung setelah piksel dibagi 255. Menggunakannya menyelaraskan distribusi inputmu dengan distribusi yang dilihat jaringan selama training. Untuk model yang dilatih pada dataset berbeda, kamu akan menghitung ulang statistik pada dataset tersebut."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mengubah ukuran mask segmentasi (ID kelas integer 0..20) dari 500x500 menjadi 224x224. Metode interpolasi mana yang benar?",
+      "options": ["Bicubic — mempertahankan ketajaman", "Bilinear — menghaluskan batas kelas", "Nearest neighbour — mempertahankan ID kelas integer yang valid alih-alih menciptakan nilai pecahan", "Lanczos — kualitas tertinggi"],
+      "correct": 2,
+      "explanation": "Bilinear, bicubic, dan lanczos merata-ratakan nilai tetangga. Pada mask ID kelas, itu menghasilkan nilai non-integer seperti 4.7 di antara kelas 4 dan kelas 5, yang bukan kelas nyata. Nearest neighbour memilih piksel asli terdekat dan menjaga ruang label tetap utuh. Aturan ini juga berlaku untuk channel apa pun yang menyandikan ID atau indeks."
+    },
+    {
+      "stage": "post",
+      "question": "Konversi RGB ke grayscale menggunakan bobot 0.299 R + 0.587 G + 0.114 B alih-alih 0.333 R + 0.333 G + 0.333 B. Mengapa?",
+      "options": ["Karena foton hijau membawa lebih banyak energi daripada foton merah atau biru", "Karena penglihatan manusia paling sensitif terhadap hijau dan paling tidak sensitif terhadap biru, sehingga jumlah berbobot cocok dengan luminansi yang dipersepsikan", "Untuk menyesuaikan perilaku filter Bayer pada sensor kamera", "Untuk mengompensasi artefak kompresi JPEG di setiap channel"],
+      "correct": 1,
+      "explanation": "Bobot ITU-R BT.601 0.299/0.587/0.114 berasal dari efisiensi luminus mata manusia. Rata-rata berbobot sama akan membuat gambar bernuansa hijau tampak terlalu gelap dan gambar merah terlalu terang bagi pengamat manusia. Sebagian besar kode grayscale computer vision klasik memakai bobot ini; BT.709 (0.2126/0.7152/0.0722) adalah varian HDTV modern untuk input linear-light."
+    }
+  ]
+}

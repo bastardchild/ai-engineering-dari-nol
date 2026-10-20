@@ -1,0 +1,78 @@
+{
+  "lesson": "15-indirect-prompt-injection",
+  "title": "Indirect Prompt Injection - Permukaan Serangan Produksi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang membedakan indirect prompt injection (IPI) dari direct prompt injection?",
+      "options": [
+        "IPI sinonim dengan jailbreaking",
+        "IPI menyematkan instruksi di dalam konten eksternal (halaman web, email, output tool) yang dikonsumsi agent saat operasi normal, tanpa penyerang menyentuh prompt pengguna",
+        "IPI hanya berjalan pada model multimodal",
+        "IPI memerlukan fine-tuning model target"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang BUKAN salah satu dari tiga vektor pengiriman IPI yang didaftar dalam pelajaran ini?",
+      "options": [
+        "Edit system prompt langsung oleh pengguna",
+        "Output tool",
+        "Alur kerja inbox / dokumen",
+        "Retrieval-augmented generation (retrieval teracuni)"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa filter input pengguna melewatkan IPI?",
+      "options": [
+        "Filter tidak bisa membaca JSON",
+        "Filter hanya berjalan setelah model merespons",
+        "Filter input pengguna peka huruf besar-kecil",
+        "Payload tidak pernah muncul di input pengguna; ia muncul di konten hasil retrieval atau dari tool"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa prinsip sentral Information Flow Control (IFC) untuk agent AI?",
+      "options": [
+        "Nonaktifkan semua tool secara default",
+        "Enkripsi semua konten hasil retrieval",
+        "Beri label konten berdasarkan sumber sebagai terpercaya atau tidak; aksi yang dipicu konten tidak terpercaya harus diratifikasi oleh input terpercaya sebelum dieksekusi",
+        "Hanya pakai prompt satu giliran"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa temuan Nasr et al. (Oktober 2025, 'The Attacker Moves Second') tentang 12 pertahanan IPI yang dipublikasikan dengan serangan adaptif?",
+      "options": [
+        "Serangan adaptif terlalu mahal untuk dievaluasi",
+        "ASR mendekati nol yang dilaporkan bertahan di bawah serangan adaptif",
+        "Serangan adaptif (gradien, RL, pencarian acak, red-team manusia) menembus >90% di antaranya meski klaim ASR mendekati nol awalnya",
+        "Hanya satu pertahanan yang ditembus"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Di peringkat mana prompt injection dalam OWASP LLM Top 10 2025?",
+      "options": [
+        "LLM10 (terendah)",
+        "LLM01 (teratas, ancaman lapisan aplikasi #1)",
+        "Tidak terdaftar",
+        "LLM05"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

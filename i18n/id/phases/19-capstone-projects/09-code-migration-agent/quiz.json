@@ -1,0 +1,90 @@
+{
+  "lesson": "09-code-migration-agent",
+  "title": "Capstone 09 — Agen Migrasi Kode (Upgrade Bahasa / Runtime Tingkat Repo)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa pipeline menggabungkan substrate deterministik dengan lapisan agen alih-alih hanya salah satu?",
+      "options": [
+        "Agen saja lebih cepat daripada recipe",
+        "OpenRewrite atau libcst menangani 70-80% penulisan ulang mekanis dengan aman dan murah, menyisakan agen untuk long tail yang ambigu",
+        "Determinisme hanya dibutuhkan untuk sistem build",
+        "Recipe deterministik lebih lambat daripada LLM"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Sinyal apa yang dipakai pipeline sebagai ground truth untuk migrasi sukses?",
+      "options": [
+        "Penilaian mandiri agen pada rubrik",
+        "Persetujuan reviewer pada PR",
+        "Ukuran diff di bawah batas keras",
+        "CI hijau di sandbox tanpa regresi coverage melebihi ambang kecil"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Batas anggaran apa yang ditegakkan loop agen per repo?",
+      "options": [
+        "30 menit wall-clock, biaya $8, dan 20 giliran agen",
+        "1 jam wall-clock dan 100 giliran",
+        "Waktu dan biaya tak terbatas; abort hanya saat error",
+        "Tanpa batas giliran, plafon $100"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Gate apa yang menyala saat coverage turun lebih dari sekitar 2% setelah migrasi?",
+      "options": [
+        "Substrate deterministik memutar ulang recipe-nya",
+        "Repo dimasukkan ke kelas kegagalan coverage_regression alih-alih membuka PR bersih",
+        "Agen otomatis force-push perbaikan",
+        "Reviewer dilewati"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa taksonomi kegagalan diperlakukan sebagai deliverable, bukan artefak sampingan?",
+      "options": [
+        "Itu menggantikan test suite",
+        "Itu diwajibkan branch protection GitHub",
+        "Itu memenuhi checklist kepatuhan",
+        "Itu mengelompokkan repo gagal per kelas agar penulis recipe berikutnya bisa menyasar mode kegagalan teratas"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Benchmark publik mana yang ditargetkan capstone untuk migrasi Java 8 ke 17?",
+      "options": [
+        "MMLU-Pro",
+        "MigrationBench dari Amazon",
+        "ViDoRe v3",
+        "SWE-bench Pro"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diukur rubrik integrasi agen tentang distribusi perbaikan?",
+      "options": [
+        "Jumlah dependensi yang dipin",
+        "Jumlah force-push per repo",
+        "Fraksi perbaikan yang ditangani OpenRewrite versus yang ditulis lapisan agen",
+        "Kecepatan tokenisasi file sumber"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

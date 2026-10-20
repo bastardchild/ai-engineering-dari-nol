@@ -1,0 +1,78 @@
+{
+  "lesson": "24-chaos-engineering-llm",
+  "title": "Chaos Engineering untuk Produksi LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Lima prasyarat apa yang diwajibkan pelajaran ini sebelum menjalankan chaos di produksi?",
+      "options": [
+        "Channel Slack, paket stiker, maskot, hashtag, pos blog",
+        "Hanya database vektor",
+        "SLI/SLO, observability, rollback otomatis, runbook terstruktur, on-call",
+        "Tiga model frontier"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Empat plane apa yang dimiliki arsitektur chaos, plus loop umpan baliknya?",
+      "options": [
+        "Frontend, backend, mobile, web",
+        "Ingest, transform, store, serve",
+        "Train, eval, deploy, archive",
+        "Control, target, safety, observability — dengan umpan balik ke penyesuaian SLO"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan guardrail alert burn-rate selama eksperimen chaos?",
+      "options": [
+        "Menjeda eksperimen saat pembakaran error budget harian melebihi sekitar 2x yang diharapkan",
+        "Otomatis mempromosikan eksperimen ke produksi",
+        "Menonaktifkan observability",
+        "Mempercepat eksperimen"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang merupakan eksperimen chaos khusus LLM yang didaftar dalam pelajaran ini?",
+      "options": [
+        "Pengurangan kecepatan kipas acak",
+        "Reboot seluruh datacenter",
+        "Badai eviction KV yang memaksa saturasi anggaran blok vLLM",
+        "Jatuhkan semua DNS"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Kadens apa yang direkomendasikan pelajaran ini untuk latihan chaos?",
+      "options": [
+        "Hanya tahunan",
+        "Gangguan produksi penuh harian",
+        "Tidak pernah",
+        "Canary kecil mingguan, game day bulanan dengan postmortem, audit ketahanan lintas tim triwulanan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan khusus LLM apa yang diungkap eksperimen prompt malformed?",
+      "options": [
+        "Stall tokenizer yang mengunci worker pada input seperti unicode bersarang dalam atau codepoint UTF-8 berukuran besar",
+        "GPU undervolt",
+        "Kehilangan paket jaringan",
+        "Contention I/O disk"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

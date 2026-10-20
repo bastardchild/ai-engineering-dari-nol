@@ -1,0 +1,78 @@
+{
+  "lesson": "13-mcp-server-with-registry",
+  "title": "Capstone 13 — Server MCP Tanpa State dengan Registry dan Governance",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa capstone ini memakai server.json dan server/discover sekaligus?",
+      "options": [
+        "server.json menyimpan sesi, sedangkan server/discover menghapusnya",
+        "Registry mewajibkan kedua file memuat tanggal versi identik",
+        "Keduanya adalah dua nama untuk manifest tool yang sama",
+        "server.json menerbitkan metadata instalasi dan endpoint, sedangkan server/discover melaporkan kapabilitas protokol live"
+      ],
+      "correct": 3,
+      "explanation": "Catatan Registry membantu klien menemukan dan mengonfigurasi server. RPC live melaporkan apa yang didukung proses yang berjalan. Skema dan domain versinya independen, tetapi identitas yang diterbitkan harus memakai namespace terautentikasi dan cocok dengan serverInfo live."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang menggantikan handshake initialize pada revisi MCP 2026-07-28?",
+      "options": [
+        "Mcp-Session-Id plus notifications/initialized",
+        "Setiap permintaan membawa versi protokol dan kapabilitas klien, dan klien dapat memanggil server/discover yang wajib",
+        "Permintaan GET yang membuka stream server permanen",
+        "Cookie sesi yang dikirim sekali per koneksi TCP"
+      ],
+      "correct": 1,
+      "explanation": "Protokolnya tanpa state. Versi dan kapabilitas adalah metadata permintaan, sedangkan server/discover menyediakan penemuan versi dan kapabilitas live tanpa membuat sesi."
+    },
+    {
+      "stage": "check",
+      "question": "Perilaku tools/list mana yang mendukung penemuan yang aman dan efisien?",
+      "options": [
+        "Respons di-cache selamanya tanpa scope",
+        "Urutan tool acak di setiap replika",
+        "Daftar lokal koneksi yang dibuat saat initialize",
+        "Urutan deterministik plus ttlMs dan cacheScope publik atau privat yang benar"
+      ],
+      "correct": 3,
+      "explanation": "Urutan stabil meningkatkan reproducibility dan prompt caching. ttlMs mengomunikasikan kesegaran, dan cacheScope mencegah hasil spesifik pengguna bocor lewat cache bersama."
+    },
+    {
+      "stage": "check",
+      "question": "Desain Streamable HTTP mana yang cocok dengan transport tanpa state saat ini?",
+      "options": [
+        "Semua klien memerlukan routing load-balancer sticky",
+        "POST membuat sesi, GET melanjutkannya, dan DELETE menutupnya",
+        "Stream GET mandiri memakai replay Last-Event-ID",
+        "Setiap pesan JSON-RPC memakai POST sendiri, dengan JSON atau SSE ber-scope permintaan untuk satu permintaan"
+      ],
+      "correct": 3,
+      "explanation": "Streamable HTTP saat ini hanya POST untuk pesan MCP dan tidak memiliki sesi protokol, stream GET mandiri, DELETE sesi, atau resumability Last-Event-ID."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang harus divalidasi server produksi sebelum handler tool yang disetujui kebijakan berjalan?",
+      "options": [
+        "Hanya bahwa server.json mencantumkan URL remote",
+        "Hanya anotasi destructiveHint pada tool",
+        "Hanya bahwa manusia mengirim pesan persetujuan",
+        "Metadata protokol plus issuer token, audience atau resource, kedaluwarsa, scope, dan persetujuan exact-action apa pun"
+      ],
+      "correct": 3,
+      "explanation": "Metadata transport, validasi token, dan kebijakan adalah gerbang terpisah. Anotasi dan metadata publikasi tidak memberikan otoritas."
+    },
+    {
+      "stage": "post",
+      "question": "Bukti mana yang paling mendukung klaim bahwa server diskalakan tanpa sesi protokol?",
+      "options": [
+        "Entri remote di server.json",
+        "Run konkuren tingkat wire di dua replika yang dapat dipertukarkan tanpa ketergantungan affinity",
+        "Unit test yang membangun satu kamus respons",
+        "Diagram yang menunjukkan load balancer"
+      ],
+      "correct": 1,
+      "explanation": "Batas transport dan deployment yang sebenarnya harus diuji. Permintaan bergantian antar replika membuktikan kebenaran tidak tersembunyi di satu proses atau sesi sticky."
+    }
+  ]
+}

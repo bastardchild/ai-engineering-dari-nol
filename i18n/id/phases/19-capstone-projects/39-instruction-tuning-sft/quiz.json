@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/39-instruction-tuning-sft",
+  "title": "Instruction Tuning dengan Supervised Fine-Tuning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca: kamu memberi model base vanilla prompt 'Apa ibu kota Prancis?'. Ia mengeluarkan 'Dan bagaimana dengan Italia dan Spanyol juga?'. Mana yang paling mendiagnosis celahnya?",
+      "options": [
+        "Model kehilangan fakta tentang Paris.",
+        "Model punya perilaku language model tetapi tidak punya kontrak format instruction-following.",
+        "Model membutuhkan kosakata lebih besar.",
+        "Model base harus direset dan dipretrain ulang."
+      ],
+      "correct": 1,
+      "explanation": "Model base bisa melanjutkan teks tetapi belum pernah ditunjukkan bahwa instruksi mengharapkan respons yang sesuai. SFT mengajarkan kontrak format: lihat instruksi, keluarkan respons."
+    },
+    {
+      "stage": "check",
+      "question": "Fungsi collate menyetel labels[i] = -100 pada posisi instruksi dan posisi padding. Mengapa cross-entropy PyTorch menangani posisi ini dengan benar?",
+      "options": [
+        "PyTorch menormalisasi berdasarkan panjang sequence sehingga posisi ter-mask saling meniadakan.",
+        "ignore_index=-100 dihormati F.cross_entropy: posisi itu menyumbang loss nol dan gradien nol.",
+        "Cross-entropy diam-diam membuang target negatif apa pun.",
+        "Output model di posisi itu otomatis disetel ke NaN."
+      ],
+      "correct": 1,
+      "explanation": "ignore_index adalah argumen terdokumentasi F.cross_entropy. Target yang sama dengannya menyumbang nol ke loss dan nol ke gradien. -100 adalah nilai default konvensional."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa shifted_loss memotong logits[:, :-1, :] dan labels[:, 1:] alih-alih memakainya di posisi yang sama?",
+      "options": [
+        "Itu optimasi opsional; label posisi sama juga bekerja.",
+        "Untuk mengecualikan posisi padding terakhir secara otomatis.",
+        "Karena model di posisi i memprediksi token di posisi i+1 di bawah objektif next-token causal.",
+        "Untuk membuat tensor berukuran sama setelah langkah collate."
+      ],
+      "correct": 2,
+      "explanation": "Causal LM melatih posisi i memprediksi token i+1. Potongan menyelaraskan prediksi di posisi i dengan label emas di posisi i+1, objektif next-token standar."
+    },
+    {
+      "stage": "check",
+      "question": "Kamu melatih tanpa mask: label sama dengan input_ids tanpa -100. Model berlatih tetapi exact-match pada respons lebih buruk daripada dengan mask. Penyebab paling mungkin?",
+      "options": [
+        "Model tidak bisa mempelajari token batas tanpa mask.",
+        "Optimizer overfitting pada token respons.",
+        "Cross-entropy tidak stabil saat loss mencakup special.",
+        "Sebagian besar sinyal gradien pergi ke prediksi instruksi (wilayah ter-mask terbesar menahannya)."
+      ],
+      "correct": 3,
+      "explanation": "Saat posisi instruksi dihitung dalam loss, mereka mendominasi gradien karena biasanya lebih banyak daripada token respons. Learning rate efektif pada bagian yang kamu pedulikan (respons) turun, dan model menghabiskan kapasitas merekonstruksi input yang selalu disediakan pengguna."
+    },
+    {
+      "stage": "post",
+      "question": "Exact-match 0.85 pada set held-out. Reviewer bilang model memparafrase jawaban benar dan exact-match melewatkannya. Metrik apa yang kamu tambahkan untuk menangkap ini?",
+      "options": [
+        "Rata-rata panjang sequence.",
+        "Cross-entropy referensi di bawah model.",
+        "Token-level F1 terhadap referensi, yang memberi kredit tumpang tindih bahkan saat tidak identik karakter.",
+        "Loss pada set held-out."
+      ],
+      "correct": 2,
+      "explanation": "Token-level F1 (dihitung antara token prediksi dan referensi setelah normalisasi) memberi kredit model karena sebagian besar jawaban benar meski bentuk permukaan berbeda. Ini tugas lesson 41."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu ingin memakai model SFT di chatbot yang mendukung dialog multi-turn. Perubahan minimum apa yang diperlukan pada data dan mask?",
+      "options": [
+        "Tidak ada: model SFT selalu menangani multi-turn out of the box.",
+        "Tambahkan penanda USER dan ASSISTANT per giliran, gabungkan giliran, dan mask semua kecuali giliran assistant yang sedang dilatih.",
+        "Ganti loss ke mean-squared error.",
+        "Perbesar kosakata."
+      ],
+      "correct": 1,
+      "explanation": "SFT multi-turn menggeneralisasi template satu giliran. Setiap giliran mendapat penanda peran. Mask adalah gabungan semua posisi non-assistant plus padding. Objektif training tidak berubah."
+    }
+  ]
+}

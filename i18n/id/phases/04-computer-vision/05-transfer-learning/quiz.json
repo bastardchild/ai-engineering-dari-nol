@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kamu memiliki 500 gambar berlabel untuk tugas baru yang dekat dengan distribusi ImageNet. Rezim mana yang paling masuk akal?",
+      "options": ["Fine-tune setiap layer dengan LR besar yang sama", "Abaikan bobot pretrained; dataset kecil paling baik dengan model kecil", "Bekukan backbone pretrained ImageNet dan latih hanya head linear baru", "Latih ResNet-50 dari awal"],
+      "correct": 2,
+      "explanation": "Dengan 500 gambar, kamu tidak memiliki cukup sinyal untuk melatih jaringan dalam dari awal atau melakukan fine-tune semua layer end-to-end dengan aman tanpa merusak fitur pretrained. Membekukan backbone dan melatih hanya head baru (linear probe) memakai fitur pretrained secara langsung dan merupakan resep standar untuk dataset kecil yang domainnya dekat."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa layer conv awal dari jaringan pretrained ImageNet bertransfer dengan baik ke gambar medis meskipun ImageNet tidak berisi X-ray?",
+      "options": ["ImageNet diam-diam berisi data medis", "Transfer hanya bekerja ketika domainnya cocok", "PyTorch menginisialisasi ulang layer awal secara otomatis", "Layer awal menyandikan primitif visual generik — tepi, orientasi, kontras — yang dibagi hampir di semua domain visual; hanya layer akhir yang berspesialisasi pada kategori ImageNet"],
+      "correct": 3,
+      "explanation": "Filter mirip Gabor dan detektor tekstur sederhana adalah fitur yang dipelajari layer CNN awal pada korpus gambar alami apa pun. Fitur itu mencerminkan statistik cahaya, bayangan, dan tepi yang berlaku lintas fotografi, pencitraan medis, mikroskopi, dan data satelit. Layer akhir secara progresif berspesialisasi, itulah sebabnya fine-tuning berfokus pada beberapa blok terakhir."
+    },
+    {
+      "stage": "post",
+      "question": "Saat melakukan fine-tune end-to-end dengan discriminative learning rate, mengapa layer awal harus mendapat LR lebih kecil daripada layer akhir?",
+      "options": ["LR lebih kecil di layer awal mempercepat training", "Layer awal memiliki lebih sedikit parameter", "Layer awal menyandikan fitur umum yang ingin kamu pertahankan; layer akhir menyandikan fitur spesifik tugas yang harus bergerak; LR lebih kecil pada layer awal mencegah pergeseran fitur dan catastrophic forgetting", "PyTorch mewajibkan LR per layer agar benar"],
+      "correct": 2,
+      "explanation": "Layer awal sudah menyandikan primitif visual yang tepat; kamu menginginkan pembaruan sangat kecil agar fitur itu terjaga. Layer akhir perlu bergerak menuju tugas baru. Satu learning rate untuk seluruh model memaksa kompromi yang merugikan kedua ujung. Discriminative LR memungkinkan setiap tahap bergerak dengan lajunya sendiri, titik manis empiris untuk fine-tuning."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu melakukan fine-tune ResNet pada dataset medis 10 kelas berisi 800 gambar grayscale (direplikasi ke 3 channel). Akurasinya 10% (peluang acak untuk 10 kelas). Penyebab paling mungkin apa?",
+      "options": ["ResNet tidak dapat menangani input grayscale", "Statistik running BatchNorm berasal dari foto RGB ImageNet dan sangat tidak cocok dengan distribusi medis grayscale, sehingga beberapa layer BN pertama menghasilkan noise yang menjalar ke depan", "800 gambar terlalu sedikit untuk transfer learning apa pun", "Kamu memakai fungsi loss yang salah"],
+      "correct": 1,
+      "explanation": "BatchNorm menyimpan running_mean dan running_var dari ImageNet. Pada dataset kecil dengan distribusi bergeser, buffer itu tidak pernah beradaptasi cukup cepat selama fine-tune singkat, dan BN menormalisasi aktivasi dengan statistik yang salah. Perbaikannya: bekukan statistik BN, beralih ke GroupNorm, atau pramuat statistik BN dengan satu pass warmup khusus BN pada dataset target."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu membandingkan dua percobaan: (a) linear probe pada backbone ImageNet beku, akurasi 82%; (b) fine-tune end-to-end, akurasi 78%. Apa yang harus kamu simpulkan?",
+      "options": ["Fine-tuning tidak membantu; rilis linear probe", "Fine-tune yang berakhir di bawah linear probe hampir selalu merupakan bug training — LR terlalu tinggi, BN salah ditangani, atau scheduler/optimizer salah konfigurasi; diagnosis dulu sebelum menyimpulkan apa pun tentang transfer", "Datasetnya terlalu besar", "Bobot pretrained-nya buruk"],
+      "correct": 1,
+      "explanation": "Fine-tuning seharusnya selalu mengalahkan atau menyamai linear probe, karena linear probe adalah kasus khusus fine-tuning dengan LR backbone = 0. Jika fine-tune lebih buruk, pipeline-nya secara aktif merusak fitur pretrained. Perbaikannya adalah menurunkan LR backbone, menerapkan discriminative LR, atau membekukan BN — bukan meninggalkan fine-tuning."
+    }
+  ]
+}

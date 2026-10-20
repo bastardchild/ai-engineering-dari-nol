@@ -123,20 +123,20 @@ test('supporter navigation survives translated README headings', () => {
   }
 });
 
-test('sponsors page is rendered from SPONSORS.md at build time', () => {
+test('sponsors page is rendered from the Indonesian SPONSORS source at build time', () => {
   const { renderSponsorsMarkdown } = require('./build.js');
   const page = read('site/sponsors.html');
   const generated = between(page, '<!-- GENERATED:SPONSORS:START -->\n', '\n          <!-- GENERATED:SPONSORS:END -->', 'site/sponsors.html');
-  assert.equal(generated, renderSponsorsMarkdown(read('SPONSORS.md')));
+  assert.equal(generated, renderSponsorsMarkdown(read('i18n/id/SPONSORS.md')));
   assert.ok(generated.startsWith('<h1 id="sponsorship">Sponsorship</h1>'));
-  for (const anchor of ['hardware-lab-partner', 'hard-rules', 'pricing-anchors']) {
+  for (const anchor of ['mitra-lab-perangkat-keras', 'aturan-keras', 'jangkar-harga']) {
     assert.ok(generated.includes(`id="${anchor}"`), anchor);
     assert.ok(generated.includes(`href="#${anchor}"`), anchor);
   }
   assert.ok(generated.includes(`<a href="${sponsorUrl}" target="_blank" rel="noopener"><picture><source media="(prefers-color-scheme: dark)" srcset="https://serpapi.com/assets/media_kit/logo-with-wordmark-white.svg">`));
   assert.ok(generated.includes('href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/BACKERS.md" target="_blank" rel="noopener"'));
-  assert.ok(generated.includes('<td class="align-right">114,584 (+4%)</td>'));
-  assert.ok(generated.includes('<li><strong>Open-source baseline</strong>'));
+  assert.ok(generated.includes('<td class="align-right">114.584 (+4%)</td>'));
+  assert.ok(generated.includes('<li><strong>Dasar open-source</strong>'));
   assert.doesNotMatch(generated, /\n\s*\[Babel\]/);
 });
 
@@ -163,10 +163,10 @@ test('the hamburger menu and every page footer link to the sponsors page', () =>
     if (!text.includes('<div class="footer-links">')) continue;
     footers++;
     const links = between(text, '<div class="footer-links">', '</div>', page);
-    assert.ok(links.includes('<a href="sponsors.html">Sponsor us</a>'), page);
+    assert.ok(links.includes('<a href="sponsors.html">Dukung kami</a>'), page);
   }
   assert.ok(footers >= 13);
-  assert.ok(read('site/header.js').includes("ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');"));
+  assert.ok(read('site/header.js').includes("ensureNavigationLink(nav, 'sponsors.html', 'Dukung kami', 'header-mobile-only');"));
   assert.ok(JSON.parse(read('site/ui-strings.json')).keys.includes('Sponsor us'));
   const vercel = JSON.parse(read('vercel.json'));
   assert.ok(vercel.rewrites.some(rule => rule.source === '/sponsors' && rule.destination === '/sponsors.html'));

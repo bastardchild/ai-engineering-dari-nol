@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/27-eval-harness-fixture-tasks",
+  "title": "Harness Eval dengan Tugas Fixture",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca lesson: properti apa yang paling dibutuhkan verifier eval agen yang baik?",
+      "options": [
+        "Determinisme antar run.",
+        "Kecepatan dalam rentang milidetik.",
+        "Penjelasan bahasa alami atas vonis.",
+        "Cakupan setiap baris kode kandidat."
+      ],
+      "correct": 0,
+      "explanation": "Determinisme adalah yang membuat regresi terdeteksi. Verifier non-deterministik mengubah setiap merah menjadi lempar koin."
+    },
+    {
+      "stage": "check",
+      "question": "Kandidat mencetak 3 pass dalam 5 sampel pada satu tugas. Nilai apa yang dikembalikan formula pass@5 lesson (dibulatkan dua desimal)?",
+      "options": [
+        "0.75",
+        "1.00",
+        "0.99",
+        "0.60"
+      ],
+      "correct": 2,
+      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976, yang dibulatkan menjadi 0.99. Laju mentah per sampel (0.6) adalah nilai yang disebut opsi (a), tetapi formula memperkuatnya lintas k sampel."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa lesson menyertakan pass@1 dan pass@k dalam laporan?",
+      "options": [
+        "pass@1 adalah versi yang didukung registry verifier; pass@k disimpan untuk verifier mendatang.",
+        "pass@k dapat menyembunyikan model yang benar hanya satu dari banyak sampel, jadi pass@1 menjangkarkan hasil pada kualitas percobaan pertama.",
+        "pass@1 adalah nilai yang dilihat pengguna di dashboard; pass@k untuk debugging internal.",
+        "pass@k dan pass@1 identik secara matematis untuk k > 1."
+      ],
+      "correct": 1,
+      "explanation": "pass@k membuat model yang benar sekali dari banyak percobaan terlihat kuat; pass@1 adalah lantai percobaan pertama. Melaporkan keduanya mencegah klaim berlebihan."
+    },
+    {
+      "stage": "check",
+      "question": "Harness memanggil _prepare_scratch sebelum setiap sampel. Mengapa itu penting untuk pass@k > 1?",
+      "options": [
+        "Itu memastikan setiap sampel mulai dari setup buggy, bukan output sampel sebelumnya.",
+        "Itu menghindari race condition pada direktori temp bersama.",
+        "Itu hanya relevan untuk verifier shell.",
+        "Itu murni optimasi performa."
+      ],
+      "correct": 0,
+      "explanation": "Tanpa scratch baru, sampel N+1 mulai dari output sampel N. Harness akan mengukur 'pembersihan percobaan kedua' alih-alih sukses percobaan pertama."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu menambah verifier baru 'pytest_passes' yang menjalankan pytest di direktori scratch. Verifier yang ada mana yang harus menjadi dasarnya?",
+      "options": [
+        "Mustahil mengekspresikan pytest sebagai verifier.",
+        "shell_exit_zero, karena pytest menandakan lolos lewat exit code 0.",
+        "file_equals, karena pytest menulis file hasil.",
+        "regex_match, karena output pytest memuat kata 'passed'."
+      ],
+      "correct": 1,
+      "explanation": "pytest keluar 0 saat lolos dan non-nol saat gagal. shell_exit_zero adalah primitif yang tepat. Wiring produksi merutekan panggilan lewat sandbox dari lesson 26."
+    },
+    {
+      "stage": "post",
+      "question": "Reviewer bertanya: 'apakah regresi ini di model atau di harness?' Artefak mana yang menjawab pertanyaan itu?",
+      "options": [
+        "SampleResult per tugas, per sampel plus pesan detail verifier.",
+        "File JSON fixture.",
+        "Transkrip chain-of-thought agen.",
+        "Kode sumber registry verifier."
+      ],
+      "correct": 0,
+      "explanation": "Latensi per sampel, detail verifier, dan pass/fail memungkinkan triase: fixture sama, vonis berbeda, jadi model berubah; vonis sama tetapi latensi berbeda, jadi ada hal lain yang bergeser."
+    }
+  ]
+}

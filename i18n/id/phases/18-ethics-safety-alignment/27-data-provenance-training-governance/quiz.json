@@ -1,0 +1,78 @@
+{
+  "lesson": "27-data-provenance-training-governance",
+  "title": "Provenance Data dan Tata Kelola Data Pelatihan",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa jendela kepatuhan tata kelola data pelatihan ada di waktu pengumpulan, bukan setelah pelatihan?",
+      "options": [
+        "Setelah data masuk bobot model, penghapusan bedah tidak mungkin; pelatihan ulang dari nol adalah satu-satunya remediasi lengkap dan biayanya sangat mahal",
+        "Karena hak penghapusan GDPR tidak berlaku untuk AI",
+        "Karena regulator tidak mengaudit model yang sudah dideploy",
+        "Karena kerangka cookie-consent melarang penggunaan pasca-pengumpulan"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa item statutori yang diwajibkan California AB 2013 untuk diterbitkan pengembang dalam ringkasan dataset?",
+      "options": [
+        "12",
+        "3",
+        "7",
+        "30"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Item AB 2013 mana yang baru relatif terhadap struktur datasheet Gebru et al. 2018?",
+      "options": [
+        "Sumber atau pemilik dataset",
+        "Periode waktu pengumpulan data",
+        "Apakah sistem memakai atau terus memakai generasi data sintetis",
+        "Pembersihan, pemrosesan, atau modifikasi lain"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa prinsip DPA 2025 yang konvergen untuk pelatihan LLM pada konten pihak pertama yang tersedia publik?",
+      "options": [
+        "Pelatihan dilarang dalam semua keadaan",
+        "Legitimate interest dapat membenarkan pelatihan pada konten pihak pertama yang tersedia publik dengan opt-out dan pengamanan yang tepat; consent tidak diperlukan",
+        "Persetujuan eksplisit pengguna selalu diperlukan",
+        "Hanya data sintetis yang boleh dipakai"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mana yang BUKAN remediasi parsial untuk masalah ireversibilitas yang disebutkan dalam pelajaran?",
+      "options": [
+        "Unlearning (penghapusan perkiraan yang diukur dengan MIA)",
+        "Lokalisasi berbasis influence function dan update selektif",
+        "Penghapusan bobot otomatis yang diwajibkan GDPR",
+        "Supresi output turunan data lewat fine-tune"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa temuan 'Consent in Crisis' (Juli 2024) dari Data Provenance Initiative?",
+      "options": [
+        "Tingkat consent stabil di semua sumber",
+        "Data sintetis telah sepenuhnya menggantikan data web",
+        "Pembatasan robots.txt menurun dari tahun ke tahun",
+        "Penerbit menambahkan pembatasan robots.txt dengan laju yang mempercepat; commons yang bisa dilatih secara terbuka menyusut cepat, dengan sekitar 25% sumber pelatihan teratas menambahkan pembatasan dari 2023 ke 2024"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

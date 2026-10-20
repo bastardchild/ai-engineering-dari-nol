@@ -1,0 +1,90 @@
+{
+  "lesson": "11-llm-observability-dashboard",
+  "title": "Capstone 11 — Dashboard Observability & Eval LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Skema ingest mana yang menjadi konvergensi Langfuse, Phoenix, dan OpenLLMetry?",
+      "options": [
+        "Format eksposisi Prometheus",
+        "Konvensi semantik OpenTelemetry GenAI di atas OTLP HTTP",
+        "JSON proprietary per vendor",
+        "File log CSV biasa"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa memisahkan ClickHouse dan Postgres di lapisan penyimpanan?",
+      "options": [
+        "Keduanya dapat dipertukarkan dan salah satu dipilih acak",
+        "Postgres lebih cepat untuk ingest span",
+        "ClickHouse menangani analitik kolumnar atas span sedangkan Postgres menyimpan pengguna, sesi, dan metadata aplikasi",
+        "ClickHouse tidak bisa menyimpan string"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan processor tail-sampling di OpenTelemetry Collector?",
+      "options": [
+        "Memutuskan apakah menyimpan trace setelah selesai, memakai aturan seperti simpan error plus sample sukses",
+        "Memutar ulang trace lama ke Postgres",
+        "Men-streaming setiap byte tanpa syarat",
+        "Memotong span di bawah 100ms"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana dashboard mendeteksi drift antar minggu?",
+      "options": [
+        "Menghitung ID trace unik",
+        "Menghitung PSI atau KL divergence pada embedding prompt yang dipool dan memantau tren skor eval",
+        "Mengamati dashboard secara manual",
+        "Membaca timestamp deploy terbaru"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa target MTTR deliverable pada regresi kebocoran PII yang disuntikkan?",
+      "options": [
+        "Di bawah 1 jam",
+        "Dalam 24 jam",
+        "Di bawah 5 menit dari bug di-deploy ke alert Slack",
+        "Dalam shift on-call berikutnya"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Keluarga SDK mana yang harus menghasilkan span GenAI kanonis untuk memenuhi rubrik trace-coverage?",
+      "options": [
+        "OpenAI dan Anthropic saja",
+        "Satu SDK apa pun cukup",
+        "Hanya vLLM",
+        "Minimal enam: OpenAI, Anthropic, Google GenAI, LangChain, LlamaIndex, dan vLLM"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana hasil evaluasi ditautkan kembali ke panggilan LLM asli?",
+      "options": [
+        "Sebagai tabel Postgres terpisah tanpa trace ID",
+        "Sebagai CSV yang dikirim email tiap malam",
+        "Sebagai pesan Slack saja",
+        "Sebagai span eval yang ditulis sebagai anak dari trace induk di ClickHouse"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "16-model-routing",
+  "title": "Model Routing sebagai Primitif Pengurangan Biaya",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa ide inti dari model cascading?",
+      "options": [
+        "Selalu routing dengan bobot acak",
+        "Jalankan dua model secara paralel lalu rata-ratakan outputnya",
+        "Jalankan setiap permintaan di model termahal lebih dulu",
+        "Jalankan model murah dulu, eskalasi ke model frontier hanya saat keyakinan rendah atau ada penolakan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Empat sinyal apa yang didaftar pelajaran ini untuk keputusan routing?",
+      "options": [
+        "Hanya tier pengguna",
+        "Hanya jumlah token",
+        "Klasifikasi tugas, panjang prompt, kemiripan embedding dengan kumpulan yang diketahui sulit, dan keyakinan diri dari lintasan pertama",
+        "Suhu GPU, kecepatan kipas, kelembapan ruangan, waktu hari"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana profil latensi yang diharapkan dari router cascade?",
+      "options": [
+        "Selalu lebih cepat daripada pre-route",
+        "Sekitar 1.2x latensi median (run murah plus verifikasi), sekitar 2x pada permintaan yang dieskalasi (~10% traffic)",
+        "Selalu 10x lebih lambat",
+        "Identik dengan model frontier"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Pola routing mana yang menambah latensi 5-10 ms di awal dan paling cepat secara keseluruhan?",
+      "options": [
+        "Cascade",
+        "Rute ensemble",
+        "Round-robin acak",
+        "Pre-route dengan classifier"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu drift model murah dalam routing?",
+      "options": [
+        "Model murah menjadi lebih mahal",
+        "Cascade jatuh ke frontier 100% sepanjang waktu",
+        "Drift latensi pada model murah",
+        "Distribusi tugas bergeser tetapi router terlatih terus mengirim permintaan ke model murah, diam-diam menurunkan kualitas"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Guard mana yang direkomendasikan pelajaran ini untuk menangkap drift routing?",
+      "options": [
+        "Metrik kualitas online — thumbs-up/down per rute, LLM-judge pada sampel held-out, tingkat eskalasi, tingkat penolakan",
+        "Hanya review engineering triwulanan",
+        "Hanya eval set offline",
+        "Nonaktifkan routing di produksi"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

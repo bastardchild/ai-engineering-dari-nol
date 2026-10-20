@@ -1,0 +1,102 @@
+{
+  "lesson": "18-multilingual-nlp",
+  "title": "NLP Multibahasa",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa arti zero-shot cross-lingual transfer?",
+      "options": [
+        "Menerjemahkan tanpa model terjemahan",
+        "Melakukan tokenization tanpa merge",
+        "Melakukan fine-tuning model multibahasa pada satu bahasa sumber lalu mengevaluasinya pada bahasa berbeda tanpa label bahasa target",
+        "Melatih tanpa contoh"
+      ],
+      "correct": 2,
+      "explanation": "Zero-shot transfer: latih pada bahasa sumber, jalankan pada target tanpa supervisi bahasa target."
+    },
+    {
+      "stage": "pre",
+      "question": "Keluarga model mana yang dikirim sebagai baseline lintas bahasa 100 bahasa standar?",
+      "options": [
+        "GPT-2",
+        "GloVe",
+        "DistilBERT",
+        "XLM-R (misalnya XLM-RoBERTa-base, 270M)"
+      ],
+      "correct": 3,
+      "explanation": "XLM-R adalah baseline pretrained 100 bahasa kanonik untuk klasifikasi lintas bahasa."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa bahasa Inggris sebagai sumber tidak selalu memberikan transfer terbaik untuk target non-Inggris?",
+      "options": [
+        "Bahasa Inggris memiliki terlalu sedikit data",
+        "Kemiripan bahasa (tipologi, aksara, morfologi) memprediksi kualitas transfer; sumber berdaya tinggi yang lebih dekat dapat mengungguli bahasa Inggris",
+        "Bahasa Inggris memakai BPE",
+        "Bahasa Inggris terlalu pendek"
+      ],
+      "correct": 1,
+      "explanation": "Sumber yang terkait tipologis (misalnya Hindi untuk target Indic) sering mengungguli bahasa Inggris sebagai sumber fine-tune."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu 'fertility tax' untuk bahasa sumber daya rendah?",
+      "options": [
+        "Model lebih kecil berlatih lebih lambat",
+        "Tokenizer tidak dapat menangani Unicode",
+        "BPE menolak dilatih",
+        "Teks sumber daya rendah ter-tokenisasi menjadi lebih banyak subword per kata daripada bahasa Inggris, mengonsumsi context window, latensi, dan kapasitas"
+      ],
+      "correct": 3,
+      "explanation": "Bahasa ekor panjang ter-tokenisasi pada fertilitas jauh lebih tinggi, memakan konteks dan efisiensi training."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa evaluasi per bahasa diperlukan, bukan akurasi agregat?",
+      "options": [
+        "Agregat berjalan lebih cepat",
+        "Agregat hanya bekerja pada klasifikasi",
+        "Agregat mengabaikan tokenization",
+        "Angka agregat menyembunyikan bahasa ekor panjang di mana model multibahasa bisa jauh lebih buruk daripada yang disiratkan rata-ratanya"
+      ],
+      "correct": 3,
+      "explanation": "Akurasi agregat menutupi kinerja buruk pada bahasa sumber daya rendah; skor per bahasa mengungkapnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa learning rate fine-tuning kritis saat mengadaptasi model multibahasa dengan data few-shot?",
+      "options": [
+        "LR tinggi dapat meruntuhkan penyelarasan multibahasa dan secara efektif mereduksi model menjadi hanya bahasa Inggris",
+        "LR lebih rendah membuang GPU",
+        "Ia mengubah kosakata",
+        "Diwajibkan oleh tokenizer"
+      ],
+      "correct": 0,
+      "explanation": "LR berlebihan menggeser representasi bersama; LR konservatif (~2e-5) mempertahankan struktur lintas bahasa."
+    },
+    {
+      "stage": "post",
+      "question": "Mitigasi mana yang secara langsung menangani fertilitas tokenizer untuk aksara ekor panjang?",
+      "options": [
+        "Melewati stopword",
+        "Memakai byte-fallback (SentencePiece byte_fallback=True) atau tokenizer dengan cakupan aksara lebih luas (misalnya XLM-V)",
+        "Lebih banyak epoch training",
+        "Batch size lebih rendah"
+      ],
+      "correct": 1,
+      "explanation": "Byte fallback dan tokenizer berkosakata lebih luas mengurangi fertilitas dan OOV untuk aksara sumber daya rendah."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan model monolingual dari awal layak dicoba alih-alih model multibahasa?",
+      "options": [
+        "Hanya untuk terjemahan",
+        "Setiap kali tokenizer-nya BPE",
+        "Selalu untuk bahasa Inggris",
+        "Ketika bahasa target memiliki cukup data untuk melatih model monolingual yang mengalahkan baseline multibahasa; uji sebelum berasumsi"
+      ],
+      "correct": 3,
+      "explanation": "Kadang training monolingual mengalahkan multibahasa untuk target berdaya tinggi; perbandingan empiris yang menentukan."
+    }
+  ]
+}

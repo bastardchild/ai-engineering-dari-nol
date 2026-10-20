@@ -1,0 +1,78 @@
+{
+  "lesson": "76-collective-ops-from-scratch",
+  "title": "Operasi Kolektif dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa biaya bandwidth per rank untuk ring allreduce tensor T byte pada N rank?",
+      "options": [
+        "N * T byte",
+        "T log2(N) byte",
+        "T byte",
+        "2T(N-1)/N byte"
+      ],
+      "correct": 3,
+      "explanation": "Ring allreduce memindahkan N-1 chunk berukuran T/N dua kali (reduce-scatter lalu allgather); total per rank adalah 2T(N-1)/N, independen dari ukuran cluster."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa queue mesh dalam lesson ini pengganti jujur untuk NCCL di cluster nyata?",
+      "options": [
+        "Itu meng-offload reduksi ke hardware",
+        "Itu berjalan di core CUDA",
+        "Itu mengimplementasikan pola wire yang sama (pengiriman point-to-point terurut mengelilingi ring), hanya mediumnya berbeda",
+        "Itu mengompresi pesan"
+      ],
+      "correct": 2,
+      "explanation": "Kebenaran algoritmik bergantung pada pola wire, bukan medium; ring queue memunculkan bentuk race dan jadwal chunk yang sama dengan ring allreduce NCCL."
+    },
+    {
+      "stage": "check",
+      "question": "Setelah separuh reduce-scatter ring allreduce, apa yang dipegang rank r?",
+      "options": [
+        "Jumlah tereduksi untuk satu chunk (satu per-N tensor)",
+        "Jumlah tereduksi untuk dua chunk",
+        "Tensor penuh yang belum tereduksi",
+        "Tidak ada"
+      ],
+      "correct": 0,
+      "explanation": "Reduce-scatter menaruh jumlah satu chunk di satu rank; separuh allgather lalu memutar chunk selesai itu mengelilingi ring."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa memakai tree broadcast alih-alih N-1 pengiriman langsung dari sumber?",
+      "options": [
+        "Tree wajib di PyTorch",
+        "Pengiriman langsung menjatuhkan paket",
+        "Tree menggandakan set pemegang per putaran; kedalamannya log2(N) sehingga latensi berskala log bukan N",
+        "Tree memakai lebih sedikit memori"
+      ],
+      "correct": 2,
+      "explanation": "Hop log2(N) mendominasi saat latensi per hop menjadi bottleneck; N-1 pengiriman sekuensial membayar lantai latensi itu N kali."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa verifikasi terhadap torch.distributed gloo pada input yang sama?",
+      "options": [
+        "Gloo lebih cepat",
+        "Gloo adalah referensi legal untuk semantik kolektif; output byte-equal membuktikan algoritmamu sesuai spesifikasi sebelum berjalan di cluster nyata",
+        "Gloo tidak butuh setup",
+        "Gloo menulis JSONL otomatis"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa referensi, primitif terlihat benar sampai langkah 10000 training nyata; gloo memberi ground truth byte-equal di CPU."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan tree allreduce menang atas ring allreduce?",
+      "options": [
+        "Selalu",
+        "Saat pesan besar",
+        "Pesan kecil atau tautan latensi tinggi; jumlah hop log2(N) mengalahkan suku bandwidth 2T(N-1)/N di bawah crossover",
+        "Tidak pernah"
+      ],
+      "correct": 2,
+      "explanation": "NCCL memilih ring di atas ~1 MB dan tree di bawahnya; crossover adalah bandwidth versus latensi pada topologi cluster yang diberikan."
+    }
+  ]
+}

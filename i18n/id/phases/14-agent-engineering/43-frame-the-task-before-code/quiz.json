@@ -1,0 +1,48 @@
+{
+  "lesson": "43-frame-the-task-before-code",
+  "title": "Bingkai Tugas Sebelum Menulis Kode",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang seharusnya menjadi unit pertama pekerjaan coding agent yang andal?",
+      "options": ["Kerangka tugas yang didukung bukti repo", "Panggilan model", "Edit", "Pull request"],
+      "correct": 0,
+      "explanation": "Kerangka tugas menetapkan fakta, batas, hal yang belum diketahui, dan bukti sebelum implementasi."
+    },
+    {
+      "stage": "check",
+      "question": "Pernyataan mana yang merupakan fakta repo?",
+      "options": ["Test duplicate-response mengharapkan 409 di tests/test_accounts.py:44", "API kemungkinan memakai 409", "409 terasa konvensional", "API seharusnya memakai 409"],
+      "correct": 0,
+      "explanation": "Fakta membawa bukti konkret yang dapat diperiksa."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menyebut path yang dilarang?",
+      "options": ["Untuk memilih model", "Untuk mendefinisikan ruang negatif perubahan", "Untuk membuat prompt lebih panjang", "Untuk menghindari menjalankan test"],
+      "correct": 1,
+      "explanation": "Path yang diizinkan saja tidak menyatakan pekerjaan sampingan menggoda mana yang harus dibiarkan."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan hal yang belum diketahui manusia harus menghentikan agent?",
+      "options": ["Setiap kali ada file yang tidak dikenal", "Sebelum setiap perintah", "Hanya setelah deployment", "Saat ia mengubah perilaku produk, risiko, otoritas, atau biaya yang tidak dapat dipulihkan"],
+      "correct": 3,
+      "explanation": "Pilihan berkonsekuensi tinggi membutuhkan checkpoint eksplisit sebelum terkubur di kode."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang membuat bukti penerimaan kuat?",
+      "options": ["Ditulis setelah coding", "Memakai banyak tool", "Menyebut perintah atau observasi persis dan klaim yang dibuktikannya", "Mengatakan test lulus"],
+      "correct": 2,
+      "explanation": "Bukti spesifik memungkinkan sesi lain mereproduksi penutupan tugas."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan reconnaissance cukup?",
+      "options": ["Saat context window penuh", "Saat setiap keputusan yang direncanakan punya bukti, otoritas terdelegasi, atau hal eksplisit yang belum diketahui", "Setelah satu pencarian", "Setelah membaca setiap file"],
+      "correct": 1,
+      "explanation": "Reconnaissance berhenti saat keputusan berpijak atau terlihat belum terselesaikan."
+    }
+  ]
+}

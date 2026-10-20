@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa keunggulan SVD dibanding eigendecomposition?",
+      "options": ["SVD selalu lebih cepat dihitung", "SVD menghasilkan matriks output lebih kecil", "SVD bekerja pada matriks apa pun dengan bentuk apa pun, sedangkan eigendecomposition memerlukan matriks persegi dengan himpunan eigenvector lengkap", "SVD tidak memerlukan komputasi numerik"],
+      "correct": 2,
+      "explanation": "Eigendecomposition hanya bekerja pada matriks persegi yang memiliki n eigenvector bebas linear. SVD menguraikan matriks m x n APA PUN menjadi U * Sigma * V^T tanpa batasan bentuk atau rank."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa arti 'low-rank approximation'?",
+      "options": ["Mengonversi matriks ke tipe data presisi lebih rendah", "Menghapus baris bernilai rendah dari matriks", "Mengurutkan baris matriks berdasarkan magnitudonya", "Mengaproksimasi matriks dengan hanya mempertahankan komponen terpentingnya, menghasilkan matriks lebih sederhana dengan lebih sedikit arah independen"],
+      "correct": 3,
+      "explanation": "Aproksimasi rank-k hanya mempertahankan k singular value teratas dan vektornya, membuang sisanya. Teorema Eckart-Young membuktikan ini adalah aproksimasi TERBAIK yang mungkin untuk rank tersebut."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam SVD A = U * Sigma * V^T, operasi geometris apa yang direpresentasikan setiap faktor?",
+      "options": ["Ketiga faktor melakukan operasi yang sama: rotasi", "U mengompresi, Sigma memperluas, V^T menormalisasi", "V^T merotasi di ruang input, Sigma menskalakan sepanjang sumbu utama, U merotasi ke ruang output", "U menskalakan, Sigma merotasi, V^T mentranslasi"],
+      "correct": 2,
+      "explanation": "SVD mengungkap bahwa setiap matriks melakukan: (1) V^T merotasi input agar sejajar dengan arah utama, (2) Sigma meregangkan/mengompresi sepanjang setiap sumbu, (3) U merotasi hasilnya ke ruang output. Rotasi, skala, rotasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa sklearn mengimplementasikan PCA memakai SVD alih-alih eigendecomposition matriks kovariansi?",
+      "options": ["SVD menghasilkan hasil berbeda yang lebih akurat untuk ML", "SVD lebih mudah diparalelkan di GPU", "SVD bekerja langsung pada matriks data tanpa membentuk matriks kovariansi, menghindari pengkuadratan condition number dan meningkatkan stabilitas numerik", "SVD tidak memerlukan pemusatan data"],
+      "correct": 2,
+      "explanation": "Membentuk A^T*A mengkuadratkan singular value (dan condition number). Jika A punya singular value [1000, 0.001], A^T*A punya eigenvalue [10^6, 10^-6] -- 6 digit presisi hilang. SVD menghindarinya dengan bekerja langsung pada A."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana truncated SVD memungkinkan sistem rekomendasi memprediksi rating yang hilang?",
+      "options": ["Ia melatih neural network pada rating yang diamati", "Ia menguraikan matriks rating menjadi profil pengguna dan film laten; dot product profil pengguna dengan profil film memprediksi rating yang hilang", "Ia mengisi entri hilang dengan rating rata-rata", "Ia mengelompokkan pengguna serupa dan menyalin rating mereka"],
+      "correct": 1,
+      "explanation": "SVD menguraikan matriks rating menjadi profil pengguna (U), kepentingan faktor laten (Sigma), dan profil film (V^T). Rekonstruksi low-rank mengisi entri hilang berdasarkan faktor laten (genre, era, gaya) yang menjelaskan preferensi pengguna."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "06-devops-troubleshooting-agent",
+  "title": "Capstone 06 — Agen Troubleshooting DevOps untuk Kubernetes",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa postur izin default untuk permukaan RBAC agen troubleshooting?",
+      "options": [
+        "Cluster-admin agar bisa self-heal",
+        "Read-only secara default, dengan verb destruktif digerbangi di server terpisah dan persetujuan manusia",
+        "Setara dengan engineer on-call",
+        "Namespace-admin hanya di namespace terdampak"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Knowledge graph apa yang dijalani agen selama analisis akar masalah?",
+      "options": [
+        "Node adalah objek K8s plus sumber telemetri; edge mengodekan kepemilikan, penjadwalan, dan observasi",
+        "Nama metrik Prometheus yang diorganisir per tim",
+        "Daftar datar pod yang baru restart",
+        "Grafik commit GitHub dan review PR"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana hipotesis akar masalah diperingkat untuk brief Slack?",
+      "options": [
+        "Berdasarkan nama alert alfabetis",
+        "Berdasarkan log-probability model saja",
+        "Berdasarkan urutan pembuatannya",
+        "Berdasarkan skor bukti yang menggabungkan recency, spesifisitas, panjang jalur graph, dan jumlah sitasi"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa audit log mencatat perintah yang dipertimbangkan agen sekaligus yang dieksekusi?",
+      "options": [
+        "ArgoCD hanya menerima perintah yang dipertimbangkan",
+        "Serangan replay membutuhkan kedua daftar",
+        "Slack API membutuhkan keduanya untuk pengiriman",
+        "Reviewer dapat menangkap near-miss saat agen hampir menjalankan perintah destruktif"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mekanisme mana yang mencegah agen melakukan rollback sepihak pada deploy buruk?",
+      "options": [
+        "Tool destruktif berada di server MCP terpisah di balik token persetujuan dari kartu Slack",
+        "PagerDuty otomatis menjeda deployment",
+        "Branch protection pada repo GitOps",
+        "LLM-judge kedua memberi suara pada rollback"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Target time-to-hypothesis p50 apa yang diukur rubrik?",
+      "options": [
+        "Di bawah 1 jam",
+        "Di bawah 30 detik",
+        "Sebelum shift on-call berikutnya",
+        "Di bawah 5 menit dari alert ke brief Slack"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Berapa besar suite insiden sintetis yang dipakai untuk menilai akurasi RCA?",
+      "options": [
+        "5 skenario",
+        "20 skenario mencakup OOMKill, DNS flap, HPA thrash, PVC fill, dan lainnya",
+        "1 insiden demo berskrip",
+        "100 alert produksi yang diambil acak"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

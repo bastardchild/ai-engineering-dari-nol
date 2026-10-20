@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan utama antara container Docker dan virtual machine?",
+      "options": ["Tidak ada perbedaan praktis", "Container lebih lambat tetapi lebih aman daripada VM", "Container berbagi kernel OS host sedangkan VM menjalankan OS penuh sendiri", "Container hanya bisa menjalankan Linux sedangkan VM mendukung OS apa pun"],
+      "correct": 2,
+      "explanation": "Container berbagi kernel host dan mengisolasi pada level proses, sehingga mulai dalam hitungan detik. VM menjalankan OS tamu lengkap dengan kernel sendiri, membutuhkan lebih banyak resource dan waktu startup lebih lambat."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu Dockerfile?",
+      "options": ["File konfigurasi untuk daemon Docker", "Kumpulan instruksi untuk membangun image Docker lapis demi lapis", "File yang mendaftar container yang sedang berjalan", "File log yang mencatat aktivitas container"],
+      "correct": 1,
+      "explanation": "Dockerfile berisi instruksi berurutan (FROM, RUN, COPY, dll.) yang dijalankan Docker untuk membangun image. Setiap instruksi membuat lapisan yang di-cache."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa volume mount sangat penting untuk pengembangan AI dengan Docker?",
+      "options": ["Volume memungkinkan beberapa container berbagi GPU yang sama", "Volume membuat container berjalan lebih cepat dengan kecepatan disk host", "Volume diperlukan agar paket Python terinstal dengan benar", "Volume mempertahankan data (model, dataset, kode) lintas rebuild container agar kamu tidak mengunduh gigabyte setiap kali"],
+      "correct": 3,
+      "explanation": "Tanpa volume, semua isi container hilang saat berhenti. Volume mount memetakan direktori host ke dalam container, sehingga bobot model (14+ GB) dan dataset bertahan saat rebuild."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diaktifkan oleh NVIDIA Container Toolkit?",
+      "options": ["Menginstal driver CUDA di dalam container", "Menjalankan container GPU NVIDIA di perangkat keras AMD", "Mengekspos GPU host ke container Docker melalui flag --gpus", "Mengompilasi kode CUDA selama proses build Docker"],
+      "correct": 2,
+      "explanation": "NVIDIA Container Toolkit adalah hook runtime yang mengekspos GPU host ke container. Toolkit CUDA berada di dalam container, tetapi driver GPU dibagikan dari host."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam file Docker Compose untuk AI, bagaimana service 'ai-dev' menjangkau basis data vektor 'qdrant'?",
+      "options": ["Dengan me-mount volume bersama di antara kedua container", "Dengan memakai nama service 'qdrant' sebagai hostname, karena Compose membuat jaringan bersama", "Dengan mengonfigurasi VPN di antara container", "Dengan memakai alamat IP dan port mesin host"],
+      "correct": 1,
+      "explanation": "Docker Compose otomatis membuat jaringan bersama tempat service dapat saling menjangkau berdasarkan nama. Container ai-dev terhubung ke 'http://qdrant:6333' memakai nama service sebagai hostname."
+    }
+  ]
+}

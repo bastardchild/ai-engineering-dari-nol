@@ -1,0 +1,78 @@
+{
+  "lesson": "60-projection-layer-modality-align",
+  "title": "Layer Proyeksi untuk Penyelarasan Modalitas",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa encoder vision menghasilkan token yang tidak bisa dikonsumsi decoder teks secara langsung?",
+      "options": [
+        "Token gambar dienkripsi",
+        "Token gambar terlalu pendek",
+        "Mereka dalam format file berbeda",
+        "Token gambar hidup dalam basis yang dipelajari encoder selama pretraining vision tanpa korespondensi dengan vektor kata decoder"
+      ],
+      "correct": 3,
+      "explanation": "Kedua encoder mempelajari basis independen; modul jembatan diperlukan untuk menyelaraskannya di ruang bersama."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa MLP dua layer cukup untuk penyelarasan modalitas dalam praktik?",
+      "options": [
+        "Proyeksi satu layer dilarang",
+        "PyTorch mewajibkan dua layer",
+        "Satu tekukan non-linear (GELU) di antara dua proyeksi linear secara empiris cukup untuk menyelaraskan fitur gaya CLIP dengan embedding teks",
+        "Proyeksi lebih dalam ilegal"
+      ],
+      "correct": 2,
+      "explanation": "LLaVA dan turunannya mengirim MLP dua layer ini karena non-linearitas memperbaiki ketidakcocokan kelengkungan yang tidak bisa dilakukan satu linear."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa encoder vision dibekukan selama tahap penyelarasan ini?",
+      "options": [
+        "Encoder kosong",
+        "Encoder 86M parameter tidak bisa dilatih ulang pada korpus mock kecil; proyeksi 1,3M parameter saja cukup ringan untuk diselaraskan dalam hitungan menit",
+        "Dibekukan berarti wall time lebih cepat",
+        "PyTorch tidak mendukung training encoder"
+      ],
+      "correct": 1,
+      "explanation": "Membekukan encoder dan tabel teks membuat proyeksi satu-satunya yang belajar, itulah bentuk operasional setiap VLM berbasis adapter."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikembalikan cosine_alignment_loss(image_emb, text_emb) saat dua vektor menunjuk arah berlawanan?",
+      "options": [
+        "Infinity",
+        "1.0",
+        "0.0",
+        "2.0"
+      ],
+      "correct": 3,
+      "explanation": "Loss adalah 1 - cos(angle). Vektor antiparalel punya cos = -1, jadi loss 1 - (-1) = 2.0."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa CLS pooling dipakai untuk menghasilkan satu vektor tingkat gambar dari 197 token?",
+      "options": [
+        "Menghemat disk",
+        "PyTorch menjumlahkan token otomatis",
+        "Token patch tidak dipakai",
+        "Caption adalah satu vektor per sampel jadi sisi gambar juga butuh satu vektor; token CLS adalah ringkasan gambar bawaan encoder"
+      ],
+      "correct": 3,
+      "explanation": "Penyelarasan adalah satu vektor gambar terhadap satu vektor caption; CLS pooling menghasilkan vektor gambar itu tanpa parameter tambahan."
+    },
+    {
+      "stage": "post",
+      "question": "Sistem produksi mana yang paling langsung memetakan ke pola lesson 60?",
+      "options": [
+        "LLaVA 1.5: encoder vision dibekukan, LLM dibekukan, hanya melatih proyeksi MLP dua layer",
+        "PaLM",
+        "AlphaFold",
+        "Stable Diffusion"
+      ],
+      "correct": 0,
+      "explanation": "Training tahap satu LLaVA persis ini: encoder dan LM dibekukan dengan jembatan MLP dua layer sebagai satu-satunya bagian yang dapat dilatih."
+    }
+  ]
+}

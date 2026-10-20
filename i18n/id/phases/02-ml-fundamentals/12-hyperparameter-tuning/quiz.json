@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "hptune-pre-1",
+      "stage": "pre",
+      "question": "Apa beda parameter dan hyperparameter?",
+      "options": [
+        "Tidak ada bedanya; keduanya sinonim",
+        "Parameter dipelajari saat training (bobot, bias); hyperparameter disetel sebelum training dimulai (learning rate, max depth)",
+        "Parameter hanya berlaku untuk neural network; hyperparameter untuk model pohon",
+        "Parameter disetel pengguna; hyperparameter dipelajari saat training"
+      ],
+      "correct": 1,
+      "explanation": "Parameter dipelajari algoritma optimasi selama training (misalnya bobot). Hyperparameter disetel sebelum training dan mengatur bagaimana pembelajaran berjalan (misalnya learning rate, kekuatan regularisasi)."
+    },
+    {
+      "id": "hptune-pre-2",
+      "stage": "pre",
+      "question": "Grid search atas 4 hyperparameter dengan 5 nilai masing-masing butuh berapa evaluasi?",
+      "options": [
+        "625",
+        "20",
+        "4",
+        "25"
+      ],
+      "correct": 0,
+      "explanation": "Grid search mengevaluasi setiap kombinasi: 5^4 = 625. Pertumbuhan eksponensial inilah yang membuat grid search tidak praktis saat hyperparameter banyak."
+    },
+    {
+      "id": "hptune-post-1",
+      "stage": "post",
+      "question": "Mengapa random search sering mengungguli grid search dengan anggaran evaluasi yang sama?",
+      "options": [
+        "Random search selalu menemukan global optimum",
+        "Sebagian besar hyperparameter punya dimensionalitas efektif rendah, jadi random search mencakup yang penting lebih rapat",
+        "Grid search tidak bisa menangani hyperparameter kontinu",
+        "Random search memakai algoritma optimasi yang lebih baik"
+      ],
+      "correct": 1,
+      "explanation": "Biasanya hanya 1-2 hyperparameter yang penting untuk suatu masalah. Grid search membuang evaluasi dengan memvariasikan yang tak penting. Random search memberi nilai unik untuk tiap parameter di setiap percobaan sehingga mencakup dimensi penting lebih rapat."
+    },
+    {
+      "id": "hptune-post-2",
+      "stage": "post",
+      "question": "Pada Bayesian optimization, apa yang diseimbangkan acquisition function?",
+      "options": [
+        "Bias dan variance pada model surrogate",
+        "Kecepatan training dan akurasi model",
+        "Jumlah fitur dan jumlah sampel",
+        "Exploitation (mencari dekat titik bagus yang diketahui) dan exploration (mencari wilayah yang belum pasti)"
+      ],
+      "correct": 3,
+      "explanation": "Acquisition function menentukan di mana mengevaluasi berikutnya dengan menyeimbangkan exploitation (dekat hasil bagus yang diketahui) dan exploration (wilayah yang belum pasti menurut model surrogate). Ini mengarahkan pencarian lebih efisien daripada acak."
+    },
+    {
+      "id": "hptune-post-3",
+      "stage": "post",
+      "question": "Kamu menyetel hyperparameter memakai set test lalu melaporkan performa test terbaik. Apa yang salah?",
+      "options": [
+        "Tidak ada -- ini praktik standar",
+        "Set test seharusnya dipakai untuk training, bukan penyetelan",
+        "Hyperparameter seharusnya hanya berupa bilangan bulat",
+        "Kamu overfitting ke set test; performa yang dilaporkan terlalu optimistis dan tidak akan generalisasi"
+      ],
+      "correct": 3,
+      "explanation": "Menyetel pada set test berarti kamu memilih hyperparameter yang kebetulan bagus pada sampel spesifik itu. Ini overfitting ke set test. Pakai set validasi untuk penyetelan dan sisakan set test untuk evaluasi akhir."
+    }
+  ]
+}

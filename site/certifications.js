@@ -160,7 +160,7 @@
     if (!validated) return '';
     var crossTrack = !!(sourceTrack && !trackContainsLesson(sourceTrack, validated.path));
     var label = validated.label || validated.lesson.name;
-    if (crossTrack) label += ' · Supplemental to ' + (sourceTrack.examCode || sourceTrack.shortName || sourceTrack.id);
+    if (crossTrack) label += ' · Suplemen untuk ' + (sourceTrack.examCode || sourceTrack.shortName || sourceTrack.id);
     return '<a href="' + attr(lessonReferenceHref(validated.path, sourceTrack)) + '">' + esc(label) + ' →</a>';
   }
 
@@ -174,7 +174,7 @@
   }
 
   function minutes(track) {
-    return examValue(track, ['durationMinutes', 'minutes', 'timeLimitMinutes'], 'Not listed');
+    return examValue(track, ['durationMinutes', 'minutes', 'timeLimitMinutes'], 'Tidak tercantum');
   }
 
   function unpublished(track, flag) {
@@ -182,17 +182,17 @@
   }
 
   function questions(track) {
-    if (unpublished(track, 'itemCountPublished')) return 'Not published';
-    return examValue(track, ['questionCount', 'questions', 'items'], 'Not listed');
+    if (unpublished(track, 'itemCountPublished')) return 'Tidak dipublikasikan';
+    return examValue(track, ['questionCount', 'questions', 'items'], 'Tidak tercantum');
   }
 
   function passing(track) {
-    if (unpublished(track, 'passingScorePublished')) return 'Not published';
-    return examValue(track, ['passingScaledScore', 'passingScore', 'passingScaled'], 'See official guide');
+    if (unpublished(track, 'passingScorePublished')) return 'Tidak dipublikasikan';
+    return examValue(track, ['passingScaledScore', 'passingScore', 'passingScaled'], 'Lihat panduan resmi');
   }
 
   function price(track) {
-    var value = examValue(track, ['price', 'fee', 'priceUsd', 'feeUsd'], 'See official provider');
+    var value = examValue(track, ['price', 'fee', 'priceUsd', 'feeUsd'], 'Lihat penyedia resmi');
     if (typeof value === 'number') return '$' + value;
     return value;
   }
@@ -232,19 +232,19 @@
 
   function examFacts(track) {
     return [
-      { value: questions(track), label: 'Questions', unpublished: unpublished(track, 'itemCountPublished') },
-      { value: String(minutes(track)).match(/^\d+$/) ? minutes(track) + ' min' : minutes(track), label: 'Time limit' },
-      { value: passing(track), label: 'Passing score', unpublished: unpublished(track, 'passingScorePublished') },
-      { value: price(track), label: 'Exam fee' },
-      { value: examValue(track, ['format'], 'Closed book'), label: 'Format' },
-      { value: examValue(track, ['validityMonths', 'validForMonths'], 'See provider'), label: 'Validity' },
+      { value: questions(track), label: 'Jumlah soal', unpublished: unpublished(track, 'itemCountPublished') },
+      { value: String(minutes(track)).match(/^\d+$/) ? minutes(track) + ' menit' : minutes(track), label: 'Batas waktu' },
+      { value: passing(track), label: 'Skor kelulusan', unpublished: unpublished(track, 'passingScorePublished') },
+      { value: price(track), label: 'Biaya ujian' },
+      { value: examValue(track, ['format'], 'Buku tertutup'), label: 'Format' },
+      { value: examValue(track, ['validityMonths', 'validForMonths'], 'Lihat penyedia'), label: 'Masa berlaku' },
     ];
   }
 
   function renderCardFacts(track, limit) {
     return examFacts(track).filter(function (fact) { return !fact.unpublished; }).slice(0, limit || 3).map(function (fact) {
       var value = fact.value;
-      if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
+      if (fact.label === 'Masa berlaku' && typeof value === 'number') value += ' bulan';
       return '<div class="cert-card-fact"><strong>' + esc(value) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
     }).join('');
   }
@@ -265,9 +265,9 @@
       if (!link || !link.url) return false;
       return includeAllLinks || String(link.label || '').toLowerCase().indexOf('faq') !== -1;
     }) : [];
-    return '<div><strong>' + esc(program.accessNoticeTitle || 'Official exam access') + '</strong><p>' + esc(notice) + '</p></div>' +
-      (links.length ? '<div class="cert-source-links" aria-label="Official certification sources">' + links.map(function (link) {
-        return '<a href="' + attr(link.url) + '" target="_blank" rel="noopener">' + esc(link.label || 'Official source') + ' ↗</a>';
+    return '<div><strong>' + esc(program.accessNoticeTitle || 'Akses ujian resmi') + '</strong><p>' + esc(notice) + '</p></div>' +
+      (links.length ? '<div class="cert-source-links" aria-label="Sumber sertifikasi resmi">' + links.map(function (link) {
+        return '<a href="' + attr(link.url) + '" target="_blank" rel="noopener">' + esc(link.label || 'Sumber resmi') + ' ↗</a>';
       }).join('') + '</div>' : '');
   }
 
@@ -295,20 +295,20 @@
   }
 
   function programLinksHtml(program) {
-    var label = program.shortName || program.name || 'this certification';
+    var label = program.shortName || program.name || 'sertifikasi ini';
     var links = [];
     if (program.learnerGuidePath) {
-      links.push('<a class="cert-action secondary" href="' + attr(githubBlobUrl(program.learnerGuidePath)) + '" target="_blank" rel="noopener" aria-label="' + attr('Learn ' + label + ' with an AI tutor on GitHub, opens in a new tab') + '">Learn with an AI tutor on GitHub ↗</a>');
+      links.push('<a class="cert-action secondary" href="' + attr(githubBlobUrl(program.learnerGuidePath)) + '" target="_blank" rel="noopener" aria-label="' + attr('Pelajari ' + label + ' dengan tutor AI di GitHub, terbuka di tab baru') + '">Pelajari dengan tutor AI di GitHub ↗</a>');
     }
     if (program.tutorSkillPath) {
-      links.push('<a class="cert-action secondary" href="' + attr(githubBlobUrl(program.tutorSkillPath)) + '" target="_blank" rel="noopener" aria-label="' + attr('Read the ' + label + ' tutor skill on GitHub, opens in a new tab') + '">Read the tutor skill ↗</a>');
+      links.push('<a class="cert-action secondary" href="' + attr(githubBlobUrl(program.tutorSkillPath)) + '" target="_blank" rel="noopener" aria-label="' + attr('Baca skill tutor ' + label + ' di GitHub, terbuka di tab baru') + '">Baca skill tutor ↗</a>');
     }
     return links.length ? '<div class="cert-track-hero-actions cert-program-actions">' + links.join('') + '</div>' : '';
   }
 
   function joinLabels(labels) {
     if (labels.length < 2) return labels.join('');
-    return labels.slice(0, -1).join(', ') + ' and ' + labels[labels.length - 1];
+    return labels.slice(0, -1).join(', ') + ' dan ' + labels[labels.length - 1];
   }
 
   function latestVerified(list) {
@@ -323,11 +323,11 @@
     var delay = Math.min(index * 30, 80);
     var badge = renderTrackBadge(track);
     return '<a class="cert-track-card cert-catalog-arrival" style="--cert-arrival-delay:' + delay + 'ms" href="certification?id=' + encodeURIComponent(track.id) + '">' +
-      '<div class="cert-card-top"><span class="cert-card-code">' + esc(track.examCode || track.shortName || track.slug) + '</span><span class="cert-status">' + esc(track.level || 'Study path') + '</span></div>' +
+      '<div class="cert-card-top"><span class="cert-card-code">' + esc(track.examCode || track.shortName || track.slug) + '</span><span class="cert-status">' + esc(track.level || 'Jalur belajar') + '</span></div>' +
       '<div class="cert-card-identity' + (badge ? ' has-badge' : '') + '"><h3>' + esc(track.credential || track.title || track.shortName || track.id) + '</h3>' + badge + '</div>' +
-      '<p>' + esc(track.summary || track.audience || 'A practical route through this certification blueprint.') + '</p>' +
+      '<p>' + esc(track.summary || track.audience || 'Rute praktis melalui blueprint sertifikasi ini.') + '</p>' +
       '<div class="cert-card-facts">' + renderCardFacts(track, 3) + '</div>' +
-      '<div class="cert-card-footer"><span>' + lessonCount + ' lessons · ' + domains + ' domains</span><span>Open path →</span></div>' +
+      '<div class="cert-card-footer"><span>' + lessonCount + ' pelajaran · ' + domains + ' domain</span><span>Buka jalur →</span></div>' +
     '</a>';
   }
 
@@ -342,24 +342,24 @@
       return tracks().some(function (track) { return track.programId === program.id; });
     });
     if (!available.length) {
-      mount.innerHTML = '<div class="cert-container cert-section"><div class="cert-empty">Certification tracks are being assembled. Run <code>node site/build.js</code> after adding the program manifests.</div></div>';
-      if (summary) summary.textContent = 'The local certification catalog has not been generated yet.';
+      mount.innerHTML = '<div class="cert-container cert-section"><div class="cert-empty">Track sertifikasi sedang disusun. Jalankan <code>node site/build.js</code> setelah menambahkan manifest program.</div></div>';
+      if (summary) summary.textContent = 'Katalog sertifikasi lokal belum dibuat.';
       return;
     }
 
     var labels = joinLabels(available.map(function (program) { return program.shortName || program.name || program.id; }));
-    if (summary) summary.textContent = 'Free, independent, open-source preparation for AI engineering credentials. ' + labels + ' paths are available now, with more certification families coming next.';
+    if (summary) summary.textContent = 'Persiapan gratis, independen, dan open-source untuk kredensial teknik AI. Tersedia jalur ' + labels + ' sekarang, dengan lebih banyak keluarga sertifikasi segera hadir.';
     if (meta) {
       var verified = latestVerified(available);
-      meta.innerHTML = metaChip(labels + ' available now') +
-        metaChip(tracks().length + ' role-based tracks') +
-        metaChip(Object.keys(certs.lessonsByPath || {}).length + ' certification lessons') +
-        metaChip(verified ? 'Verified ' + formatDate(verified) : 'Versioned source material');
+      meta.innerHTML = metaChip(labels + ' tersedia sekarang') +
+        metaChip(tracks().length + ' track berbasis peran') +
+        metaChip(Object.keys(certs.lessonsByPath || {}).length + ' pelajaran sertifikasi') +
+        metaChip(verified ? 'Terverifikasi ' + formatDate(verified) : 'Materi sumber dengan versi');
     }
     var notice = document.getElementById('certProgramNotice');
     var disclaimed = available.filter(function (program) { return program.disclaimer; });
     if (notice && disclaimed.length) {
-      notice.innerHTML = '<strong>Independent preparation</strong>' + disclaimed.map(disclaimerParagraphsHtml).join('');
+      notice.innerHTML = '<strong>Persiapan independen</strong>' + disclaimed.map(disclaimerParagraphsHtml).join('');
     }
 
     var cardIndex = 0;
@@ -370,8 +370,8 @@
         return renderTrackCard(track, cardIndex++);
       }).join('');
       return '<section class="cert-container cert-section cert-program-section" aria-labelledby="' + attr(headingId) + '">' +
-        '<div class="cert-section-heading"><div><div class="cert-eyebrow">' + esc(program.provider || 'Certification program') + '</div><h2 id="' + attr(headingId) + '">' + esc(program.name || program.id) + '</h2></div><p>' + esc(program.summary || '') + '</p></div>' +
-        (access ? '<aside class="cert-access-notice" aria-label="' + attr((program.shortName || program.name || 'Certification') + ' official exam access') + '">' + access + '</aside>' : '') +
+        '<div class="cert-section-heading"><div><div class="cert-eyebrow">' + esc(program.provider || 'Program sertifikasi') + '</div><h2 id="' + attr(headingId) + '">' + esc(program.name || program.id) + '</h2></div><p>' + esc(program.summary || '') + '</p></div>' +
+        (access ? '<aside class="cert-access-notice" aria-label="' + attr((program.shortName || program.name || 'Sertifikasi') + ': akses ujian resmi') + '">' + access + '</aside>' : '') +
         programLinksHtml(program) +
         '<div class="cert-track-grid">' + cards + '</div>' +
       '</section>';
@@ -424,8 +424,8 @@
 
   function renderTrackSeo(track) {
     var name = track.credential || track.title || track.shortName || track.id;
-    document.title = name + ' - Free certification preparation';
-    var description = track.summary || 'Free, independent certification preparation with lessons and original practice.';
+    document.title = name + ' - Persiapan sertifikasi gratis';
+    var description = track.summary || 'Persiapan sertifikasi gratis dan independen dengan pelajaran dan latihan orisinal.';
     var desc = document.querySelector('meta[name="description"]');
     if (desc) desc.setAttribute('content', description);
     var canonical = document.querySelector('link[rel="canonical"]');
@@ -433,13 +433,13 @@
   }
 
   function renderTrackNotFound(hero) {
-    document.title = 'Certification track not found - AI Engineering from Scratch';
+    document.title = 'Track sertifikasi tidak ditemukan - AI Engineering from Scratch';
     var description = document.querySelector('meta[name="description"]');
-    if (description) description.setAttribute('content', 'Choose an available certification preparation track.');
+    if (description) description.setAttribute('content', 'Pilih track persiapan sertifikasi yang tersedia.');
     var canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://aiengineeringfromscratch.com/certifications.html');
     var breadcrumb = document.getElementById('trackBreadcrumb');
-    if (breadcrumb) breadcrumb.textContent = 'Not found';
+    if (breadcrumb) breadcrumb.textContent = 'Tidak ditemukan';
     var main = document.getElementById('main');
     if (main) {
       Array.from(main.querySelectorAll('.cert-section, .cert-access-notice, .cert-notice')).forEach(function (section) {
@@ -447,7 +447,7 @@
       });
     }
     hero.classList.add('is-not-found');
-    hero.innerHTML = '<div class="cert-track-not-found-copy"><div class="cert-eyebrow">TRACK NOT FOUND</div><h1>Choose an available certification path.</h1><p class="cert-track-summary">This track ID does not match the current certification catalog.</p><div class="cert-track-hero-actions"><a class="cert-action" href="certifications.html">All certifications</a></div></div>';
+    hero.innerHTML = '<div class="cert-track-not-found-copy"><div class="cert-eyebrow">TRACK TIDAK DITEMUKAN</div><h1>Pilih jalur sertifikasi yang tersedia.</h1><p class="cert-track-summary">ID track ini tidak cocok dengan katalog sertifikasi saat ini.</p><div class="cert-track-hero-actions"><a class="cert-action" href="certifications.html">Semua sertifikasi</a></div></div>';
   }
 
   function renderTrack() {
@@ -473,23 +473,23 @@
     }) || refs[0];
     var firstPath = lessonRefPath(firstIncomplete);
 
-    hero.innerHTML = '<div class="cert-eyebrow">' + esc(track.examCode || track.shortName || 'CERTIFICATION TRACK') + '</div>' +
+    hero.innerHTML = '<div class="cert-eyebrow">' + esc(track.examCode || track.shortName || 'TRACK SERTIFIKASI') + '</div>' +
       '<h1>' + esc(track.credential || track.title || track.shortName || track.id) + '</h1>' +
       '<p class="cert-track-summary">' + esc(track.summary || track.audience || '') + '</p>' +
       '<div class="cert-meta-row">' + examFacts(track).map(function (fact) {
         var value = fact.value;
-        if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
+        if (fact.label === 'Masa berlaku' && typeof value === 'number') value += ' bulan';
         return metaChip(fact.label + ': ' + value);
       }).join('') + '</div>' +
       '<div class="cert-track-hero-actions">' +
-        (firstPath ? '<a class="cert-action" href="lesson?path=' + encodeURIComponent(firstPath) + '&track=' + encodeURIComponent(track.id) + '">' + (complete ? 'Continue path' : 'Start learning') + '</a>' : '') +
-        '<a class="cert-action secondary" href="#trackAssessments">Practice readiness</a>' +
-        (tutorUrl ? '<a class="cert-action secondary" href="' + attr(tutorUrl) + '" target="_blank" rel="noopener" aria-label="Learn with an AI tutor on GitHub (opens in a new tab)">Learn with an AI tutor on GitHub ↗</a>' : '') +
-        (track.exam && track.exam.officialGuideUrl ? '<a class="cert-action secondary" href="' + attr(track.exam.officialGuideUrl) + '" target="_blank" rel="noopener">Official exam guide</a>' : '') +
+        (firstPath ? '<a class="cert-action" href="lesson?path=' + encodeURIComponent(firstPath) + '&track=' + encodeURIComponent(track.id) + '">' + (complete ? 'Lanjutkan jalur' : 'Mulai belajar') + '</a>' : '') +
+        '<a class="cert-action secondary" href="#trackAssessments">Latihan kesiapan</a>' +
+        (tutorUrl ? '<a class="cert-action secondary" href="' + attr(tutorUrl) + '" target="_blank" rel="noopener" aria-label="Pelajari dengan tutor AI di GitHub (terbuka di tab baru)">Pelajari dengan tutor AI di GitHub ↗</a>' : '') +
+        (track.exam && track.exam.officialGuideUrl ? '<a class="cert-action secondary" href="' + attr(track.exam.officialGuideUrl) + '" target="_blank" rel="noopener">Panduan ujian resmi</a>' : '') +
       '</div>';
 
     renderAccessNotice('trackAccessNotice', program, false);
-    renderProgramNotice('trackProgramNotice', program, 'Independent preparation');
+    renderProgramNotice('trackProgramNotice', program, 'Persiapan independen');
     renderTrackProgress(track);
     renderDomains(track);
     renderLessons(track);
@@ -516,9 +516,9 @@
     var percent = total ? Math.round((complete / total) * 100) : 0;
     var assessments = Array.isArray(track.assessments) ? track.assessments : [];
     var attempted = assessments.filter(function (meta) { return assessmentBest(meta.id); }).length;
-    mount.innerHTML = '<div class="cert-progress-head"><div><div class="cert-eyebrow">LOCAL PROGRESS</div><h2 id="progressTitle">Your progress</h2></div><div class="cert-progress-number">' + percent + '%</div></div>' +
+    mount.innerHTML = '<div class="cert-progress-head"><div><div class="cert-eyebrow">PROGRES LOKAL</div><h2 id="progressTitle">Progres kamu</h2></div><div class="cert-progress-number">' + percent + '%</div></div>' +
       '<div class="cert-progress-bar" role="progressbar" aria-labelledby="progressTitle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + percent + '"><div class="cert-progress-fill" style="--cert-progress:' + (percent / 100) + '"></div></div>' +
-      '<div class="cert-progress-detail"><span>' + complete + ' of ' + total + ' lessons complete</span><span>' + attempted + ' of ' + assessments.length + ' assessments attempted</span><span>' + (progressIsPersistent() ? 'Stored only in this browser' : 'Browser storage unavailable; progress is temporary') + '</span></div>';
+      '<div class="cert-progress-detail"><span>' + complete + ' dari ' + total + ' pelajaran selesai</span><span>' + attempted + ' dari ' + assessments.length + ' asesmen dicoba</span><span>' + (progressIsPersistent() ? 'Hanya tersimpan di browser ini' : 'Penyimpanan browser tidak tersedia; progres bersifat sementara') + '</span></div>';
   }
 
   function renderDomains(track) {
@@ -527,8 +527,8 @@
     var domains = Array.isArray(track.domains) ? track.domains : [];
     mount.innerHTML = domains.length ? domains.map(function (domain) {
       var objectives = Array.isArray(domain.objectives) ? domain.objectives : [];
-      return '<article class="cert-domain-row"><div class="cert-domain-weight">' + esc(domain.weight != null ? domain.weight + '%' : 'CORE') + '</div><div><h3>' + esc(domain.name || domain.title || domain.id) + '</h3><div class="cert-card-code">' + esc(domain.id || '') + '</div></div><ul class="cert-objectives">' + objectives.map(function (objective) { return '<li>' + esc(objective) + '</li>'; }).join('') + '</ul></article>';
-    }).join('') : '<div class="cert-empty">Domain details are not available in this track manifest yet.</div>';
+      return '<article class="cert-domain-row"><div class="cert-domain-weight">' + esc(domain.weight != null ? domain.weight + '%' : 'INTI') + '</div><div><h3>' + esc(domain.name || domain.title || domain.id) + '</h3><div class="cert-card-code">' + esc(domain.id || '') + '</div></div><ul class="cert-objectives">' + objectives.map(function (objective) { return '<li>' + esc(objective) + '</li>'; }).join('') + '</ul></article>';
+    }).join('') : '<div class="cert-empty">Detail domain belum tersedia di manifest track ini.</div>';
   }
 
   function renderLessons(track) {
@@ -541,14 +541,14 @@
       var lesson = findLesson(path);
       var done = lessonIsComplete(path);
       var domains = Array.isArray(normalized.domains) ? normalized.domains : [];
-      var origin = path.indexOf('phases/') === 0 ? 'Core curriculum' : (normalized.role || lesson.type || 'Certification lesson');
+      var origin = path.indexOf('phases/') === 0 ? 'Kurikulum inti' : (normalized.role || lesson.type || 'Pelajaran sertifikasi');
       return '<article class="cert-lesson-row' + (done ? ' is-complete' : '') + '">' +
         '<div class="cert-lesson-num">' + String(index + 1).padStart(2, '0') + '</div>' +
-        '<div class="cert-lesson-copy"><h3>' + esc(lesson.name) + '</h3><p>' + esc((done ? 'Complete · ' : '') + origin + (lesson.summary ? ' · ' + lesson.summary : '')) + '</p></div>' +
+        '<div class="cert-lesson-copy"><h3>' + esc(lesson.name) + '</h3><p>' + esc((done ? 'Selesai · ' : '') + origin + (lesson.summary ? ' · ' + lesson.summary : '')) + '</p></div>' +
         '<div class="cert-domain-chips">' + domains.map(function (domain) { return '<span class="cert-domain-chip">' + esc(domain) + '</span>'; }).join('') + '</div>' +
-        '<a class="cert-lesson-open" href="lesson?path=' + encodeURIComponent(path) + '&track=' + encodeURIComponent(track.id) + '">' + (done ? 'Review' : 'Open') + ' →</a>' +
+        '<a class="cert-lesson-open" href="lesson?path=' + encodeURIComponent(path) + '&track=' + encodeURIComponent(track.id) + '">' + (done ? 'Tinjau' : 'Buka') + ' →</a>' +
       '</article>';
-    }).join('') : '<div class="cert-empty">Lessons have not been added to this track yet.</div>';
+    }).join('') : '<div class="cert-empty">Pelajaran belum ditambahkan ke track ini.</div>';
   }
 
   function renderDeepDives(track) {
@@ -566,11 +566,11 @@
       var path = normalized.path || '';
       var lesson = findLesson(path);
       var title = normalized.label || lesson.name;
-      var reason = normalized.reason || lesson.summary || 'Additional context from the core AI Engineering from Scratch curriculum.';
+      var reason = normalized.reason || lesson.summary || 'Konteks tambahan dari kurikulum inti AI Engineering from Scratch.';
       return '<article class="cert-deep-dive-row">' +
-        '<div class="cert-deep-dive-badge">OPTIONAL</div>' +
+        '<div class="cert-deep-dive-badge">OPSIONAL</div>' +
         '<div class="cert-lesson-copy"><h3>' + esc(title) + '</h3><p>' + esc(reason) + '</p></div>' +
-        '<a class="cert-lesson-open" href="' + attr(lessonReferenceHref(path, track)) + '">Open lesson →</a>' +
+        '<a class="cert-lesson-open" href="' + attr(lessonReferenceHref(path, track)) + '">Buka pelajaran →</a>' +
       '</article>';
     }).join('');
   }
@@ -588,8 +588,8 @@
       var latest = attempts[0] || null;
       var count = assessment.questionCount || meta.questionCount || (Array.isArray(assessment.questions) ? assessment.questions.length : 0);
       var limit = assessment.timeLimitMinutes || meta.timeLimitMinutes || 0;
-      return '<article class="cert-assessment-card"><div class="cert-assessment-head"><span class="cert-assessment-kind">' + esc(assessment.kind || 'Practice') + '</span><span class="cert-card-code">' + count + ' questions' + (limit ? ' · ' + limit + ' min' : '') + '</span></div><h3>' + esc(assessment.title || meta.title || 'Practice assessment') + '</h3><p>' + esc(assessment.summary || assessment.description || 'Original scenario practice with feedback after submission.') + '</p><div class="cert-assessment-best">' + (best ? 'Best practice score: ' + best.percent + '%' : 'Not attempted on this device') + '</div><div class="cert-track-hero-actions"><a class="cert-action" href="assessment.html?id=' + encodeURIComponent(meta.id) + '">' + (latest ? 'Try again' : 'Start practice') + '</a>' + (latest ? '<a class="cert-action secondary" href="assessment.html?id=' + encodeURIComponent(meta.id) + '&result=latest">Review latest result</a>' : '') + '</div></article>';
-    }).join('') : '<div class="cert-empty">Practice assessments are being prepared for this track.</div>';
+      return '<article class="cert-assessment-card"><div class="cert-assessment-head"><span class="cert-assessment-kind">' + esc(assessment.kind || 'Latihan') + '</span><span class="cert-card-code">' + count + ' soal' + (limit ? ' · ' + limit + ' menit' : '') + '</span></div><h3>' + esc(assessment.title || meta.title || 'Asesmen latihan') + '</h3><p>' + esc(assessment.summary || assessment.description || 'Latihan skenario orisinal dengan umpan balik setelah pengiriman.') + '</p><div class="cert-assessment-best">' + (best ? 'Skor latihan terbaik: ' + best.percent + '%' : 'Belum dicoba di perangkat ini') + '</div><div class="cert-track-hero-actions"><a class="cert-action" href="assessment.html?id=' + encodeURIComponent(meta.id) + '">' + (latest ? 'Coba lagi' : 'Mulai latihan') + '</a>' + (latest ? '<a class="cert-action secondary" href="assessment.html?id=' + encodeURIComponent(meta.id) + '&result=latest">Tinjau hasil terbaru</a>' : '') + '</div></article>';
+    }).join('') : '<div class="cert-empty">Asesmen latihan sedang disiapkan untuk track ini.</div>';
   }
 
   function normalizePlans(value) {
@@ -613,10 +613,10 @@
         steps = Object.keys(steps).map(function (key) { return key + ': ' + steps[key]; });
       }
       if (!Array.isArray(steps)) steps = [];
-      var pace = plan.duration || plan.pace || (plan.durationDays ? plan.durationDays + ' days' : plan.id || 'Study plan');
-      var workload = plan.hoursPerWeek ? plan.hoursPerWeek + ' hours per week' : '';
-      return '<article class="cert-plan-card"><div class="cert-card-code">' + esc(pace) + '</div><h3>' + esc(plan.title || plan.label || plan.name || 'Study plan') + '</h3><p>' + esc(plan.description || plan.summary || workload) + '</p>' + (steps.length ? '<ul>' + steps.map(function (step) { return '<li>' + esc(typeof step === 'string' ? step : step.title || step.name || JSON.stringify(step)) + '</li>'; }).join('') + '</ul>' : '') + '</article>';
-    }).join('') : '<div class="cert-empty">Use the lesson order above as the default study plan.</div>';
+      var pace = plan.duration || plan.pace || (plan.durationDays ? plan.durationDays + ' hari' : plan.id || 'Rencana belajar');
+      var workload = plan.hoursPerWeek ? plan.hoursPerWeek + ' jam per minggu' : '';
+      return '<article class="cert-plan-card"><div class="cert-card-code">' + esc(pace) + '</div><h3>' + esc(plan.title || plan.label || plan.name || 'Rencana belajar') + '</h3><p>' + esc(plan.description || plan.summary || workload) + '</p>' + (steps.length ? '<ul>' + steps.map(function (step) { return '<li>' + esc(typeof step === 'string' ? step : step.title || step.name || JSON.stringify(step)) + '</li>'; }).join('') + '</ul>' : '') + '</article>';
+    }).join('') : '<div class="cert-empty">Gunakan urutan pelajaran di atas sebagai rencana belajar bawaan.</div>';
   }
 
   function normalizeQuestion(question, index) {
@@ -728,17 +728,17 @@
   }
 
   function renderAssessmentError(mount) {
-    mount.innerHTML = '<div class="cert-error"><h1>Assessment not found</h1><p>This practice set is not available in the generated certification data.</p><a class="cert-action" href="certifications.html">All certifications</a></div>';
+    mount.innerHTML = '<div class="cert-error"><h1>Asesmen tidak ditemukan</h1><p>Set latihan ini tidak tersedia dalam data sertifikasi yang dihasilkan.</p><a class="cert-action" href="certifications.html">Semua sertifikasi</a></div>';
   }
 
   function renderAssessmentLoaded(mount, assessment, track, forceForm) {
-    renderProgramNotice('assessmentProgramNotice', programForTrack(track), 'Independent practice');
+    renderProgramNotice('assessmentProgramNotice', programForTrack(track), 'Latihan independen');
     var questions = (assessment.questions || []).map(normalizeQuestion);
     if (!questions.length) {
-      mount.innerHTML = '<div class="cert-error"><h1>Practice is being written</h1><p>This assessment has metadata but no questions yet.</p><a class="cert-action" href="' + (track ? 'certification?id=' + encodeURIComponent(track.id) : 'certifications.html') + '">Back to track</a></div>';
+      mount.innerHTML = '<div class="cert-error"><h1>Latihan sedang disusun</h1><p>Asesmen ini memiliki metadata tetapi belum ada soal.</p><a class="cert-action" href="' + (track ? 'certification?id=' + encodeURIComponent(track.id) : 'certifications.html') + '">Kembali ke track</a></div>';
       return;
     }
-    var title = assessment.title || 'Practice assessment';
+    var title = assessment.title || 'Asesmen latihan';
     var version = assessmentVersion(assessment);
     document.title = title + ' - AI Engineering from Scratch';
     var existing = assessmentAttempts(assessment.id, version);
@@ -759,10 +759,10 @@
       if (window.AIFSCertProgress) window.AIFSCertProgress.saveDraft(assessment.id, version, draft);
     }
 
-    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(questions.length + ' original questions') + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
-      '<div class="cert-notice"><strong>Practice score only</strong><p>Your result is a percentage created by this open-source course. It is not an official scaled exam score, credential decision, or guarantee of passing.</p></div>' +
-      (limit ? '<div class="cert-timer" id="assessmentTimer" role="timer" aria-live="off" aria-label="Time remaining"><span>Time remaining</span><strong id="assessmentTimerValue">' + formatRemaining(draft.deadlineAt - Date.now()) + '</strong></div>' : '') +
-      '<form class="assessment-form" id="assessmentForm" tabindex="-1" aria-label="Assessment questions">' + questions.map(function (question, index) { return renderQuestion(question, index, draft.answers[question.id] || []); }).join('') + '<div class="cert-submit-row"><p>You can submit a partial attempt. Unanswered questions count as incorrect, and explanations appear after submission.</p><button class="cert-action" type="submit">Submit practice</button></div></form></div>';
+    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Sertifikasi</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Latihan</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'LATIHAN') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Kerjakan skenario orisinal, lalu kirim untuk melihat penjelasan dan umpan balik per domain.') + '</p><p class="assessment-scoring-note">Kirim kapan pun kamu siap. Soal tanpa jawaban dihitung salah.</p><div class="cert-meta-row">' + metaChip(questions.length + ' soal orisinal') + metaChip(limit ? limit + ' menit' : 'Tanpa batas waktu') + metaChip(progressIsPersistent() ? 'Tersimpan lokal' : 'Progres hanya bertahan di halaman ini') + '</div></section>' +
+      '<div class="cert-notice"><strong>Hanya skor latihan</strong><p>Hasil kamu adalah persentase yang dibuat oleh kursus open-source ini. Ini bukan skor ujian terukur resmi, keputusan kredensial, atau jaminan kelulusan.</p></div>' +
+      (limit ? '<div class="cert-timer" id="assessmentTimer" role="timer" aria-live="off" aria-label="Waktu tersisa"><span>Waktu tersisa</span><strong id="assessmentTimerValue">' + formatRemaining(draft.deadlineAt - Date.now()) + '</strong></div>' : '') +
+      '<form class="assessment-form" id="assessmentForm" tabindex="-1" aria-label="Soal asesmen">' + questions.map(function (question, index) { return renderQuestion(question, index, draft.answers[question.id] || []); }).join('') + '<div class="cert-submit-row"><p>Kamu bisa mengirim percobaan sebagian. Soal tanpa jawaban dihitung salah, dan penjelasan muncul setelah pengiriman.</p><button class="cert-action" type="submit">Kirim latihan</button></div></form></div>';
 
     var form = document.getElementById('assessmentForm');
     form.addEventListener('change', function (event) {
@@ -797,7 +797,7 @@
   function renderQuestion(question, index, selected) {
     var inputType = question.type === 'multiple' ? 'checkbox' : 'radio';
     selected = Array.isArray(selected) ? selected : [];
-    return '<fieldset class="cert-question"><legend><div class="cert-question-head"><span class="cert-question-kicker">Question ' + (index + 1) + ' · ' + esc(question.domain) + '</span><span class="cert-question-kicker">' + (question.type === 'multiple' ? 'Select all that apply' : 'Choose one') + '</span></div><div class="cert-question-prompt">' + esc(question.prompt) + '</div></legend><div class="cert-option-list">' + question.options.map(function (option, optionIndex) {
+    return '<fieldset class="cert-question"><legend><div class="cert-question-head"><span class="cert-question-kicker">Soal ' + (index + 1) + ' · ' + esc(question.domain) + '</span><span class="cert-question-kicker">' + (question.type === 'multiple' ? 'Pilih semua yang berlaku' : 'Pilih satu') + '</span></div><div class="cert-question-prompt">' + esc(question.prompt) + '</div></legend><div class="cert-option-list">' + question.options.map(function (option, optionIndex) {
       var isSelected = selected.map(Number).indexOf(optionIndex) !== -1;
       var checked = isSelected ? ' checked' : '';
       return '<label class="cert-option' + (isSelected ? ' is-selected' : '') + '"><input type="' + inputType + '" name="question-' + attr(question.id) + '" value="' + optionIndex + '" data-question="' + attr(question.id) + '"' + checked + '><span>' + esc(option) + '</span></label>';
@@ -892,12 +892,12 @@
         return '<li>' + renderInternalLessonReference(ref, track) + '</li>';
       }).join('');
       if (!links) {
-        links = '<li><a href="#' + attr(item.reviewIds[0]) + '">Review the missed explanation →</a></li>';
+        links = '<li><a href="#' + attr(item.reviewIds[0]) + '">Tinjau penjelasan yang terlewat →</a></li>';
       }
       return '<article class="cert-remediation-domain"><h3>' + esc(domain ? domain.name : item.id) + '</h3><span>' + item.score.correct + '/' + item.score.total + ' · ' + item.percent + '%</span><ul class="cert-remediation-links">' + links + '</ul></article>';
     }).join('');
 
-    return '<section class="cert-remediation" aria-labelledby="remediationTitle"><div class="cert-eyebrow">TARGETED REMEDIATION</div><h2 id="remediationTitle">Study the decisions you missed</h2><p>Every lesson below comes from an internal reference on a question you missed. Revisit the decision, then start a fresh attempt.</p><div class="cert-remediation-grid">' + cards + '</div></section>';
+    return '<section class="cert-remediation" aria-labelledby="remediationTitle"><div class="cert-eyebrow">REMEDIASI TERARAH</div><h2 id="remediationTitle">Pelajari keputusan yang kamu lewatkan</h2><p>Setiap pelajaran di bawah berasal dari referensi internal pada soal yang kamu lewatkan. Tinjau kembali keputusan itu, lalu mulai percobaan baru.</p><div class="cert-remediation-grid">' + cards + '</div></section>';
   }
 
   function renderAssessmentResults(mount, assessment, track, questions, attempt) {
@@ -911,7 +911,7 @@
     }).join('');
     var remediationHtml = renderRemediation(track, questions, attempt);
     var latestResultHref = 'assessment.html?id=' + encodeURIComponent(assessment.id) + '&result=latest';
-    mount.innerHTML = '<div class="assessment-shell cert-results"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Results</span></div><section class="cert-results-summary" id="assessmentResultsSummary" tabindex="-1" aria-label="Assessment result"><div class="cert-results-head"><div><div class="cert-eyebrow">PRACTICE RESULT</div><div class="cert-results-score">' + scoreSummary.percent + '%</div></div><div><strong>' + scoreSummary.correct + ' of ' + scoreSummary.total + ' exact answers</strong><p>' + (attempt.timedOut ? 'Submitted when the timer expired.' : 'Submitted in ' + formatDuration(attempt.durationMs)) + '</p></div></div><div class="cert-domain-score-grid">' + domainHtml + '</div><div class="cert-notice"><strong>Not an official scaled score</strong><p>This percentage measures this original practice set only. It cannot predict or guarantee the provider\'s scaled certification result.</p></div><div class="cert-track-hero-actions"><button class="cert-action" type="button" id="assessmentRetake">Start a fresh attempt</button><a class="cert-action secondary" href="' + attr(latestResultHref) + '">Revisit latest result</a>' + (track ? '<a class="cert-action secondary" href="certification?id=' + encodeURIComponent(track.id) + '">Return to track</a>' : '') + '</div></section>' + remediationHtml + '<section aria-labelledby="reviewTitle"><div class="cert-section-heading"><div><div class="cert-eyebrow">REVIEW</div><h2 id="reviewTitle">Decisions and explanations</h2></div><p>Use every miss to identify the domain and decision rule you need to revisit.</p></div>' + questions.map(function (question, index) { return renderReview(question, index, attemptAnswers[question.id] || [], track); }).join('') + '</section></div>';
+    mount.innerHTML = '<div class="assessment-shell cert-results"><div class="cert-breadcrumb"><a href="certifications.html">Sertifikasi</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Hasil</span></div><section class="cert-results-summary" id="assessmentResultsSummary" tabindex="-1" aria-label="Hasil asesmen"><div class="cert-results-head"><div><div class="cert-eyebrow">HASIL LATIHAN</div><div class="cert-results-score">' + scoreSummary.percent + '%</div></div><div><strong>' + scoreSummary.correct + ' dari ' + scoreSummary.total + ' jawaban tepat</strong><p>' + (attempt.timedOut ? 'Dikirim saat waktu habis.' : 'Dikirim dalam ' + formatDuration(attempt.durationMs)) + '</p></div></div><div class="cert-domain-score-grid">' + domainHtml + '</div><div class="cert-notice"><strong>Bukan skor terukur resmi</strong><p>Persentase ini hanya mengukur set latihan orisinal ini. Ini tidak dapat memprediksi atau menjamin hasil sertifikasi terukur dari penyedia.</p></div><div class="cert-track-hero-actions"><button class="cert-action" type="button" id="assessmentRetake">Mulai percobaan baru</button><a class="cert-action secondary" href="' + attr(latestResultHref) + '">Lihat lagi hasil terbaru</a>' + (track ? '<a class="cert-action secondary" href="certification?id=' + encodeURIComponent(track.id) + '">Kembali ke track</a>' : '') + '</div></section>' + remediationHtml + '<section aria-labelledby="reviewTitle"><div class="cert-section-heading"><div><div class="cert-eyebrow">TINJAUAN</div><h2 id="reviewTitle">Keputusan dan penjelasan</h2></div><p>Gunakan setiap kesalahan untuk mengidentifikasi domain dan aturan keputusan yang perlu kamu tinjau kembali.</p></div>' + questions.map(function (question, index) { return renderReview(question, index, attemptAnswers[question.id] || [], track); }).join('') + '</section></div>';
     var retake = document.getElementById('assessmentRetake');
     if (retake) retake.addEventListener('click', function () {
       if (window.AIFSCertProgress) window.AIFSCertProgress.clearDraft(assessment.id, assessmentVersion(assessment));
@@ -923,10 +923,10 @@
   }
 
   function formatDuration(ms) {
-    if (!isFiniteNumber(ms) || ms < 0) return 'an unknown duration';
+    if (!isFiniteNumber(ms) || ms < 0) return 'durasi tidak diketahui';
     var mins = Math.floor(ms / 60000);
     var secs = Math.floor((ms % 60000) / 1000);
-    return mins + 'm ' + secs + 's';
+    return mins + 'mnt ' + secs + 'dtk';
   }
 
   function renderReview(question, index, picked, track) {
@@ -937,10 +937,10 @@
     var refs = question.references.map(function (ref) {
       if (typeof ref === 'string') {
         if (/^https?:\/\//i.test(ref)) {
-          var sourceLabel = 'External source';
+          var sourceLabel = 'Sumber eksternal';
           try {
             var sourceUrl = new URL(ref);
-            sourceLabel = (/\.pdf$/i.test(sourceUrl.pathname) ? 'Exam guide' : sourceUrl.hostname.replace(/^www\./, '')) + ' ↗';
+            sourceLabel = (/\.pdf$/i.test(sourceUrl.pathname) ? 'Panduan ujian' : sourceUrl.hostname.replace(/^www\./, '')) + ' ↗';
           } catch (_) {}
           return '<li><a href="' + attr(ref) + '" target="_blank" rel="noopener">' + esc(sourceLabel) + '</a></li>';
         }
@@ -951,7 +951,7 @@
         return '<li>' + esc(ref) + '</li>';
       }
       if (!ref) return '';
-      var label = ref.label || ref.title || ref.url || ref.path || 'Reference';
+      var label = ref.label || ref.title || ref.url || ref.path || 'Referensi';
       if (ref.url) return '<li><a href="' + attr(ref.url) + '" target="_blank" rel="noopener">' + esc(label) + ' ↗</a></li>';
       if (ref.path) {
         var objectLink = renderInternalLessonReference(ref, track);
@@ -959,7 +959,7 @@
       }
       return '<li>' + esc(label) + '</li>';
     }).join('');
-    return '<article class="cert-review ' + (ok ? 'is-correct' : 'is-wrong') + '" id="review-' + attr(question.id || index + 1) + '"><div class="cert-question-kicker">Question ' + (index + 1) + ' · ' + esc(question.domain) + ' · ' + (ok ? 'Correct' : 'Review') + '</div><h3>' + esc(question.prompt) + '</h3><div class="cert-review-answer"><strong>Your answer</strong><p>' + esc(pickedLabels.length ? pickedLabels.join('; ') : 'No answer') + '</p></div>' + (!ok ? '<div class="cert-review-answer"><strong>Correct answer</strong><p>' + esc(correctLabels.join('; ')) + '</p></div>' : '') + '<div class="cert-review-explanation"><strong>Why</strong><p>' + esc(question.explanation || 'No explanation has been added yet.') + '</p></div>' + (refs ? '<ul class="cert-reference-list">' + refs + '</ul>' : '') + '</article>';
+    return '<article class="cert-review ' + (ok ? 'is-correct' : 'is-wrong') + '" id="review-' + attr(question.id || index + 1) + '"><div class="cert-question-kicker">Soal ' + (index + 1) + ' · ' + esc(question.domain) + ' · ' + (ok ? 'Benar' : 'Tinjau') + '</div><h3>' + esc(question.prompt) + '</h3><div class="cert-review-answer"><strong>Jawaban kamu</strong><p>' + esc(pickedLabels.length ? pickedLabels.join('; ') : 'Tidak ada jawaban') + '</p></div>' + (!ok ? '<div class="cert-review-answer"><strong>Jawaban benar</strong><p>' + esc(correctLabels.join('; ')) + '</p></div>' : '') + '<div class="cert-review-explanation"><strong>Mengapa</strong><p>' + esc(question.explanation || 'Belum ada penjelasan yang ditambahkan.') + '</p></div>' + (refs ? '<ul class="cert-reference-list">' + refs + '</ul>' : '') + '</article>';
   }
 
   function init() {

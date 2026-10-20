@@ -1,0 +1,66 @@
+{
+  "lesson": "05-scaling-distributed",
+  "title": "Scaling: Distributed Training, FSDP, DeepSpeed",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Model 7B parameter dalam FP16 membutuhkan berapa VRAM hanya untuk bobot?",
+      "options": [
+        "14 GB",
+        "28 GB",
+        "7 GB",
+        "56 GB"
+      ],
+      "correct": 0,
+      "explanation": "Setiap parameter dalam FP16 adalah 2 byte. 7 miliar * 2 byte = 14 GB. Dengan state optimizer Adam (2 salinan) dan gradien, total memori training kira-kira 56 GB sebelum memperhitungkan aktivasi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tiga jenis paralelisme yang dipakai dalam distributed training?",
+      "options": [
+        "Paralelisme batch, sequence, dan token",
+        "Paralelisme forward, backward, dan optimizer",
+        "Data parallelism, tensor parallelism, dan pipeline parallelism",
+        "Paralelisme CPU, GPU, dan TPU"
+      ],
+      "correct": 2,
+      "explanation": "Data parallelism mereplikasi model di setiap GPU dan membagi data. Tensor parallelism membagi layer individual lintas GPU. Pipeline parallelism membagi layer model menjadi tahap-tahap lintas GPU."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan FSDP (Fully Sharded Data Parallel) yang tidak dilakukan DDP standar?",
+      "options": [
+        "Ia memakai optimizer berbeda",
+        "Ia memproses data lebih cepat",
+        "Ia mendukung lebih banyak GPU",
+        "Ia memecah (shard) parameter model, gradien, dan state optimizer lintas GPU alih-alih mereplikasi model penuh di masing-masing"
+      ],
+      "correct": 3,
+      "explanation": "DDP standar mereplikasi seluruh model di setiap GPU (boros). FSDP memecah parameter lintas GPU sehingga masing-masing hanya menyimpan sebagian kecil. Parameter dikumpulkan sesuai kebutuhan untuk komputasi dan dilepas setelahnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu DeepSpeed ZeRO Stage 3?",
+      "options": [
+        "Jadwal learning rate",
+        "Ia mempartisi state optimizer, gradien, DAN parameter model lintas GPU, mencapai efisiensi memori maksimum",
+        "Metode kuantisasi",
+        "Pipeline praproses data"
+      ],
+      "correct": 1,
+      "explanation": "ZeRO Stage 1 memecah state optimizer, Stage 2 menambahkan sharding gradien, Stage 3 menambahkan sharding parameter. Stage 3 memberikan penghematan memori maksimum, memungkinkan training model yang jauh melebihi memori satu GPU."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa sinkronisasi gradien diperlukan dalam training data-parallel?",
+      "options": [
+        "Untuk mempercepat forward pass",
+        "Setiap GPU menghitung gradien pada data berbeda; merata-ratakan gradien lintas GPU memastikan semua replika memperbarui secara identik",
+        "Untuk mengurangi penggunaan memori",
+        "Untuk mencegah overfitting"
+      ],
+      "correct": 1,
+      "explanation": "Dalam data parallelism, setiap GPU memproses batch berbeda dan menghitung gradien berbeda. AllReduce merata-ratakan gradien ini lintas semua GPU sehingga setiap replika menerapkan update yang sama dan tetap sinkron."
+    }
+  ]
+}

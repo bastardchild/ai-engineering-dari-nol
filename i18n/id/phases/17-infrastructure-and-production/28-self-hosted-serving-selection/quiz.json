@@ -1,0 +1,78 @@
+{
+  "lesson": "28-self-hosted-serving-selection",
+  "title": "Pemilihan Serving Self-Hosted — Mencocokkan Engine dengan Hardware dan Skala",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Engine mana yang dipilih pelajaran ini sebagai default satu perintah di laptop developer?",
+      "options": [
+        "llama.cpp",
+        "vLLM",
+        "TGI",
+        "Ollama"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Peristiwa 2025 apa yang mengubah default menjauh dari TGI untuk proyek baru?",
+      "options": [
+        "TGI masuk mode maintenance pada 11 Desember 2025 — hanya perbaikan bug ke depannya",
+        "TGI berhenti mendukung CUDA",
+        "TGI menaikkan harga",
+        "TGI diakuisisi Anthropic"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Batasan hardware mana yang memaksa llama.cpp dan mengecualikan vLLM / TRT-LLM?",
+      "options": [
+        "Hanya CPU (tanpa akselerator)",
+        "AMD MI300X",
+        "NVIDIA Hopper",
+        "Apple M4"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Engine mana yang diposisikan pelajaran ini untuk beban kerja agentic multi-turn dan berat prefix berkat RadixAttention?",
+      "options": [
+        "SGLang",
+        "Ollama",
+        "TGI",
+        "llama.cpp"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pipeline dev-ke-prod apa yang direkomendasikan pelajaran ini pada bobot GGUF atau HF yang sama?",
+      "options": [
+        "TGI di mana-mana",
+        "Ollama di dev dan Ollama di prod",
+        "Ollama di dev, llama.cpp di staging, vLLM (atau SGLang untuk beban berat prefix) di prod",
+        "Hanya TRT-LLM, dari atas ke bawah"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa Ollama tidak dianjurkan untuk produksi bersama?",
+      "options": [
+        "Itu tidak bisa memuat GGUF",
+        "Itu hanya berjalan di Windows",
+        "Itu tertutup",
+        "Serialisasi HTTP Go menambah overhead, manajemen konkurensi lebih sederhana daripada vLLM, dan dukungan OpenTelemetry tertinggal"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

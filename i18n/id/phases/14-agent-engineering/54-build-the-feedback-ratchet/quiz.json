@@ -1,0 +1,48 @@
+{
+  "lesson": "54-build-the-feedback-ratchet",
+  "title": "Bangun Ratchet Umpan Balik",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kapan umpan balik menjadi infrastruktur?",
+      "options": ["Saat ia diringkas", "Saat ia muncul di dashboard", "Saat ia dikumpulkan", "Saat ia punya jalur menuju perubahan durable yang dimiliki dan verifikasi"],
+      "correct": 3,
+      "explanation": "Promosi dan kepemilikan mengubah observasi menjadi pembelajaran sistem."
+    },
+    {
+      "stage": "check",
+      "question": "Ke mana upaya penulisan ke produksi harus dirutekan?",
+      "options": ["Hanya dokumentasi", "Batas kebijakan atau izin", "Backlog umum", "Desain visual"],
+      "correct": 1,
+      "explanation": "Otoritas yang tidak aman dimiliki oleh lapisan kebijakan yang dapat ditegakkan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus diubah lebih dulu oleh false positive?",
+      "options": ["Jabatan tim", "Region deployment", "Harga", "Cakupan evaluasi atau test"],
+      "correct": 3,
+      "explanation": "Lapisan evaluasi harus mempertahankan kegagalan sebagai kasus yang dapat direproduksi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa owner menjadi bagian dari kontrol?",
+      "options": ["Perbaikan tanpa pemilik tidak berubah atau tetap terkini secara andal", "Untuk menambah rapat", "Untuk menyembunyikan sinyal", "Untuk menghapus pembuktian"],
+      "correct": 0,
+      "explanation": "Seseorang harus mengimplementasikan, memverifikasi, meninjau, dan mempensiunkan aksinya."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kontrol harus dipensiunkan?",
+      "options": ["Jangan pernah", "Saat bukti menunjukkan ia tergantikan, usang, atau menciptakan friksi lebih besar daripada risiko yang dilindunginya", "Saat ia terasa tua", "Segera setelah ditambahkan"],
+      "correct": 1,
+      "explanation": "Pensiun harus didukung bukti sama seperti promosi."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana umpan balik shaping dan coding agent terhubung?",
+      "options": ["Hanya prompt yang penting", "Hanya metrik yang penting", "Bukti produk mengubah outcome dan scope, sementara koreksi agent mengubah workbench; insiden dapat mengubah keduanya", "Keduanya tidak terhubung"],
+      "correct": 2,
+      "explanation": "Kedua jalur memakai ratchet yang sama dari bukti menuju perubahan sistem yang durable."
+    }
+  ]
+}

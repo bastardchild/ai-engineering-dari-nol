@@ -1,0 +1,78 @@
+{
+  "lesson": "24-skill-discovery-and-progressive-disclosure",
+  "title": "Discovery Skill dan Progressive Disclosure",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Host menemukan nama skill yang sama di scope project dan user. Apa yang menentukan mana yang menang?",
+      "options": [
+        "Kebijakan prioritas scope yang didokumentasikan host",
+        "Direktori dengan timestamp terbaru",
+        "Body SKILL.md terpanjang",
+        "Kata kerja pertama pada deskripsi skill"
+      ],
+      "correct": 0,
+      "explanation": "Format skill portabel tidak menciptakan satu urutan prioritas universal. Host harus mendeklarasikan bagaimana scope saling menutupi dan sebaiknya melaporkan tabrakan alih-alih diam-diam bergantung pada urutan iterasi filesystem."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang termasuk dalam katalog discovery pertama yang dikirim ke model sebelum implementasi?",
+      "options": [
+        "Setiap skrip, aset, dan referensi secara lengkap",
+        "Record identitas ringkas seperti nama dan deskripsi",
+        "Output dari menjalankan setiap skrip yang dibundel",
+        "Hanya timestamp modifikasi"
+      ],
+      "correct": 1,
+      "explanation": "Discovery tingkat satu harus membawa metadata yang cukup untuk merutekan tugas tanpa memuat instruksi lengkap. Body dan resource yang direferensikan diungkapkan belakangan, yang melindungi anggaran konteks dan menghindari eksekusi terlalu dini."
+    },
+    {
+      "stage": "check",
+      "question": "Urutan mana yang benar mengimplementasikan progressive disclosure di bawah kontrak ini?",
+      "options": [
+        "Memuat semua body, membuang sebagian besar, lalu membangun katalog",
+        "Membaca referensi lebih dulu, lalu menyimpulkan skill mana yang memilikinya",
+        "Menjalankan skrip, memuat aset, lalu menemukan nama",
+        "Katalogkan metadata, muat body SKILL.md terpilih, lalu baca referensi yang diperlukan"
+      ],
+      "correct": 3,
+      "explanation": "Discovery, aktivasi, dan pemuatan resource adalah tahap terpisah. Setiap tahap membelanjakan konteks lebih banyak hanya setelah tahap sebelumnya menetapkan relevansi, sehingga body dan referensi skill yang tidak terkait tetap di luar prompt."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa duplikat dengan prioritas setara harus dilaporkan sebagai ambigu?",
+      "options": [
+        "Karena memilih berdasarkan urutan direktori yang insidental membuat routing nondeterministik dan sulit diaudit",
+        "Karena setiap tabrakan berarti kedua skill adalah YAML tidak valid",
+        "Karena nama duplikat otomatis mendapat akses jaringan",
+        "Karena scope user harus selalu menang"
+      ],
+      "correct": 0,
+      "explanation": "Jika dua kandidat memiliki nama dan peringkat kebijakan yang sama, urutan leksikal atau iterasi bukan otoritas yang bermakna. Gagal secara jelas memaksa host atau pengguna menyelesaikan identitas alih-alih menghasilkan perilaku yang bergantung lingkungan."
+    },
+    {
+      "stage": "post",
+      "question": "Sebuah SKILL.md mereferensikan `references/archive/schema.md` dalam bundle yang hanya mengizinkan referensi satu tingkat. Apa yang harus dilakukan validasi?",
+      "options": [
+        "Menyalin file ke cache global secara otomatis",
+        "Mengeksekusinya untuk mengetahui apakah berguna",
+        "Menolaknya karena rantai referensi lebih dalam daripada yang diizinkan kontrak paket",
+        "Mengikutinya karena setiap path relatif aman"
+      ],
+      "correct": 2,
+      "explanation": "Kontrak satu tingkat mengizinkan file atau path langsung seperti `references/schema.md`, bukan rantai bersarang rekursif. Batas itu menjaga paket dapat diperiksa dan memblokir kompleksitas mirip traversal sebelum konten dimuat."
+    },
+    {
+      "stage": "post",
+      "question": "Apa respons paling dapat dipertahankan ketika katalog melebihi anggaran konteks yang dideklarasikan?",
+      "options": [
+        "Menerapkan batas deterministik, melaporkan entri yang dihilangkan, dan mengizinkan discovery yang lebih sempit",
+        "Mengabaikan anggaran setiap kali skill memiliki deskripsi panjang",
+        "Menghapus nama skill sambil mempertahankan body instruksi lengkap",
+        "Mengambil sampel entri secara acak pada setiap eksekusi"
+      ],
+      "correct": 0,
+      "explanation": "Pemotongan atau penghilangan deterministik membuat perilaku katalog dapat direproduksi dan diukur. Melaporkan yang dihilangkan mempertahankan observability, sedangkan scope atau pencarian yang lebih sempit dapat mengambil kandidat yang tidak muat di katalog pertama."
+    }
+  ]
+}

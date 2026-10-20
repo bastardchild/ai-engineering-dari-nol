@@ -1,0 +1,78 @@
+{
+  "lesson": "02-inference-platform-economics",
+  "title": "Ekonomi Platform Inferensi — Fireworks, Together, Baseten, Modal, Replicate, Anyscale",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tiga segmen pasar mana yang dipakai pelajaran ini untuk mengelompokkan vendor inferensi 2026?",
+      "options": [
+        "Single-tenant, multi-tenant, on-prem",
+        "Gratis, berbayar, enterprise",
+        "Open-source, komersial, hybrid",
+        "Silikon kustom, platform GPU, marketplace API-first"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Pada utilisasi GPU berkelanjutan sekitar berapa penagihan per menit (Baseten, Modal) mulai mengalahkan penagihan per token (Fireworks, Together)?",
+      "options": [
+        "5%",
+        "90%",
+        "60%",
+        "30%"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Platform mana yang digambarkan sebagai serverless native Python dengan penagihan per detik dan cold start 2-4 detik setelah pre-warming?",
+      "options": [
+        "Anyscale",
+        "Baseten",
+        "Fireworks",
+        "Modal"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa pembeda harga LoRA yang menonjol dari Fireworks?",
+      "options": [
+        "Permintaan LoRA butuh kontrak GPU khusus terpisah",
+        "Permintaan yang dilayani LoRA ditagih dengan tarif per token model dasar",
+        "Permintaan yang dilayani LoRA lebih mahal daripada model dasar",
+        "LoRA tidak didukung sama sekali"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Platform mana yang cocok untuk pelanggan kesehatan teregulasi yang butuh SOC 2 Type II, postur siap HIPAA, dan GPU khusus?",
+      "options": [
+        "Together",
+        "Anyscale",
+        "Baseten",
+        "Replicate"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran ini berargumen bahwa klaim custom engine sebagian besar hanya bayang-bayang pemasaran di lapisan platform?",
+      "options": [
+        "Custom engine tidak pernah mengalahkan vLLM",
+        "Harga per token adalah satu-satunya pembeda nyata",
+        "vLLM dan SGLang mencakup sekitar 80% inferensi open-source produksi, jadi diferensiasi platform lebih datang dari DX, atribusi, dan SLA daripada engine",
+        "Semua custom engine adalah fork dari TensorRT-LLM"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

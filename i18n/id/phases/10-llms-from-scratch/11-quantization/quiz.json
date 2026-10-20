@@ -1,0 +1,66 @@
+{
+  "lesson": "11-quantization",
+  "title": "Quantization: Membuat Model Muat",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Berapa VRAM yang dibutuhkan model 70B parameter dalam FP16 hanya untuk bobot?",
+      "options": [
+        "70 GB",
+        "140 GB",
+        "35 GB",
+        "280 GB"
+      ],
+      "correct": 1,
+      "explanation": "70 miliar parameter * 2 byte per parameter FP16 = 140 miliar byte = 140 GB. Ini melebihi satu A100 (80GB), membutuhkan setidaknya dua GPU hanya untuk memuat bobot."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu quantization dalam konteks LLM?",
+      "options": [
+        "Mengurangi presisi numerik bobot (misalnya FP16 ke INT4) untuk menurunkan penggunaan memori dan meningkatkan kecepatan inferensi",
+        "Mengompresi data training",
+        "Menghapus layer model yang tidak terpakai",
+        "Mengurangi ukuran kosakata"
+      ],
+      "correct": 0,
+      "explanation": "Quantization memetakan bobot floating point presisi tinggi ke integer presisi lebih rendah. Quantization INT4 menyimpan setiap bobot dalam 4 bit alih-alih 16, mengurangi memori 4x dengan kehilangan akurasi minimal."
+    },
+    {
+      "stage": "post",
+      "question": "Apa perbedaan kunci antara post-training quantization (PTQ) dan quantization-aware training (QAT)?",
+      "options": [
+        "QAT tidak memakai gradien",
+        "PTQ memerlukan lebih banyak data",
+        "PTQ mengkuantisasi setelah training tanpa retraining; QAT menyimulasikan quantization selama training sehingga model belajar mentoleransi presisi yang berkurang",
+        "PTQ lebih akurat"
+      ],
+      "correct": 2,
+      "explanation": "PTQ cepat (cukup kalibrasi dan kuantisasi) tetapi bisa kehilangan akurasi. QAT menyertakan fake quantization selama training, memungkinkan model menyesuaikan bobotnya agar lebih tahan terhadap kehilangan presisi. QAT biasanya memberi akurasi lebih baik."
+    },
+    {
+      "stage": "post",
+      "question": "Apa arti quantization 'per-channel' dan mengapa lebih baik daripada 'per-tensor'?",
+      "options": [
+        "Ia mengkuantisasi setiap output channel secara terpisah, memakai skala/zero-point berbeda untuk masing-masing, mengurangi error quantization",
+        "Ia memproses satu color channel pada satu waktu",
+        "Ia adalah jenis data parallelism",
+        "Ia memakai GPU terpisah per channel"
+      ],
+      "correct": 0,
+      "explanation": "Per-tensor memakai satu faktor skala untuk seluruh matriks bobot. Per-channel memakai skala terpisah untuk setiap output channel (baris). Karena channel berbeda memiliki rentang nilai berbeda, per-channel menangkapnya lebih akurat."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa 95% bobot di Llama 3 70B berada antara -0.1 dan +0.1?",
+      "options": [
+        "Bobotnya belum konvergen",
+        "Weight decay dan normalisasi selama training mendorong bobot ke nilai kecil, membuat rentang FP16 penuh menjadi boros",
+        "Ini spesifik untuk arsitektur Llama",
+        "Modelnya dilatih dengan buruk"
+      ],
+      "correct": 1,
+      "explanation": "Regularisasi weight decay mengecilkan bobot mendekati nol. Layer normalization menjaga aktivasi tetap terpusat. Gabungan keduanya menghasilkan distribusi bobot yang terkonsentrasi di dekat nol, membuat kuantisasi presisi rendah efektif."
+    }
+  ]
+}

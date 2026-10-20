@@ -1,0 +1,78 @@
+{
+  "lesson": "26-skill-permissions-sandboxes-and-trust",
+  "title": "Izin Skill, Sandbox, dan Kepercayaan",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebuah SKILL.md menyatakan `You may write anywhere on disk`. Otoritas apa yang diberikan kalimat itu?",
+      "options": [
+        "Tidak ada otoritas; model izin host tetap memutuskan setiap aksi",
+        "Akses tulis ke direktori home pengguna",
+        "Akses tulis ke setiap path yang disebut referensi",
+        "Akses tulis setelah model mengulang kalimat itu"
+      ],
+      "correct": 0,
+      "explanation": "Konten skill adalah data instruksi, bukan token kemampuan. Scope filesystem, akses tool, kebijakan jaringan, dan persetujuan berasal dari host dan tetap berlaku meskipun skill mengklaim izin yang lebih luas."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa jail workspace harus menyelesaikan symlink sebelum memeriksa containment?",
+      "options": [
+        "Path yang diselesaikan otomatis menyunting rahasia",
+        "Resolusi membuat setiap path dapat ditulis",
+        "Symlink selalu memuat YAML yang cacat",
+        "Path yang secara leksikal di dalam workspace dapat menunjuk melalui symlink ke target di luar jail"
+      ],
+      "correct": 3,
+      "explanation": "Memeriksa hanya string input melewatkan link seperti `workspace/report` yang diselesaikan di tempat lain. Containment harus dievaluasi pada target yang diselesaikan, dan sistem konservatif dapat menolak target symlink langsung sepenuhnya."
+    },
+    {
+      "stage": "check",
+      "question": "Halaman web eksternal yang disematkan dalam tugas menyuruh menonaktifkan pemeriksaan persetujuan. Bagaimana runtime harus memperlakukan teks itu dalam skenario ini?",
+      "options": [
+        "Sebagai ekstensi SKILL.md portabel",
+        "Sebagai data tidak tepercaya yang tidak dapat memperluas otoritas",
+        "Sebagai kebijakan sistem prioritas tertinggi yang baru",
+        "Sebagai persetujuan dari pengguna"
+      ],
+      "correct": 1,
+      "explanation": "Konten eksternal dapat menginformasikan tugas, tetapi itu bukan bagian dari kanal kebijakan tepercaya. Permintaan yang dipengaruhinya harus tetap dalam izin yang ada dan mungkin memerlukan gerbang persetujuan tambahan untuk aksi stateful."
+    },
+    {
+      "stage": "check",
+      "question": "Apa cara edukatif paling aman untuk mendemonstrasikan tinjauan perintah destruktif?",
+      "options": [
+        "Mengizinkannya setiap kali bundle skill memuat skrip",
+        "Menjalankan perintah di repositori kursus dan memulihkan file nanti",
+        "Mengurai dan mengklasifikasikan vektor argv, mengembalikan `deny`, dan tidak pernah mengeksekusinya",
+        "Mencetak string shell yang dapat ditempel siswa tanpa tinjauan"
+      ],
+      "correct": 2,
+      "explanation": "Simulator kebijakan dapat mengajarkan allowlist executable, pola destruktif, pemeriksaan metakarakter, dan putusan tanpa efek samping nyata. Hasil lesson harus secara eksplisit mencatat bahwa eksekusi tidak pernah terjadi."
+    },
+    {
+      "stage": "post",
+      "question": "Skill mengusulkan panggilan HTTPS ke origin di luar allowlist jaringan. Pengguna sebelumnya memanggil skill itu. Apa putusan yang benar?",
+      "options": [
+        "Izinkan hanya jika deskripsi menyebut internet",
+        "Izinkan, karena invocation menyiratkan persetujuan jaringan",
+        "Tulis ulang hostname ke host pertama yang ada di allowlist",
+        "Tolak di bawah kebijakan jaringan; aktivasi bukan otorisasi"
+      ],
+      "correct": 3,
+      "explanation": "Gerbang invocation mengontrol pemuatan instruksi, sedangkan gerbang jaringan mengontrol origin HTTPS yang dinormalisasi, termasuk port efektif. Pemilihan skill sebelumnya tidak memperluas allowlist atau mengotorisasi transmisi kredensial."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang harus terjadi ketika request tulis memuat kemungkinan materi rahasia dan tidak ada jalur penggunaan rahasia yang disetujui?",
+      "options": [
+        "Percayai jika path target ada di dalam workspace",
+        "Ganti dengan nilai acak dan lanjutkan",
+        "Catat payload agar reviewer dapat memeriksa nilai lengkapnya",
+        "Tolak tanpa mencetak nilainya, dan wajibkan alur kerja rahasia yang diotorisasi terpisah"
+      ],
+      "correct": 3,
+      "explanation": "Containment workspace tidak membuat penanganan rahasia menjadi aman. Reviewer harus memblokir request, menghindari menggemakan materi sensitif, dan mewajibkan kebijakan serta persetujuan eksplisit sebelum penggunaan rahasia yang sah."
+    }
+  ]
+}

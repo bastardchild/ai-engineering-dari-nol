@@ -1,0 +1,90 @@
+{
+  "lesson": "05-autonomous-research-agent",
+  "title": "Capstone 05 — Agen Riset Otonom (Kelas AI-Scientist)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bentuk pencarian apa yang dipakai agen kelas AI-Scientist untuk menjelajahi eksperimen?",
+      "options": [
+        "Ekspansi breadth-first dengan skor acak",
+        "Beam search atas output token",
+        "Reinforcement learning murni dari umpan balik manusia",
+        "Pencarian pohon best-first atas node eksperimen dengan skor novelty x quality x budget"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa sandbox dikonfigurasi dengan --network=none dan batas resource terbatas?",
+      "options": [
+        "Untuk memaksa agen memakai prompt caching",
+        "Untuk mencegah egress jaringan dan membatasi efek samping eksperimen dalam amplop yang reproducible",
+        "Untuk menegakkan aritmetika floating-point deterministik",
+        "Untuk mengizinkan GPU passthrough secara default"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran langkah vision critique dalam loop writer?",
+      "options": [
+        "Menghasilkan ide eksperimen baru dari tangkapan layar",
+        "Menggantikan matplotlib saat render",
+        "Menerjemahkan gambar menjadi bar chart",
+        "Mengompilasi draft LaTeX ke PDF, lalu VLM mengkritik tata letak, keterbacaan gambar, dan keselarasan klaim-bukti"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana ansambel reviewer menjadi gerbang pipeline?",
+      "options": [
+        "Reviewer memilih anonim dan suara mayoritas menang",
+        "Lima juri memberi skor dengan rubrik gaya NeurIPS dan agregat berbobot harus melewati ambang, jika tidak draft kembali ke writer",
+        "Satu juri menerima atau menolak dengan flag biner",
+        "Review hanya berjalan setelah publikasi"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Disiplin biaya apa yang ditegakkan capstone per paper?",
+      "options": [
+        "GPU-hour dilacak tetapi tidak pernah dibatasi",
+        "Anggaran keras $30 yang dilacak lewat counter Langfuse dan estimasi pra-run",
+        "Optimasi biaya saja tanpa pemeriksaan kualitas",
+        "Komputasi tak terbatas, hanya batas wall-clock"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Fungsi skor mana yang memeringkat node pohon untuk ekspansi lanjutan?",
+      "options": [
+        "Jumlah sitasi paper terkait",
+        "Prioritas uniform acak",
+        "Panjang output dan jumlah token",
+        "Novelty x quality x sisa budget"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diuji laporan red-team terhadap sistem?",
+      "options": [
+        "Upaya escape sandbox seperti fork bomb, eksfiltrasi jaringan, dan escape filesystem",
+        "Tingkat cache hit pada system prompt",
+        "Kebocoran data multi-tenant di vector DB",
+        "Ekor latensi saat packet loss"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

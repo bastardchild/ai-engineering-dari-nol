@@ -1,0 +1,78 @@
+{
+  "lesson": "37-loading-pretrained-weights",
+  "title": "Memuat Bobot Pretrained",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa loader membutuhkan name map?",
+      "options": [
+        "Bobot GPT-2 yang diterbitkan memakai nama seperti wte, wpe, h.N.attn.c_attn; model lokal memakai tok_embed, pos_embed, blocks.N.attn.qkv; loader menerjemahkan satu ke lainnya",
+        "File safetensors dienkripsi",
+        "Tensor pretrained dan parameter lokal berbagi nama yang sama",
+        "Torch mewajibkannya"
+      ],
+      "correct": 0,
+      "explanation": "Dua konvensi penamaan punya sejarah berbeda; map adalah dict literal yang diperluas per layer."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu transpose conv1d, dan tensor mana yang membutuhkannya?",
+      "options": [
+        "Semua tensor bobot",
+        "GPT-2 terbitan menyimpan bobot c_attn, c_proj, dan c_fc dalam tata letak conv1d tensorflow, yaitu transpose dari yang diharapkan nn.Linear.weight; loader memanggil .t() pada tensor itu saat assignment",
+        "Hanya embedding",
+        "Hanya scale LayerNorm"
+      ],
+      "correct": 1,
+      "explanation": "Tiga sufiks perlu ditranspose; bias dan LayerNorm sudah berbentuk benar."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa LM head tidak ada di file safetensors?",
+      "options": [
+        "Terlalu besar",
+        "Dimuat dari file terpisah",
+        "Dihitung saat runtime dari logits",
+        "Weight tying: LM head berbagi penyimpanan dengan token embedding (wte), jadi memuat wte dan mengalias lm_head.weight = tok_embed.weight setelah load merekonstruksi head"
+      ],
+      "correct": 3,
+      "explanation": "Menyetel lm_head.weight = tok_embed.weight setelah wte mendarat memulihkan alias; menyalin malah menggandakan jumlah parameter."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan loader saat shape mismatch?",
+      "options": [
+        "Padding tensor lebih kecil",
+        "Membuat proses crash",
+        "Mencatat mismatch di LoadReport.shape_mismatch dan menolak assign, membiarkan parameter lokal tidak tersentuh",
+        "Memotong tensor lebih besar"
+      ],
+      "correct": 2,
+      "explanation": "Model setengah termuat adalah mesin kegagalan senyap; menolak assign menjaga laporan tetap jujur."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa fixture stub demo bukan unduhan GPT-2 nyata?",
+      "options": [
+        "File nyata tidak dalam format safetensors",
+        "Bobot nyata dienkripsi",
+        "Demo harus berjalan offline dan cepat; stub memakai konvensi penamaan pretrained yang persis sehingga jalur kode loader identik, dan menukar file nyata tidak mengubah apa pun pada loader",
+        "Safetensors tidak bisa menyimpan tensor besar"
+      ],
+      "correct": 2,
+      "explanation": "Jalur kode sama, payload lebih kecil; loader bekerja pada keduanya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menghasilkan sampel sebelum dan sesudah load?",
+      "options": [
+        "Untuk mengukur kecepatan inferensi",
+        "Untuk menyetel random seed",
+        "Jika sampel pasca-load identik dengan sampel pra-load, load tidak mengubah model, yang berarti pemetaan diam-diam melewatkan setiap tensor",
+        "Untuk memanaskan cache GPU"
+      ],
+      "correct": 2,
+      "explanation": "Generasi sanity adalah gate termurah: sidik jari sampel yang gagal berubah mengekspos load rusak yang tidak akan ditangkap ringkasan LoadReport sendiri."
+    }
+  ]
+}

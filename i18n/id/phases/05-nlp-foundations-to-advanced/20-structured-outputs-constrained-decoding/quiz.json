@@ -1,0 +1,102 @@
+{
+  "lesson": "20-structured-outputs-constrained-decoding",
+  "title": "Structured Outputs & Constrained Decoding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa prompt 'return JSON' saja tidak cukup untuk produksi?",
+      "options": [
+        "Prompt terlalu panjang",
+        "Prompting tidak dapat mendeskripsikan skema",
+        "JSON terlalu bertele-tele",
+        "Model frontier mematuhinya sebagian besar waktu tetapi tidak selalu; sebagian kecil output cacat merusak parser hilir"
+      ],
+      "correct": 3,
+      "explanation": "Struktur berbasis prompt saja bekerja ~80% pada model frontier; produksi memerlukan jaminan yang lebih kuat."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dimodifikasi constrained decoding di setiap langkah generasi?",
+      "options": [
+        "Vektor logit, dengan memask token yang akan membatalkan grammar target sehingga hanya kelanjutan valid yang dapat disampel",
+        "Loss training",
+        "Tokenizer",
+        "KV cache"
+      ],
+      "correct": 0,
+      "explanation": "Prosesor logit menetapkan token tidak valid ke -inf sehingga softmax tidak dapat menyampelnya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa constrained decoding bisa lebih cepat daripada generasi bebas?",
+      "options": [
+        "Modelnya lebih kecil",
+        "Ia menghindari softmax sepenuhnya",
+        "Ia melewati backprop",
+        "Token scaffold yang dipaksakan (misalnya '{\"name\": \"') dapat dikeluarkan langsung tanpa sampling, dan ruang pencarian token valid menyusut"
+      ],
+      "correct": 3,
+      "explanation": "Token yang sudah ditentukan melewati sampling dan set token valid yang lebih kecil mengurangi biaya decode."
+    },
+    {
+      "stage": "check",
+      "question": "Pilihan desain skema mana yang mencegah komitmen prematur oleh model?",
+      "options": [
+        "Menaruh 'answer' lebih dulu",
+        "Menempatkan field penalaran sebelum field jawaban/keputusan agar model berpikir sebelum berkomitmen",
+        "Memakai kunci lebih pendek",
+        "Memakai snake_case"
+      ],
+      "correct": 1,
+      "explanation": "Urutan field adalah logika: menaruh penalaran lebih dulu memungkinkan model berpikir sebelum mengunci jawaban."
+    },
+    {
+      "stage": "check",
+      "question": "Apa keterbatasan alat constrained decoding berbasis FSM seperti Outlines?",
+      "options": [
+        "Mereka hanya mendukung enum",
+        "Mereka mengunci kamu ke OpenAI",
+        "Skema rekursif harus diratakan; struktur yang benar-benar rekursif memerlukan mesin berbasis CFG seperti XGrammar",
+        "Mereka tidak deterministik"
+      ],
+      "correct": 2,
+      "explanation": "FSM tidak dapat merepresentasikan rekursi tak terbatas; mesin CFG menanganinya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa Instructor digambarkan tidak memodifikasi logit?",
+      "options": [
+        "Instructor memformat skema ke dalam prompt dan mem-parsing/mencoba ulang output; masking logit terjadi di sisi server atau tidak sama sekali",
+        "Ia menyunting prompt",
+        "Ia memakai pembaruan gradien",
+        "Diwajibkan oleh Anthropic"
+      ],
+      "correct": 0,
+      "explanation": "Instructor memakai structured output sisi provider plus validasi dan retry sisi klien, bukan masking logit."
+    },
+    {
+      "stage": "post",
+      "question": "Masalah apa yang dapat ditimbulkan regex ketat seperti date='YYYY-MM-DD'?",
+      "options": [
+        "Ia merusak parsing JSON",
+        "Ia menghapus jalan keluar untuk nilai yang tidak diketahui, sehingga model mengarang tanggal alih-alih mengembalikan null/sentinel",
+        "Ia memerlukan dukungan CFG",
+        "Regex lambat"
+      ],
+      "correct": 1,
+      "explanation": "Grammar yang terlalu ketat memaksa model mengarang nilai; selalu izinkan null/sentinel untuk nilai tak diketahui."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu memilih guided decoding vLLM vs API structured-output vendor?",
+      "options": [
+        "Hanya dengan BPE tingkat byte",
+        "Selalu vendor",
+        "Inferensi self-hosted di mana kamu mengontrol model dan menginginkan jaminan tingkat logit tanpa retry",
+        "Hanya untuk skema kecil"
+      ],
+      "correct": 2,
+      "explanation": "Guided decoding vLLM cocok untuk serving self-hosted dengan batasan tingkat logit; API vendor mengunci kamu ke stack mereka."
+    }
+  ]
+}

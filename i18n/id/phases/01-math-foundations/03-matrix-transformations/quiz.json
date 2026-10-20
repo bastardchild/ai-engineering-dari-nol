@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu eigenvector dari sebuah matriks?",
+      "options": ["Vektor yang hanya diskalakan (tidak pernah dirotasi) oleh matriks saat dikalikan", "Entri diagonal matriks yang dinyatakan sebagai vektor", "Baris terbesar dalam matriks", "Vektor yang tegak lurus terhadap semua kolom matriks"],
+      "correct": 0,
+      "explanation": "Eigenvector v memenuhi Av = lambda*v, artinya matriks A hanya meregangkan v dengan faktor skalar lambda (eigenvalue) tanpa mengubah arahnya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang direpresentasikan determinan matriks transformasi 2D secara geometris?",
+      "options": ["Jumlah eigenvector yang dimiliki matriks", "Sudut rotasi yang diterapkan matriks", "Faktor perkalian luas oleh matriks", "Trace matriks"],
+      "correct": 2,
+      "explanation": "Determinan mengukur seberapa besar transformasi menskalakan luas. det=1 mempertahankan luas (rotasi), det=2 menggandakan luas, det=0 meruntuhkan ke dimensi lebih rendah, dan det=-1 mempertahankan luas tetapi membalik orientasi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa urutan transformasi matriks penting? (yaitu, mengapa R @ S berbeda dari S @ R?)",
+      "options": ["Satu urutan menghasilkan matriks lebih besar daripada yang lain", "Determinannya berbeda untuk setiap urutan", "Perkalian matriks tidak komutatif: merotasi lalu menskalakan memberi hasil berbeda daripada menskalakan lalu merotasi", "Penjumlahan matriks tidak komutatif"],
+      "correct": 2,
+      "explanation": "Perkalian matriks tidak komutatif. Merotasi (1,0) sebesar 90 derajat lalu menskalakan dengan (2,0.5) menghasilkan (0,0.5), tetapi menskalakan dulu lalu merotasi menghasilkan (0,2). Operasi geometrisnya terkomposisi secara berbeda."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam recurrent neural network, apa yang terjadi ketika matriks bobot memiliki eigenvalue dengan magnitudo lebih besar dari 1?",
+      "options": ["Eigenvalue konvergen ke 1 selama pelatihan", "Jaringan menjadi lebih stabil", "Output meledak eksponensial seiring langkah waktu (masalah exploding gradient)", "Jaringan belajar lebih cepat"],
+      "correct": 2,
+      "explanation": "Perkalian berulang dengan matriks memperkuat arah eigenvalue. Eigenvalue > 1 menyebabkan pertumbuhan eksponensial (exploding gradient), sedangkan eigenvalue < 1 menyebabkan peluruhan eksponensial (vanishing gradient)."
+    },
+    {
+      "stage": "post",
+      "question": "Matriks A = [[2, 1], [1, 2]] memiliki eigenvalue 3 dan 1. Apa yang diungkapkan eigendecomposition A = V @ D @ V^(-1)?",
+      "options": ["A ber-rank 1 dan memetakan semua vektor ke garis", "A setara dengan dua rotasi", "A mengompresi semua vektor dengan faktor 2", "A meregangkan ruang 3x sepanjang arah [1,1] dan membiarkan arah [1,-1] tidak berubah"],
+      "correct": 3,
+      "explanation": "Eigenvalue 3 dengan eigenvector [1,1] berarti A meregangkan 3x sepanjang diagonal. Eigenvalue 1 dengan eigenvector [1,-1] berarti A membiarkan anti-diagonal tidak berubah. D berisi {3,1}, V berisi eigenvector."
+    }
+  ]
+}

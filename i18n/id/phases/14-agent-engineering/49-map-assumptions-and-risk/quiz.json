@@ -1,0 +1,48 @@
+{
+  "lesson": "49-map-assumptions-and-risk",
+  "title": "Petakan Asumsi dan Risiko",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diungkap peta asumsi yang disembunyikan roadmap fitur?",
+      "options": ["Kondisi yang harus benar agar build layak diinvestasikan", "Tanggal rilis", "Kode sumber", "Nama tim"],
+      "correct": 0,
+      "explanation": "Asumsi memunculkan taruhan nilai, kegunaan, kelayakan, viabilitas, dan keselamatan."
+    },
+    {
+      "stage": "check",
+      "question": "Asumsi mana yang dapat difalsifikasi?",
+      "options": ["Desainnya modern", "Pengguna akan menyukainya", "Delapan dari sepuluh engineer mengidentifikasi layanan yang benar lebih cepat saat replay", "Fitur ini berguna"],
+      "correct": 2,
+      "explanation": "Asumsi yang dapat difalsifikasi punya populasi, observasi, dan kemungkinan gagal."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menilai impact, ketidakpastian, dan ireversibilitas secara terpisah?",
+      "options": ["Untuk menjamin sukses", "Untuk membuat alasan urutan risiko eksplisit", "Untuk menghapus pertimbangan", "Untuk membuat formula universal"],
+      "correct": 1,
+      "explanation": "Dimensi-dimensi itu mengungkap mengapa suatu hal yang belum diketahui harus diselesaikan lebih awal."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus menjadi sasaran eksperimen berikutnya?",
+      "options": ["Risiko terbuka tertinggi dengan test yang menentukan dan murah", "Ide paling populer", "Fitur paling mudah", "Tugas terpanjang"],
+      "correct": 0,
+      "explanation": "Urutan berbasis risiko memaksimalkan pembelajaran sebelum komitmen."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang membuat eksperimen menentukan?",
+      "options": ["Ia menghasilkan demo", "Setiap hasil mengarah ke lebih banyak build", "Hasil lulus, gagal, dan ambigu mengarah ke keputusan berikutnya yang dinyatakan", "Ia memakai otoritas produksi"],
+      "correct": 2,
+      "explanation": "Test harus mampu mengubah arah."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana urutan build harus berubah saat reversibilitas berbeda?",
+      "options": ["Pekerjaan ireversibel selalu lebih dulu", "Hanya biaya yang penting", "Tidak berubah", "Test yang reversibel harus mendahului komitmen ireversibel berkonsekuensi tinggi"],
+      "correct": 3,
+      "explanation": "Belajar dengan aman sebelum mengambil otoritas atau biaya migrasi."
+    }
+  ]
+}

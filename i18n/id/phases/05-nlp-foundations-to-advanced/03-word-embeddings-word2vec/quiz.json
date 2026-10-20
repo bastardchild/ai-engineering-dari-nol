@@ -1,0 +1,102 @@
+{
+  "lesson": "03-word-embeddings-word2vec",
+  "title": "Word Embeddings — Word2Vec dari Awal",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu distributional hypothesis?",
+      "options": [
+        "Semua kata dapat di-embed dalam 300 dimensi",
+        "Kata yang sering muncul membawa makna paling banyak",
+        "Kamu akan mengenali sebuah kata dari kata-kata yang menemaninya",
+        "Kata terdistribusi secara seragam di seluruh dokumen"
+      ],
+      "correct": 2,
+      "explanation": "Distributional hypothesis Firth (1957): konteks yang mirip menyiratkan makna yang mirip."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa softmax biasa atas kosakata tidak praktis di Word2Vec?",
+      "options": [
+        "Softmax tidak dapat memodelkan probabilitas",
+        "Softmax tidak memiliki gradien",
+        "Menghitung softmax atas 100k+ istilah kosakata sangat mahal per langkah training",
+        "Ini menyebabkan gradien menghilang"
+      ],
+      "correct": 2,
+      "explanation": "Softmax seluruh kosakata terlalu mahal; negative sampling merumuskannya ulang sebagai klasifikasi biner."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan antara skip-gram dan CBOW?",
+      "options": [
+        "Skip-gram memprediksi kata konteks dari kata pusat; CBOW memprediksi kata pusat dari konteks",
+        "Skip-gram memprediksi kata pusat dari konteks; CBOW melakukan sebaliknya",
+        "Skip-gram melatih jaringan dalam; CBOW dangkal",
+        "Skip-gram memakai bigram; CBOW memakai unigram"
+      ],
+      "correct": 0,
+      "explanation": "Skip-gram: pusat -> konteks. CBOW: konteks -> pusat."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam negative sampling, apa objektif untuk pasangan positif (pusat, konteks)?",
+      "options": [
+        "Meminimalkan dot product keduanya",
+        "Memaksa keduanya ortogonal",
+        "Memaksimalkan sigmoid(W[pusat] dot W'[konteks]) agar mendekati 1",
+        "Mendekorelasi vektor"
+      ],
+      "correct": 2,
+      "explanation": "Pasangan positif melatih sigmoid mendekati 1; negatif tersampel melatih sigmoid mendekati 0."
+    },
+    {
+      "stage": "check",
+      "question": "Setelah melatih Word2Vec, matriks bobot mana yang menjadi word embedding?",
+      "options": [
+        "Proyeksi pasca-training terpisah",
+        "Keduanya, dikalikan bersama",
+        "Matriks W' hidden-to-output",
+        "Matriks W input-to-hidden (tabel kata pusat)"
+      ],
+      "correct": 3,
+      "explanation": "Tabel kata pusat W adalah output embedding standar; W' sering dibuang atau dirata-ratakan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa Word2Vec gagal pada polisemi (misalnya 'bank')?",
+      "options": [
+        "Negative sampling membuang makna langka",
+        "Ia mengabaikan kata langka",
+        "Ukuran window-nya terlalu kecil",
+        "Ia memberikan satu vektor statis per kata, sehingga 'river bank' dan 'financial bank' berbagi vektor yang sama"
+      ],
+      "correct": 3,
+      "explanation": "Embedding statis tidak dapat mendisambiguasi makna; embedding kontekstual (ELMo/BERT) memperbaikinya."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu masih akan memilih Word2Vec daripada transformer pada 2026?",
+      "options": [
+        "Ketika kualitas dialog penting",
+        "Ketika kamu memerlukan disambiguasi kontekstual",
+        "Retrieval ringan, on-device, spesifik domain di mana satu pencarian baris adalah anggaran latensinya",
+        "Ketika input sangat panjang"
+      ],
+      "correct": 2,
+      "explanation": "Word2Vec menang pada anggaran latensi sangat kecil, inferensi on-device, atau training domain-spesifik yang cepat."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang memungkinkan analogi terkenal 'king - man + woman ~ queen'?",
+      "options": [
+        "Skip-gram dilatih pada kosakata kerajaan",
+        "Aritmetika vektor menangkap arah linear seperti 'royal' yang bertransfer lintas gender",
+        "Model menyandikan status kerajaan sebagai bit flag",
+        "Cosine similarity invarian terhadap gender"
+      ],
+      "correct": 1,
+      "explanation": "Arah dalam ruang embedding menyandikan fitur relasional, sehingga penambahan/pengurangan bergerak secara sistematis."
+    }
+  ]
+}

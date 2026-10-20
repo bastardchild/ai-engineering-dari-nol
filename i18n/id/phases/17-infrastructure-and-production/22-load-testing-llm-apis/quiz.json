@@ -1,0 +1,78 @@
+{
+  "lesson": "22-load-testing-llm-apis",
+  "title": "Load Testing API LLM — Mengapa k6 dan Locust Berbohong",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa jebakan GIL dalam load testing LLM berbasis Locust?",
+      "options": [
+        "Tokenisasi sisi klien berjalan di bawah GIL Python dan mengantre di belakang pembuatan permintaan, sehingga latensi antar-token yang dilaporkan membengkak",
+        "Locust mewajibkan CUDA",
+        "Locust hanya berjalan di Windows",
+        "Locust tidak mendukung HTTP"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa jebakan keseragaman prompt?",
+      "options": [
+        "Prompt seragam selalu memperlambat server",
+        "Sampling dari distribusi nyata kurang merepresentasikan prompt panjang",
+        "Mengulang prompt yang sama membuat prefix caching tampak seperti decode konkuren penuh, sehingga throughput yang dilaporkan membengkak",
+        "Prompt seragam mewajibkan streaming"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Empat pola beban mana yang direkomendasikan pelajaran ini?",
+      "options": [
+        "Hanya burst",
+        "Tes klik manual",
+        "Steady-state, ramp, spike, soak",
+        "1 RPS konstan selama 10 hari"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana pelajaran ini merekomendasikan membangun distribusi prompt yang realistis?",
+      "options": [
+        "Karakter acak per permintaan",
+        "Selalu pakai prompt yang sama untuk memaksimalkan cache hit",
+        "Tulis 5 prompt manual lalu acak",
+        "Sampling dari distribusi nyata memakai mean dan stddev (misalnya --mean-input-tokens / --stddev-input-tokens milik LLMPerf) atau replay traffic nyata"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Kombinasi tool 2026 mana yang diposisikan paling baik untuk gate SLA CI/CD dan run terdistribusi native Kubernetes?",
+      "options": [
+        "Hanya guidellm",
+        "Hanya Vegeta",
+        "k6 v2026.1.0 dengan k6 Operator 1.0 GA (CRD TestRun / PrivateLoadZone)",
+        "Locust 2.43.3 standar"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan mana yang ditangkap pola beban soak?",
+      "options": [
+        "Ekor cold-start",
+        "Contention GIL tokenizer",
+        "Memory leak, drift connection pool, dan luapan observability selama berjam-jam",
+        "Badai eviction cache"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

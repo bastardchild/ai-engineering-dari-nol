@@ -1,0 +1,78 @@
+{
+  "lesson": "80-checkpoint-sharded-resume",
+  "title": "Checkpoint Sharded dan Resume Atomik",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa gather-then-write adalah pola checkpoint yang salah pada skala besar?",
+      "options": [
+        "Semua state melewati rank 0; bandwidth tulis adalah tautan tunggal paling lambat, bukan agregat, jadi tulisan skala TB memakan jam",
+        "Itu butuh hardware khusus",
+        "Itu memakai terlalu banyak CPU",
+        "Itu terlihat buruk"
+      ],
+      "correct": 0,
+      "explanation": "Tulisan sharded berskala dengan ukuran cluster: 64 rank menulis paralel selesai dalam 1/64 waktu satu rank menulis state yang dikumpulkan."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dicatat manifest yang tidak bisa dicatat file shard?",
+      "options": [
+        "world_size, versi skema, sha256 per shard, dan kepemilikan shard; memberi loader kontrak untuk divalidasi sebelum menyentuh state",
+        "Hostname",
+        "Angka acak",
+        "Nama filesystem"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa manifest loader harus menebak shard mana milik rank mana dan percaya jumlah file benar."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menulis ke <name>.tmp lalu rename alih-alih menulis langsung?",
+      "options": [
+        "Diwajibkan torch",
+        "Lebih cepat",
+        "Menghemat memori",
+        "Rename POSIX dalam satu filesystem bersifat atomik: crash di tengah tulis meninggalkan file sebelumnya utuh. Tulis langsung dapat meninggalkan checkpoint setengah jadi yang meracuni resume berikutnya"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa tulis atomik, simpan parsial plus manifest diperbarui yang menunjuknya merusak state pada load berikutnya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilindungi sha256 per shard?",
+      "options": [
+        "Perlambatan",
+        "Serangan jaringan",
+        "Tulisan parsial atau rusak; memverifikasi hash saat load menangkap shard terpotong sebelum menyentuh state model",
+        "Memory leak"
+      ],
+      "correct": 2,
+      "explanation": "Tanpa verifikasi sha256 shard terpotong dimuat diam-diam dan merusak optimiser, muncul belakangan sebagai loss NaN."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa jalur load menolak ketidakcocokan world_size secara keras?",
+      "options": [
+        "Melanjutkan layout shard 4 rank pada 8 rank secara diam-diam salah menugaskan shard; penolakan keras memaksa operator memakai jalur rebalance lintas world size",
+        "Hardware membutuhkannya",
+        "Lebih mudah dikodekan",
+        "Kosmetik"
+      ],
+      "correct": 0,
+      "explanation": "Rebalance lintas world size adalah operasi terpisah; menyambung shard berukuran salah secara diam-diam merusak state."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa produksi merotasi checkpoint (menyimpan K terakhir)?",
+      "options": [
+        "Kompresi",
+        "Estetika",
+        "Tidak",
+        "Tanpa rotasi disk penuh di tengah run dan checkpoint berikutnya gagal; rotasi menghapus yang tertua sebelum menulis yang baru, membatasi penggunaan disk"
+      ],
+      "correct": 3,
+      "explanation": "Run nyata menyimpan 3-5 checkpoint terbaru; yang tertua dibuang sebelum setiap simpan baru agar anggaran disk tetap."
+    }
+  ]
+}

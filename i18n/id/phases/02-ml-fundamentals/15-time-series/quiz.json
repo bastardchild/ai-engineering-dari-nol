@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "timeseries-pre-1",
+      "stage": "pre",
+      "question": "Mengapa split train/test acak tidak sah untuk data time series?",
+      "options": [
+        "Data time series sama sekali tidak bisa dibagi",
+        "Split acak hanya bekerja untuk masalah klasifikasi",
+        "Split acak membocorkan informasi masa depan ke set training sehingga model bisa curang",
+        "Split acak membuat dataset jadi terlalu kecil"
+      ],
+      "correct": 2,
+      "explanation": "Pada split acak, titik data masa depan bisa masuk ke set training sementara titik masa lalu ada di set test. Model lalu memakai informasi masa depan untuk memprediksi masa lalu, menghasilkan hasil yang terlalu optimistis."
+    },
+    {
+      "id": "timeseries-pre-2",
+      "stage": "pre",
+      "question": "Apa artinya sebuah time series bersifat stasioner?",
+      "options": [
+        "Nilainya selalu naik dari waktu ke waktu",
+        "Properti statistiknya (mean, variance, autokorelasi) tidak berubah seiring waktu",
+        "Nilainya tidak pernah berubah seiring waktu",
+        "Tidak ada pola musiman di dalamnya"
+      ],
+      "correct": 1,
+      "explanation": "Deret stasioner punya mean, variance, dan struktur autokorelasi yang konstan sepanjang waktu. Sebagian besar metode peramalan mengasumsikan stasioneritas. Deret non-stasioner perlu differencing atau detrending dulu."
+    },
+    {
+      "id": "timeseries-post-1",
+      "stage": "post",
+      "question": "Apa tujuan melakukan differencing pada time series?",
+      "options": [
+        "Untuk menormalkan nilai ke rentang 0 sampai 1",
+        "Untuk mengubah regresi menjadi klasifikasi",
+        "Untuk menambah jumlah titik data",
+        "Untuk menghapus tren dan membuat deret stasioner dengan memodelkan perubahan antar nilai berurutan"
+      ],
+      "correct": 3,
+      "explanation": "Differencing mengganti tiap nilai dengan perubahan dari nilai sebelumnya: diff[t] = value[t] - value[t-1]. Ini menghapus tren sehingga deret lebih mendekati stasioner."
+    },
+    {
+      "id": "timeseries-post-2",
+      "stage": "post",
+      "question": "Lag feature mengubah time series menjadi masalah supervised learning. Apa itu lag-3 feature untuk memprediksi y[t]?",
+      "options": [
+        "Nilai 3 langkah waktu lalu: y[t-3]",
+        "Selisih antara nilai saat ini dan 3 langkah ke depan",
+        "Turunan ketiga dari deret tersebut",
+        "Rata-rata 3 nilai berikutnya: (y[t+1] + y[t+2] + y[t+3]) / 3"
+      ],
+      "correct": 0,
+      "explanation": "Lag-3 feature adalah y[t-3]: nilai 3 langkah waktu ke belakang. Memakai nilai masa lalu sebagai fitur input memungkinkan model ML standar (regresi, pohon) membuat prediksi time series tanpa algoritma khusus."
+    },
+    {
+      "id": "timeseries-post-3",
+      "stage": "post",
+      "question": "Walk-forward validation membagi data waktu menjadi jendela yang membesar atau bergeser. Mengapa ini lebih baik daripada K-fold CV untuk time series?",
+      "options": [
+        "Walk-forward lebih cepat dihitung",
+        "K-fold CV tidak bisa dipakai pada data numerik",
+        "Walk-forward memakai lebih banyak data untuk training",
+        "Walk-forward menghormati urutan waktu, hanya melatih pada data masa lalu dan menguji pada data masa depan, sehingga mencegah lookahead bias"
+      ],
+      "correct": 3,
+      "explanation": "Walk-forward validation selalu melatih pada data masa lalu dan menguji pada data masa depan, meniru penerapan di dunia nyata. K-fold CV mengocok data, berpotensi melatih pada masa depan untuk memprediksi masa lalu (temporal leakage)."
+    }
+  ]
+}

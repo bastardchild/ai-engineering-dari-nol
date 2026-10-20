@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang diselesaikan MCP (Model Context Protocol) untuk agen AI?",
+      "options": ["Mengenkripsi komunikasi antar agen", "Mengompresi context window besar agar muat di model lebih kecil", "Memberi agen cara standar untuk menemukan dan memakai tool yang diekspos server eksternal, tanpa meng-hardcode implementasi tool", "Menyediakan format standar untuk data latih"],
+      "correct": 2,
+      "explanation": "MCP menstandarkan akses tool: server mengekspos tool dengan schema JSON, dan agen apa pun yang kompatibel MCP dapat menemukan dan memanggilnya. Ini memisahkan implementasi tool dari kode agen."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan antara MCP dan A2A?",
+      "options": ["MCP untuk agen Python dan A2A untuk agen JavaScript", "MCP open source dan A2A proprietary", "MCP menghubungkan agen ke tool (agent-to-tool), sedangkan A2A menghubungkan agen ke agen lain (agent-to-agent) untuk delegasi tugas", "MCP sinkron dan A2A asinkron"],
+      "correct": 2,
+      "explanation": "MCP adalah protokol untuk akses tool (agen memanggil tool). A2A adalah protokol untuk kolaborasi agen (agen mendelegasikan tugas ke agen lain). Keduanya menyelesaikan lapisan berbeda dari masalah komunikasi."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam A2A, apa itu 'agent card' dan mengapa penting?",
+      "options": ["Kredensial keamanan yang mengautentikasi identitas agen", "File konfigurasi yang menetapkan system prompt agen", "Dashboard visual yang menampilkan metrik performa agen", "Dokumen JSON di URL well-known yang mendeskripsikan kemampuan, skill, dan endpoint agen, sehingga agen lain dapat menemukan dan mendelegasikan tugas kepadanya"],
+      "correct": 3,
+      "explanation": "Agent card (di-host di /.well-known/agent.json) adalah cara agen mengiklankan dirinya. Card itu mencantumkan skill, format input/output yang didukung, dan endpoint tugas. Agen lain membaca card ini untuk memutuskan apakah dan bagaimana mendelegasikan pekerjaan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa sistem multi-agen memerlukan protokol komunikasi terstruktur alih-alih sekadar mengirim string antar agen?",
+      "options": ["Parsing string mahal secara komputasi bagi LLM", "Protokol terstruktur menyediakan type safety, discoverability, penanganan error, dan interoperabilitas antar agen yang dibangun tim berbeda dengan framework berbeda", "String terlalu besar untuk dikirim lewat HTTP", "Protokol terstruktur diwajibkan semua penyedia cloud"],
+      "correct": 1,
+      "explanation": "Tanpa kontrak terstruktur, agen dari tim berbeda salah menafsirkan output satu sama lain, penanganan error bersifat ad-hoc, dan tidak ada cara menemukan apa yang dapat dilakukan agen lain. Protokol menyediakan bahasa bersama yang membuat sistem multi-agen andal."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana ACP (Agent Communication Protocol) berbeda dari A2A dalam tujuan desainnya?",
+      "options": ["ACP memakai WebSocket sedangkan A2A memakai HTTP", "ACP lebih cepat daripada A2A untuk aplikasi real-time", "ACP hanya bekerja dalam satu organisasi sedangkan A2A lintas organisasi", "ACP berfokus pada auditabilitas enterprise dengan riwayat pesan lengkap dan pelacakan kepatuhan, sedangkan A2A berfokus pada delegasi tugas yang ringan"],
+      "correct": 3,
+      "explanation": "ACP dirancang untuk lingkungan enterprise di mana setiap interaksi agen harus dapat diaudit, dilacak, dan patuh. A2A lebih sederhana dan berfokus pada penyelesaian tugas. ACP menambahkan lapisan governance yang dibutuhkan industri teregulasi."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "lesson": "01-tokenizers",
+  "title": "Tokenizer: BPE, WordPiece, SentencePiece",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tujuan utama tokenizer dalam pipeline LLM?",
+      "options": [
+        "Untuk menerjemahkan teks antar bahasa",
+        "Untuk mengompresi teks agar hemat penyimpanan",
+        "Untuk mengubah teks menjadi urutan integer yang dapat diproses model",
+        "Untuk menghapus stop word dari teks"
+      ],
+      "correct": 2,
+      "explanation": "LLM memproses angka, bukan teks. Tokenizer mengubah setiap karakter, kata, dan simbol menjadi ID integer dari kosakata tetap. Konversi ini tidak netral -- ia menentukan bagaimana model 'melihat' bahasa."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan BPE (Byte Pair Encoding) untuk membangun kosakatanya?",
+      "options": [
+        "Menetapkan ID secara acak ke substring",
+        "Memakai pencarian kamus untuk kata utuh",
+        "Memecah teks menjadi karakter individual saja",
+        "Secara iteratif menggabungkan pasangan token bertetangga yang paling sering hingga mencapai ukuran kosakata target"
+      ],
+      "correct": 3,
+      "explanation": "BPE dimulai dari byte/karakter individual dan berulang kali menggabungkan pasangan bertetangga yang paling umum. 'th' + 'e' menjadi 'the'. Setelah ribuan penggabungan, kata umum menjadi satu token sementara kata langka dipecah menjadi potongan subword."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa ukuran kosakata menciptakan tradeoff dalam desain LLM?",
+      "options": [
+        "Ukuran kosakata tidak memengaruhi performa model",
+        "Kosakata yang lebih kecil selalu lebih efisien",
+        "Kosakata yang lebih besar selalu berperforma lebih baik",
+        "Terlalu kecil membuat sequence panjang (komputasi lebih banyak); terlalu besar membuang parameter embedding pada token langka"
+      ],
+      "correct": 3,
+      "explanation": "Kosakata kecil (misalnya level karakter) berarti setiap kata menjadi banyak token, meningkatkan panjang sequence dan komputasi. Kosakata besar membuang parameter pada token yang jarang muncul di data training. Sebagian besar LLM memakai 32K-100K token."
+    },
+    {
+      "stage": "post",
+      "question": "Masalah apa yang diselesaikan byte-level fallback dalam tokenisasi?",
+      "options": [
+        "Ia memastikan input apa pun (emoji, aksara langka, data biner) dapat di-encode tanpa token 'unknown'",
+        "Ia meningkatkan akurasi model",
+        "Ia mengurangi ukuran kosakata",
+        "Ia mempercepat tokenisasi"
+      ],
+      "correct": 0,
+      "explanation": "Dengan byte-level fallback, tokenizer dapat mundur ke nilai byte mentah (256 kemungkinan) untuk karakter apa pun yang tidak ada di kosakata. Ini menjamin cakupan penuh -- tidak ada input yang pernah 'unknown.'"
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana tokenizer memengaruhi performa bahasa non-Inggris pada LLM?",
+      "options": [
+        "Tokenizer bekerja sama baiknya untuk semua bahasa",
+        "Teks non-Inggris selalu di-tokenisasi per karakter",
+        "Tokenisasi tidak memengaruhi performa bahasa",
+        "Bahasa yang kurang terwakili di data training mendapat merge token yang lebih buruk, membutuhkan lebih banyak token per kata dan membuang context window"
+      ],
+      "correct": 3,
+      "explanation": "Merge BPE dipelajari dari data training. Jika teks Jepang hanya 5% korpus, karakter Jepang mendapat lebih sedikit merge, membutuhkan 2-5x lebih banyak token per kata daripada bahasa Inggris. Ini secara efektif memperkecil context window untuk teks non-Inggris."
+    }
+  ]
+}

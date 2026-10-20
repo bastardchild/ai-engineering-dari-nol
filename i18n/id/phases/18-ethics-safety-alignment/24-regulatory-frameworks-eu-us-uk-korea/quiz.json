@@ -1,0 +1,78 @@
+{
+  "lesson": "24-regulatory-frameworks-eu-us-uk-korea",
+  "title": "Kerangka Regulasi - EU, US, UK, Korea",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kapan EU AI Act mulai berlaku, dan kategori apa yang berlaku lebih dulu?",
+      "options": [
+        "Agustus 2025; semua kategori berlaku sekaligus",
+        "Januari 2024; sistem berisiko tinggi berlaku hari itu",
+        "Agustus 2024; praktik terlarang dan AI literacy berlaku 2 Februari 2025",
+        "Agustus 2026; hanya GPAI berlaku pada tanggal mulai"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa denda maksimum menurut EU AI Act yang berlaku sejak 2 Agustus 2026?",
+      "options": [
+        "Hingga 5 juta EUR atau 1% omzet global",
+        "Hingga 1 juta EUR atau 0.1% omzet global",
+        "Hingga 15 juta EUR atau 3% omzet global",
+        "Tak terbatas"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Tiga bab apa yang menyusun GPAI Code of Practice (10 Juli 2025)?",
+      "options": [
+        "Capability, Control, Compliance",
+        "Transparency, Copyright, Safety and Security",
+        "Privacy, Bias, Watermarking",
+        "Training, Inference, Deployment"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang disinyalkan rebranding AISI Inggris Februari 2025 menjadi 'AI Security Institute'?",
+      "options": [
+        "Cakupan lebih sempit yang fokus pada keamanan kapabilitas frontier, meninggalkan bias algoritmik dan framing kebebasan berbicara",
+        "Penutupan evaluasi frontier Inggris",
+        "Penggabungan dengan EU AI Office",
+        "Ekspansi ke bias algoritmik"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang disinyalkan rebranding CAISI AS (Juni 2025) dalam arah kebijakan?",
+      "options": [
+        "Rilis open-source wajib untuk model frontier",
+        "Penggabungan dengan FDA",
+        "Pergeseran ke 'kebijakan AI pro-pertumbuhan', dengan penekanan pada standar dan dukungan inovasi serta berkurangnya penekanan pada evaluasi pra-deployment",
+        "Evaluasi keselamatan pra-deployment yang lebih ketat"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa kewajiban utama dalam AI Framework Act Korea (berlaku Januari 2026)?",
+      "options": [
+        "Adopsi identik EU AI Act",
+        "Larangan total provider AI asing",
+        "Open-weights wajib untuk semua model generatif",
+        "Pasal 12 membentuk AISI di bawah MSIT dan mewajibkan perwakilan lokal, penilaian risiko, dan langkah keselamatan untuk AI berdampak tinggi dan generatif"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

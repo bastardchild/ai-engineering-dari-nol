@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "svm-pre-1",
+      "stage": "pre",
+      "question": "Apa itu support vector pada SVM?",
+      "options": [
+        "Semua titik data di set training",
+        "Vektor fitur setelah transformasi kernel",
+        "Vektor bobot yang dipelajari saat training",
+        "Titik training terdekat ke decision boundary yang menentukan hyperplane"
+      ],
+      "correct": 3,
+      "explanation": "Support vector adalah titik training yang persis berada di batas margin. Hanya titik inilah yang menentukan hyperplane keputusan. Menghapus titik yang bukan support vector tidak mengubah batasnya."
+    },
+    {
+      "id": "svm-pre-2",
+      "stage": "pre",
+      "question": "Apa yang dimaksimalkan SVM saat mencari decision boundary?",
+      "options": [
+        "Kompleksitas decision boundary",
+        "Margin -- jarak antara decision boundary dan titik terdekat dari tiap kelas",
+        "Jarak total semua titik ke batas keputusan",
+        "Jumlah titik training yang terklasifikasi benar"
+      ],
+      "correct": 1,
+      "explanation": "SVM mencari hyperplane yang memaksimalkan margin antara dua kelas. Margin yang lebih lebar menghasilkan generalisasi lebih baik pada data yang belum pernah dilihat."
+    },
+    {
+      "id": "svm-post-1",
+      "stage": "post",
+      "question": "Apa yang terjadi kalau kamu menaikkan parameter C pada SVM?",
+      "options": [
+        "Margin menyempit, lebih sedikit salah klasifikasi yang ditoleransi, dan model bisa overfitting",
+        "Jumlah support vector selalu bertambah",
+        "Margin melebar dan lebih banyak salah klasifikasi yang diizinkan",
+        "Fungsi kernel berubah dari linear ke RBF"
+      ],
+      "correct": 0,
+      "explanation": "C besar menghukum salah klasifikasi dengan keras, menghasilkan margin sempit yang sangat pas dengan data training. Ini bisa memicu overfitting. C kecil mengizinkan lebih banyak pelanggaran demi margin lebih lebar yang lebih teregularisasi."
+    },
+    {
+      "id": "svm-post-2",
+      "stage": "post",
+      "question": "Bagaimana kernel trick memungkinkan SVM mempelajari batas nonlinier?",
+      "options": [
+        "Dengan mengganti SVM dengan neural network",
+        "Dengan menghitung dot product di ruang berdimensi tinggi tanpa memetakan data secara eksplisit ke ruang itu",
+        "Dengan menghapus outlier dari dataset sebelum training",
+        "Dengan menambahkan fitur polinomial langsung ke data input"
+      ],
+      "correct": 1,
+      "explanation": "Kernel trick mengganti setiap dot product x_i . x_j dengan K(x_i, x_j), menghitung dot product di ruang fitur berdimensi tinggi (bahkan tak hingga untuk RBF) tanpa pernah membangun ruang itu."
+    },
+    {
+      "id": "svm-post-3",
+      "stage": "post",
+      "question": "Hinge loss bernilai nol saat y * f(x) >= 1. Apa artinya dalam hal klasifikasi?",
+      "options": [
+        "Titik itu sampel noise yang harus diabaikan",
+        "Titik itu salah klasifikasi",
+        "Titik itu persis berada di decision boundary",
+        "Titik itu terklasifikasi benar dan berada di luar margin"
+      ],
+      "correct": 3,
+      "explanation": "Saat y * f(x) >= 1, titik terklasifikasi benar DAN berada pada atau melewati batas margin. Hanya titik di dalam margin atau yang salah klasifikasi (y * f(x) < 1) yang menyumbang hinge loss."
+    }
+  ]
+}

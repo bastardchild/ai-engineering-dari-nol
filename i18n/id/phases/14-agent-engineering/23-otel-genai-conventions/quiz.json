@@ -1,0 +1,90 @@
+{
+  "lesson": "23-otel-genai-conventions",
+  "title": "Konvensi Semantik OpenTelemetry GenAI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Nama span mana yang merepresentasikan run agent dalam konvensi GenAI?",
+      "options": [
+        "invoke_agent (opsional diberi sufiks gen_ai.agent.name)",
+        "agent.start",
+        "agent_loop",
+        "run_chain"
+      ],
+      "correct": 0,
+      "explanation": "invoke_agent adalah nama kanonis; atribut nama agent muncul di nama span bila diatur."
+    },
+    {
+      "stage": "pre",
+      "question": "Tiga kategori span apa yang didefinisikan GenAI SIG?",
+      "options": [
+        "Frontend, backend, db",
+        "Read, write, exec",
+        "Latency, error, throughput",
+        "Model/client, agent, tool"
+      ],
+      "correct": 3,
+      "explanation": "Kategorinya adalah model/client (panggilan LLM), agent (create/invoke), dan tool (per invokasi)."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan span invoke_agent memakai kind CLIENT vs INTERNAL?",
+      "options": [
+        "Selalu INTERNAL",
+        "CLIENT hanya untuk HTTPS",
+        "Selalu CLIENT",
+        "CLIENT untuk layanan agent jarak jauh (OpenAI Assistants, Bedrock Agents); INTERNAL untuk framework in-process (LangChain, CrewAI, ReAct lokal)"
+      ],
+      "correct": 3,
+      "explanation": "Panggilan agent jarak jauh adalah CLIENT; run agent in-process adalah INTERNAL."
+    },
+    {
+      "stage": "check",
+      "question": "Apa aturan default untuk penangkapan konten (input dan output)?",
+      "options": [
+        "Tangkap semuanya secara default",
+        "Instrumentasi SEBAIKNYA TIDAK menangkap secara default; penangkapan bersifat opt-in via atribut gen_ai.*",
+        "Tangkap hanya saat error",
+        "Tangkap hanya output, jangan pernah input"
+      ],
+      "correct": 1,
+      "explanation": "Penangkapan konten default-off melindungi PII dan rahasia; opt-in bersifat eksplisit."
+    },
+    {
+      "stage": "check",
+      "question": "Atribut mana yang mengidentifikasi korpus atau store yang dikonsultasi untuk retrieval?",
+      "options": [
+        "gen_ai.data_source.id",
+        "gen_ai.provider.name",
+        "gen_ai.agent.name",
+        "gen_ai.request.model"
+      ],
+      "correct": 0,
+      "explanation": "gen_ai.data_source.id memberi label korpus RAG atau store yang terkena retrieval."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang disarankan pelajaran untuk menyimpan konten prompt di produksi?",
+      "options": [
+        "Simpan konten secara eksternal (S3, log store) dan catat ID referensi pada span",
+        "Tangkap prompt lengkap pada setiap span sebagai teks biasa",
+        "Enkripsi prompt di atribut span",
+        "Jangan pernah menyimpan konten apa pun"
+      ],
+      "correct": 0,
+      "explanation": "Penyimpanan eksternal dengan ID pointer menghindari PII bocor ke trace yang bisa dibaca ops."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu memilih ikut preview stabil eksperimental konvensi GenAI?",
+      "options": [
+        "Bayar lisensi",
+        "Edit konfigurasi kolektor OTel",
+        "Set OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental",
+        "Bangun ulang SDK dari sumber"
+      ],
+      "correct": 2,
+      "explanation": "Variabel env tersebut mem-pin konvensi eksperimental agar atribut tidak diganti nama diam-diam."
+    }
+  ]
+}

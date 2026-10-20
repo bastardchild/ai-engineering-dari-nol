@@ -1,0 +1,78 @@
+{
+  "lesson": "04-vllm-serving-internals",
+  "title": "Internal Serving Engine — PagedAttention, Continuous Batching, Chunked Prefill",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa masalah utama static batching klasik pada permintaan dengan panjang campuran?",
+      "options": [
+        "Itu hanya berjalan dengan FP4",
+        "Itu sama sekali tidak bisa memakai GPU",
+        "Padding ke prompt terpanjang dan output terpanjang membuang memori serta menahan seluruh batch pada sekuens paling lambat",
+        "Itu memerlukan NVLink antar setiap GPU"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana PagedAttention menurunkan fragmentasi KV cache dari 60-80% menjadi di bawah 4%?",
+      "options": [
+        "Dengan menonaktifkan KV cache sepenuhnya",
+        "Dengan menahan seluruh prompt di RAM CPU",
+        "Dengan mengompresi bobot ke INT4",
+        "Dengan mengalokasikan KV cache dalam blok berukuran tetap (default 16 token) yang dirujuk lewat block table per sekuens"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Invariant apa yang mendefinisikan continuous batching di scheduler V1 vLLM?",
+      "options": [
+        "Setiap permintaan mendapat stream GPU khusus sendiri",
+        "Scheduler menunggu jendela 10 ms untuk mengisi batch sebelum berjalan",
+        "Scheduler berjalan sekali per permintaan dan batch tidak pernah berubah",
+        "Scheduler berjalan sekali per iterasi decode, mengeluarkan sekuens yang selesai dan memasukkan yang menunggu"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Metrik latensi mana yang terutama dilindungi chunked prefill pada beban campuran?",
+      "options": [
+        "Throughput rata-rata",
+        "Waktu cold-start",
+        "Network RTT",
+        "Latensi antar-token P99 (ITL)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa kata matriks kompatibilitas fitur vLLM v0.18.0 tentang speculative decoding dengan --enable-chunked-prefill?",
+      "options": [
+        "Matriks menandai kombinasi itu sebagai kompatibel",
+        "Keduanya tidak bisa dikombinasikan dalam konfigurasi apa pun",
+        "Hanya draft head EAGLE-1 yang berjalan dengan chunked prefill",
+        "Hanya spekulasi model draft yang berjalan dengan chunked prefill"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa chunked prefill tidak dengan sendirinya menaikkan throughput rata-rata?",
+      "options": [
+        "Itu mengompresi bobot lebih agresif",
+        "Itu hanya mengurangi jitter saat decode; kemenangan throughput dalam praktik datang dari menjaga sekuens decode tetap hidup selama prefill panjang, bukan dari mengubah pekerjaan yang dilakukan",
+        "Itu berjalan di GPU berbeda dari decode",
+        "Itu memakai speculative decoding di balik layar"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

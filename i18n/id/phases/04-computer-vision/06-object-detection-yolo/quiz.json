@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Detektor YOLO dengan grid 13x13, 3 anchor per sel, dan 20 kelas menghasilkan output head dengan shape (N, 13, 13, 3, 25). Mengapa dimensi terakhirnya 25?",
+      "options": ["Itu padding ke pangkat 2 berikutnya", "25 adalah jumlah kelas di COCO", "4 koordinat box + 1 bias + 20 kelas", "4 koordinat box + 1 objectness + 20 kelas = 5 + C"],
+      "correct": 3,
+      "explanation": "Setiap anchor mengeluarkan empat target regresi box (tx, ty, tw, th), satu skor objectness, dan C logits kelas. Untuk detektor bergaya YOLO, dimensi per anchor selalu 5 + C. Pada COCO dengan 80 kelas nilainya 85; pada PASCAL VOC dengan 20 kelas nilainya 25."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa YOLO memprediksi tx, ty melalui sigmoid sebelum menambahkan sel grid?",
+      "options": ["Sigmoid diwajibkan oleh convolution", "Untuk mencegah NaN selama training", "Untuk menormalisasinya ke [0, 1] agar pusat tetap di dalam sel dan tidak dapat lolos ke wilayah sel tetangga", "Untuk membuat box lebih besar"],
+      "correct": 2,
+      "explanation": "sigmoid(tx) berada di [0, 1], sehingga (sigmoid(tx) + cell_x) * stride menempatkan pusat di suatu tempat di dalam sel pada kolom cell_x. Batasan ini menjaga setiap sel hanya bertanggung jawab atas objek yang pusatnya berada di dalam areanya sendiri, yang merupakan asumsi yang membuat training berbasis grid stabil."
+    },
+    {
+      "stage": "post",
+      "question": "Detektormu memprediksi 15 box di sekitar satu objek setelah head. Kamu menerapkan NMS dengan iou_threshold=0.45 dan mendapatkan kembali 1 box. Apa yang dilakukan NMS?",
+      "options": ["Ia merata-ratakan semua 15 prediksi", "Ia mengurutkan 15 box berdasarkan skor, mempertahankan yang skornya tertinggi, dan menghapus setiap box yang IoU-nya dengan box itu melebihi 0.45; 14 box lain semuanya tumpang tindih dengan pemenang di atas ambang sehingga tersisa satu", "Ia memilih penyintas secara acak", "Ia menggabungkan box secara geometris"],
+      "correct": 1,
+      "explanation": "NMS adalah deduplikasi greedy: urutkan berdasarkan skor, pertahankan yang teratas, hapus semua yang dekat dengannya (IoU > ambang), ulangi. Ia tidak menggabungkan atau merata-ratakan. Itulah sebabnya benchmark latensi deteksi menyertakan waktu NMS dan mengapa model modern seperti RT-DETR menggantinya dengan alternatif yang dipelajari."
+    },
+    {
+      "stage": "post",
+      "question": "Modelmu memiliki mAP@0.5 = 0.75 tetapi mAP@0.5:0.95 = 0.32. Interpretasi paling akurat apa?",
+      "options": ["Datasetnya memiliki terlalu banyak kelas", "Model menemukan objek yang benar tetapi box-nya tidak terlokalisasi rapat — baik pada IoU 0.5, gagal pada IoU 0.7+", "Modelnya rusak; mAP@0.5 harus sama dengan mAP@0.5:0.95", "Ambang inferensinya terlalu tinggi"],
+      "correct": 1,
+      "explanation": "mAP@0.5 longgar terhadap lokalisasi; mAP@0.5:0.95 merata-ratakan ambang yang ketat hingga 0.95. Jarak besar antara keduanya berarti box berada kira-kira di tempat yang benar tetapi tidak rapat. Perbaikan khas: box loss CIoU/DIoU, fitur resolusi lebih tinggi, set anchor yang lebih disesuaikan dengan dataset."
+    },
+    {
+      "stage": "post",
+      "question": "Bobot loss YOLO lambda_coord=5.0 dan lambda_noobj=0.5 kira-kira mencerminkan makalah aslinya. Rasio ini menyandikan apa?",
+      "options": ["Fakta bahwa sebagian besar sel tidak berisi objek, sehingga sel tanpa objek harus diberi bobot lebih rendah atau mereka akan mendominasi total loss; dan fakta bahwa regresi box adalah loss berskala lebih kecil daripada cross-entropy, sehingga perlu dinaikkan bobotnya agar gradiennya sebanding", "Trade-off memori GPU", "Jumlah anchor per sel", "Pilihan acak yang tidak pernah dijelaskan penulisnya"],
+      "correct": 0,
+      "explanation": "Pada grid 13x13 ada 169 sel, biasanya dengan satu hingga lima objek. 160+ sel kosong semuanya menyumbang objectness loss; tanpa lambda_noobj yang kecil, mereka akan menenggelamkan sinyal positif. Sebaliknya, MSE box loss bernilai kecil secara numerik dibanding cross-entropy, sehingga lambda_coord > 1 menjaga gradiennya sebanding. Kedua rasio adalah tentang menyeimbangkan besaran gradien per komponen."
+    }
+  ]
+}

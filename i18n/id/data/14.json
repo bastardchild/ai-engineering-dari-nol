@@ -1,0 +1,280 @@
+{
+  "phase": {
+    "14": {
+      "name": "Rekayasa Agent",
+      "desc": "Bangun agent dari prinsip dasar, gunakan coding agent secara andal, dan rumuskan pekerjaan sebelum implementasi."
+    }
+  },
+  "lessons": {
+    "phases/14-agent-engineering/01-the-agent-loop": {
+      "name": "Agent Loop",
+      "summary": "Setiap agent pada 2026 adalah varian dari loop ReAct tahun 2022 — termasuk Claude Code, Cursor, Devin, dan Operator. Token reasoning berselang-seling dengan tool call dan observasi sampai …",
+      "keywords": "ReAct: format kanonik · Pergeseran 2026: native reasoning · Lima bahan utama · Mengapa loop ini ada di mana-mana · Jebakan 2026"
+    },
+    "phases/14-agent-engineering/02-rewoo-plan-and-execute": {
+      "name": "ReWOO dan Plan-and-Execute",
+      "summary": "ReAct menyelang-selingkan pemikiran dan aksi dalam satu aliran. ReWOO memisahkannya: satu rencana besar di awal, lalu eksekusi. Token 5x lebih sedikit, akurasi +4% pada HotpotQA, dan kamu bisa mendistilasi …",
+      "keywords": "Tiga peran · Mengapa token 5x lebih sedikit · Mengapa lebih robust · Distilasi planner · Plan-and-Execute (2023) · Plan-and-Act (Erdogan et al., arXiv:2503.09572, ICML 2025) · Kapan memilih yang mana"
+    },
+    "phases/14-agent-engineering/03-reflexion-verbal-rl": {
+      "name": "Reflexion dan Verbal Reinforcement Learning",
+      "summary": "RL berbasis gradient membutuhkan ribuan percobaan dan klaster GPU untuk memperbaiki satu failure mode. Reflexion (Shinn et al., NeurIPS 2023) melakukannya dalam bahasa natural: setelah setiap percobaan gagal, …",
+      "keywords": "Tiga komponen · Tiga tipe evaluator · Mengapa ini bisa digeneralisasi · Kapan berhasil dan kapan tidak"
+    },
+    "phases/14-agent-engineering/04-tree-of-thoughts-lats": {
+      "name": "Tree of Thoughts dan LATS",
+      "summary": "Satu lintasan chain-of-thought tidak punya ruang untuk mundur. ToT (Yao et al., 2023) mengubah reasoning menjadi pohon dengan self-evaluation pada setiap node. LATS (Zhou et al., 2024) menyatukan …",
+      "keywords": "Tree of Thoughts (Yao et al., NeurIPS 2023) · LATS (Zhou et al., ICML 2024) · MCTS, secara minimal · Realitas biaya · Posisi di 2026"
+    },
+    "phases/14-agent-engineering/05-self-refine-and-critic": {
+      "name": "Self-Refine dan CRITIC",
+      "summary": "Self-Refine (Madaan et al., 2023) memakai satu LLM dalam tiga peran — generate, feedback, refine — dalam sebuah loop. Kenaikan rata-rata: +20 absolut pada 7 tugas. CRITIC (Gou et al., 2023) memperkuat …",
+      "keywords": "Self-Refine (Madaan et al., NeurIPS 2023) · CRITIC (Gou et al., arXiv:2305.11738, v4 Feb 2024) · Kondisi berhenti · Evaluator-Optimizer (Anthropic, 2024) · guardrail output OpenAI Agents SDK · Jebakan 2026"
+    },
+    "phases/14-agent-engineering/06-tool-use-and-function-calling": {
+      "name": "Tool Use dan Function Calling",
+      "summary": "Toolformer (Schick et al., 2023) memulai anotasi tool secara self-supervised. Berkeley Function Calling Leaderboard V4 (Patil et al., 2025) menetapkan standar 2026: 40% agentic, 30% multi…",
+      "keywords": "Toolformer (Schick et al., NeurIPS 2023) · Berkeley Function Calling Leaderboard V4 (Patil et al., ICML 2025) · Skema tool · Validasi argumen · Tool call paralel · Sandboxing"
+    },
+    "phases/14-agent-engineering/07-memory-virtual-context-memgpt": {
+      "name": "Memori Agent — Virtual Context dan Memory Paging",
+      "summary": "Context window itu terbatas. Percakapan, dokumen, dan jejak tool tidak. Solusinya adalah virtual memory OS yang dirumuskan ulang — konteks utama adalah RAM, penyimpanan eksternal adalah disk, agent melakukan pag…",
+      "keywords": "Analogi OS · Dua tier · Pola interrupt · Di mana paper berakhir dan produksi dimulai · Di mana pola ini salah · Bentuk memori agent"
+    },
+    "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute": {
+      "name": "Memory Block dan Sleep-Time Compute",
+      "summary": "Blok memori fungsional diskret yang bisa diedit langsung oleh model, dan agent sleep-time yang mengonsolidasikan memori secara asinkron saat agent utama menganggur. Kedua ide ini …",
+      "keywords": "Tiga tier · Blok memori · Sleep-time compute · Native reasoning · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/09-hybrid-memory-mem0": {
+      "name": "Memori Hibrida — Vector + Graph + KV",
+      "summary": "Memori hibrida menjalankan tiga penyimpanan secara paralel — vector untuk kemiripan semantik, KV untuk pencarian fakta cepat, graph untuk reasoning relasi entitas — dengan lapisan scoring yang memadukan …",
+      "keywords": "Tiga penyimpanan paralel · Fusion scoring · Mem0g dan temporal reasoning · Angka benchmark · Taksonomi scope · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/10-skill-libraries-voyager": {
+      "name": "Skill Library dan Lifelong Learning (Voyager)",
+      "summary": "Voyager (Wang et al., TMLR 2024) memperlakukan kode yang dapat dieksekusi sebagai skill. Skill diberi nama, bisa diambil kembali, bisa dikomposisi, dan disempurnakan oleh feedback lingkungan. Ini adalah arsitektur referensi…",
+      "keywords": "Tiga komponen · Ruang aksi = kode · Retrieval skill · Penyempurnaan iteratif · Kurikulum dan eksplorasi · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/11-planning-htn-and-evolutionary": {
+      "name": "Perencanaan dengan HTN dan Evolutionary Search",
+      "summary": "Perencanaan simbolik menangani kasus ketika rencana terbukti benar. Pencarian kode evolusioner menangani kasus ketika fungsi fitness dapat diperiksa mesin. ChatHTN (2025…",
+      "keywords": "Hierarchical Task Networks · ChatHTN (Gopalakrishnan et al., 2025) · AlphaEvolve (Novikov et al., 2025) · Kapan memakai yang mana · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/12-anthropic-workflow-patterns": {
+      "name": "Pola Workflow Anthropic",
+      "summary": "Schluntz dan Zhang (Anthropic, Des 2024) membedakan workflow (jalur yang telah ditentukan) dari agent (tool-use dinamis). Lima pola workflow mencakup sebagian besar kasus. Mulai dari API langsung …",
+      "keywords": "Workflow vs agent · LLM yang diaugmentasi · Lima pola · Di mana workflow mengalahkan agent · Di mana agent mengalahkan workflow · Pendamping context engineering"
+    },
+    "phases/14-agent-engineering/13-langgraph-stateful-graphs": {
+      "name": "Orchestration Graph Stateful — Durable Execution dan Checkpoint",
+      "summary": "Agent adalah state machine; node adalah fungsi; edge adalah transisi; state di-checkpoint setelah setiap node. Lanjutkan dari kegagalan apa pun pada checkpoint terakhir yang sukses. LangGraph…",
+      "keywords": "Graph · Durable execution · Streaming · Human-in-the-loop · Memori · Tiga topologi · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/14-autogen-actor-model": {
+      "name": "Actor Model untuk Agent",
+      "summary": "Agent sebagai actor: pertukaran pesan asinkron, handler berbasis event, isolasi fault, konkurensi alami. AutoGen v0.4 (Microsoft Research, Jan 2025) mendesain ulang orchestration agent…",
+      "keywords": "Actor · Tiga lapisan API · Mengapa decoupling penting · Topologi · Observability · Status: maintenance mode"
+    },
+    "phases/14-agent-engineering/15-crewai-role-based-crews": {
+      "name": "Tim Agent Berbasis Peran — Role, Task, Process",
+      "summary": "Empat primitif: Agent, Task, Crew, Process. Dua bentuk tingkat atas: Crew (kolaborasi otonom berbasis peran) dan Flow (berbasis event, deterministik). CrewAI adalah referensi 2026…",
+      "keywords": "Empat primitif · Sequential vs Hierarchical vs Consensus · Crew vs Flow · Integrasi tool · Hook memori · Kapan tim berbasis peran cocok · Kapan tidak · Bentuk dependensi · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/16-openai-agents-sdk": {
+      "name": "OpenAI Agents SDK — Handoff, Guardrail, Tracing",
+      "summary": "OpenAI Agents SDK adalah framework multi-agent ringan yang dibangun di atas Responses API. Lima primitif: Agent, Handoff, Guardrail, Session, Tracing. Handoff adalah tool bernama `tr…",
+      "keywords": "Lima primitif · Handoff sebagai tool · Guardrail · Tracing · Session · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/17-claude-agent-sdk": {
+      "name": "Harness sebagai Library — Subagent dan Session Store",
+      "summary": "Harness yang bisa kamu import: tool bawaan, subagent untuk isolasi konteks, hook, propagasi trace W3C, persistensi session. Claude Agent SDK adalah contoh referensinya — …",
+      "keywords": "Client SDK vs Agent SDK · Tool bawaan · Subagent · Session store · Hook · Konteks trace W3C · Claude Managed Agents · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/18-agno-and-mastra-runtimes": {
+      "name": "Runtime Agent untuk Produksi",
+      "summary": "Runtime agent produksi mengoptimalkan hal yang diabaikan framework prototipe: biaya instansiasi, permukaan workflow bertipe, dan backend yang siap serving. Pasangan 2026: Agno (Python…",
+      "keywords": "Agno · Mastra · Positioning · Kapan memilih masing-masing · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/19-benchmarks-swebench-gaia": {
+      "name": "Benchmark — SWE-bench, GAIA, AgentBench",
+      "summary": "Tiga benchmark menjadi jangkar evaluasi agent pada 2026. SWE-bench menguji patching kode. GAIA menguji tool use generalis. AgentBench menguji reasoning multi-lingkungan. Ketahui komposisi…",
+      "keywords": "SWE-bench (Jimenez et al., ICLR 2024 oral) · SWE-bench Verified · Kontaminasi · GAIA (Mialon et al., Nov 2023) · AgentBench (Liu et al., ICLR 2024) · Apa yang tidak diukur · Di mana benchmarking salah"
+    },
+    "phases/14-agent-engineering/20-benchmarks-webarena-osworld": {
+      "name": "Benchmark — WebArena dan OSWorld",
+      "summary": "WebArena menguji kemampuan web agent pada empat aplikasi yang di-host sendiri. OSWorld menguji kemampuan desktop agent pada Ubuntu, Windows, macOS. Saat dirilis (2023–2024) keduanya menunjukkan …",
+      "keywords": "WebArena (Zhou et al., ICLR 2024) · Ekstensi · OSWorld (Xie et al., NeurIPS 2024) · Failure mode utama · Tindak lanjut · Mengapa ini penting · Di mana benchmarking salah"
+    },
+    "phases/14-agent-engineering/21-computer-use-agents": {
+      "name": "Computer Use — Claude, OpenAI CUA, Gemini",
+      "summary": "Tiga model computer-use produksi pada 2026. Ketiganya berbasis vision. Ketiganya memperlakukan screenshot, teks DOM, dan output tool sebagai input yang tidak dipercaya. Hanya instruksi langsung pengguna…",
+      "keywords": "Claude computer use (Anthropic, 22 Okt 2024) · OpenAI CUA / Operator (Jan 2025) · Gemini 2.5 Computer Use (Google DeepMind, 7 Okt 2025) · Kontrak bersama: input tidak dipercaya · Kapan memilih yang mana · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/22-voice-agents-pipecat-livekit": {
+      "name": "Voice Agent — Pipecat dan LiveKit",
+      "summary": "Voice agent adalah kategori produksi kelas utama pada 2026. Pipecat memberimu pipeline berbasis frame di Python (VAD → STT → LLM → TTS → transport). LiveKit Agents menjembatani model AI…",
+      "keywords": "Pipecat (pipecat-ai/pipecat) · LiveKit Agents (livekit/agents) · Platform komersial · Di mana pola ini salah · Latensi tipikal 2026"
+    },
+    "phases/14-agent-engineering/23-otel-genai-conventions": {
+      "name": "Konvensi Semantik GenAI OpenTelemetry",
+      "summary": "GenAI SIG OpenTelemetry (diluncurkan April 2024) mendefinisikan skema standar untuk telemetri agent. Nama span, atribut, dan aturan content capture menyatu di berbagai vendor sehingga agent…",
+      "keywords": "Kategori span · Penamaan span agent · Atribut kunci · Content capture · Stabilitas · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/24-agent-observability-platforms": {
+      "name": "Observability Agent — Langfuse, Phoenix, Opik",
+      "summary": "Tiga platform observability agent open-source mendominasi 2026. Langfuse (MIT) — 6 juta+ instalasi/bulan, tracing + manajemen prompt + eval + session replay. Arize Phoenix (Elastic …",
+      "keywords": "Langfuse (MIT) · Arize Phoenix (Elastic License 2.0) · Comet Opik (Apache 2.0) · Data industri · Memilih satu · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/25-multi-agent-debate": {
+      "name": "Debat dan Kolaborasi Multi-Agent",
+      "summary": "Du et al. (ICML 2024, \"Society of Minds\") menjalankan N instance model yang mengusulkan jawaban secara independen, lalu saling mengkritik secara iteratif selama R putaran hingga konvergen. Meningkatkan faktualitas…",
+      "keywords": "Society of Minds (Du et al., ICML 2024) · Topologi sparse · Kapan debat membantu · Kapan debat merugikan · Implementasi praktis 2026 · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/26-failure-modes-agentic": {
+      "name": "Failure Mode — Mengapa Agent Rusak",
+      "summary": "MASFT (Berkeley, 2025) mengatalogkan 14 failure mode multi-agent dalam 3 kategori. Taksonomi Microsoft mendokumentasikan bagaimana kegagalan AI yang ada teramplifikasi dalam pengaturan agentic. Data lapangan industri…",
+      "keywords": "MASFT (Berkeley, arXiv:2503.13657) · Microsoft Taxonomy of Failure Mode in Agentic AI Systems · Characterizing Faults in Agentic AI (arXiv:2603.06847) · LLM Agent Hallucinations Survey (arXiv:2509.18970) · Lima mode yang berulang di industri · Mitigasi: gate di setiap langkah · Di mana monitoring kegagalan salah"
+    },
+    "phases/14-agent-engineering/27-prompt-injection-defense": {
+      "name": "Prompt Injection dan Pertahanan PVE",
+      "summary": "Greshake et al. (AISec 2023) menetapkan indirect prompt injection sebagai masalah keamanan agent yang menentukan. Penyerang menanam instruksi di data yang diambil agent; saat di-ingest, …",
+      "keywords": "Greshake et al., AISec 2023 (arXiv:2302.12173) · Doktrin pertahanan 2026 · PVE: Prompt-Validator-Executor · Di mana pertahanan gagal"
+    },
+    "phases/14-agent-engineering/28-orchestration-patterns": {
+      "name": "Pola Orchestration — Supervisor, Swarm, Hierarchical",
+      "summary": "Empat pola orchestration berulang di framework 2026: supervisor-worker, swarm / peer-to-peer, hierarchical, debate. Panduan Anthropic: \"Ini tentang membangun sistem yang tepat…",
+      "keywords": "Supervisor-worker · Swarm / peer-to-peer · Hierarchical · Debat · Crew otonom vs flow deterministik · Panduan Anthropic · Di mana pola ini salah"
+    },
+    "phases/14-agent-engineering/29-production-runtimes": {
+      "name": "Runtime Produksi — Queue, Event, Cron",
+      "summary": "Agent produksi berjalan pada enam bentuk runtime: request-response, streaming, durable execution, background berbasis queue, event-driven, dan terjadwal. Pilih bentuknya sebelum kamu memilih …",
+      "keywords": "Request-response · Streaming · Durable execution · Berbasis queue / background · Event-driven · Terjadwal · Pola deployment 2026 · Observability adalah penopang utama · Di mana runtime produksi gagal"
+    },
+    "phases/14-agent-engineering/30-eval-driven-agent-development": {
+      "name": "Pengembangan Agent Berbasis Eval",
+      "summary": "Panduan Anthropic: \"mulai dengan prompt sederhana, optimalkan dengan evaluasi menyeluruh, dan tambahkan sistem agentic multi-langkah hanya bila perlu.\" Evaluasi bukan langkah terakhir…",
+      "keywords": "Tiga lapisan evaluasi · Evaluator-optimizer (Anthropic) · Praktik terbaik 2026 · Merangkai Phase 14 · Di mana pengembangan berbasis eval gagal"
+    },
+    "phases/14-agent-engineering/31-agent-workbench-why-models-fail": {
+      "name": "Agent Workbench: Mengapa Model Cakap Tetap Gagal",
+      "summary": "Model yang cakap tidak cukup. Agent yang andal membutuhkan workbench: instruksi, state, scope, feedback, verifikasi, review, dan handoff. Hilangkan itu semua dan bahkan model frontier…",
+      "keywords": "Workbench versus prompt engineering · Workbench versus framework · Bernalar dari primitif, bukan dari taksonomi vendor · Pola yang beredar, diterjemahkan ke primitif · Apa kata bukti sebenarnya · Di mana tulisan vendor berhenti"
+    },
+    "phases/14-agent-engineering/32-minimal-agent-workbench": {
+      "name": "Agent Workbench Minimal",
+      "summary": "Workbench berguna terkecil adalah tiga file: router instruksi di root, file state, dan task board. Sisanya dilapisi di atasnya. Jika sebuah repo tidak bisa membawa ketiganya, …",
+      "keywords": "AGENTS.md adalah router, bukan manual · agent_state.json adalah system of record · task_board.json adalah queue · Tiga file adalah lantai, bukan langit-langit"
+    },
+    "phases/14-agent-engineering/33-instructions-as-executable-constraints": {
+      "name": "Instruksi Agent sebagai Constraint yang Dapat Dieksekusi",
+      "summary": "Instruksi yang ditulis sebagai prosa hanyalah harapan. Instruksi yang ditulis sebagai constraint adalah test. Workbench mengubah setiap aturan menjadi sesuatu yang bisa diperiksa agent saat runtime dan diperiksa reviewer…",
+      "keywords": "Lima kategori yang mencakup sebagian besar aturan · Aturan dapat dibaca mesin · Aturan ramah diff · Aturan versus guardrail framework · Progressive disclosure: peta, bukan ensiklopedia"
+    },
+    "phases/14-agent-engineering/34-repo-memory-and-state": {
+      "name": "Memori Repo dan State yang Tahan Lama",
+      "summary": "Riwayat chat itu volatil. Repo itu tahan lama. Workbench menyimpan state agent dalam file berversi sehingga session berikutnya, agent berikutnya, dan reviewer berikutnya membaca dari sum…",
+      "keywords": "Apa yang masuk ke memori repo · State schema-first · Penulisan atomik · Migrasi"
+    },
+    "phases/14-agent-engineering/35-initialization-scripts": {
+      "name": "Skrip Inisialisasi untuk Agent",
+      "summary": "Setiap session yang mulai dari dingin membayar biaya. Agent membaca file yang sama, mengulang probe yang sama, dan menemukan ulang path yang sama. Skrip init membayar biaya itu sekali dan menulis …",
+      "keywords": "Apa yang diprobe skrip init · Gagal keras, gagal cepat, gagal di satu tempat · Idempoten · Aturan init versus startup"
+    },
+    "phases/14-agent-engineering/36-scope-contracts": {
+      "name": "Scope Contract dan Batas Tugas",
+      "summary": "Model tidak tahu di mana pekerjaan berakhir. Scope contract adalah file per tugas yang menyatakan di mana pekerjaan dimulai, di mana berakhir, dan cara rollback jika meluber. Contract itu …",
+      "keywords": "Apa isi scope contract · Glob, bukan path mentah · Rollback bagian dari scope · Pemeriksaan scope adalah pemeriksaan diff · Dua ketinggian scope: daftar fitur dan contract tugas"
+    },
+    "phases/14-agent-engineering/37-runtime-feedback-loops": {
+      "name": "Loop Feedback Runtime",
+      "summary": "Agent yang tidak melihat output perintah nyata hanya menebak. Feedback runner menangkap stdout, stderr, exit code, dan timing ke dalam record terstruktur yang bisa dibaca putaran berikutnya. Lalu agent…",
+      "keywords": "Apa isi record feedback · Pemotongan bersifat deterministik · Feedback versus telemetri · Menolak maju tanpa feedback"
+    },
+    "phases/14-agent-engineering/38-verification-gates": {
+      "name": "Gate Verifikasi",
+      "summary": "Agent tidak boleh menandai pekerjaannya sendiri sebagai selesai. Gate verifikasi membaca scope contract, log feedback, laporan aturan, dan diff, lalu menjawab satu pertanyaan…",
+      "keywords": "Apa yang diperiksa gate · Deterministik, bukan probabilistik · Satu laporan, satu path · Menolak tanpa pengecualian"
+    },
+    "phases/14-agent-engineering/39-reviewer-agent": {
+      "name": "Reviewer Agent: Pisahkan Builder dari Penilai",
+      "summary": "Agent yang menulis kode tidak bisa menilainya. Reviewer adalah loop kedua dengan system prompt berbeda, tujuan berbeda, dan akses read-only ke semua yang dihasilkan builder…",
+      "keywords": "Rubrik reviewer · Reviewer adalah peran terpisah, bukan model terpisah · Reviewer tidak boleh mengedit diff · Rubrik reviewer versus gate verifikasi"
+    },
+    "phases/14-agent-engineering/40-multi-session-handoff": {
+      "name": "Handoff Multi-Session",
+      "summary": "Session akan berakhir. Pekerjaannya tidak. Paket handoff adalah artefak yang mengubah \"agent bekerja selama satu jam\" menjadi \"session berikutnya produktif dalam menit pertama…",
+      "keywords": "Tujuh field yang dibawa setiap handoff · Handoff dihasilkan, bukan ditulis · Dua bentuk: dapat dibaca manusia dan mesin · Pemangkasan log feedback · Tinggalkan state yang bersih"
+    },
+    "phases/14-agent-engineering/41-workbench-for-real-repos": {
+      "name": "Workbench pada Repo Nyata",
+      "summary": "Sebelas lesson tentang surface tidak bernilai jika tidak bertahan saat bersentuhan dengan codebase nyata. Lesson ini menjalankan tugas yang sama dua kali pada aplikasi sampel kecil: hanya prompt versus …",
+      "keywords": "Aplikasi sampel · Tugasnya · Dua pipeline · Lima hasil yang diukur"
+    },
+    "phases/14-agent-engineering/42-agent-workbench-capstone": {
+      "name": "Capstone: Kirim Paket Agent Workbench yang Dapat Digunakan Ulang",
+      "summary": "Mini-track berakhir dengan paket yang bisa kamu jatuhkan ke repo mana pun. Sebelas lesson tentang surface dimampatkan menjadi direktori yang bisa kamu `cp -r` dan membuat agent bekerja andal keesokan paginya…",
+      "keywords": "Tata letak paket · Apa yang masuk, apa yang keluar · Installer · Versioning"
+    },
+    "phases/14-agent-engineering/43-frame-the-task-before-code": {
+      "name": "Rumuskan Tugas Sebelum Agent Menulis Kode",
+      "summary": "Coding agent bisa mengimplementasikan tugas yang jelas dengan cepat. Ia juga bisa mengimplementasikan tugas yang tidak jelas dengan cepat. Kecepatannya sama. Biayanya tidak.",
+      "keywords": "Framing tugas · Kejelasan versus kecepatan · Biaya salah arah · Titik berhenti sebelum implementasi"
+    },
+    "phases/14-agent-engineering/44-plan-from-evidence": {
+      "name": "Bangun Rencana Eksekusi Berbasis Bukti",
+      "summary": "Rencana bukan to-do list yang lebih cantik. Rencana adalah graph dependensi di mana setiap perubahan punya alasan dan setiap node terminal punya bukti.",
+      "keywords": "Graph dependensi · Alasan per perubahan · Node terminal dan bukti · Rencana yang dapat dieksekusi"
+    },
+    "phases/14-agent-engineering/45-delegate-with-isolation": {
+      "name": "Delegasikan Pekerjaan Agent dengan Isolasi dan Merge Contract",
+      "summary": "Agent paralel menghemat waktu nyata hanya ketika pekerjaannya independen. Jika tidak, mereka mengubah satu tugas jelas menjadi masalah koordinasi dengan laju kegagalan yang lebih cepat.",
+      "keywords": "Isolasi kerja · Merge contract · Independensi tugas · Biaya koordinasi"
+    },
+    "phases/14-agent-engineering/46-turn-feedback-into-system": {
+      "name": "Ubah Setiap Koreksi Agent menjadi Perbaikan Sistem",
+      "summary": "Koreksi yang hanya hidup di chat memperbaiki satu kali jalan. Koreksi yang dipromosikan menjadi test, boundary, contoh, atau tool memperbaiki setiap jalan berikutnya.",
+      "keywords": "Koreksi menjadi test · Boundary · Contoh dan tool · Perbaikan sistemik"
+    },
+    "phases/14-agent-engineering/47-outcomes-before-output": {
+      "name": "Definisikan Hasil Sebelum Memilih Output",
+      "summary": "Implementasi cepat memperbesar penalti karena memilih masalah yang salah. Bentuk hasilnya lebih dulu agar kecepatan mengarah ke arah yang benar.",
+      "keywords": "Hasil versus output · Memilih masalah · Kecepatan dan arah · Titik keputusan"
+    },
+    "phases/14-agent-engineering/48-discover-the-real-workflow": {
+      "name": "Temukan Workflow yang Benar-Benar Dijalankan Orang",
+      "summary": "Requirement tidak menunggu di rapat untuk dikumpulkan. Requirement tersebar di tindakan, workaround, catatan, dan perbedaan pendapat.",
+      "keywords": "Requirement tersembunyi · Workaround · Observasi kerja nyata · Wawancara dan catatan"
+    },
+    "phases/14-agent-engineering/49-map-assumptions-and-risk": {
+      "name": "Petakan Asumsi dan Selesaikan yang Paling Berisiko Lebih Dulu",
+      "summary": "Roadmap menyembunyikan ketidakpastian di dalam fitur. Peta asumsi mengekspos apa yang harus benar sebelum fitur-fitur itu pantas ada.",
+      "keywords": "Peta asumsi · Ketidakpastian tersembunyi · Prioritas risiko · Eksperimen penentu"
+    },
+    "phases/14-agent-engineering/50-choose-the-smallest-testable-slice": {
+      "name": "Pilih Irisan Terkecil yang Bisa Mengubah Keputusan",
+      "summary": "Kecil itu berguna hanya ketika membuktikan sesuatu yang penting. Build mungil yang tidak bisa mengubah keputusan berikutnya hanyalah tidak selesai.",
+      "keywords": "Irisan vertikal · Kekuatan keputusan · Prototipe minimal · Kriteria belajar"
+    },
+    "phases/14-agent-engineering/51-write-specifications-that-preserve-judgment": {
+      "name": "Tulis Spesifikasi yang Menjaga Judgment",
+      "summary": "Spesifikasi yang berguna menetapkan invariant dan bukti sambil membiarkan pilihan implementasi yang dapat dibalik tetap terbuka. Ia adalah batas keputusan, bukan skenario film.",
+      "keywords": "Invariant · Bukti · Kebebasan implementasi · Batas keputusan"
+    },
+    "phases/14-agent-engineering/52-design-success-metrics": {
+      "name": "Rancang Metrik Keberhasilan Sebelum Hasilnya Ada",
+      "summary": "Pengukuran harus menjawab sebuah keputusan, bukan menghias dashboard. Mulai dari tujuan, turunkan pertanyaan, lalu pilih metrik terkecil yang menjawabnya.",
+      "keywords": "Tujuan ke pertanyaan · Metrik terkecil · Keputusan versus dashboard · Baseline"
+    },
+    "phases/14-agent-engineering/53-prototype-pilot-or-production": {
+      "name": "Pilih Prototype, Pilot, atau Production secara Sengaja",
+      "summary": "Ini adalah lingkungan belajar yang berbeda, bukan tingkat kilap. Pilih tahap yang menjawab ketidakpastian saat ini dengan konsekuensi tak perlu paling kecil.",
+      "keywords": "Prototype · Pilot · Production · Lingkungan belajar · Konsekuensi"
+    },
+    "phases/14-agent-engineering/54-build-the-feedback-ratchet": {
+      "name": "Bangun Ratchet Feedback dengan Ownership dan Retirement",
+      "summary": "Shipping menutup satu loop build dan membuka loop belajar. Bukti harus mengubah sistem atau ia menjadi telemetri yang tidak dimiliki siapa pun.",
+      "keywords": "Ratchet feedback · Ownership · Retirement · Bukti menjadi perubahan · Loop belajar"
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "15-mcp-security-tool-poisoning",
+  "title": "Keamanan MCP: Metadata Teracuni, Routing, dan State MRTR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Field MCP mana yang aman dipakai sebagai identitas klien terautentikasi?",
+      "options": [
+        "Tidak ada field clientInfo yang dilaporkan sendiri",
+        "clientInfo.name",
+        "clientInfo.version",
+        "clientCapabilities"
+      ],
+      "correct": 0,
+      "explanation": "Informasi dan kemampuan klien adalah metadata protokol, bukan bukti autentikasi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus di-hash gateway setelah menyetujui sebuah tool?",
+      "options": [
+        "Deskriptor lengkap kanonis, termasuk deskripsi, schema, dan anotasi yang relevan",
+        "Hanya nama tool",
+        "Hanya nama tampilan server",
+        "Identifier sesi saat ini"
+      ],
+      "correct": 0,
+      "explanation": "Pinning seluruh deskriptor mendeteksi perubahan schema dan anotasi yang terlewat oleh hash hanya-deskripsi."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana gateway mengekspos dua tool backend yang keduanya bernama search?",
+      "options": [
+        "Meminta model menyimpulkan server",
+        "Memilih backend secara acak",
+        "Memakai nama berkualifikasi yang stabil seperti notes.search dan issues.search",
+        "Menyimpan tool terakhir yang ditemukan"
+      ],
+      "correct": 2,
+      "explanation": "Nama berkualifikasi membuat routing, persetujuan, audit, dan validasi header merujuk ke satu tool yang stabil."
+    },
+    {
+      "stage": "check",
+      "question": "Deklarasi kemampuan klien mana yang mendukung elicitation form MCP?",
+      "options": [
+        "Baik elicitation: {} secara implisit maupun elicitation: {form: {}} secara eksplisit",
+        "Objek extensions apa pun yang tidak kosong",
+        "Hanya sesi protokol dengan form aktif",
+        "Hanya elicitation.url"
+      ],
+      "correct": 0,
+      "explanation": "Objek elicitation kosong menyiratkan dukungan form, sedangkan form: {} menyatakannya secara eksplisit. Dukungan hanya-URL tidak cukup untuk request form."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa requestState harus dilindungi integritasnya dan terikat ke argumen persis?",
+      "options": [
+        "Untuk memilih scope cache",
+        "Untuk menggantikan OAuth",
+        "Untuk mencegah klien menggunakan ulang atau mengubah konfirmasi untuk aksi lain",
+        "Untuk membuat JSON lebih kecil"
+      ],
+      "correct": 2,
+      "explanation": "requestState melewati peer yang tidak tepercaya, jadi server harus mendeteksi manipulasi dan perubahan konteks. Klaim nonce atomik bersama mencegah penggunaan ulang antar instance handler."
+    },
+    {
+      "stage": "post",
+      "question": "Urutan mana yang benar untuk gateway modern?",
+      "options": [
+        "Mempercayai clientInfo, mengeksekusi, lalu mengaudit",
+        "Menerima kemampuan yang dideklarasikan sebagai izin",
+        "Mengautentikasi, memvalidasi wire dan header, memeriksa kompatibilitas kemampuan, mengotorisasi, lalu mengeksekusi",
+        "Membuat sesi, merutekan berdasarkan urutan discovery, lalu mengotorisasi"
+      ],
+      "correct": 2,
+      "explanation": "Ambiguitas wire dan identitas harus diselesaikan sebelum otorisasi dan eksekusi."
+    }
+  ]
+}

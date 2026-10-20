@@ -1,0 +1,90 @@
+{
+  "lesson": "39-reviewer-agent",
+  "title": "Reviewer Agent: Pisahkan Pembangun dari Penilai",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa builder tidak bisa menilai karyanya sendiri dengan andal?",
+      "options": [
+        "Ia kehabisan token",
+        "Model menolak menilai diri sendiri",
+        "Penerimaan itu perlu tetapi tidak cukup; kesesuaian masalah, disiplin scope, asumsi terdokumentasi, dan kesiapan handoff butuh peran berbeda dengan input berbeda",
+        "Ia kehilangan autentikasi"
+      ],
+      "correct": 2,
+      "explanation": "Celah antara builder dan reviewer adalah tempat keandalan hidup; penerimaan hanya membuktikan versi yang lebih lemah."
+    },
+    {
+      "stage": "pre",
+      "question": "Manakah yang BUKAN salah satu dari lima dimensi rubrik?",
+      "options": [
+        "Latency inferensi",
+        "Kesesuaian masalah",
+        "Disiplin scope",
+        "Kualitas verifikasi"
+      ],
+      "correct": 0,
+      "explanation": "Kelima dimensinya adalah kesesuaian masalah, disiplin scope, asumsi, kualitas verifikasi, dan kesiapan handoff."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dibutuhkan pemisahan peran?",
+      "options": [
+        "System prompt berbeda dan input berbeda; model yang sama bisa memainkan kedua peran jika postur berubah dan reviewer tidak punya akses tulis ke diff",
+        "Model berbeda",
+        "Akun baru",
+        "Perangkat keras fisik berbeda"
+      ],
+      "correct": 0,
+      "explanation": "Disiplinnya ada pada postur dan input, bukan pada identitas model."
+    },
+    {
+      "stage": "check",
+      "question": "Seperti apa arsitektur review Cloudflare 2026?",
+      "options": [
+        "Dua reviewer bergiliran",
+        "Hingga tujuh reviewer spesialis secara paralel di bawah Review Coordinator yang mendeduplikasi temuan; model teratas hanya untuk koordinator, tier lebih murah untuk spesialis",
+        "Satu reviewer besar",
+        "Satu LLM berurutan"
+      ],
+      "correct": 1,
+      "explanation": "Cloudflare menjalankan 131.246 review run dalam 30 hari memakai arsitektur spesialis + koordinator."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu dari empat bias LLM-judge yang didaftar pelajaran?",
+      "options": [
+        "Vector locality",
+        "Verbosity bias (output lebih panjang berskor lebih tinggi)",
+        "Self-preference (keluarga model yang sama)",
+        "Position bias (urutan A,B vs B,A tidak konsisten)"
+      ],
+      "correct": 0,
+      "explanation": "Keempatnya adalah position, verbosity, self-preference, authority; vector locality bukan salah satunya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu calibration set?",
+      "options": [
+        "Korpus pelatihan baru",
+        "10-20 penutupan tugas historis dengan vonis benar yang diketahui; jalankan ulang pada setiap perubahan prompt; jika kesepakatan reviewer turun di bawah 80%, perbaiki rubrik sebelum merilis",
+        "Fixture A/B test",
+        "Indeks vector"
+      ],
+      "correct": 1,
+      "explanation": "Calibration set menjaga reviewer tetap jujur; jika kesepakatan bergeser, perbaiki rubrik, bukan datanya."
+    },
+    {
+      "stage": "post",
+      "question": "Di mana laporan reviewer terintegrasi dengan bagian lain workbench?",
+      "options": [
+        "Ia menggantikan verifikasi",
+        "Ia hanya dikirim ke manajer",
+        "Ia dibundel ke dalam paket handoff (Pelajaran 40); review manusia dimulai dari laporan, bukan dari halaman kosong",
+        "Ia meng-override gerbang"
+      ],
+      "correct": 2,
+      "explanation": "Laporan review menyuapi handoff sehingga sesi berikutnya dan reviewer manusia mulai dari vonis tertulis."
+    }
+  ]
+}

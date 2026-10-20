@@ -1,0 +1,66 @@
+{
+  "lesson": "02-self-attention-from-scratch",
+  "title": "Self-Attention dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa self-attention vanilla menskalakan dot product dengan 1/sqrt(d_k)?",
+      "options": [
+        "Untuk membuat nilai output berada di antara 0 dan 1",
+        "Untuk menormalisasi vektor query dan key menjadi panjang unit",
+        "Untuk mencegah dot product membesar di dimensi tinggi, yang akan mendorong softmax ke wilayah dengan gradien sangat kecil",
+        "Untuk mengurangi biaya komputasi perkalian matriks"
+      ],
+      "correct": 2,
+      "explanation": "Saat d_k besar, dot product dari vektor acak tumbuh sebanding dengan sqrt(d_k). Tanpa scaling, softmax menerima input besar, menghasilkan output yang hampir one-hot di mana gradien menghilang."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tiga proyeksi dalam self-attention?",
+      "options": [
+        "Encoder, decoder, dan cross-attention",
+        "Query, key, dan value -- masing-masing proyeksi linear yang dipelajari dari input yang sama",
+        "Embedding, position, dan segment",
+        "Input, hidden, dan output"
+      ],
+      "correct": 1,
+      "explanation": "Self-attention memproyeksikan input melalui tiga matriks bobot berbeda untuk menghasilkan query (apa yang saya cari?), key (apa yang saya miliki?), dan value (apa yang saya keluarkan jika cocok?)."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam multi-head attention dengan 8 head dan d_model=512, berapa dimensi setiap head?",
+      "options": [
+        "512 -- setiap head melihat dimensi penuh",
+        "64 -- d_model dibagi rata antar head (512/8=64)",
+        "4096 -- setiap head memperluas representasi",
+        "8 -- satu dimensi per head"
+      ],
+      "correct": 1,
+      "explanation": "Multi-head attention membagi d_model menjadi h head, masing-masing beroperasi pada dimensi d_k = d_model/h. Dengan 512/8 = 64 dimensi per head, total biaya komputasi sama dengan self-attention single-head pada dimensi penuh."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dicegah oleh causal mask dalam attention autoregresif?",
+      "options": [
+        "Ia mencegah setiap posisi memperhatikan posisi masa depan, memastikan model hanya bisa memakai konteks masa lalu saat memprediksi token berikutnya",
+        "Ia mencegah model memperhatikan posisinya sendiri",
+        "Ia mencegah model memperhatikan token padding",
+        "Ia mencegah bobot attention menjadi terlalu besar"
+      ],
+      "correct": 0,
+      "explanation": "Dalam generasi autoregresif, token t tidak boleh melihat token t+1, t+2, dan seterusnya. Causal mask mengatur posisi masa depan ke -infinity sebelum softmax, sehingga bobot attention-nya menjadi nol."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa self-attention memiliki kompleksitas O(n^2) terhadap panjang sequence n?",
+      "options": [
+        "Karena model memiliki n layer yang ditumpuk satu sama lain",
+        "Karena backpropagation melalui attention memerlukan n^2 komputasi gradien",
+        "Karena feedforward layer setelah attention bersifat kuadratik",
+        "Karena setiap token menghitung skor attention dengan setiap token lain, menghasilkan matriks attention n x n"
+      ],
+      "correct": 3,
+      "explanation": "Perkalian matriks QK^T menghasilkan matriks attention n x n di mana entri (i,j) adalah attention dari token i ke token j. Baik komputasi maupun memori berskala O(n^2), itulah sebabnya model long-context membutuhkan teknik seperti FlashAttention."
+    }
+  ]
+}

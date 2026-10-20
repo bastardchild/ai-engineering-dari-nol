@@ -100,7 +100,7 @@
     }
     var links = document.querySelectorAll('.header-github');
     for (var j = 0; j < links.length; j++) {
-      links[j].setAttribute('aria-label', 'View ai-engineering-from-scratch on GitHub, ' + format(n) + ' stars');
+      links[j].setAttribute('aria-label', 'Lihat ai-engineering-from-scratch di GitHub, ' + format(n) + ' bintang');
     }
   }
 
@@ -246,10 +246,10 @@
   }
 
   function addNavigationLinks(nav) {
-    ensureNavigationLink(nav, 'learning-paths.html', 'Learning Paths', '');
-    ensureNavigationLink(nav, 'projects.html', 'Projects', '');
-    ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
-    ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');
+    ensureNavigationLink(nav, 'learning-paths.html', 'Jalur Belajar', '');
+    ensureNavigationLink(nav, 'projects.html', 'Proyek', '');
+    ensureNavigationLink(nav, 'certifications.html', 'Sertifikasi', 'header-mobile-only');
+    ensureNavigationLink(nav, 'sponsors.html', 'Dukung kami', 'header-mobile-only');
   }
 
   function setupNavigation(header) {
@@ -263,21 +263,21 @@
 
     navId += 1;
     if (!nav.id) nav.id = 'siteNavigation' + navId;
-    if (!nav.getAttribute('aria-label')) nav.setAttribute('aria-label', 'Primary');
+    if (!nav.getAttribute('aria-label')) nav.setAttribute('aria-label', 'Utama');
 
     var toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'header-menu-toggle';
     toggle.setAttribute('aria-controls', nav.id);
     toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Open navigation');
+    toggle.setAttribute('aria-label', 'Buka navigasi');
     toggle.innerHTML = '<span class="header-menu-icon" aria-hidden="true">'
       + '<span></span><span></span><span></span></span>';
     inner.insertBefore(toggle, nav);
 
     var priorityNav = document.createElement('nav');
     priorityNav.className = 'header-priority-nav';
-    priorityNav.setAttribute('aria-label', 'Quick links');
+    priorityNav.setAttribute('aria-label', 'Tautan cepat');
     priorityNav.hidden = true;
     inner.insertBefore(priorityNav, nav);
 
@@ -302,7 +302,7 @@
     var tools = document.createElement('div');
     tools.className = 'header-mobile-tools';
     tools.setAttribute('role', 'group');
-    tools.setAttribute('aria-label', 'Site tools');
+    tools.setAttribute('aria-label', 'Alat situs');
     nav.appendChild(tools);
 
     var directChildren = Array.prototype.slice.call(inner.children);
@@ -351,7 +351,7 @@
       open = !!next;
       header.classList.toggle('header-nav-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      toggle.setAttribute('aria-label', open ? 'Tutup navigasi' : 'Buka navigasi');
       nav.hidden = !open;
       if (restoreFocus && !open) toggle.focus();
     }

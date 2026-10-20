@@ -1,0 +1,90 @@
+{
+  "lesson": "17-personal-ai-tutor",
+  "title": "Capstone 17 — Tutor AI Pribadi (Adaptif, Multimodal, dengan Memori)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan kebijakan tutor Socratic saat pelajar langsung meminta jawaban?",
+      "options": [
+        "Beralih ke node konsep lain",
+        "Mencatat permintaan dan diam",
+        "Mengajukan pertanyaan penuntun yang menopang pelajar menuju jawaban",
+        "Langsung memberi jawaban lalu lanjut"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Struktur apa yang dikodekan graph kurikulum?",
+      "options": [
+        "Hanya node yang terakhir dipelajari",
+        "Topik yang diacak",
+        "Graph berarah konsep dengan edge prasyarat, terhubung ke konten OER",
+        "Daftar datar konsep tak terkait"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diperbarui learner model setelah setiap interaksi?",
+      "options": [
+        "Skema graph kurikulum",
+        "Bobot LLM dasar",
+        "Probabilitas mastery per konsep lewat Bayesian knowledge tracing atau varian serupa",
+        "Kebijakan retensi COPPA"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana memori dibagi antara penyimpanan episodik dan semantik?",
+      "options": [
+        "Episodik untuk orang tua; semantik untuk pelajar",
+        "Episodik menyimpan setiap interaksi; semantik menyimpan kesalahan dan preferensi ringkas yang dipromosikan dari episodik",
+        "Episodik menyimpan embedding; semantik menyimpan audio mentah",
+        "Keduanya duplikat data yang sama"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Batasan mana yang membentuk retensi memori untuk pelajar K-12?",
+      "options": [
+        "Retensi sadar-COPPA dengan penghapusan otomatis setelah jendela tertentu dan akses orang tua",
+        "Retensi berdasarkan panjang konteks model",
+        "Retensi permanen tanpa penghapusan",
+        "Hanya GDPR"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa struktur studi khasiat yang dipakai untuk menggerbang deliverable?",
+      "options": [
+        "Satu sesi satu jam dengan satu pelajar",
+        "Survei internet anonim",
+        "AB test 30 detik",
+        "Pre-test dan post-test selama dua minggu dengan 10 pelajar, dibandingkan dengan kohort baseline non-adaptif"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Jalur input multimodal apa yang disediakan tutor untuk pelajar?",
+      "options": [
+        "Hanya foto lewat model OCR khusus",
+        "Teks yang diketik, suara lewat LiveKit + Whisper, dan foto matematika lewat dots.ocr atau PaliGemma 2",
+        "Hanya teks",
+        "Hanya suara tanpa teks atau foto"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

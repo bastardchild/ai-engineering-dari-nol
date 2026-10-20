@@ -1,0 +1,78 @@
+{
+  "lesson": "78-zero-parameter-sharding",
+  "title": "ZeRO Optimizer State Sharding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa ZeRO memecah optimiser state lebih dulu alih-alih parameter?",
+      "options": [
+        "Optimiser state adalah suku memori terbesar dan hanya disentuh saat step, bukan forward atau backward",
+        "DeepSpeed mewajibkannya",
+        "Optimiser lebih penting",
+        "Parameter lebih mudah"
+      ],
+      "correct": 0,
+      "explanation": "Untuk Adam dalam mixed precision, master fp32 plus dua momen adalah 12P byte per rank versus 4P untuk param fp16 + gradien. Memecah suku terbesar dulu menang memori terbanyak per unit kompleksitas."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa pola wire per langkah ZeRO stage 1?",
+      "options": [
+        "Tidak ada",
+        "Satu broadcast",
+        "Satu allreduce",
+        "Satu reduce_scatter pada gradien plus satu allgather pada parameter yang diperbarui"
+      ],
+      "correct": 3,
+      "explanation": "Reduce_scatter hanya mengirim shard gradien ke tiap rank; allgather mendistribusikan shard parameter yang diperbarui kembali. Total byte sama dengan allreduce, memori dibagi N."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa bandwidth per langkah sama dengan DDP?",
+      "options": [
+        "Itu tidak sama",
+        "Sihir",
+        "ZeRO memakai kompresi",
+        "Allreduce sama dengan reduce_scatter plus allgather dalam bandwidth; ZeRO membelahnya menjadi dua separuh pada data berbeda"
+      ],
+      "correct": 3,
+      "explanation": "Ring allreduce diimplementasikan sebagai reduce_scatter lalu allgather. ZeRO melakukan dua operasi sama tetapi allgather memutar parameter yang diperbarui, bukan gradien yang dijumlahkan."
+    },
+    {
+      "stage": "check",
+      "question": "Untuk model 7B dengan Adam dalam mixed precision pada 8 rank, berapa penurunan memori versus DDP vanilla?",
+      "options": [
+        "99%",
+        "0%",
+        "10%",
+        "Sekitar 65% (vanilla 16P vs ZeRO-1 4P + 12P/N = 5.5P)"
+      ],
+      "correct": 3,
+      "explanation": "Vanilla: 2P + 2P + 4P + 4P + 4P = 16P. ZeRO-1: 2P + 2P + (4P+4P+4P)/8 = 5.5P. Penurunan (16-5.5)/16 = 65.6%."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditambahkan ZeRO-2 di atas ZeRO-1?",
+      "options": [
+        "Menghapus optimiser",
+        "Juga membuang gradien non-shard setelah reduce_scatter, membebaskan memori gradien per rank; bandwidth tetap sama",
+        "Tidak ada",
+        "Mengganti backend ke NCCL"
+      ],
+      "correct": 1,
+      "explanation": "ZeRO-2 menolkan porsi gradien non-shard setelah reduce_scatter; bandwidth sama dengan ZeRO-1 tetapi memori gradien lebih rendah."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa ZeRO mewajibkan checkpoint optimiser state mencatat rank mana memiliki shard mana?",
+      "options": [
+        "Tidak",
+        "Kosmetik",
+        "Kompresi",
+        "Tanpa kepemilikan per rank state tersimpan tidak terbaca saat restart; melanjutkan pada world size sama perlu menaruh shard yang tepat di rank yang tepat"
+      ],
+      "correct": 3,
+      "explanation": "Lesson 80 membangun manifest checkpoint sharded justru agar run ZeRO dapat melanjutkan pada topologi sama."
+    }
+  ]
+}

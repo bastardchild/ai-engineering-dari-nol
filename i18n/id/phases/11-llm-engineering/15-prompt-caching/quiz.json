@@ -1,0 +1,66 @@
+{
+  "lesson": "15-prompt-caching",
+  "title": "Prompt Caching dan Context Caching",
+  "questions": [
+    {
+      "stage": "post",
+      "question": "Diskon apa yang diterapkan Anthropic untuk pembacaan cache dibanding tarif input dasar?",
+      "options": [
+        "Diskon 25%",
+        "Diskon 90%",
+        "Diskon 75%",
+        "Diskon 50%"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa timestamp dinamis harus berada di bawah cache breakpoint, bukan di atasnya?",
+      "options": [
+        "Anthropic secara eksplisit menolak timestamp di blok ter-cache",
+        "Timestamp membingungkan tokenizer",
+        "Mereka memakan lebih banyak token daripada teks statis",
+        "Cache hanya hit ketika prefix identik byte; timestamp yang berubah memutus kecocokan untuk semua yang setelahnya"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana prompt caching OpenAI dikonfigurasi?",
+      "options": [
+        "Flag level sistem yang kamu aktifkan per proyek",
+        "Pencocokan prefix otomatis tanpa konfigurasi",
+        "API CachedContent yang kamu buat dan rujuk",
+        "Marker cache_control eksplisit"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Untuk Anthropic, berapa premi write yang dikenakan TTL diperpanjang 1 jam dibanding default 5 menit?",
+      "options": [
+        "4x premi write",
+        "2x premi write (50% di atas baseline)",
+        "Tanpa premi write",
+        "Sama"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Berapa kali penggunaan ulang yang dibutuhkan untuk mencapai titik impas pada premi write 25% Anthropic?",
+      "options": [
+        "5",
+        "10",
+        "1",
+        "2"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

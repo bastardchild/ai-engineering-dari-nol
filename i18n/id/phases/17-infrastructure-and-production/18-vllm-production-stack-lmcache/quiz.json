@@ -1,0 +1,78 @@
+{
+  "lesson": "18-vllm-production-stack-lmcache",
+  "title": "Stack Serving Produksi — KV Offloading dan Routing Cache-Aware",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang terutama ditangani LMCache dalam deployment vLLM?",
+      "options": [
+        "Contention GIL pada tokenizer",
+        "Penyaringan egress jaringan",
+        "Image pull saat cold-start",
+        "Tekanan KV cache di HBM yang menyebabkan preemption dan prefill ulang prefix yang sama"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "API vLLM mana yang memperkenalkan backend KV cache yang bisa dipasang?",
+      "options": [
+        "Flag prefix-caching",
+        "Connector API di vLLM v0.9.0",
+        "PagedAttention v2",
+        "ChunkedPrefill API"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditambahkan rilis vLLM 0.11.0 (Januari 2026) ke jalur KV offload?",
+      "options": [
+        "Penghapusan dukungan LMCache",
+        "KV cache FP8 yang wajib",
+        "Jalur offload asinkron agar engine tidak terblokir pada offload dalam kasus umum",
+        "Offload yang hanya sinkron"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kapan kamu harus memilih LMCache dibanding offload CPU native?",
+      "options": [
+        "Saat kamu hanya berjalan di CPU",
+        "Saat beberapa engine berbagi prefix lintas tenant, varian LoRA, atau konteks RAG berulang, sehingga penggunaan ulang antar-engine menguntungkan",
+        "Saat satu engine mengalami tekanan HBM dan tidak ada prefix sharing",
+        "Saat kamu ingin menonaktifkan KV caching sepenuhnya"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang terjadi pada manfaat LMCache saat jejak KV tetap jauh di bawah kapasitas HBM?",
+      "options": [
+        "LMCache otomatis nonaktif",
+        "Konfigurasi menyamai baseline dengan overhead sekitar 3-5% dan tanpa manfaat nyata",
+        "Engine crash",
+        "Itu tetap menggandakan throughput"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa LMCache bisa dikomposisikan dengan serving terdisagregasi (Fase 17 · 17)?",
+      "options": [
+        "KV yang dipindahkan dari prefill ke decode mendarat di LMCache; query berikutnya bisa menarik dari LMCache dan melewati prefill, jadi router cache-aware bisa memilih engine yang cache lokal atau cache bersama LMCache-nya cocok",
+        "Tidak — keduanya saling eksklusif",
+        "Karena LMCache menggantikan NIXL",
+        "Karena LMCache berjalan di GPU yang sama dengan engine"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

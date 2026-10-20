@@ -1,0 +1,102 @@
+{
+  "lesson": "26-relation-extraction-kg",
+  "title": "Relation Extraction & Konstruksi Knowledge Graph",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa unit atomik sebuah knowledge graph?",
+      "options": [
+        "Token",
+        "POS tag",
+        "Triple (subjek, relasi, objek)",
+        "Kalimat"
+      ],
+      "correct": 2,
+      "explanation": "KG menyimpan informasi sebagai triple (s, r, o); triple yang diagregasi membentuk graf."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa kepanjangan AEVS dalam relation extraction 2026?",
+      "options": [
+        "Aggregated Entity-Value Schema",
+        "Async Entity Validation Service",
+        "Auto-Encoder Vector Search",
+        "Anchor-Extraction-Verification-Supplement: anchor span, ekstrak triple, verifikasi terhadap sumber, lengkapi cakupan"
+      ],
+      "correct": 3,
+      "explanation": "AEVS adalah kerangka mitigasi halusinasi 2026 untuk RE yang ter-grounding."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa setiap triple harus membawa provenance sumber (id dokumen + span)?",
+      "options": [
+        "Provenance diwajibkan SPARQL",
+        "Ia mempercepat ekstraksi",
+        "Provenance mengubah ontologi",
+        "Provenance memungkinkanmu mengaudit triple dan menolak halusinasi yang span-nya tidak cocok dengan teks sumber"
+      ],
+      "correct": 3,
+      "explanation": "Provenance memungkinkan audit dan merupakan inti deteksi halusinasi bergaya AEVS."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan kanonikalisasi relasi?",
+      "options": [
+        "Menambahkan embedding",
+        "Menghapus triple",
+        "Memetakan frasa verba permukaan (misalnya 'was born in', 'is a native of') ke id properti tetap agar graf dapat dikueri",
+        "Menerjemahkan dokumen"
+      ],
+      "correct": 2,
+      "explanation": "Kanonikalisasi meruntuhkan parafrase menjadi id properti KG kanonik."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa relation extraction biasanya memerlukan coreference resolution terlebih dahulu?",
+      "options": [
+        "Pronomina seperti 'he founded Apple' harus diselesaikan ke entitas bernama sebelum ekstraksi triple",
+        "Coref menormalisasi kapitalisasi",
+        "Coref menyediakan posisi",
+        "Coref menambahkan embedding"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa coref, RE menempelkan relasi ke pronomina alih-alih entitas bernama yang mendasarinya."
+    },
+    {
+      "stage": "post",
+      "question": "Pilihan mana yang menukar recall IE terbuka dengan kemampuan kueri graf?",
+      "options": [
+        "Sampling triple acak",
+        "Graf hanya embedding",
+        "Memetakan relasi open-IE ke ontologi tertutup (misalnya properti Wikidata) sebelum digabungkan ke KG",
+        "Melewati NER"
+      ],
+      "correct": 2,
+      "explanation": "Ontologi tertutup membuat graf dapat dikueri; langkah kanonikalisasi membayar dirinya di hilir."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa banyak KG produksi memakai kualifier temporal (waktu mulai/selesai)?",
+      "options": [
+        "Diwajibkan RDF",
+        "Untuk menghapus entitas NIL",
+        "SPARQL lebih cepat",
+        "Banyak relasi dibatasi waktu (pemberi kerja, pasangan, peran); kualifier mencegah klaim 'benar selamanya' yang menjadi basi"
+      ],
+      "correct": 3,
+      "explanation": "Relasi dibatasi waktu memerlukan kualifier (misalnya Wikidata P580/P582) atau fakta diam-diam menjadi basi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu REBEL?",
+      "options": [
+        "Tokenizer",
+        "Model coreference",
+        "Seq2seq relation extractor yang mengeluarkan triple yang sudah dalam id properti Wikidata",
+        "Vector database"
+      ],
+      "correct": 2,
+      "explanation": "REBEL (Babelscape) adalah model RE seq2seq yang dilatih pada triple Wikidata dengan supervisi jarak jauh."
+    }
+  ]
+}

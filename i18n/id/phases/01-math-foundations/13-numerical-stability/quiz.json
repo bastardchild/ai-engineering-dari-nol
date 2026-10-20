@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa rentang perkiraan angka yang dapat direpresentasikan float32?",
+      "options": [
+        "+/- 1.8e308",
+        "+/- 3.4e38",
+        "+/- 1.0e10",
+        "+/- 65,504"
+      ],
+      "correct": 1,
+      "explanation": "Float32 memiliki eksponen 8-bit yang memberi rentang sekitar +/- 3.4e38. Float16 terbatas pada +/- 65.504, dan float64 mencapai +/- 1.8e308."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa 0.1 + 0.2 tidak sama dengan 0.3 dalam aritmetika floating-point?",
+      "options": [
+        "CPU memiliki bug di sirkuit penjumlahannya",
+        "0.1 dan 0.2 tidak dapat direpresentasikan secara tepat dalam floating point biner",
+        "Python membulatkan semua desimal menjadi bilangan bulat",
+        "0.3 bukan bilangan floating-point yang valid"
+      ],
+      "correct": 1,
+      "explanation": "Angka 0.1 adalah pecahan berulang dalam biner (seperti 1/3 dalam desimal). Float32 memotongnya, sehingga nilai tersimpannya sekitar 0.100000001490116. Akumulasi error membuat jumlahnya berbeda dari 0.3."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam implementasi softmax yang stabil, mengapa kamu mengurangi max(logits) sebelum eksponensiasi?",
+      "options": [
+        "Ia menormalisasi logit agar bermean nol",
+        "Ia mengonversi logit dari float16 ke float32",
+        "Ia membuat probabilitas output lebih seragam",
+        "Ia mencegah exp() overflow dengan memastikan eksponen terbesar adalah 0"
+      ],
+      "correct": 3,
+      "explanation": "Setelah mengurangi max(logits), nilai terbesar adalah 0 dan exp(0) = 1, yang tidak dapat overflow. Semua nilai lain negatif, sehingga eksponensialnya kurang dari 1. Probabilitasnya identik secara matematis dengan versi naif."
+    },
+    {
+      "stage": "post",
+      "question": "Saat memakai central finite difference untuk gradient checking, apa yang terjadi jika ukuran langkah h terlalu kecil (misalnya 1e-15)?",
+      "options": [
+        "Aproksimasinya menjadi lebih akurat",
+        "Gradient otomatis menjadi nol",
+        "Catastrophic cancellation merusak hasil karena f(x+h) dan f(x-h) hampir identik",
+        "Evaluasi fungsi menjadi lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "Ketika h sangat kecil, f(x+h) dan f(x-h) hanya berbeda di beberapa digit signifikan terakhirnya. Mengurangkannya meniadakan digit depan, menyisakan sebagian besar noise pembulatan. Nilai baik yang umum adalah h = 1e-5 hingga 1e-7."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa bfloat16 umumnya lebih disukai daripada float16 untuk pelatihan neural network?",
+      "options": [
+        "bfloat16 memakai lebih sedikit memori daripada float16",
+        "bfloat16 memiliki rentang eksponen yang sama dengan float32, menghindari overflow pada aktivasi besar tanpa loss scaling",
+        "bfloat16 didukung lebih banyak arsitektur GPU daripada float16",
+        "bfloat16 memiliki lebih banyak bit mantissa, memberi presisi lebih baik"
+      ],
+      "correct": 1,
+      "explanation": "bfloat16 memiliki 8 bit eksponen (sama seperti float32, rentang hingga 3.4e38) sedangkan float16 hanya 5 bit eksponen (maks ~65.504). Selama pelatihan, aktivasi dan gradient dapat melebihi 65.504, menyebabkan overflow float16. bfloat16 menanganinya tanpa loss scaling."
+    }
+  ]
+}

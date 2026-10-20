@@ -1,0 +1,78 @@
+{
+  "lesson": "17-mcp-gateways-and-registries",
+  "title": "Gateway MCP Stateless dan Admission Registry",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang harus dipertahankan gateway MCP saat ini di antara request klien biasa?",
+      "options": [
+        "Satu Mcp-Session-Id per backend",
+        "Koneksi HTTP terakhir",
+        "Stream event GET mandiri",
+        "Tidak ada sesi protokol; setiap request membawa informasi yang diperlukan untuk validasi dan routing"
+      ],
+      "correct": 3,
+      "explanation": "Request biasa MCP 2026-07-28 bersifat mandiri dan dapat mencapai instance gateway mana pun yang sehat."
+    },
+    {
+      "stage": "check",
+      "question": "Hasil tools/list yang difilter per principal biasanya harus memakai cache scope mana?",
+      "options": [
+        "public",
+        "global",
+        "private",
+        "session"
+      ],
+      "correct": 2,
+      "explanation": "Daftar tool spesifik pengguna tidak boleh dibagikan lintas konteks otorisasi."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana gateway meneruskan panggilan tool ke backend saat ini?",
+      "options": [
+        "Membuka stream GET lebih dulu",
+        "Menyalin bearer token dan session id luar",
+        "Menggunakan ulang id JSON-RPC luar sebagai state durable",
+        "Membuat request mandiri baru dengan metadata klien gateway dan kemampuan yang dimediasi"
+      ],
+      "correct": 3,
+      "explanation": "Gateway adalah klien bagi backend dan membuat request baru yang valid secara independen."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana gateway memakai record server.json Registry resmi selama admission?",
+      "options": [
+        "Memvalidasi bentuk publikasinya, lalu menggabungkannya dengan state publisher terverifikasi, provenance, kebijakan, dan persetujuan yang terpisah",
+        "Menganggap publikasi sebagai tinjauan keamanan yang selesai",
+        "Menyalin klaim verifikasi dari field record sembarang",
+        "Mempercayai record apa pun yang namanya terlihat familier"
+      ],
+      "correct": 0,
+      "explanation": "server.json membawa metadata publikasi. Provenance terverifikasi dan keputusan persetujuan gateway tetap menjadi bukti admission eksternal."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana notifikasi perubahan list berdurasi panjang dibuka pada Streamable HTTP modern?",
+      "options": [
+        "Melalui request POST subscriptions/listen yang responsnya SSE",
+        "Melalui resources/subscribe",
+        "Melalui GET mandiri dengan Last-Event-ID",
+        "Melalui notifications/initialized"
+      ],
+      "correct": 0,
+      "explanation": "subscriptions/listen menggantikan model GET tanpa permintaan dan subscription resource yang lama."
+    },
+    {
+      "stage": "post",
+      "question": "Aturan routing ekstensi Tasks mana yang berlaku saat ini?",
+      "options": [
+        "Memakai tasks/result untuk output final",
+        "Memakai tasks/list untuk memulihkan semua task dalam sesi",
+        "Merutekan tasks/get, tasks/update, dan tasks/cancel memakai taskId sebagai Mcp-Name",
+        "Menyimpan task di Mcp-Session-Id"
+      ],
+      "correct": 2,
+      "explanation": "Ekstensi resmi memakai get, update, dan cancel; ID task menyediakan handle routing tanpa sesi protokol."
+    }
+  ]
+}

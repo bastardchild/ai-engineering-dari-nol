@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dimaksud dengan 'single-agent ceiling'?",
+      "options": ["Titik ketika satu agen gagal karena tugas melebihi satu context window, memerlukan keahlian berbeda, atau butuh kerja paralel", "Ukuran model maksimum yang dapat berjalan di satu GPU", "Jumlah maksimum tool yang dapat dipakai agen", "Batas berapa banyak panggilan API yang dapat dilakukan agen per menit"],
+      "correct": 0,
+      "explanation": "Satu agen memiliki satu context window, satu system prompt, dan memproses secara berurutan. Ketika tugas memerlukan membaca 50 file (context overflow), berpindah antara riset dan coding (keahlian campuran), atau melakukan pekerjaan independen secara bersamaan (paralelisme), satu agen akan gagal."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa kamu mungkin memakai beberapa agen spesialis alih-alih satu agen umum yang kuat?",
+      "options": ["Setiap agen dapat memiliki system prompt terfokus, konteks lebih kecil, dan tool khusus, sehingga performa pada subtugas spesifiknya lebih baik", "Beberapa agen selalu lebih murah daripada satu model besar", "Agen umum tidak dapat memakai tool", "Beberapa agen dapat berbagi context window yang sama"],
+      "correct": 0,
+      "explanation": "Agen peneliti yang dioptimalkan untuk pencarian, agen coder yang dioptimalkan untuk implementasi, dan agen reviewer yang dioptimalkan untuk kualitas kode masing-masing melakukan tugasnya lebih baik daripada satu agen yang mencoba menjadi ketiganya sekaligus."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan pola multi-agen pipeline (sekuensial) lebih baik daripada pola fan-out paralel?",
+      "options": ["Ketika setiap tahap bergantung pada output tahap sebelumnya, seperti riset lalu coding lalu review", "Ketika kamu memiliki lebih banyak GPU daripada tugas", "Ketika kamu ingin meminimalkan latensi total", "Ketika semua subtugas saling independen"],
+      "correct": 0,
+      "explanation": "Pola pipeline tepat ketika pekerjaan memang sekuensial: coder membutuhkan output peneliti, dan reviewer membutuhkan output coder. Fan-out paralel lebih baik ketika subtugas independen."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu pola supervisor dalam sistem multi-agen?",
+      "options": ["Manusia menetapkan tugas secara manual ke setiap agen", "Pola di mana agen melakukan voting atas respons terbaik", "Agen orchestrator pusat yang menguraikan tugas, mendelegasikan ke agen worker, mengumpulkan hasil, dan menentukan langkah berikutnya", "Sistem pemantauan yang mencatat aksi agen untuk debugging"],
+      "correct": 2,
+      "explanation": "Agen supervisor bertindak seperti manajer proyek: memecah tugas menjadi subtugas, menetapkannya ke worker spesialis, meninjau output mereka, dan memutuskan apakah akan beriterasi atau menyelesaikan. Ini memberikan kontrol terpusat atas alur kerja."
+    },
+    {
+      "stage": "post",
+      "question": "Apa tradeoff utama sistem multi-agen dibandingkan agen tunggal?",
+      "options": ["Sistem multi-agen selalu menghasilkan kualitas lebih rendah", "Sistem multi-agen tidak dapat memakai tool eksternal", "Sistem multi-agen memerlukan lebih banyak data latih", "Kompleksitas, latensi, dan biaya meningkat akibat banyak panggilan LLM dan komunikasi antar-agen, ditukar dengan penanganan tugas kompleks yang lebih baik"],
+      "correct": 3,
+      "explanation": "Setiap agen tambahan berarti lebih banyak panggilan LLM (biaya), lebih banyak round trip (latensi), dan lebih banyak mode kegagalan (kompleksitas debugging). Multi-agen hanya layak ketika tugas benar-benar melebihi kemampuan satu agen."
+    }
+  ]
+}

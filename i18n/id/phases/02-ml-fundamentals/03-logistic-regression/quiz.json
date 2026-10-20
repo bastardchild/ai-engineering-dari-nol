@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "logreg-pre-1",
+      "stage": "pre",
+      "question": "Berapa rentang output fungsi sigmoid?",
+      "options": [
+        "0 sampai 1 (eksklusif)",
+        "-1 sampai 1",
+        "Minus tak hingga sampai plus tak hingga",
+        "0 sampai plus tak hingga"
+      ],
+      "correct": 0,
+      "explanation": "Fungsi sigmoid 1/(1+e^(-z)) menghasilkan nilai yang ketat di antara 0 dan 1, sehingga bisa ditafsirkan sebagai probabilitas."
+    },
+    {
+      "id": "logreg-pre-2",
+      "stage": "pre",
+      "question": "Mengapa logistic regression disebut 'regression' padahal dipakai untuk klasifikasi?",
+      "options": [
+        "Karena ia meminimalkan mean squared error seperti linear regression",
+        "Karena ia memprediksi nilai kontinu yang kemudian dibulatkan",
+        "Nama itu berasal dari fungsi logistic (sigmoid) yang dipakainya, bukan dari analisis regresi",
+        "Karena awalnya dirancang untuk regresi lalu diadaptasi"
+      ],
+      "correct": 2,
+      "explanation": "Nama itu berasal dari fungsi logistic (sigmoid). Meski namanya begitu, logistic regression adalah algoritma klasifikasi yang mengeluarkan probabilitas kelas."
+    },
+    {
+      "id": "logreg-post-1",
+      "stage": "post",
+      "question": "Mengapa binary cross-entropy dipakai, bukan MSE, untuk logistic regression?",
+      "options": [
+        "MSE hanya bisa dipakai dengan model linear",
+        "Cross-entropy hanya bekerja kalau dataset seimbang",
+        "Cross-entropy lebih cepat dihitung",
+        "MSE dengan sigmoid menghasilkan permukaan cost non-convex dengan local minima, sedangkan cross-entropy convex"
+      ],
+      "correct": 3,
+      "explanation": "MSE yang digabung dengan aktivasi sigmoid menghasilkan permukaan cost non-convex dengan banyak local minima. Binary cross-entropy dengan sigmoid bersifat convex, menjamin satu global minimum."
+    },
+    {
+      "id": "logreg-post-2",
+      "stage": "post",
+      "question": "Sebuah filter spam punya precision = 0.95 dan recall = 0.60. Apa artinya secara praktis?",
+      "options": [
+        "60% email yang ditandai adalah spam, dan 95% dari seluruh spam tertangkap",
+        "Saat menandai sebuah email sebagai spam, itu benar 95% dari waktu, tetapi hanya 60% spam asli yang tertangkap",
+        "95% dari semua email terklasifikasi benar, dan 60% spam tertangkap",
+        "Model 95% akurat di set test dan 60% di set training"
+      ],
+      "correct": 1,
+      "explanation": "Precision = 0.95 berarti 95% email yang diprediksi spam memang spam (alarm palsu sedikit). Recall = 0.60 berarti hanya 60% spam asli yang tertangkap (40% lolos)."
+    },
+    {
+      "id": "logreg-post-3",
+      "stage": "post",
+      "question": "Pada softmax regression untuk 4 kelas, apa yang benar tentang probabilitas outputnya?",
+      "options": [
+        "Hanya 2 kelas teratas yang mendapat probabilitas bukan nol",
+        "Outputnya adalah skor mentah, bukan probabilitas",
+        "Keempat probabilitas output berjumlah 1, dan kelas dengan probabilitas tertinggi adalah prediksinya",
+        "Tiap kelas mendapat probabilitas independen antara 0 dan 1"
+      ],
+      "correct": 2,
+      "explanation": "Softmax mengubah vektor skor mentah menjadi probabilitas yang berjumlah 1. Kelas yang diprediksi adalah kelas dengan probabilitas tertinggi."
+    }
+  ]
+}

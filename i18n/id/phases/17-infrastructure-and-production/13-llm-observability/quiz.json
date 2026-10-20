@@ -1,0 +1,78 @@
+{
+  "lesson": "13-llm-observability",
+  "title": "Pemilihan Stack Observability LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana pelajaran ini membagi pasar observability LLM 2026?",
+      "options": [
+        "Platform pengembangan (dibundel dengan eval/prompt/session) versus tool gateway/telemetri",
+        "Python versus TypeScript",
+        "Vendor versus open source",
+        "On-prem versus cloud"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Tool mana yang diposisikan pelajaran ini sebagai inti berlisensi MIT dengan cerita self-host kuat dan tier cloud gratis 50K event/bulan?",
+      "options": [
+        "Phoenix",
+        "Arize AX",
+        "LangSmith",
+        "Langfuse"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa klaim skala utama Arize AX dibanding stack observability monolitik seperti Datadog?",
+      "options": [
+        "Selalu lebih mahal",
+        "Sekitar 100x lebih murah pada skala lewat integrasi Iceberg/Parquet zero-copy",
+        "Gratis di bawah 1 juta event/hari",
+        "10% lebih murah"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Lapisan instrumentasi mana yang disebut pelajaran ini salah untuk portabilitas?",
+      "options": [
+        "Instrumentasi di lapisan HTTP/OpenAI-SDK",
+        "Sampling 5% pada permintaan sukses",
+        "Memakai konvensi semantik OpenTelemetry GenAI",
+        "Instrumentasi di dalam framework agent-mu, karena itu mengikatmu ke framework tersebut"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Konvensi OpenTelemetry mana yang diidentifikasi pelajaran ini sebagai lapisan interoperabilitas antar tool observability pada 2026?",
+      "options": [
+        "Konvensi semantik GenAI (gen_ai.system, gen_ai.request.model, gen_ai.usage.input_tokens)",
+        "Konvensi semantik OTel HTTP",
+        "Konvensi semantik OTel messaging",
+        "Konvensi semantik OTel database"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran ini berargumen retensi trace penuh tidak berskala di atas 1 juta permintaan/hari?",
+      "options": [
+        "Vendor memblokirnya",
+        "Phoenix hanya mendukung 1 juta trace",
+        "Biaya penyimpanan retensi lebih besar daripada panggilan LLM itu sendiri; tim harus sampling (misalnya 100% error, 100% biaya tinggi, 5% sukses)",
+        "OpenTelemetry membatasi volume trace"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

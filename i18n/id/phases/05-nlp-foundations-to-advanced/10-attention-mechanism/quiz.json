@@ -1,0 +1,102 @@
+{
+  "lesson": "10-attention-mechanism",
+  "title": "Mekanisme Attention — Terobosannya",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Masalah apa dalam seq2seq yang diselesaikan attention Bahdanau?",
+      "options": [
+        "Ketidakcocokan tokenization",
+        "Latensi beam search",
+        "Bottleneck vektor konteks berukuran tetap di mana decoder hanya melihat state akhir encoder",
+        "Gradien menghilang pada encoder"
+      ],
+      "correct": 2,
+      "explanation": "Attention memungkinkan decoder mengonsultasikan setiap state encoder, bukan hanya yang terakhir."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu vektor konteks attention pada langkah decoder t?",
+      "options": [
+        "Hidden state akhir encoder",
+        "Embedding input decoder",
+        "Proyeksi acak",
+        "Rata-rata berbobot hidden state encoder di mana bobotnya berasal dari skor query-key"
+      ],
+      "correct": 3,
+      "explanation": "Konteks = jumlah alpha_i * h_i, rata-rata berbobot state encoder yang bergantung langkah."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam attention aditif Bahdanau, apa peran vektor v_a?",
+      "options": [
+        "Ia menyandikan posisi",
+        "Ia memberi bias pada softmax",
+        "Ia mengontrol dropout",
+        "Ia adalah proyeksi yang mengubah kombinasi hidden berdimensi attention menjadi skor skalar per posisi encoder"
+      ],
+      "correct": 3,
+      "explanation": "v_a melakukan dot-product dengan tanh(W_a s + U_a h) untuk meruntuhkan vektor d_attn menjadi skor skalar."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam varian attention 'dot' Luong, batasan apa yang harus dipenuhi?",
+      "options": [
+        "Beam search diperlukan",
+        "State decoder dan state encoder harus berbagi dimensi yang sama (d_s == d_h)",
+        "Softmax harus dalam ruang log",
+        "Encoder harus bidirectional"
+      ],
+      "correct": 1,
+      "explanation": "dot memakai s^T h tanpa proyeksi, sehingga dimensinya harus sama persis."
+    },
+    {
+      "stage": "check",
+      "question": "Pemetaan Q/K/V mana yang menggambarkan attention klasik (Bahdanau/Luong)?",
+      "options": [
+        "Q dari encoder, K dan V dari decoder",
+        "Q, K, V adalah tiga proyeksi terpisah yang dipelajari dari sumber",
+        "Q = state decoder; K dan V = state encoder (tensor yang sama)",
+        "Q acak, K dan V dipelajari"
+      ],
+      "correct": 2,
+      "explanation": "Dalam attention klasik, key dan value keduanya state encoder; transformer memisahkan K dan V melalui proyeksi yang dipelajari."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa melaporkan bobot attention mentah sebagai 'penjelasan' dianggap rapuh?",
+      "options": [
+        "Penelitian (misalnya Jain dan Wallace, 2019) menunjukkan distribusi attention dapat dipermutasi tanpa mengubah prediksi pada beberapa tugas",
+        "Bobot attention tidak dapat diturunkan",
+        "Bobot attention membocorkan label",
+        "Mereka terlalu kecil untuk diplot"
+      ],
+      "correct": 0,
+      "explanation": "Bobot attention berkorelasi dengan prediksi tetapi bukan penjelasan yang setia tanpa pemeriksaan ablasi/kontrafaktual."
+    },
+    {
+      "stage": "post",
+      "question": "Langkah mana yang menjembatani attention Bahdanau ke self-attention transformer?",
+      "options": [
+        "Mengkueri sebuah urutan terhadap dirinya sendiri dengan proyeksi Q, K, dan V yang dipelajari terpisah, dijalankan dalam head paralel",
+        "Membuang beam search",
+        "Mengganti softmax dengan sigmoid",
+        "Menambah lebih banyak layer RNN"
+      ],
+      "correct": 0,
+      "explanation": "Self-attention mengkueri urutan yang sama, dengan proyeksi K dan V terpisah, diparallelkan lintas head."
+    },
+    {
+      "stage": "post",
+      "question": "Apa satu kasus penggunaan praktis masking dalam attention?",
+      "options": [
+        "Menggantikan dropout",
+        "Menyandikan posisi",
+        "Menetapkan bobot attention untuk token padding ke nol agar tidak berkontribusi pada vektor konteks",
+        "Mengurangi ukuran model"
+      ],
+      "correct": 2,
+      "explanation": "Memask padding (atau token masa depan di decoder) mencegah softmax menyebarkan bobot ke posisi yang tidak valid."
+    }
+  ]
+}

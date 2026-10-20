@@ -1,0 +1,120 @@
+{
+  "phase": {
+    "15": {
+      "name": "Sistem Otonom",
+      "desc": "Agent long-horizon, self-improvement, dan stack keamanan 2026."
+    }
+  },
+  "lessons": {
+    "phases/15-autonomous-systems/01-long-horizon-agents": {
+      "name": "Dari Chatbot ke Agent Long-Horizon (METR)",
+      "summary": "Pada 2023 chatbot menjawab pertanyaan dalam satu putaran. Pada 2026 model frontier rutin berjalan menit hingga jam pada satu tugas. Benchmark Time Horizon 1.1 METR (Januari 2026) mem…",
+      "keywords": "Time Horizon METR dalam satu paragraf · Apa yang benar-benar rusak saat horizon tumbuh · Waktu penggandaan dan implikasinya · Gaming konteks eval · Single-turn vs long-horizon, dibandingkan"
+    },
+    "phases/15-autonomous-systems/02-star-family-reasoning": {
+      "name": "STaR, V-STaR, Quiet-STaR: Self-Taught Reasoning",
+      "summary": "Loop self-improvement terkecil yang mungkin berada di dalam rationale. Model menghasilkan chain of thought, menyimpan yang berakhir pada jawaban benar, lalu fine-tune pada itu…",
+      "keywords": "STaR: bootstrap dari yang berhasil · V-STaR: latih verifier dengan DPO · Quiet-STaR: rationale internal per token · Mengapa ketiganya berbagi kekhawatiran keamanan · Perbandingan · Posisinya di stack 2026"
+    },
+    "phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding": {
+      "name": "AlphaEvolve: Coding Agent Evolusioner",
+      "summary": "Pasangkan model coding frontier dengan loop evolusioner dan evaluator yang dapat diperiksa mesin. Biarkan loop berjalan cukup lama. Ia menemukan prosedur perkalian matriks kompleks 4x4…",
+      "keywords": "Loop · Apa yang membuat evaluator tidak bisa ditawar · Reward hacking adalah sisi lain dari pernyataan itu · Mengapa LLM + search mengalahkan keduanya sendiri-sendiri · Posisi AlphaEvolve di stack frontier"
+    },
+    "phases/15-autonomous-systems/04-darwin-godel-machine": {
+      "name": "Darwin Gödel Machine: Agent yang Memodifikasi Diri",
+      "summary": "Godel Machine karya Schmidhuber (2003) menuntut bukti formal bahwa setiap modifikasi diri bermanfaat sebelum menerimanya. Bukti itu mustahil dalam praktik. Darwin Godel Machine…",
+      "keywords": "Loop · Apa yang sebenarnya diperbaiki DGM · Demonstrasi reward hacking · Versus Godel Machine klasik · Posisinya di phase ini"
+    },
+    "phases/15-autonomous-systems/05-ai-scientist-v2": {
+      "name": "AI Scientist v2: Riset Tingkat Workshop",
+      "summary": "AI Scientist v2 dari Sakana (Yamada et al., arXiv:2504.08066) menjalankan loop riset penuh: hipotesis, kode, eksperimen, figur, penulisan, submission. Ini adalah sistem pertama yang mem…",
+      "keywords": "Arsitektur · Arti hasil penerimaan workshop · Temuan evaluasi independen · Kekhawatiran sandbox escape · Posisi v2 di stack frontier"
+    },
+    "phases/15-autonomous-systems/06-automated-alignment-research": {
+      "name": "Riset Alignment Otomatis (Anthropic AAR)",
+      "summary": "Anthropic menjalankan tim paralel Claude Opus 4.6 Autonomous Alignment Researcher di sandbox independen, berkoordinasi lewat forum bersama yang log-nya berada di luar sandbox mana pun (s…",
+      "keywords": "Arsitektur (seperti dijelaskan publik) · Mengapa log di luar sandbox penting · Tradeoff workflow yang ditentukan · Risiko kompresi · Apa yang tidak digantikan AAR"
+    },
+    "phases/15-autonomous-systems/07-recursive-self-improvement": {
+      "name": "Recursive Self-Improvement: Kapabilitas vs Alignment",
+      "summary": "Recursive self-improvement (RSI) bukan lagi spekulasi. Workshop RSI ICLR 2026 di Rio (23-27 April) membingkainya sebagai masalah engineering dengan tooling konkret. Demis Hassa…",
+      "keywords": "Arti tepat recursive self-improvement · Hasil alignment faking secara rinci · Pertanyaan Hassabis · Kapabilitas vs alignment, sebagai perlombaan · Apa yang dianggap engineering oleh workshop ICLR 2026"
+    },
+    "phases/15-autonomous-systems/08-bounded-self-improvement": {
+      "name": "Desain Self-Improvement yang Terbatas",
+      "summary": "Riset telah konvergen pada empat primitif untuk membatasi loop self-improvement. Invariant formal yang harus berlaku pada setiap edit. Anchor alignment yang tidak boleh diubah. Mu…",
+      "keywords": "Primitif 1: invariant formal · Primitif 2: anchor alignment · Primitif 3: constraint multi-objektif · Primitif 4: deteksi regresi · Batas information-theoretic · Contoh terperinci"
+    },
+    "phases/15-autonomous-systems/09-coding-agent-landscape": {
+      "name": "Lanskap Coding Agent Otonom (SWE-bench, CodeAct)",
+      "summary": "SWE-bench Verified naik dari 4% ke 80,9% dalam waktu kurang dari tiga tahun. Claude Sonnet 4.5 yang sama mencetak 43,2% pada SWE-agent v1 dan 59,8% pada Cline autonomous — scaffolding di sekitar model…",
+      "keywords": "SWE-bench dalam satu paragraf · Apa yang sebenarnya ditunjukkan kurva 2022 → 2026 · CodeAct vs tool call JSON · Scaffold di lanskap 2026 · Mengapa scaffolding mendominasi · Saturasi benchmark dan distribusi nyata"
+    },
+    "phases/15-autonomous-systems/10-claude-code-permission-modes": {
+      "name": "Mode Permission untuk Agent Otonom",
+      "summary": "Tangga permission — tingkat otonomi bertahap dari review setiap aksi hingga setujui semuanya — adalah cara harness mengatur apa yang boleh dilakukan agent otonom tanpa bertanya. Clau…",
+      "keywords": "Enam mode permission · Auto Mode dalam satu halaman · Apa yang ditangkap sistem · Apa yang bisa terlewat · Bingkai research preview · Posisi tangga ini di workflow kamu"
+    },
+    "phases/15-autonomous-systems/11-browser-agents": {
+      "name": "Browser Agent dan Indirect Prompt Injection",
+      "summary": "ChatGPT agent (Juli 2025) menggabungkan Operator dan deep research menjadi satu browser/terminal agent dan menetapkan SOTA BrowseComp di 68,9%. OpenAI menutup Operator pada 31 Agustus 2025 — konsoli…",
+      "keywords": "Lanskap 2026, satu paragraf per sistem · BrowseComp vs OSWorld vs WebArena · Permukaan serangan, disebutkan · Mengapa \"tidak sepenuhnya dapat ditambal\" · Postur pertahanan yang benar-benar dikirim"
+    },
+    "phases/15-autonomous-systems/12-durable-execution": {
+      "name": "Durable Execution untuk Agent Berjalan Lama",
+      "summary": "Agent long-horizon produksi tidak berjalan dalam `while True`. Setiap panggilan LLM menjadi activity dengan checkpoint, retry, dan replay. Integrasi Temporal dengan OpenAI Agents SDK menjadi G…",
+      "keywords": "Activity, workflow, dan replay · Mengapa panggilan LLM cocok dengan pola ini · Checkpoint dengan key `thread_id` · Input manusia sebagai state kelas utama · Degradasi 35 menit · Kapan durable execution adalah jawaban yang salah"
+    },
+    "phases/15-autonomous-systems/13-cost-governors": {
+      "name": "Action Budget, Iteration Cap, Cost Governor",
+      "summary": "Biaya LLM bulanan sebuah agent e-commerce menengah melonjak dari $1.200 ke $4.800 setelah timnya mengaktifkan skill \"order-tracking\". Itu bukan bug harga. Itu adalah agent yang …",
+      "keywords": "Stack cost governor · Mengapa stack, bukan satu cap · Permukaan budget harness · EU AI Act, OWASP Agentic Top 10 · Kasus $1.200 → $4.800 yang teramati"
+    },
+    "phases/15-autonomous-systems/14-kill-switches-canaries": {
+      "name": "Kill Switch, Circuit Breaker, Canary Token",
+      "summary": "Kill switch adalah boolean yang disimpan di luar permukaan edit agent — key Redis, feature flag, config bertanda tangan — yang menonaktifkan agent sepenuhnya. Circuit breaker lebih rinci…",
+      "keywords": "Kill switch · Circuit breaker · Canary token · Mengapa melapisi batas statistik dan keras · Karantina via redirect datapath eBPF · Apa yang tidak ditangkap detektor mana pun"
+    },
+    "phases/15-autonomous-systems/15-propose-then-commit": {
+      "name": "HITL: Propose-Then-Commit",
+      "summary": "Konsensus 2026 tentang HITL itu spesifik. Bukan \"agent bertanya, pengguna mengklik Approve.\" Melainkan propose-then-commit: aksi yang diusulkan disimpan ke durable store dengan …",
+      "keywords": "State machine propose-then-commit · Idempotency key · Durabilitas: mengapa approval bertahan lebih lama dari proses · Approval cap kosong dan mitigasi challenge-and-response · Apa yang dianggap berkonsekuensi · Verifikasi pasca-aksi · EU AI Act Pasal 14"
+    },
+    "phases/15-autonomous-systems/16-checkpoints-rollback": {
+      "name": "Checkpoint dan Rollback",
+      "summary": "Setiap transisi state graph dipersistenkan. Saat worker crash, lease-nya kedaluwarsa dan worker lain melanjutkan dari checkpoint terbaru. Cloudflare Durable Objects menyimpan state lintas…",
+      "keywords": "Setiap transisi dipersistenkan · Pemulihan lease · Idempotensi plus precondition · Verifikasi pasca-aksi · Rencana rollback · Pembacaan operasional EU AI Act Pasal 14 · Failure mode tajam: eksekusi ganda"
+    },
+    "phases/15-autonomous-systems/17-constitutional-ai": {
+      "name": "Constitutional AI dan Override Aturan",
+      "summary": "Claude Constitution Anthropic tanggal 22 Januari 2026 setebal 79 halaman dan berlisensi CC0. Dokumen ini bergerak dari alignment berbasis aturan ke berbasis penalaran dan menetapkan hierarki prioritas empat tingkat: (1)…",
+      "keywords": "Hierarki prioritas empat tingkat · Larangan hardcoded vs default soft-coded · Pelatihan CAI 2022 · Apa yang ditangkap dan terlewat oleh alignment berbasis penalaran · Eksperimen partisipatif 2023 · Mengapa larangan hardcoded diperlukan · Posisi Constitution di stack"
+    },
+    "phases/15-autonomous-systems/18-llama-guard": {
+      "name": "Llama Guard dan Klasifikasi Input/Output",
+      "summary": "Llama Guard 3 (Meta, basis Llama-3.1-8B, di-fine-tune untuk keselamatan konten) mengklasifikasikan input dan output LLM terhadap taksonomi 13 hazard MLCommons dalam 8 bahasa. 1B-IN…",
+      "keywords": "Llama Guard 3 sekilas · Tambahan di Llama Guard 4 · NeMo Guardrails (NVIDIA) · Korpus serangan · Di mana classifier menang · Di mana classifier kalah · Defense-in-depth"
+    },
+    "phases/15-autonomous-systems/19-anthropic-rsp": {
+      "name": "Anthropic Responsible Scaling Policy v3.0",
+      "summary": "RSP v3.0 berlaku 24 Februari 2026, menggantikan kebijakan 2023. Mitigasi dua tingkat: apa yang akan dilakukan Anthropic secara unilateral vs apa yang dibingkai sebagai rekomendasi seluruh industri…",
+      "keywords": "Jadwal mitigasi dua tingkat · Ambang AI R&D-4 · Frontier Safety Roadmap dan Risk Report · Penghapusan klausul pause · Downgrade SaferAI · Apa yang bukan menjadi isi lesson ini"
+    },
+    "phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf": {
+      "name": "Preparedness Framework OpenAI dan FSF DeepMind",
+      "summary": "Preparedness Framework v2 OpenAI (April 2025) memperkenalkan Research Category — Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards — …",
+      "keywords": "OpenAI Preparedness Framework v2 (April 2025) · DeepMind Frontier Safety Framework v3 (September 2025; Tracked Capability Levels ditambahkan 17 April 2026) · Titik konvergensi ketiganya · Titik divergensinya · Sandbagging: kapabilitas spesifik yang memperumit ketiganya · Skill membaca kebijakan"
+    },
+    "phases/15-autonomous-systems/21-metr-external-evaluation": {
+      "name": "Time Horizon METR dan Evaluasi Eksternal",
+      "summary": "METR (eks-ARC Evals) adalah 501(c)(3) independen sejak Desember 2023. Benchmark Time Horizon 1.1 mereka (Januari 2026) mencocokkan kurva logistik pada probabilitas keberhasilan tugas vs log(exp…",
+      "keywords": "Latar belakang METR · Pencocokan Time Horizon · Angka Januari 2026 · Suite benchmark · Evaluasi monitoring prototipe · Mengapa horizon adalah batas atas · Kasus evaluator eksternal · Cara memakai angka horizon dalam praktik"
+    },
+    "phases/15-autonomous-systems/22-cais-caisi-societal-risk": {
+      "name": "CAIS, CAISI, dan Risiko Skala Masyarakat",
+      "summary": "Center for AI Safety (CAIS, San Francisco, didirikan 2022 oleh Hendrycks dan Zhang) menerbitkan kerangka empat risiko — malicious use, AI races, organizational risks, rogue AIs …",
+      "keywords": "CAIS — Center for AI Safety · Kerangka empat risiko · Di mana risiko organisasi berada · CAISI — Center for AI Standards and Innovation · California SB-53 · Risiko skala masyarakat bukan masalah satu lapisan"
+    }
+  }
+}

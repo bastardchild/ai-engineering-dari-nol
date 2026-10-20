@@ -1,0 +1,78 @@
+{
+  "lesson": "36-training-loop-eval",
+  "title": "Loop Training dan Evaluasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa tensor target harus berupa tensor input yang digeser satu posisi?",
+      "options": [
+        "Cross entropy membutuhkan tensor identik",
+        "Itu mempercepat optimizer",
+        "Itu diwajibkan AdamW",
+        "Prediksi token berikutnya adalah objektif training: di setiap posisi model memprediksi token berikutnya; lupa pergeseran melatih model memprediksi dirinya sendiri, yang tidak mempelajari hal berguna"
+      ],
+      "correct": 3,
+      "explanation": "Input adalah token 0..T-1; target adalah token 1..T; loss dihitung pada bentuk (batch*seq, vocab) dan (batch*seq,) yang diratakan."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan evaluate_model yang tidak dilakukan langkah training?",
+      "options": [
+        "Ia menjalankan sejumlah batch validasi tetap di bawah no_grad dan dengan dropout dimatikan, mengembalikan rata-rata loss yang reproducible",
+        "Ia mengubah bobot model",
+        "Ia menghitung gradien dua kali",
+        "Ia menjalankan optimizer"
+      ],
+      "correct": 0,
+      "explanation": "Evaluasi held-out tidak butuh gradien, dropout, dan memakai irisan data validasi tetap agar reproducible antar run."
+    },
+    {
+      "stage": "check",
+      "question": "Parameter AdamW mana yang mendapat weight decay?",
+      "options": [
+        "Tensor berbentuk matriks (bobot linear, tabel embedding) mendapat weight decay; tensor scale, shift, dan bias mendapat decay nol",
+        "Hanya scale LayerNorm",
+        "Setiap parameter secara setara",
+        "Hanya LM head"
+      ],
+      "correct": 0,
+      "explanation": "Memberi decay pada scale LayerNorm mendorong scale ke nol dan merusak normalisasi; pemisahan ini pola produksi standar."
+    },
+    {
+      "stage": "check",
+      "question": "Bentuk apa yang dilacak jadwal warmup-plus-cosine dari langkah 0 hingga langkah akhir?",
+      "options": [
+        "Step function",
+        "Konstan",
+        "Ramp linear dari nol ke max selama warmup_steps, lalu cosine decay dari max ke min_lr selama langkah tersisa",
+        "Pertumbuhan eksponensial"
+      ],
+      "correct": 2,
+      "explanation": "Warmup mengisi state optimizer; cosine decay mengecilkan ukuran langkah agar fase akhir menyetel bobot dengan halus."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa clip norm gradien sebelum optimizer.step()?",
+      "options": [
+        "Itu menghapus kebutuhan warmup",
+        "Batch buruk dapat menghasilkan gradien besar yang menghapus jam-jam training; clipping ke max_norm=1.0 menjaga optimizer di rentang aman tanpa mendistorsi update normal",
+        "Itu mempercepat matmul",
+        "Itu mengurangi penggunaan memori"
+      ],
+      "correct": 1,
+      "explanation": "Gradient clipping adalah asuransi termurah terhadap divergensi; nilai satu adalah default yang bertahan di sebagian besar setup."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mencatat record per langkah sebagai JSONL alih-alih state pickled?",
+      "options": [
+        "JSONL diwajibkan optimizer",
+        "JSONL berlatih lebih cepat",
+        "Record JSONL tahan terhadap refactor, dapat di-grep, diplot dalam tiga puluh baris, dan bertahan saat crash; state pickled mengikat kamu ke tata letak modul yang menghasilkannya",
+        "JSONL memakai memori GPU lebih sedikit"
+      ],
+      "correct": 2,
+      "explanation": "Crash apa pun meninggalkan artefak yang dapat dibaca; resume membaca langkah terakhir; tooling di atasnya trivial."
+    }
+  ]
+}

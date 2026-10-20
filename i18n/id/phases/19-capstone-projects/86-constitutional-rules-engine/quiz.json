@@ -1,0 +1,78 @@
+{
+  "lesson": "86-constitutional-rules-engine",
+  "title": "Capstone 86 — Mesin Aturan Konstitusional",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa memakai konstitusi YAML deklaratif alih-alih pemeriksaan kode ad-hoc?",
+      "options": [
+        "Karena YAML mendukung anchor",
+        "Karena YAML lebih cepat di-parse dari Python",
+        "Karena aturan di YAML dapat ditinjau non-engineer, hidup di version control, dan dapat diganti tanpa perubahan kode",
+        "Karena standard library lebih suka YAML"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Field apa yang wajib dimiliki setiap aturan minimal?",
+      "options": [
+        "name, regex, fix",
+        "id, owner, timestamp",
+        "predicate, severity, owner",
+        "name, severity, must, explanation"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana engine mengomposisi predicate?",
+      "options": [
+        "Hanya lewat satu contains_regex per aturan",
+        "Dengan mengalikan skor keyakinan",
+        "Lewat classifier neural",
+        "Lewat all_of, any_of, dan not_ yang secara rekursif membungkus predicate atomik"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran applies_when?",
+      "options": [
+        "Itu menimpa severity",
+        "Itu memilih operasi fixer",
+        "Itu menggating predicate must agar aturan yang tidak berlaku dicatat sebagai not_applicable alih-alih violation",
+        "Itu selalu bernilai true"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan Fixer?",
+      "options": [
+        "Memanggil model remote untuk memperbaiki teks",
+        "Menerapkan fix deklaratif per aturan (append, prepend, replace_regex) untuk menghasilkan teks revisi",
+        "Menulis ulang file aturan",
+        "Menghitung severity dari fix"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa demo menjalankan engine kedua kali setelah fixer?",
+      "options": [
+        "Karena pass pertama hanya dry run",
+        "Untuk memuat ulang konstitusi",
+        "Untuk menggelembungkan ukuran laporan",
+        "Untuk memverifikasi teks revisi memenuhi aturan dan memunculkan aturan yang tidak dapat diperbaiki fixer secara lokal"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

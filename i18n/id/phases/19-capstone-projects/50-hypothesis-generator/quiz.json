@@ -1,0 +1,78 @@
+{
+  "lesson": "50-hypothesis-generator",
+  "title": "Generator Hipotesis",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa generator menghasilkan antrean berperingkat alih-alih satu hipotesis?",
+      "options": [
+        "Karena runner butuh kedalaman agar dapat memunculkan hipotesis berikutnya saat yang pertama gagal",
+        "Karena mock model hanya mengeluarkan daftar",
+        "Karena embedding membutuhkan lebih dari satu input",
+        "Karena parser tidak bisa membaca satu blok"
+      ],
+      "correct": 0,
+      "explanation": "Inti menghasilkan antrean adalah mengamortisasi biaya sampling sepanjang loop. Saat hipotesis pertama gagal runner memunculkan yang berikutnya tanpa pass sampling baru."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dicapai ramp temperature pada setiap pass?",
+      "options": [
+        "Memperlebar distribusi sampling agar draft berikutnya bisa mendarat lebih jauh dari seed",
+        "Menaikkan dimensi embedding",
+        "Menaikkan toleransi parser",
+        "Melipattigakan nilai seed"
+      ],
+      "correct": 0,
+      "explanation": "Temperature lebih tinggi memperlebar distribusi sampling. Ramp mendorong setiap pass menyimpang lebih jauh agar filter novelty punya pekerjaan."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan filter novelty menolak draft?",
+      "options": [
+        "Saat skor peringkatnya di bawah ambang",
+        "Saat jarak cosine minimum ke survivor sebelumnya turun di bawah ambang novelty",
+        "Saat parser lolos tetapi jumlah tag-nya salah",
+        "Saat pass draft lebih besar dari panjang antrean"
+      ],
+      "correct": 1,
+      "explanation": "Novelty adalah jarak minimum ke survivor sebelumnya. Jika jarak itu di bawah ambang, draft adalah near-duplicate dan dibuang."
+    },
+    {
+      "stage": "check",
+      "question": "Tiga komponen apa yang bergabung dalam skor peringkat?",
+      "options": [
+        "Latensi, throughput, biaya",
+        "Novelty, specificity, testability",
+        "Temperature, seed, indeks pass",
+        "Variabel, metrik, panjang baseline"
+      ],
+      "correct": 1,
+      "explanation": "Skor peringkat adalah jumlah berbobot novelty, specificity, dan testability. Setiap subskor berada antara nol dan satu."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mock language model dikunci pada bucket temperature alih-alih float mentah?",
+      "options": [
+        "Karena bucket membuat jadwal diskret sehingga perubahan temperature kecil dapat memilih draft berskrip berbeda",
+        "Karena embedding membutuhkannya",
+        "Karena parser butuh integer",
+        "Karena float tidak bisa di-hash"
+      ],
+      "correct": 0,
+      "explanation": "Bucket mendiskretkan jadwal kontinu. Dua temperature bertetangga dapat memetakan ke bucket berbeda dan menarik draft berbeda dari bank berskrip, itulah cara mock mensimulasikan sampling bervariasi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi jika setiap draft dari mock model gagal parser?",
+      "options": [
+        "Generator melempar error keras",
+        "Antrean kosong dan setiap pass mencatat penolakan parse sehingga mode kegagalan dapat diaudit",
+        "Ambang novelty diturunkan otomatis",
+        "Runner mencoba ulang dengan prompt baru"
+      ],
+      "correct": 1,
+      "explanation": "Kegagalan parser dicatat sebagai log dengan alasan parse reject. Antrean bisa kembali kosong tanpa merusak loop, dan log menjelaskan alasannya."
+    }
+  ]
+}

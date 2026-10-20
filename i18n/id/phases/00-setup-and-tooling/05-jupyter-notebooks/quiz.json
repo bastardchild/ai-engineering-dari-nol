@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu Jupyter notebook?",
+      "options": ["Dokumen interaktif yang memadukan sel kode yang dapat dieksekusi dengan teks markdown dan output inline", "Manajer paket untuk library Python", "Sistem version control untuk proyek data science", "Editor teks untuk menulis skrip Python"],
+      "correct": 0,
+      "explanation": "Jupyter notebook (.ipynb) adalah environment interaktif tempat kamu dapat menulis dan menjalankan kode dalam sel, melihat output secara inline, dan memadukan kode dengan penjelasan teks terformat."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa fungsi kernel Jupyter?",
+      "options": ["Menjalankan kode di sel dan menyimpan variabel di memori antar eksekusi", "Menghubungkan notebook ke GitHub untuk version control", "Mengelola penyimpanan file untuk notebook", "Memformat sel markdown menjadi HTML"],
+      "correct": 0,
+      "explanation": "Kernel adalah proses Python terpisah yang mengeksekusi kode sel dan mempertahankan state (variabel, impor) di memori. Semua sel dalam satu notebook berbagi kernel yang sama."
+    },
+    {
+      "stage": "post",
+      "question": "Apa perbedaan antara perintah magic %timeit dan %%time?",
+      "options": ["Tidak ada perbedaan, keduanya alias", "%timeit menjalankan kode berkali-kali lalu merata-rata, %%time menjalankan kode sekali", "%timeit mengukur wall time, %%time mengukur waktu CPU", "%timeit bekerja pada satu baris, %%time bekerja pada seluruh notebook"],
+      "correct": 1,
+      "explanation": "%timeit menjalankan pernyataan berkali-kali untuk rata-rata statistik (bagus untuk microbenchmark). %%time menjalankan sel sekali dan melaporkan wall time (bagus untuk proses pelatihan)."
+    },
+    {
+      "stage": "post",
+      "question": "Apa penyebab paling umum notebook berjalan di mesinmu tetapi gagal saat orang lain menjalankannya dari atas ke bawah?",
+      "options": ["Lupa perintah magic %matplotlib inline", "Terlalu banyak memakai sel markdown", "Eksekusi sel yang tidak berurutan menciptakan dependensi tersembunyi pada urutan eksekusi", "Memakai versi Python yang berbeda"],
+      "correct": 2,
+      "explanation": "Menjalankan sel tidak berurutan menciptakan dependensi state tersembunyi. Sebuah variabel mungkin ada karena kamu menjalankan sel 5 sebelum sel 2. Kernel > Restart & Run All memverifikasi eksekusi linear."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus memindahkan kode dari notebook ke skrip .py?",
+      "options": ["Jangan pernah -- notebook selalu lebih baik untuk pekerjaan AI", "Hanya saat kamu perlu menjalankan di GPU", "Segera setelah kamu menulis lebih dari 10 baris kode", "Saat kode tersebut adalah utilitas yang dapat dipakai ulang, pipeline pelatihan, atau kode produksi"],
+      "correct": 3,
+      "explanation": "Aturannya adalah 'eksplorasi di notebook, rilis dalam skrip.' Utilitas yang dapat dipakai ulang, pipeline pelatihan, dan apa pun yang berjalan di produksi sebaiknya berupa file .py. Notebook untuk eksplorasi dan prototipe."
+    }
+  ]
+}

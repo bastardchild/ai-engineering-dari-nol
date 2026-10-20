@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan antara probability mass function (PMF) dan probability density function (PDF)?",
+      "options": ["PMF selalu berjumlah 0.5, PDF terintegral menjadi 1", "PMF memberi probabilitas tepat untuk hasil diskret, sedangkan PDF memberi kerapatan untuk variabel kontinu yang harus diintegralkan pada suatu interval untuk mendapat probabilitas", "Tidak ada perbedaan; keduanya konsep sama dengan nama berbeda", "PMF dipakai untuk variabel kontinu, PDF untuk variabel diskret"],
+      "correct": 1,
+      "explanation": "Untuk variabel diskret, PMF memberi P(X=k) secara langsung. Untuk variabel kontinu, PDF f(x) adalah kerapatan -- P(a<=X<=b) memerlukan integrasi f(x) dari a ke b. Kerapatan di satu titik bukan probabilitas."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dinyatakan Central Limit Theorem?",
+      "options": ["Rata-rata banyak sampel acak independen konvergen ke distribusi normal terlepas dari distribusi asalnya", "Semua data mengikuti distribusi normal", "Probabilitas kejadian langka menurun seiring bertambahnya ukuran sampel", "Dataset besar selalu memiliki variansi rendah"],
+      "correct": 0,
+      "explanation": "CLT menyatakan bahwa rata-rata banyak variabel acak independen mendekati Gaussian, apa pun bentuk distribusi aslinya. Ini menjelaskan mengapa distribusi normal muncul di mana-mana."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa softmax mengurangi logit maksimum sebelum eksponensiasi (the 'softmax trick')?",
+      "options": ["Untuk membuat semua probabilitas sama", "Untuk mencegah overflow numerik akibat mengeksponensialkan angka besar sambil menghasilkan hasil yang identik secara matematis", "Untuk mempercepat komputasi dengan mengurangi jumlah eksponensiasi", "Untuk menormalisasi logit agar bermean nol"],
+      "correct": 1,
+      "explanation": "exp(100) overflow menjadi infinity. Mengurangi max(logits) menggeser semua nilai sehingga terbesar adalah 0. exp(0)=1 aman. Pengurangan itu saling meniadakan dalam normalisasi, memberi probabilitas identik."
+    },
+    {
+      "stage": "post",
+      "question": "Cross-entropy loss untuk klasifikasi menyederhana menjadi -log(q(true_class)). Apa artinya secara intuitif?",
+      "options": ["Mengalikan probabilitas prediksi dengan label sebenarnya", "Menghukum model berdasarkan seberapa rendah probabilitas prediksinya untuk kelas yang benar -- prediksi lebih rendah berarti loss lebih tinggi", "Merata-ratakan log probabilitas di semua kelas", "Menghitung entropi distribusi sebenarnya"],
+      "correct": 1,
+      "explanation": "Jika model memprediksi 0.9 untuk kelas yang benar, loss = -log(0.9) = 0.105 (rendah). Jika memprediksi 0.01, loss = -log(0.01) = 4.6 (tinggi). Loss menghukum keyakinan rendah pada jawaban yang benar."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa model bahasa bekerja dengan log probabilitas alih-alih probabilitas mentah?",
+      "options": ["Mengalikan banyak probabilitas kecil menyebabkan underflow numerik ke nol; log probabilitas mengubah hasil kali menjadi penjumlahan, menghindarinya", "Log probabilitas lebih mudah diinterpretasikan secara visual", "Probabilitas mentah tidak dapat merepresentasikan nilai kurang dari 0.01", "Log probabilitas diwajibkan oleh arsitektur transformer"],
+      "correct": 0,
+      "explanation": "P(kalimat) = P(kata1) * P(kata2) * ... cepat underflow ke 0.0 dengan float64. Log P(kalimat) = log P(kata1) + log P(kata2) + ... tetap dalam rentang terbatas. Hasil kali menjadi penjumlahan."
+    }
+  ]
+}

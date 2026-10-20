@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Untuk apa API key digunakan saat memanggil layanan LLM?",
+      "options": ["Mengenkripsi data yang dikirim ke server", "Mengautentikasi identitasmu dan mengotorisasi permintaan", "Mengompresi permintaan untuk mengurangi bandwidth", "Memilih bahasa pemrograman yang dipakai server"],
+      "correct": 1,
+      "explanation": "API key adalah string unik yang mengidentifikasi akunmu, mengotorisasi permintaanmu, dan memungkinkan penyedia melacak penggunaan serta penagihan."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa API key tidak boleh di-hardcode langsung di kode sumber?",
+      "options": ["Python tidak bisa membaca literal string lebih dari 50 karakter", "Penyedia API memblokir key yang muncul di file sumber", "Key yang di-hardcode membuat kode berjalan lebih lambat", "Key tersebut bisa tanpa sengaja ter-commit ke git dan terekspos publik"],
+      "correct": 3,
+      "explanation": "Key yang di-hardcode di kode sumber berisiko ter-commit ke version control dan terdorong ke repositori publik, tempat key itu bisa dipanen dan disalahgunakan orang lain."
+    },
+    {
+      "stage": "post",
+      "question": "Apa cara yang disarankan untuk menyimpan API key untuk pengembangan lokal?",
+      "options": ["Dalam file .env yang terdaftar di .gitignore", "Di README.md agar mudah diakses", "Dalam variabel Python di bagian atas skripmu", "Di requirements.txt bersama versi paket"],
+      "correct": 0,
+      "explanation": "File .env menyimpan key sebagai environment variable dan harus ditambahkan ke .gitignore agar tidak pernah ter-commit. SDK membaca key dari environment variable secara otomatis."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam panggilan HTTP mentah ke API Anthropic, header mana yang membawa API key?",
+      "options": ["Authorization: Bearer sk-ant-...", "Content-Type: application/json", "anthropic-version: 2023-06-01", "x-api-key: sk-ant-..."],
+      "correct": 3,
+      "explanation": "API Anthropic menggunakan header 'x-api-key' untuk autentikasi, bukan pola 'Authorization: Bearer' yang lebih umum. Ini spesifik untuk desain API mereka."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang terjadi saat kamu melewati rate limit sebuah API?",
+      "options": ["Permintaanmu diantrekan dan diproses otomatis nanti", "Server mengembalikan error (biasanya HTTP 429) dan kamu harus menunggu sebelum mencoba lagi", "API key-mu dicabut secara permanen", "API diam-diam membuang permintaanmu tanpa respons"],
+      "correct": 1,
+      "explanation": "Rate limiting mengembalikan HTTP 429 (Too Many Requests). Kamu perlu menunggu dan mencoba lagi, biasanya dengan exponential backoff. Rate limit mencegah penyalahgunaan dan memastikan penggunaan yang adil."
+    }
+  ]
+}

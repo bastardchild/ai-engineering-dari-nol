@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Apa yang direpresentasikan fungsi loss dalam pelatihan neural network?",
+      "options": ["Jadwal learning rate", "Ukuran terdiferensiasi seberapa salah prediksi model, yang diminimalkan optimizer", "Jumlah prediksi yang salah", "Ukuran dataset training"],
+      "correct": 1,
+      "explanation": "Fungsi loss memetakan prediksi dan target menjadi satu skalar yang diminimalkan optimizer lewat gradient descent. Fungsi itu harus terdiferensiasi agar gradient bisa dihitung.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa cross-entropy lebih disukai daripada MSE untuk tugas klasifikasi?",
+      "options": ["Cross-entropy menghukum prediksi salah yang percaya diri secara eksponensial lewat -log(p), sedangkan MSE memberi gradient lemah di dekat 0 dan 1", "Cross-entropy tidak butuh label", "MSE hanya bekerja untuk regresi", "Cross-entropy lebih cepat dihitung"],
+      "correct": 0,
+      "explanation": "Saat model dengan yakin memprediksi kelas yang salah (p dekat 0 untuk kelas benar), -log(p) menghasilkan loss sangat besar dan gradient kuat. MSE hanya memberi gradient lemah pada situasi yang sama karena sigmoid datar di dekat 0 dan 1.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa yang terjadi jika kamu memakai loss MSE untuk klasifikasi biner?",
+      "options": ["Gradient meledak", "Training langsung divergen", "Model berlatih normal", "Model bisa meminimalkan loss dengan memprediksi 0.5 untuk semua hal, mencapai MSE=0.25 tanpa belajar"],
+      "correct": 3,
+      "explanation": "Dengan MSE pada dataset biner seimbang, memprediksi 0.5 untuk setiap input memberi MSE=0.25 -- nilai minimum yang bisa dicapai tanpa membedakan apa pun. Model memenuhi loss tanpa mempelajari pola berguna.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa yang dilakukan label smoothing dan mengapa berguna?",
+      "options": ["Ia menghaluskan jadwal learning rate", "Ia mengganti target keras 0/1 dengan nilai lunak seperti 0.1/0.9, mencegah prediksi terlalu percaya diri dan memperbaiki generalisasi", "Ia menghapus label berisik dari dataset", "Ia menerapkan moving average pada loss"],
+      "correct": 1,
+      "explanation": "Label smoothing mengubah target dari [0,0,1,0] menjadi [0.025,0.025,0.925,0.025] (dengan alpha=0.1). Ini mencegah model mendorong logit ke tak hingga demi mencapai target keras, sehingga mengurangi rasa terlalu percaya diri.",
+      "stage": "post"
+    },
+    {
+      "question": "Pada contrastive loss (InfoNCE), apa peran parameter temperature?",
+      "options": ["Ia mengatur seberapa tajam distribusi kemiripan -- temperature lebih rendah berarti pemisahan lebih keras antara positif dan negatif", "Ia menetapkan jumlah sampel negatif", "Ia mengatur learning rate", "Ia menentukan dimensi embedding"],
+      "correct": 0,
+      "explanation": "Temperature membagi skor kemiripan sebelum softmax. Temperature lebih rendah (misalnya 0.07) membuat distribusi lebih tajam sehingga model harus memisahkan positif dari negatif dengan jelas. Temperature lebih tinggi lebih pemaaf.",
+      "stage": "post"
+    }
+  ]
+}

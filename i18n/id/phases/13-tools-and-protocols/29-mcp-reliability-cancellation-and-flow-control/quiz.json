@@ -1,0 +1,78 @@
+{
+  "lesson": "29-mcp-reliability-cancellation-and-flow-control",
+  "title": "Keandalan, Pembatalan, dan Kontrol Aliran MCP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Respons mutasi hilang dan klien mencoba ulang dengan id JSON-RPC baru. Apa yang membuat percobaan ulang aman?",
+      "options": [
+        "Id JSON-RPC baru otomatis menghapus duplikasi mutasi",
+        "Deskriptor tool menyertakan idempotentHint",
+        "Kunci idempotensi aplikasi durable yang dipakai ulang dengan argumen identik",
+        "Percobaan ulang memakai koneksi HTTP yang sama"
+      ],
+      "correct": 2,
+      "explanation": "Id JSON-RPC mengorelasikan pesan. Idempotensi bisnis memerlukan kunci durable, fingerprint argumen, dan hasil committed yang tersimpan."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien membatalkan request yang sedang berjalan melalui stdio pada MCP 2026-07-28?",
+      "options": [
+        "Memanggil tasks/cancel untuk id JSON-RPC",
+        "Mengirim notifications/cancelled dengan id request aktif",
+        "Menutup stream SSE per-request",
+        "Mengirim request DELETE ke endpoint MCP"
+      ],
+      "correct": 1,
+      "explanation": "stdio tidak memiliki stream respons per-request, jadi klien mengirim notifikasi notifications/cancelled yang fire-and-forget."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien membatalkan request Streamable HTTP yang sedang berjalan?",
+      "options": [
+        "Menutup stream respons SSE untuk request itu",
+        "POST notifications/cancelled ke endpoint MCP",
+        "Menunggu server mengirim notifications/cancelled",
+        "Mengirim Last-Event-ID dengan nilai kosong"
+      ],
+      "correct": 0,
+      "explanation": "Untuk Streamable HTTP modern, menutup stream respons spesifik request adalah sinyal pembatalannya."
+    },
+    {
+      "stage": "check",
+      "question": "Progres terus datang sebelum setiap timeout idle. Deadline mana yang tetap harus mengakhiri request yang lepas kendali?",
+      "options": [
+        "Timeout maksimum absolut yang diukur dari awal request",
+        "Kedaluwarsa cursor pagination berikutnya",
+        "Interval keepalive proxy",
+        "Interval polling Task"
+      ],
+      "correct": 0,
+      "explanation": "Progres yang valid dapat mereset jam idle, tetapi deadline maksimum absolut harus tetap berlaku."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dibuktikan respons tasks/cancel yang sukses?",
+      "options": [
+        "Hasil durable telah dihapus",
+        "Worker sudah berhenti",
+        "Server mengakui niat pembatalan",
+        "Task harus akhirnya menjadi cancelled"
+      ],
+      "correct": 2,
+      "explanation": "Pembatalan Task bersifat kooperatif. Task dapat tetap working, selesai lebih dulu, atau mencapai cancelled setelah checkpoint worker."
+    },
+    {
+      "stage": "post",
+      "question": "Stream SSE subscription terputus setelah beberapa event progres. Rencana pemulihan mana yang sesuai MCP 2026-07-28?",
+      "options": [
+        "Melanjutkan dari Last-Event-ID dan memutar ulang setiap mutasi yang sedang berjalan",
+        "Membuka stream event GET dan memulihkan Mcp-Session-Id",
+        "Mempertahankan id request lama dan menganggap tidak ada pembaruan yang hilang",
+        "Membuka request listen baru, mengambil ulang state otoritatif, dan menghindari replay mutasi yang tidak aman"
+      ],
+      "correct": 3,
+      "explanation": "Stream MCP modern tidak dapat dilanjutkan dengan Last-Event-ID. Pemulihan memakai request baru plus pengambilan ulang otoritatif dan keamanan retry yang eksplisit."
+    }
+  ]
+}

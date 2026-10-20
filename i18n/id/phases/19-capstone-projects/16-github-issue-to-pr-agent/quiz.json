@@ -1,0 +1,90 @@
+{
+  "lesson": "16-github-issue-to-pr-agent",
+  "title": "Capstone 16 — Agen Otonom GitHub Issue-ke-PR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana agen coding cloud asinkron dipicu di produksi?",
+      "options": [
+        "Webhook GitHub yang dipicu label issue atau komentar PR, dikirim ke worker sandbox",
+        "Upload file manual",
+        "Sesi SSH panjang ke VM",
+        "Cron job terjadwal yang menghantam repo"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa agen harus berjalan dengan token instalasi GitHub App berumur pendek alih-alih personal access token?",
+      "options": [
+        "Personal access token tidak bisa membuka PR",
+        "Token App memberikan kredensial berbutir halus, ber-scope, dan berumur pendek yang cocok untuk worker per tugas",
+        "App menghindari rate limit GitHub sepenuhnya",
+        "App membutuhkan kode lebih sedikit daripada PAT"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dua perlindungan apa yang mencegah agen menimpa main?",
+      "options": [
+        "Menonaktifkan git di worker",
+        "Branch protection menegakkan larangan push langsung atau force-push ke main, dengan app tidak ada di daftar bypass",
+        "Mewajibkan captcha per push",
+        "Mengenkripsi repo sebelum clone"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa proteksi ber-scope path untuk .github/workflows ditegakkan di worker, bukan sebagai izin GitHub App?",
+      "options": [
+        ".github/workflows adalah path virtual",
+        "Izin GitHub App tidak ber-scope path, jadi pemeriksaan allow-list worker pada diff yang diusulkan adalah tempat yang tepat",
+        "Path scoping mustahil dalam bentuk apa pun",
+        "Workflow disimpan di luar repo"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Gating apa yang terjadi setelah loop agen selesai, sebelum membuka PR?",
+      "options": [
+        "Model reviewer menulis ulang diff",
+        "PR langsung dibuka tanpa pemeriksaan",
+        "CI penuh berjalan di sandbox; delta coverage dihitung; PR dengan regresi melebihi ambang diberi label needs-review",
+        "Repo di-force-push ke main"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Knob anggaran mana yang ditegakkan dispatcher per repo per hari?",
+      "options": [
+        "Hanya batas giliran",
+        "Plafon dolar per PR plus jumlah maksimum PR per repo per hari",
+        "PR tak terbatas dan biaya tak terbatas",
+        "Hanya batas wall-clock"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang masuk ke body PR yang diposting agen?",
+      "options": [
+        "Rationale, ringkasan diff, URL trace, biaya, dan jumlah giliran agar reviewer bisa mengaudit dan menindaklanjuti",
+        "Hanya diff",
+        "Tidak ada; PR punya body kosong",
+        "Hanya changelog hasil generate"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

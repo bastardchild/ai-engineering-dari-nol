@@ -1,0 +1,90 @@
+{
+  "lesson": "03-realtime-voice-assistant",
+  "title": "Capstone 03 — Asisten Suara Real-Time (ASR ke LLM ke TTS)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa agen suara tidak bisa dibangun dengan menyambung tiga panggilan REST blocking?",
+      "options": [
+        "Endpoint REST punya timeout keras 30 detik",
+        "REST tidak kompatibel dengan WebRTC",
+        "Serialisasi JSON terlalu lambat untuk data audio",
+        "Latensi end-to-end di bawah 800ms menuntut streaming ber-pipeline di setiap tahap"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa peran turn-detector bersama VAD?",
+      "options": [
+        "Mencampur musik latar ke aliran output",
+        "Mendeteksi pembicara mana yang sedang bicara dalam panggilan multipihak",
+        "Membaca transkrip parsial dan menilai apakah pengguna benar-benar sudah selesai berbicara",
+        "Melatih klon suara khusus untuk agen"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Saat pengguna mulai berbicara ketika agen masih merespons, apa yang harus terjadi agar barge-in terasa tepat?",
+      "options": [
+        "TTS menyelesaikan kalimat saat ini sebelum berhenti",
+        "Agen menaikkan volume TTS untuk menegaskan prioritas",
+        "TTS langsung dibatalkan, sisa output LLM dibuang, dan ASR diaktifkan kembali",
+        "Pipeline menampung audio pengguna sampai TTS selesai"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa filler singkat seperti \"satu detik, saya cek dulu\" dikeluarkan saat tool melebihi sekitar 300ms?",
+      "options": [
+        "Itu memicu model ASR fallback",
+        "Itu menghindari keheningan agar percakapan tidak macet saat tool side-channel berjalan",
+        "Itu meningkatkan WER pada ucapan berikutnya",
+        "Itu mereset jitter buffer WebRTC"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Chunk audio pertama harus keluar dari server dalam waktu kira-kira berapa setelah token LLM pertama?",
+      "options": [
+        "200ms",
+        "800ms",
+        "2 detik",
+        "20ms"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Metrik mana yang secara langsung mengukur barge-in yang tidak tepat atau penutupan giliran yang terlalu cepat?",
+      "options": [
+        "MOS",
+        "False-cutoff rate",
+        "Acceptance rate",
+        "WER"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pada packet loss di bawah 3%, dua perilaku adaptif apa yang diandalkan pipeline?",
+      "options": [
+        "Beralih ke LLM lebih besar dan menonaktifkan TTS",
+        "Menahan transkrip parsial dan menaikkan ambang speech-gate VAD",
+        "Me-restart ruang LiveKit",
+        "Fallback ke codec audio PSTN"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

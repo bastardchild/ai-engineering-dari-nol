@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana ViT mengubah gambar menjadi urutan token?",
+      "options": ["Menerapkan conv dengan kernel_size = stride = patch_size untuk membelah gambar menjadi patch tak tumpang tindih dan memproyeksikan setiap patch secara linear ke token embedding dalam satu operasi", "Meratakan seluruh gambar menjadi satu vektor", "Menjalankan CNN terlebih dahulu dan memakai feature map-nya sebagai token", "Mengurutkan intensitas piksel"],
+      "correct": 0,
+      "explanation": "Layer pertama ViT adalah conv dengan kernel_size = stride = 16, mengubah gambar 224x224 menjadi grid 14x14 dari patch 16x16, masing-masing diproyeksikan ke dim=768. Conv tunggal itu melakukan patchifikasi sekaligus proyeksi. Hasilnya 196 token yang dapat diproses encoder transformer standar."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu token [CLS] di ViT dan mengapa diperlukan?",
+      "options": ["Placeholder untuk data yang hilang", "Nilai piksel khusus", "Mask dropout", "Vektor yang dipelajari dan ditaruh di depan urutan token; setelah N layer transformer outputnya mengagregasi seluruh gambar dan masuk ke classifier head"],
+      "correct": 3,
+      "explanation": "ViT mengikuti konvensi BERT: menambahkan vektor yang dipelajari (token CLS) di depan urutan patch. Self-attention memungkinkan setiap token melihat semua token lain, sehingga token CLS mengagregasi informasi global dari semua patch. Classifier hanya membaca output CLS. Desain alternatif memakai average-pooling atas semua token patch (dipakai ConvNeXt dan banyak model pasca-ViT)."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa makalah ViT asli memerlukan pretraining JFT-300M untuk mengalahkan ResNet, sedangkan DeiT tidak?",
+      "options": ["DeiT memakai attention berbeda", "Makalah ViT salah", "ViT memiliki inductive bias lebih lemah daripada CNN; tanpa data cukup ia overfitting. DeiT menunjukkan bahwa dengan augmentasi kuat (RandAugment, Mixup, CutMix), stochastic depth, dan opsional distilasi CNN, ViT dapat dilatih dengan baik hanya pada ImageNet-1k", "ViT rusak tanpa JFT-300M"],
+      "correct": 2,
+      "explanation": "Kurangnya inductive bias ViT (tidak ada lokalitas, tidak ada translation equivariance bawaan) berarti jaringan harus mempelajarinya dari data. Dengan 1 juta gambar ImageNet itu sulit; dengan 300 juta gambar JFT itu mudah. DeiT menggantikan data dengan perbaikan resep training: augmentasi berat, stochastic depth, dan distilasi dari guru CNN, yang semuanya mengompensasi kurangnya prior."
+    },
+    {
+      "stage": "post",
+      "question": "Pre-LayerNorm (`x = x + sublayer(LN(x))`) vs post-LayerNorm (`x = LN(x + sublayer(x))`) — mana yang dipakai transformer modern dan mengapa?",
+      "options": ["Post-LN; lebih sederhana", "Keduanya bukan; transformer modern melewati LayerNorm", "Pre-LN; ia melatih jaringan lebih dalam secara stabil tanpa learning-rate warmup dan menghindari ketidakstabilan gradien yang dialami post-LN setelah sekitar 6 layer", "Keduanya identik"],
+      "correct": 2,
+      "explanation": "Post-LN adalah transformer asli (2017) dan memerlukan warmup cermat + learning rate kecil setelah 6-8 layer. Pre-LN (Xiong dkk., 2020; dipakai ViT, GPT-2+, setiap LLM modern) lebih stabil secara numerik: residual stream terakumulasi tanpa melewati LN, dan setiap sublayer beroperasi pada input ternormalisasi. Setiap transformer lebih dalam dari 12 layer memakai pre-LN."
+    },
+    {
+      "stage": "post",
+      "question": "Swin Transformer memperkenalkan windowed attention. Masalah apa yang diselesaikannya?",
+      "options": ["BatchNorm tidak didukung", "Overfitting pada tekstur", "Gradien yang menghilang", "Attention penuh berbiaya O((H*W)^2); Swin membatasi attention pada jendela lokal berukuran 7x7 patch, menurunkan biaya ke O(H*W * window^2). Blok bergantian menggeser jendela sebesar setengah ukurannya sehingga informasi akhirnya bercampur di seluruh gambar"],
+      "correct": 3,
+      "explanation": "Gambar 224x224 dengan patch 4x4 memiliki 56*56 = 3136 token; attention penuh adalah 3136^2 = ~10 juta pasangan per layer. Swin hanya melakukan attention di dalam jendela 7x7, memberikan 49^2 = 2401 pasangan per jendela (plus jumlah jendela). Jendela bergeser di blok bergantian mencampur informasi antar jendela selama beberapa layer. Ini mengembalikan prior lokalitas mirip CNN ke transformer tanpa meninggalkan attention."
+    }
+  ]
+}

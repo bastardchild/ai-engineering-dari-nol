@@ -29,10 +29,10 @@
       return total + (Array.isArray(phase.lessons) ? phase.lessons.length : 0);
     }, 0);
     var values = {
-      mastheadLessonCount: lessonTotal + ' lessons',
-      mastheadPhaseCount: PHASES.length + ' phases',
-      prefaceLessonCount: lessonTotal + ' lessons',
-      prefacePhaseCount: PHASES.length + ' phases'
+      mastheadLessonCount: lessonTotal + ' pelajaran',
+      mastheadPhaseCount: PHASES.length + ' fase',
+      prefaceLessonCount: lessonTotal + ' pelajaran',
+      prefacePhaseCount: PHASES.length + ' fase'
     };
     Object.keys(values).forEach(function (id) {
       var target = document.getElementById(id);
@@ -147,7 +147,7 @@
       var statusClass = p.status.replace(/ /g, '-');
       var roman = toRoman(p.id);
       var num = String(p.id).padStart(2, '0');
-      html += '<div class="toc-row" data-phase="' + i + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Phase ' + num + ': ' + escapeHtml(p.name) + '">';
+      html += '<div class="toc-row" data-phase="' + i + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Buka Fase ' + num + ': ' + escapeHtml(p.name) + '">';
       html += '<span class="toc-num">' + roman + '.</span>';
       html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
       html += '<span class="toc-meta">' + done + ' / ' + total + '</span>';
@@ -204,7 +204,7 @@
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-labelledby', 'modalTitle');
     modal.setAttribute('aria-describedby', 'modalDesc');
-    closeBtn.setAttribute('aria-label', 'Close phase details');
+    closeBtn.setAttribute('aria-label', 'Tutup detail fase');
 
     document.addEventListener('click', function (e) {
       var row = e.target.closest('.toc-row, .phase-card');
@@ -249,7 +249,7 @@
     if (resetBtn) {
       resetBtn.addEventListener('click', function () {
         if (!window.AIFSProgress) return;
-        var ok = window.confirm('Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.');
+        var ok = window.confirm('Hapus semua kemajuan lokalmu (jawaban kuis dan pelajaran yang sudah selesai)? Tindakan ini tidak bisa dibatalkan.');
         if (!ok) return;
         window.AIFSProgress.reset();
       });
@@ -265,7 +265,7 @@
     currentPhaseIdx = idx;
     modalReturnFocus = document.activeElement;
 
-    document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
+    document.getElementById('modalPhaseNum').textContent = 'FASE ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
     document.getElementById('modalDesc').textContent = p.desc;
 
@@ -301,22 +301,22 @@
       var canOpen = (l.status === 'complete' || userComplete) && lessonPath;
       var lessonUrl = canOpen ? 'lesson?path=' + encodeURIComponent(lessonPath) : '';
       var lessonLabel = escapeHtml(l.name);
-      var lessonMeta = '<span class="modal-lesson-meta"><span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span><span aria-hidden="true">·</span><span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span></span>';
+      var lessonMeta = '<span class="modal-lesson-meta"><span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Menggabungkan: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span><span aria-hidden="true">·</span><span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span></span>';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
       if (canOpen) {
-        html += '<a href="' + lessonUrl + '" class="modal-lesson-open" aria-label="Open lesson: ' + lessonLabel + '">';
+        html += '<a href="' + lessonUrl + '" class="modal-lesson-open" aria-label="Buka pelajaran: ' + lessonLabel + '">';
         html += '<span class="modal-lesson-copy"><span class="modal-lesson-name">' + lessonLabel + '</span>' + lessonMeta + '</span>';
-        html += '<span class="modal-lesson-cta">' + (userComplete ? 'Review' : 'Open lesson') + '<span aria-hidden="true">→</span></span></a>';
+        html += '<span class="modal-lesson-cta">' + (userComplete ? 'Tinjau' : 'Buka pelajaran') + '<span aria-hidden="true">→</span></span></a>';
       } else {
         html += '<span class="modal-lesson-open is-unavailable" aria-disabled="true">';
         html += '<span class="modal-lesson-copy"><span class="modal-lesson-name">' + lessonLabel + '</span>' + lessonMeta + '</span>';
-        html += '<span class="modal-lesson-cta">Coming soon</span></span>';
+        html += '<span class="modal-lesson-cta">Segera hadir</span></span>';
       }
 
       var toggleHtml = '';
       if (hasProgress && canOpen) {
-        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '" aria-label="' + (userComplete ? 'Mark as not done' : 'Mark complete') + '"><span class="modal-lesson-check" aria-hidden="true">' + (userComplete ? '✓' : '') + '</span><span class="modal-lesson-toggle-label">' + (userComplete ? 'Done' : 'Mark done') + '</span></button>';
+        toggleHtml = '<button type="button" class="modal-lesson-toggle' + (userComplete ? ' done' : '') + '" data-path="' + lessonPath + '" title="' + (userComplete ? 'Tandai belum selesai' : 'Tandai selesai') + '" aria-label="' + (userComplete ? 'Tandai belum selesai' : 'Tandai selesai') + '"><span class="modal-lesson-check" aria-hidden="true">' + (userComplete ? '✓' : '') + '</span><span class="modal-lesson-toggle-label">' + (userComplete ? 'Selesai' : 'Tandai selesai') + '</span></button>';
       }
       html += toggleHtml;
       html += '</div>';
@@ -346,12 +346,12 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span><strong class="modal-progress-count">' + userDone + '</strong> of ' + p.lessons.length + ' lessons complete</span><span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span><strong class="modal-progress-count">' + userDone + '</strong> dari ' + p.lessons.length + ' pelajaran selesai</span><span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
         barEl.setAttribute('role', 'progressbar');
-        barEl.setAttribute('aria-label', p.name + ' progress');
+        barEl.setAttribute('aria-label', p.name + ' progres');
         barEl.setAttribute('aria-valuemin', '0');
         barEl.setAttribute('aria-valuemax', '100');
         barEl.setAttribute('aria-valuenow', String(pct));
@@ -394,8 +394,8 @@
   function wireCopyButton(btn, label, getText) {
     if (!btn || !label) return;
     var revertTimer = null;
-    var defaultLabel = label.textContent || 'copy';
-    var defaultAriaLabel = btn.getAttribute('aria-label') || 'Copy command';
+    var defaultLabel = label.textContent || 'salin';
+    var defaultAriaLabel = btn.getAttribute('aria-label') || 'Salin perintah';
     function resetCopyState() {
       label.textContent = defaultLabel;
       btn.classList.remove('copied');
@@ -406,15 +406,15 @@
       revertTimer = setTimeout(resetCopyState, 1500);
     }
     function confirmCopied() {
-      label.textContent = 'copied';
+      label.textContent = 'tersalin';
       btn.classList.add('copied');
-      btn.setAttribute('aria-label', 'Command copied');
+      btn.setAttribute('aria-label', 'Perintah tersalin');
       scheduleReset();
     }
     function reportCopyFailure() {
-      label.textContent = 'retry';
+      label.textContent = 'coba lagi';
       btn.classList.remove('copied');
-      btn.setAttribute('aria-label', 'Copy failed. Try again');
+      btn.setAttribute('aria-label', 'Gagal menyalin. Coba lagi');
       scheduleReset();
     }
     function fallbackCopy(text) {
@@ -540,7 +540,7 @@
         dot.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
       caption.setAttribute('aria-live', announce ? 'polite' : 'off');
-      caption.textContent = 'Plate ' + (current + 1) + ' of ' + panels.length + '. ' + panels[current].getAttribute('data-caption');
+      caption.textContent = 'Panel ' + (current + 1) + ' dari ' + panels.length + '. ' + panels[current].getAttribute('data-caption');
       previous.disabled = current === 0;
       next.disabled = current === panels.length - 1;
     }

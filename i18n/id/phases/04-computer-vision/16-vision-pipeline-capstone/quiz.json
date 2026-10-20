@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa pipeline vision produksi memakai model Pydantic (atau setara) di setiap batas tahap?",
+      "options": ["Pydantic lebih cepat daripada akses dict", "Itu membantu alokasi GPU", "Pydantic diwajibkan oleh FastAPI", "Skema bertipe menangkap ketidakcocokan antarmuka di batas; detektor yang mengembalikan (cx, cy, w, h) ketika hilir mengharapkan (x1, y1, x2, y2) gagal secara keras dengan validation error alih-alih diam-diam menghasilkan crop kosong"],
+      "correct": 3,
+      "explanation": "Bug antarmuka yang senyap adalah masalah khas pipeline ML. Setiap batas memiliki sistem koordinat, urutan channel, rentang nilai, dan shape. Validasi di batas dengan Pydantic mengubah setiap ketidakcocokan menjadi error langsung. Biayanya beberapa mikrodetik; penghematannya berjam-jam debugging."
+    },
+    {
+      "stage": "pre",
+      "question": "Pada pipeline vision hanya-CPU, tahap mana yang paling sering menjadi blok latensi terbesar?",
+      "options": ["Membaca body request HTTP", "Preprocessing gambar (dekode JPEG, konversi warna, resize); itu CPU-bound dan sering mendominasi ketika tidak ada GPU atau ketika model GPU-nya kecil", "Menulis respons JSON", "NMS akhir detektor"],
+      "correct": 1,
+      "explanation": "Di CPU, preprocessing sering menjadi biaya tunggal terbesar. Dekode JPEG dapat memakan milidetik, konversi warna lebih banyak, resize ke input model sebagian lagi. Aturannya sederhana: profil sebelum mengoptimalkan. Di GPU detektor biasanya mendominasi, tetapi jangan mengasumsikan itu di CPU."
+    },
+    {
+      "stage": "post",
+      "question": "Classifier pipeline crash ketika sebuah deteksi memiliki ukuran box 3x4 piksel. Perbaikan yang benar?",
+      "options": ["Menambah batch size", "Melatih ulang classifier pada gambar lebih kecil", "Menetapkan ambang min_crop (misalnya 16 atau 32 piksel) dan melewati klasifikasi untuk deteksi lebih kecil dari itu; catat pelewatan dan sertakan deteksi dalam respons tanpa field klasifikasi", "Menambahkan try/except global dan mengembalikan klasifikasi kosong"],
+      "correct": 2,
+      "explanation": "Crop sangat kecil adalah mode kegagalan yang wajar: classifier dilatih pada input 224x224 dan tidak dapat mengklasifikasi patch 3 piksel dengan andal. Ambang (min_crop) melewati itu, mempertahankan deteksi, dan menghasilkan respons lengkap yang jujur. try/except generik menyembunyikan kondisi; tidak mengembalikan klasifikasi sama sekali menyembunyikan kegagalan nyata; langkah yang benar adalah pelewatan bernama yang dicatat."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu menambahkan batching ke classifier (tunggu hingga 10 ms, batch semua crop tertunda, satu forward GPU). Efek yang diharapkan?",
+      "options": ["Latensi menurun secara ketat", "Tidak ada efek", "Throughput meningkat signifikan, latensi per request meningkat hingga sebesar jendela batching (~10ms) ditambah sedikit dari operasi tensor yang lebih besar; jawaban yang tepat bergantung pada apakah layanan dibatasi throughput atau latensi", "Throughput menurun karena penantian"],
+      "correct": 2,
+      "explanation": "Batching adalah trade-off throughput-latensi. Setiap request menunggu hingga jendela, yang menambah latensi. Forward pass yang di-batch lebih efisien per gambar, sehingga throughput berskala dengan batch size. Pakai batching ketika QPS tinggi dan latensi individual memiliki kelonggaran; hindari ketika SLA latensi di bawah 50ms."
+    },
+    {
+      "stage": "post",
+      "question": "Respons pipeline-mu menjadi error 500 ketika pengguna mengunggah JPEG yang rusak. Bagaimana kamu memperbaikinya?",
+      "options": ["Abaikan; pengguna akan mencoba lagi", "Tangkap kegagalan dekode gambar lebih awal di preprocessing, kembalikan 400 dengan kode error spesifik seperti 'image_decode_failed' agar klien dapat mencoba lagi dengan file lain alih-alih 500 yang menyiratkan kesalahan server", "Selalu kembalikan 200 dengan hasil kosong", "Pindahkan decoding ke classifier"],
+      "correct": 1,
+      "explanation": "500 dari input pengguna yang rusak adalah bug kontrak API. Input buruk harus mengembalikan 4xx agar klien tahu itu masalahnya; respons 5xx menandakan masalah server dan memicu logika retry klien dengan input buruk yang sama, memperbesar beban. Kode kegagalan bernama (image_decode_failed, image_too_large, unsupported_content_type) memungkinkan klien bereaksi dengan benar."
+    }
+  ]
+}

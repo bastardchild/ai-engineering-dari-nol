@@ -1,0 +1,48 @@
+{
+  "lesson": "51-write-specifications-that-preserve-judgment",
+  "title": "Spesifikasi yang Mempertahankan Pertimbangan",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa jalan tengah berguna antara kurang dan berlebihan spesifikasi?",
+      "options": ["Tanpa rencana", "Permintaan lebih panjang", "Skrip implementasi lengkap", "Kontrak yang dapat dieksekusi yang mematok invariant dan bukti sambil mempertahankan pilihan reversibel"],
+      "correct": 3,
+      "explanation": "Kontrak membatasi outcome dan risiko tanpa menuliskan setiap detail implementasi."
+    },
+    {
+      "stage": "check",
+      "question": "Keputusan mana yang biasanya harus dikunci?",
+      "options": ["Nama variabel lokal", "Apakah sistem boleh menulis ke produksi", "Pemecahan file yang reversibel", "Urutan fungsi helper privat"],
+      "correct": 1,
+      "explanation": "Otoritas dan perilaku berkonsekuensi tinggi membutuhkan keputusan milik manusia."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu bounded decision?",
+      "options": ["Agent tidak bisa bertindak", "Agent boleh memilih di dalam batas aman yang eksplisit", "Pilihannya acak", "Tidak ada pembuktian"],
+      "correct": 1,
+      "explanation": "Batas mempertahankan pertimbangan berguna sambil menjaga risiko tetap terkendali."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa memasangkan contoh dengan invariant?",
+      "options": ["Mereka mengurangi semua ambiguitas", "Contoh membuktikan setiap aturan universal", "Mereka menggantikan outcome", "Contoh mengungkap niat sementara invariant menyatakan kondisi yang harus selalu berlaku"],
+      "correct": 3,
+      "explanation": "Kasus konkret dan batasan universal berperan berbeda."
+    },
+    {
+      "stage": "post",
+      "question": "Pembuktian apa yang cocok untuk klaim user-journey?",
+      "options": ["Observasi journey browser atau end-to-end", "Anotasi tipe", "Hanya unit test lokal", "Rencana"],
+      "correct": 0,
+      "explanation": "Pembuktian harus beroperasi pada lapisan yang sama dengan klaimnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mencatat rationale untuk keputusan yang dikunci?",
+      "options": ["Untuk mencegah semua perubahan", "Untuk membuat file lebih panjang", "Agar bukti selanjutnya dapat merevisi pilihan tanpa arkeologi", "Untuk menyembunyikan ketidakpastian"],
+      "correct": 2,
+      "explanation": "Alasan yang dapat dilacak membuat spesifikasi berkembang dengan sengaja."
+    }
+  ]
+}

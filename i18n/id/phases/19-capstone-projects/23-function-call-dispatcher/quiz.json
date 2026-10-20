@@ -1,0 +1,90 @@
+{
+  "lesson": "23-function-call-dispatcher",
+  "title": "Dispatcher Function Call",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa timeout pada tool non-idempoten default tanpa retry?",
+      "options": [
+        "Karena dispatcher tidak bisa mengukur panggilan non-idempoten",
+        "Karena handler non-idempoten berjalan lebih cepat",
+        "Karena idempotency key lambat",
+        "Karena tool mungkin sudah commit sebagian; retry bisa menduplikasi efek"
+      ],
+      "correct": 3,
+      "explanation": "Mencoba ulang db.write yang timeout di 4,9 detik bisa menghasilkan tulisan kedua. Dispatcher menolak kecuali handler memberi tahu bahwa panggilan aman diulang."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilindungi dedupe idempotency-key?",
+      "options": [
+        "Error validasi skema",
+        "Retry yang menyala saat panggilan asli masih in-flight",
+        "Restart proses",
+        "Jaringan lambat"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa dedupe, retry di detik ke-5 berlomba dengan panggilan asli lambat yang masih pending. Cache meruntuhkan keduanya menjadi satu invokasi handler."
+    },
+    {
+      "stage": "check",
+      "question": "Jenis error mana yang layak di-retry di dispatcher ini?",
+      "options": [
+        "schema dan not_found",
+        "timeout (jika idempoten) dan transient",
+        "internal dan budget_exceeded",
+        "Semuanya"
+      ],
+      "correct": 1,
+      "explanation": "Schema dan not_found deterministik. Internal menutupi bug handler tak dikenal. Budget exceeded adalah yield. Hanya timeout pada idempoten dan TransientError eksplisit yang di-retry."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilindungi semaphore di sekitar _run_with_retries?",
+      "options": [
+        "Handler dari dirinya sendiri",
+        "Backend dari terlalu banyak panggilan simultan yang difan-out oleh gather()",
+        "Validator",
+        "Penghitung retry"
+      ],
+      "correct": 1,
+      "explanation": "Gather atas empat puluh panggilan akan membuka empat puluh dispatch konkuren tanpa batas. Semaphore membatasi gelombangnya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa idempotency key diturunkan oleh pemanggil, bukan dispatcher?",
+      "options": [
+        "Karena cache tidak bisa menyimpan string",
+        "Karena registry tidak punya key",
+        "Karena menurunkan dari args saja membuat dua panggilan berbeda-semantik bertabrakan jika kebetulan berbagi args",
+        "Karena hash Python tidak stabil"
+      ],
+      "correct": 2,
+      "explanation": "Pemanggil tahu step id, niat planner, pengguna. Args saja bukan konteks cukup untuk dedupe aman."
+    },
+    {
+      "stage": "post",
+      "question": "Kode error JSON-RPC mana yang dipetakan ke kegagalan skema saat dispatch?",
+      "options": [
+        "-32602",
+        "-32603",
+        "-32700",
+        "-32601"
+      ],
+      "correct": 0,
+      "explanation": "-32602 Invalid params. Dispatcher mengembalikannya sebelum handler apa pun berjalan."
+    },
+    {
+      "stage": "post",
+      "question": "Setelah max_attempts tercapai dengan timeout pada tool idempoten, apa yang dikembalikan?",
+      "options": [
+        "DispatchOk tanpa hasil",
+        "DispatchError dengan kind=timeout dan attempts==max_attempts",
+        "Exception dilempar",
+        "DispatchError dengan kind=internal"
+      ],
+      "correct": 1,
+      "explanation": "Dispatcher mengembalikan envelope error bertipe. kind mencerminkan mode kegagalan terakhir, attempts mencerminkan berapa kali mencoba."
+    }
+  ]
+}

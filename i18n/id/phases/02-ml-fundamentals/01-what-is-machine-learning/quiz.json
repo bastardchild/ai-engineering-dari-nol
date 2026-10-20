@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "ml-intro-pre-1",
+      "stage": "pre",
+      "question": "Dalam supervised learning, apa yang diterima model selama pelatihan?",
+      "options": [
+        "Pasangan input-output dengan jawaban benar yang sudah disediakan",
+        "Sekumpulan aturan yang ditulis oleh seorang pakar manusia",
+        "Sinyal reward untuk setiap aksi yang diambil model",
+        "Hanya data input tanpa label sama sekali"
+      ],
+      "correct": 0,
+      "explanation": "Supervised learning dilatih pada pasangan input-output (data berlabel). Model belajar memetakan input ke output benar yang sudah diketahui."
+    },
+    {
+      "id": "ml-intro-pre-2",
+      "stage": "pre",
+      "question": "Apa tujuan membagi data menjadi set training dan set test?",
+      "options": [
+        "Agar ada data cadangan kalau data training hilang",
+        "Untuk menilai apakah model mampu generalisasi ke data yang belum pernah dilihat saat training",
+        "Untuk mempercepat training dengan memakai lebih sedikit data",
+        "Untuk menyeimbangkan jumlah kelas di dalam dataset"
+      ],
+      "correct": 1,
+      "explanation": "Set test mengukur generalisasi. Kalau kamu mengevaluasi pada data training, yang kamu ukur adalah hafalan, bukan pembelajaran."
+    },
+    {
+      "id": "ml-intro-post-1",
+      "stage": "post",
+      "question": "Sebuah model mendapat akurasi 98% pada data training tetapi 55% pada data test. Ini contoh dari apa?",
+      "options": [
+        "Data drift: distribusi data test berubah",
+        "Underfitting: model terlalu sederhana",
+        "Overfitting: model menghafal noise training alih-alih mempelajari pola umum",
+        "Generalisasi bagus: model mempelajari pola yang sebenarnya"
+      ],
+      "correct": 2,
+      "explanation": "Jarak besar antara akurasi training (tinggi) dan akurasi test (rendah) adalah ciri khas overfitting. Model menghafal data training."
+    },
+    {
+      "id": "ml-intro-post-2",
+      "stage": "post",
+      "question": "Sebuah situs e-commerce ingin mengelompokkan pelanggan ke dalam segmen berdasarkan perilaku pembelian tanpa label yang sudah ditentukan. Ini jenis ML apa?",
+      "options": [
+        "Unsupervised learning (clustering)",
+        "Supervised learning (regression)",
+        "Supervised learning (classification)",
+        "Reinforcement learning"
+      ],
+      "correct": 0,
+      "explanation": "Menemukan pengelompokan alami dalam data tanpa label yang sudah ditentukan adalah clustering, salah satu bentuk unsupervised learning."
+    },
+    {
+      "id": "ml-intro-post-3",
+      "stage": "post",
+      "question": "Skenario mana yang BUKAN kasus penggunaan yang cocok untuk machine learning?",
+      "options": [
+        "Mendeteksi transaksi penipuan dalam aliran jutaan pembayaran",
+        "Memprediksi churn pelanggan dari data perilaku historis",
+        "Mengklasifikasikan citra lesi kulit sebagai jinak atau ganas",
+        "Mengonversi suhu dari Celsius ke Fahrenheit"
+      ],
+      "correct": 3,
+      "explanation": "Celsius ke Fahrenheit adalah rumus tetap (F = 9/5 * C + 32). Aturan sederhana yang sudah jelas tidak butuh ML. ML hanya menambah kompleksitas tanpa manfaat."
+    }
+  ]
+}

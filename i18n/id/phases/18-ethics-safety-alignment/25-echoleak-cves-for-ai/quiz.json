@@ -1,0 +1,78 @@
+{
+  "lesson": "25-echoleak-cves-for-ai",
+  "title": "EchoLeak dan Kemunculan CVE untuk AI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mana yang paling tepat menggambarkan EchoLeak (CVE-2025-32711)?",
+      "options": [
+        "Cacat command-injection AI zero-click di Microsoft 365 Copilot (CVE-2025-32711, CVSS 9.3) yang menyebabkan pengungkapan informasi jaringan tanpa izin, dengan eksfiltrasi lewat domain Microsoft yang di-allowlist/dipercaya CSP",
+        "Kerentanan hardware pada NPU",
+        "Serangan supply-chain pada PyPI",
+        "Jailbreak lewat shot stuffing konteks panjang"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang membuat EchoLeak 'zero-click'?",
+      "options": [
+        "Itu berjalan di kernel sistem operasi",
+        "Itu butuh tiga klik tetapi tanpa mengetik",
+        "Korban tidak harus membuka email; Copilot mengambilnya sebagai konteks RAG selama query rutin dan instruksi yang disuntikkan dieksekusi",
+        "Itu membutuhkan pengguna mengklik tautan di chat Teams"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Aim Labs menyebut EchoLeak sebagai 'LLM Scope Violation'. Tiga batas apa yang masing-masing harus dikendalikan secara independen?",
+      "options": [
+        "Retrieval, scope, output",
+        "Network, disk, memory",
+        "Prompt, response, log",
+        "Input, model, GPU"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana Microsoft/GitHub memperbaiki CamoLeak (CVSS 9.6, GitHub Copilot Chat)?",
+      "options": [
+        "Meningkatkan ukuran konteks",
+        "Menambahkan filter prompt injection XPIA",
+        "Mengganti model ke Llama Guard",
+        "Menonaktifkan rendering gambar sepenuhnya di Copilot Chat (biaya: kegunaan) karena permukaan serangan alternatifnya tidak bisa dibatasi"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pola apa dalam kalibrasi severity yang diungkap pengungkapan EchoLeak?",
+      "options": [
+        "Vendor menilai terlalu tinggi skor CVSS awal",
+        "Semua CVE AI otomatis dinilai 10.0",
+        "Vendor awalnya menilai EchoLeak rendah (information disclosure); proof-of-concept eksfiltrasi kode MFA dari Aim Labs menaikkan rating ke 9.3 — defender harus mendorong PoC yang komprehensif untuk kerentanan khas AI",
+        "Rating severity hanya diputuskan OWASP"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Di mana NIST dan OWASP menempatkan prompt injection per 2024/2025?",
+      "options": [
+        "NIST: di luar cakupan; OWASP: tidak terdaftar",
+        "Keduanya menyebutnya hanya risiko Tier-2",
+        "NIST: minor; OWASP: paling bawah daftar",
+        "NIST AI SPD 2024 membingkai prompt injection sebagai risiko keamanan informasi utama untuk AI generatif; OWASP 2025 menempatkannya di LLM01 (ancaman lapisan aplikasi teratas)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

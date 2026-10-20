@@ -1,0 +1,78 @@
+{
+  "lesson": "21-tool-registry-schema-validation",
+  "title": "Registry Tool dengan Validasi Skema",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa mendaftarkan skema tool terpisah dari handler-nya?",
+      "options": [
+        "Karena handler tidak bisa mengembalikan JSON",
+        "Agar validator tetap data murni, dan handler tetap kode buram",
+        "Karena skema harus dikompilasi",
+        "Karena skema harus berada di YAML"
+      ],
+      "correct": 1,
+      "explanation": "Menjaga skema sebagai data dan handler sebagai kode memungkinkan validator menjadi fungsi murni atas pohon skema."
+    },
+    {
+      "stage": "check",
+      "question": "Keyword mana yang sengaja di luar subset yang diimplementasikan lesson ini?",
+      "options": [
+        "items, enum",
+        "oneOf, anyOf, $ref, allOf",
+        "minLength, maxLength, pattern",
+        "type, properties, required"
+      ],
+      "correct": 1,
+      "explanation": "Keyword yang dihilangkan menambah siklus dan resolusi referensi. Kami menjaga subset linear agar validator tetap satu walk rekursif."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa register() menolak duplikat secara default?",
+      "options": [
+        "Karena skema tidak bisa divalidasi ulang",
+        "Overwrite diam-diam adalah penyebab drift katalog tool di produksi",
+        "Karena registry tidak bisa menyimpan lebih dari satu record per nama",
+        "Karena handler tidak bisa diganti"
+      ],
+      "correct": 1,
+      "explanation": "Memaksa override=True memunculkan kasus di mana dua bagian kode bermaksud memiliki nama tool yang sama."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan validator saat skema menentukan tipe integer tetapi menerima nilai True?",
+      "options": [
+        "Mengkoersi ke integer diam-diam",
+        "Menganggapnya 1 dan lolos",
+        "Melempar exception tak tertangani",
+        "Mengembalikan type error karena bool bukan integer dalam validator ini"
+      ],
+      "correct": 3,
+      "explanation": "bool Python adalah subclass int, tetapi validator menyaring bool dari pemeriksaan integer. Boolean dan integer JSON berbeda."
+    },
+    {
+      "stage": "post",
+      "question": "Saat objek input adalah {'user': {'email': 0}} dan skema mewajibkan user.email berupa string, apa path error-nya?",
+      "options": [
+        "/user",
+        "/user/email",
+        "/",
+        "user.email"
+      ],
+      "correct": 1,
+      "explanation": "JSON pointer mengodekan penurunan melalui user lalu email sebagai /user/email."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa registry bukan batas keamanan?",
+      "options": [
+        "Karena handler bersifat async",
+        "Karena handler masih bisa berperilaku buruk setelah validasi lolos",
+        "Karena registry berjalan in-process",
+        "Karena skema adalah JSON"
+      ],
+      "correct": 1,
+      "explanation": "Registry memeriksa bentuk. Perilaku, timeout, dan isolasi adalah tanggung jawab dispatcher dan sandbox."
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "eval-pre-1",
+      "stage": "pre",
+      "question": "Mengapa kamu tidak boleh menyetel hyperparameter berdasarkan performa di set test?",
+      "options": [
+        "Set test terlalu kecil untuk estimasi yang bisa diandalkan",
+        "Menyesuaikan model berdasarkan hasil test sama saja dengan melatihnya di set test, sehingga performa yang dilaporkan jadi tak bermakna",
+        "Hyperparameter tidak bisa diubah setelah training",
+        "Set test selalu punya fitur berbeda dari set training"
+      ],
+      "correct": 1,
+      "explanation": "Setiap kali kamu menyesuaikan model berdasarkan performa test, kamu membocorkan informasi test ke keputusan pemodelanmu. Set test harus dipakai tepat sekali di akhir untuk estimasi yang tak bias."
+    },
+    {
+      "id": "eval-pre-2",
+      "stage": "pre",
+      "question": "Sebuah dataset berisi 95% sampel negatif dan 5% positif. Model memprediksi 'negatif' untuk semua sampel. Berapa akurasinya?",
+      "options": [
+        "0%",
+        "95%",
+        "50%",
+        "5%"
+      ],
+      "correct": 1,
+      "explanation": "Akurasi = prediksi benar / total = 950/1000 = 95%. Inilah kenapa akurasi menyesatkan pada data tak seimbang -- model yang sama sekali tak berguna terlihat hebat."
+    },
+    {
+      "id": "eval-post-1",
+      "stage": "post",
+      "question": "Pada K-fold cross-validation dengan K=5, berapa kali tiap titik data dipakai sebagai validasi?",
+      "options": [
+        "Tepat satu kali",
+        "Lima kali",
+        "Tergantung random seed",
+        "Tidak pernah -- semua data dipakai untuk training"
+      ],
+      "correct": 0,
+      "explanation": "Pada K-fold CV, data dibagi menjadi K fold sama besar. Tiap fold dipakai sebagai set validasi tepat satu kali, sementara K-1 fold lainnya dipakai untuk training."
+    },
+    {
+      "id": "eval-post-2",
+      "stage": "post",
+      "question": "Learning curve menunjukkan skor training = 0.95 dan skor validasi = 0.60 yang tidak membaik walau data ditambah. Apa yang sebaiknya kamu coba?",
+      "options": [
+        "Naikkan learning rate",
+        "Pakai model yang lebih sederhana atau tambahkan regularisasi untuk mengurangi variance (overfitting)",
+        "Hapus set validasi agar model dapat lebih banyak data training",
+        "Kumpulkan lebih banyak data training"
+      ],
+      "correct": 1,
+      "explanation": "Jarak besar antara skor training (tinggi) dan validasi (rendah) berarti variance tinggi (overfitting). Solusinya model lebih sederhana, regularisasi lebih banyak, atau teknik seperti dropout -- bukan menambah data jika jaraknya tetap."
+    },
+    {
+      "id": "eval-post-3",
+      "stage": "post",
+      "question": "AUC-ROC = 0.5 untuk sebuah classifier biner. Apa artinya?",
+      "options": [
+        "Model memisahkan kedua kelas dengan sempurna",
+        "Model tidak lebih baik daripada tebakan acak dalam memeringkat positif di atas negatif",
+        "Model punya akurasi 50%",
+        "Model punya precision dan recall yang sama"
+      ],
+      "correct": 1,
+      "explanation": "AUC-ROC = 0.5 berarti peringkat contoh positif dan negatif dari model tidak lebih baik daripada acak. AUC = 1.0 berarti pemisahan sempurna. Metrik ini tidak bergantung pada threshold."
+    }
+  ]
+}

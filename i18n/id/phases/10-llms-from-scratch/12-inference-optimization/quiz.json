@@ -1,0 +1,66 @@
+{
+  "lesson": "12-inference-optimization",
+  "title": "Optimasi Inferensi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa dua fase inferensi LLM?",
+      "options": [
+        "Forward dan backward",
+        "Encoding dan decoding",
+        "Training dan evaluasi",
+        "Prefill (memproses prompt secara paralel, compute-bound) dan decode (menghasilkan token satu per satu, memory-bound)"
+      ],
+      "correct": 3,
+      "explanation": "Prefill memproses semua token prompt secara paralel (dibatasi komputasi). Decode menghasilkan token secara autoregresif satu per satu (dibatasi bandwidth memori untuk memuat bobot model). Optimasi berbeda menargetkan tiap fase."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dihilangkan KV-cache selama generasi autoregresif?",
+      "options": [
+        "Embedding lookup",
+        "Kebutuhan akan attention mask",
+        "Komputasi softmax",
+        "Komputasi ulang berlebih vektor key dan value untuk semua token sebelumnya di setiap langkah generasi"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa KV-cache, menghasilkan token N memerlukan komputasi ulang attention key dan value untuk semua N-1 token sebelumnya. KV-cache menyimpan vektor ini, sehingga setiap token baru hanya menghitung K dan V miliknya sendiri, menghemat komputasi O(N) per langkah."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu continuous batching dan mengapa meningkatkan throughput?",
+      "options": [
+        "Batching lintas beberapa model",
+        "Memakai ukuran batch lebih besar",
+        "Memproses semua request dalam satu batch besar",
+        "Secara dinamis menambah dan menghapus request dari batch yang berjalan saat mereka mulai dan selesai, alih-alih menunggu seluruh batch selesai"
+      ],
+      "correct": 3,
+      "explanation": "Dalam static batching, request pendek menahan slot batch-nya sampai request terpanjang selesai. Continuous batching segera mengisi slot yang selesai dengan request baru, menjaga GPU tetap sibuk dan meningkatkan throughput keseluruhan."
+    },
+    {
+      "stage": "post",
+      "question": "Masalah apa yang diselesaikan PagedAttention (dipakai di vLLM)?",
+      "options": [
+        "Ia meningkatkan kecepatan tokenisasi",
+        "Ia mengurangi ukuran model",
+        "Ia mengelola memori KV-cache dalam blok berukuran tetap seperti virtual memory, menghilangkan fragmentasi dari sequence berpanjang variabel",
+        "Ia mempercepat komputasi attention"
+      ],
+      "correct": 2,
+      "explanation": "KV-cache untuk sequence berpanjang variabel menyebabkan fragmentasi memori (celah terbuang antar alokasi). PagedAttention mengalokasikan KV-cache dalam blok tetap dan memetakannya dengan page table, seperti virtual memory OS."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu speculative decoding?",
+      "options": [
+        "Memakai model draft kecil untuk mengusulkan beberapa token yang diverifikasi model besar secara paralel, mempercepat generasi",
+        "Memprediksi token yang diinginkan pengguna",
+        "Menghasilkan beberapa respons dan memilih yang terbaik",
+        "Meng-cache sequence yang sering dihasilkan"
+      ],
+      "correct": 0,
+      "explanation": "Model kecil yang cepat menghasilkan N token kandidat. Model besar memverifikasi semua N dalam satu forward pass (paralel). Jika K token diterima, kamu telah menghasilkan K token dalam waktu kira-kira 1 langkah model besar."
+    }
+  ]
+}

@@ -15,18 +15,18 @@
     section.setAttribute('aria-labelledby', id + '-title');
     section.innerHTML = `<div class="newsletter-strip">
       <div class="newsletter-copy">
-        <h2 id="${id}-title">${lesson ? 'AI Engineering Newsletter' : 'Learn AI from scratch. Stay ahead of what’s next.'}</h2>
-        <p>${lesson ? 'Practical lessons and updates on AI, DevOps, and cloud native. One email a week.' : 'Practical lessons, tools worth trying, and the week’s key developments across AI, DevOps, and cloud native. One free email, every week.'}</p>
+        <h2 id="${id}-title">${lesson ? 'AI Engineering Newsletter' : 'Belajar AI dari nol. Tetap selangkah di depan.'}</h2>
+        <p>${lesson ? 'Pelajaran praktis dan kabar terbaru seputar AI, DevOps, dan cloud native. Satu email per minggu.' : 'Pelajaran praktis, alat yang layak dicoba, dan perkembangan penting minggu ini di AI, DevOps, dan cloud native. Satu email gratis, setiap minggu.'}</p>
       </div>
       <div class="newsletter-signup">
         <form action="${publicationUrl}/subscribe" method="get" aria-describedby="${id}-note">
-          <label class="newsletter-email-label" for="${id}-email">Email address</label>
+          <label class="newsletter-email-label" for="${id}-email">Alamat email</label>
           <div class="newsletter-input-row">
-            <input id="${id}-email" name="email" type="email" placeholder="Your email address" autocomplete="email" required>
-            <button type="submit">Subscribe free <span aria-hidden="true">↗</span></button>
+            <input id="${id}-email" name="email" type="email" placeholder="Alamat email kamu" autocomplete="email" required>
+            <button type="submit">Berlangganan gratis <span aria-hidden="true">↗</span></button>
           </div>
         </form>
-        <p id="${id}-note" class="newsletter-note">Free. Unsubscribe anytime. Finish signup on Substack.</p>
+        <p id="${id}-note" class="newsletter-note">Gratis. Berhenti kapan saja. Selesaikan pendaftaran di Substack.</p>
       </div>
     </div>`;
     return section;
@@ -59,8 +59,8 @@
     const close = document.createElement('button');
     close.type = 'button';
     close.className = 'newsletter-modal-close';
-    close.textContent = 'Close ×';
-    close.setAttribute('aria-label', 'Close newsletter signup');
+    close.textContent = 'Tutup ×';
+    close.setAttribute('aria-label', 'Tutup pendaftaran newsletter');
     close.autofocus = true;
     close.addEventListener('click', function () { element.close(); });
     element.append(close, signupSection('dialog'));
@@ -105,13 +105,13 @@
       return;
     }
     const placements = {
-      'learning-paths': ['#overview', 'after', 'Keep building your AI skills, every week.', 'learning-paths-container'],
-      catalog: ['.catalog-header', 'append', 'Get practical lessons and the week’s AI updates.'],
-      certifications: ['.cert-hero', 'after', 'Keep learning as AI tools and practices evolve.', 'cert-container'],
-      certification: ['#trackProgramNotice', 'before', 'Keep building beyond your study plan.', 'cert-container'],
-      glossary: ['.glossary-explorer', 'after', 'Turn AI concepts into practical skills.'],
-      prereqs: ['.roadmap-workspace', 'after', 'Keep your learning connected to what’s next.', 'roadmap-container'],
-      developer: ['.trust-page', 'append', 'Follow the tools and ideas shaping AI engineering.']
+      'learning-paths': ['#overview', 'after', 'Terus kembangkan skill AI kamu, setiap minggu.', 'learning-paths-container'],
+      catalog: ['.catalog-header', 'append', 'Dapatkan pelajaran praktis dan kabar AI minggu ini.'],
+      certifications: ['.cert-hero', 'after', 'Terus belajar seiring alat dan praktik AI berkembang.', 'cert-container'],
+      certification: ['#trackProgramNotice', 'before', 'Terus berkembang melampaui rencana belajar kamu.', 'cert-container'],
+      glossary: ['.glossary-explorer', 'after', 'Ubah konsep AI menjadi keterampilan praktis.'],
+      prereqs: ['.roadmap-workspace', 'after', 'Jaga pembelajaran kamu tetap terhubung dengan hal berikutnya.', 'roadmap-container'],
+      developer: ['.trust-page', 'append', 'Ikuti alat dan ide yang membentuk rekayasa AI.']
     };
     const placement = placements[page];
     if (!placement) return;
@@ -126,7 +126,7 @@
     row.className = 'newsletter-callout-row';
     const copy = document.createElement('p');
     copy.textContent = message;
-    row.append(copy, newsletterLink('Get the free newsletter →'));
+    row.append(copy, newsletterLink('Dapatkan newsletter gratis →'));
     callout.append(row);
     target[position](callout);
   }
@@ -156,7 +156,7 @@
     if (readers) {
       readers.before(signupSection('home'));
       const colophon = document.querySelector('.colophon p');
-      if (colophon) colophon.textContent = colophon.textContent.replace('No paywall, no signup.', 'No paywall, no account required.');
+      if (colophon) colophon.textContent = colophon.textContent.replace('No paywall, no signup.', 'Tanpa paywall, tanpa perlu akun.');
     } else {
       addPagePlacement();
       addLessonPlacement();

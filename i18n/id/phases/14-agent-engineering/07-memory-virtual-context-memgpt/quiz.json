@@ -1,0 +1,90 @@
+{
+  "lesson": "07-memory-virtual-context-memgpt",
+  "title": "Memori Agent — Virtual Context dan Memory Paging",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Analogi OS apa yang menjadi dasar MemGPT?",
+      "options": [
+        "Virtual memory: konteks utama sebagai RAM, penyimpanan eksternal sebagai disk, tool memori sebagai page in dan out",
+        "Proses dan thread",
+        "Socket jaringan",
+        "File descriptor"
+      ],
+      "correct": 0,
+      "explanation": "MemGPT memetakan prompt ke RAM, penyimpanan eksternal ke disk, dan tool memori ke transfer bergaya page-fault."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa context window yang lebih besar tidak sepenuhnya menyelesaikan masalah memori?",
+      "options": [
+        "Model menolak input panjang",
+        "Konteks panjang tidak memakan biaya",
+        "Overflow, dilusinya attention, dan tidak adanya persistensi antar sesi tetap menggigit bahkan dengan window 128k",
+        "Penyedia membatasinya di 4k token"
+      ],
+      "correct": 2,
+      "explanation": "Mem0 mengukur baseline berwindow 128k yang tetap melewatkan fakta yang ditangkap agent 4k dengan memori eksternal; overflow, dilusi, dan persistensi tetap ada."
+    },
+    {
+      "stage": "check",
+      "question": "Manakah yang BUKAN salah satu tool memori kanonis MemGPT?",
+      "options": [
+        "archival_memory_search",
+        "core_memory_append",
+        "conversation_search",
+        "gradient_memory_update"
+      ],
+      "correct": 3,
+      "explanation": "Tidak ada tool gradient memory; permukaannya adalah operasi core/archival/conversation."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan interrupt pattern di MemGPT?",
+      "options": [
+        "Ia menghentikan seluruh run agent pada setiap error",
+        "Di tengah percakapan agent memanggil tool memori, runtime mengeksekusinya, dan hasilnya disambung ke giliran berikutnya",
+        "Ia melewati context window sepenuhnya",
+        "Ia memicu pelatihan ulang model"
+      ],
+      "correct": 1,
+      "explanation": "Memory-as-interrupt: panggil tool memori, runtime mengambil, hasilnya kembali sebagai observation baru pada giliran berikutnya (seperti read() di Unix)."
+    },
+    {
+      "stage": "check",
+      "question": "Sistem produksi mana yang menjadi evolusi MemGPT pada 2024?",
+      "options": [
+        "Pinecone",
+        "Mem0",
+        "Zep",
+        "Letta"
+      ],
+      "correct": 3,
+      "explanation": "MemGPT menjadi Letta pada September 2024; repo riset cpacker/MemGPT masih ada sebagai asalnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu memory poisoning dalam konteks ini?",
+      "options": [
+        "Membaca dari disk saat RAM tersedia",
+        "Pergeseran versi model embedding",
+        "Bug yang merusak indeks vektor",
+        "Konten penyerang tersimpan sebagai catatan memori dan diserap ulang pada recall berikutnya"
+      ],
+      "correct": 3,
+      "explanation": "Memori eksternal adalah teks hasil retrieval; jika konten yang dapat dijangkau penyerang masuk ke catatan memori, agent menyerapnya lagi di sesi berikutnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pelajaran menyebut sistem memori produksi sebagai varian MemGPT?",
+      "options": [
+        "Letta, Mem0, Assistants threads, dan Claude Agent SDK semuanya menjalankan pola paged-memory dua tingkat (atau lebih); perbedaannya pada bentuk operasional",
+        "Mereka berbagi bobot",
+        "Mereka memakai vector DB yang sama",
+        "MemGPT memegang merek dagangnya"
+      ],
+      "correct": 0,
+      "explanation": "Pilih berdasarkan bentuk operasional, bukan pola; semuanya berbagi kerangka page in/out MemGPT."
+    }
+  ]
+}

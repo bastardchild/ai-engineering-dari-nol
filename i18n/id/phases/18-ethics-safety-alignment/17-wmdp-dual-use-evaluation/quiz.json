@@ -1,0 +1,78 @@
+{
+  "lesson": "17-wmdp-dual-use-evaluation",
+  "title": "WMDP dan Evaluasi Kapabilitas Dual-Use",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa kriteria 'yellow zone' yang dipakai WMDP untuk pemilihan soal?",
+      "options": [
+        "Resep sintesis senyawa berbahaya",
+        "Pengetahuan yang mendekatkan dan memungkinkan proses berbahaya tanpa menjadi resep sintesis langsung",
+        "Konten internet terbuka tanpa review ahli",
+        "Penalaran matematika multibahasa"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Tiga domain apa yang dicakup WMDP?",
+      "options": [
+        "Biosekuriti, keamanan siber, kimia",
+        "Vision, audio, teks",
+        "Matematika, kode, bahasa",
+        "Privasi, bias, watermarking"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan RMU (metode pendamping WMDP)?",
+      "options": [
+        "Menghasilkan gambar berbahaya",
+        "Menggantikan PPO dengan DPO saat alignment",
+        "Melatih tokenizer baru untuk konten dual-use",
+        "Representation Misdirection for Unlearning: menurunkan skor WMDP ke mendekati acak sambil mempertahankan kapabilitas umum (misalnya MMLU) dalam beberapa poin"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Angka apa yang dilaporkan uji coba akuisisi senjata biologis Anthropic 2025 sebagai 'uplift', dan apa implikasinya bagi ASL-3?",
+      "options": [
+        "100x; ASL-5 tercapai",
+        "2.53x; tidak cukup untuk menyingkirkan ASL-3",
+        "10x; di bawah ASL-2",
+        "0.5x; ASL-3 tersingkirkan"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa perbedaan antara uplift relatif-novice dan kapabilitas absolut-ahli?",
+      "options": [
+        "Keduanya hanya diukur lewat MCQ",
+        "Keduanya sinonim",
+        "Relatif-novice adalah benchmark; absolut-ahli adalah lisensi",
+        "Relatif-novice adalah bantuan multiplikatif atas status quo (misalnya pencarian internet) bagi non-ahli; absolut-ahli adalah informasi maksimum yang bisa diekstrak ahli termotivasi dari model"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mana yang BUKAN jebakan pengukuran saat menafsirkan skor WMDP sebagai risiko deployment?",
+      "options": [
+        "Pengetahuan tacit yang diperlukan untuk eksekusi dan tidak tertangkap MCQ",
+        "Hambatan pengadaan dan peralatan",
+        "Lisensi open-source model",
+        "Ketahanan elicitation (apakah filter keselamatan memblokir ekstraksi)"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "lesson": "11-caching-cost",
+  "title": "Caching, Rate Limiting & Optimasi Biaya",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa startup AI sering gagal karena masalah biaya alih-alih kualitas model?",
+      "options": [
+        "Model selalu cukup baik",
+        "Biaya per panggilan bertambah cepat: 10K pengguna melakukan 10 panggilan/hari berbiaya $250/hari dalam token sebelum menagih satu dolar pun",
+        "Penyedia API menawarkan tier gratis tanpa batas",
+        "Optimasi biaya itu mudah"
+      ],
+      "correct": 1,
+      "explanation": "Biaya API LLM berskala linear dengan penggunaan. Fitur yang berbiaya $0.003 per panggilan tampak murah sampai dipanggil 100K kali/hari ($300/hari, $9K/bulan). Tanpa optimasi biaya, banyak produk AI tidak menguntungkan dalam skala besar."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu semantic caching untuk aplikasi LLM?",
+      "options": [
+        "Pra-generasi semua respons yang mungkin",
+        "Hanya meng-cache embedding",
+        "Menyimpan respons untuk query sebelumnya dan menyajikan respons ter-cache saat query baru mirip secara semantik (bukan hanya cocok persis)",
+        "Meng-cache bobot model"
+      ],
+      "correct": 2,
+      "explanation": "Caching exact-match hanya membantu untuk query identik. Semantic caching meng-embed query dan menyajikan respons ter-cache saat cosine similarity melewati ambang. 'What's the weather in NYC?' cocok dengan 'NYC weather today?'."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu model routing sebagai strategi optimasi biaya?",
+      "options": [
+        "Meng-cache respons dari beberapa model",
+        "Mengirim query sederhana ke model murah/cepat dan query kompleks ke model mahal/kuat berdasarkan klasifikasi query",
+        "Load balancing lintas server",
+        "Routing antar penyedia API berbeda"
+      ],
+      "correct": 1,
+      "explanation": "Tidak setiap query membutuhkan GPT-4. Classifier merutekan pertanyaan sederhana (FAQ, sapaan) ke model murah (GPT-3.5, Haiku) dan pertanyaan kompleks (penalaran, analisis) ke model mahal. Ini dapat memangkas biaya 50-80%."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu prompt compression dan bagaimana ia mengurangi biaya?",
+      "options": [
+        "Memakai nama variabel lebih pendek",
+        "Menghapus token redundan, merangkum konteks panjang, dan menghilangkan boilerplate untuk mengurangi jumlah token input sambil mempertahankan informasi penting",
+        "Membuat prompt lebih pendek dengan menghapus kata",
+        "Mengompresi prompt dengan gzip"
+      ],
+      "correct": 1,
+      "explanation": "Token input mendominasi biaya pada aplikasi RAG (konteks terambil besar). Prompt compression menghapus kata pengisi, merangkum bagian bertele-tele, dan memangkas chunk relevansi rendah untuk mengurangi jumlah token tanpa kehilangan informasi kunci."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu prefix caching dan fitur penyedia mana yang mengaktifkannya?",
+      "options": [
+        "Menggunakan kembali komputasi KV-cache untuk prefix prompt bersama (system prompt + definisi tool), mengurangi latensi dan biaya untuk pola berulang",
+        "Caching browser untuk respons API",
+        "Caching lookup DNS",
+        "Caching kata pertama setiap respons"
+      ],
+      "correct": 0,
+      "explanation": "Jika system prompt + definisi tool-mu 5000 token dan identik antar request, prefix caching menghitung KV-cache sekali dan menggunakannya kembali. Prompt caching Anthropic dan cached tokens OpenAI keduanya mendukung ini."
+    }
+  ]
+}

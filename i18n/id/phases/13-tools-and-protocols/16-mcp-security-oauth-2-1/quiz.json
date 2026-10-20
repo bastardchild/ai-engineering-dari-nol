@@ -1,0 +1,78 @@
+{
+  "lesson": "16-mcp-security-oauth-2-1",
+  "title": "Otorisasi MCP: CIMD, Issuer Binding, PKCE, dan Step-Up",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mekanisme mana yang disarankan untuk pendaftaran klien OAuth MCP baru pada 2026-07-28?",
+      "options": [
+        "Token akses di URL",
+        "Mcp-Session-Id",
+        "Client ID Metadata Documents",
+        "Dynamic Client Registration"
+      ],
+      "correct": 2,
+      "explanation": "CIMD disarankan; DCR sudah deprecated dan dipertahankan sebagai jalur kompatibilitas."
+    },
+    {
+      "stage": "check",
+      "question": "application_type apa yang harus dideklarasikan klien desktop dengan redirect loopback selama fallback DCR?",
+      "options": [
+        "web",
+        "stateless",
+        "native",
+        "confidential"
+      ],
+      "correct": 2,
+      "explanation": "Klien desktop, mobile, command-line, dan loopback adalah aplikasi native."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus dilakukan klien dengan nilai iss pada respons otorisasi?",
+      "options": [
+        "Menormalisasinya dan membandingkan hostname",
+        "Menyimpannya sebagai clientInfo",
+        "Mengabaikannya setelah PKCE berhasil",
+        "Membandingkannya persis dengan issuer yang tercatat sebelum memakai respons"
+      ],
+      "correct": 3,
+      "explanation": "Pemeriksaan issuer RFC 9207 mencegah mix-up respons otorisasi antar issuer."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien sebaiknya memberi kunci pada kredensial OAuth dan token akses yang diterbitkan issuer?",
+      "options": [
+        "Kredensial terbitan issuer berdasarkan issuer dan token berdasarkan issuer plus resource",
+        "Semua registrasi dan token di bawah satu nama klien global",
+        "Hanya berdasarkan nama tampilan server",
+        "Berdasarkan identifier sesi protokol"
+      ],
+      "correct": 0,
+      "explanation": "Kunci issuer dan resource mencegah kredensial terbitan melintasi otoritas keamanan atau audiens. URL CIMD yang di-host sendiri tetap portabel."
+    },
+    {
+      "stage": "post",
+      "question": "Resource mengembalikan 403 dengan scope notes:delete. Apa langkah berikutnya yang benar?",
+      "options": [
+        "Menambahkan notes:delete secara lokal tanpa otorisasi",
+        "Menjelaskan scope, memperoleh persetujuan, mengotorisasinya, lalu mencoba ulang dengan id request baru",
+        "Mengirim token MCP ke API hilir",
+        "Menggunakan ulang token saat ini dan mengabaikan challenge"
+      ],
+      "correct": 1,
+      "explanation": "Step-up memperoleh token yang baru diotorisasi sebelum mencoba ulang operasi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa URL metadata RFC 9728 untuk resource MCP https://notes.example.com/mcp?",
+      "options": [
+        "https://notes.example.com/.well-known/oauth-protected-resource/mcp",
+        "https://auth.example.com/.well-known/oauth-protected-resource",
+        "https://notes.example.com/.well-known/oauth-protected-resource",
+        "https://notes.example.com/mcp/.well-known/oauth-protected-resource"
+      ],
+      "correct": 0,
+      "explanation": "RFC 9728 mempertahankan path protected resource setelah segmen well-known, sehingga sufiks /mcp wajib ada."
+    }
+  ]
+}

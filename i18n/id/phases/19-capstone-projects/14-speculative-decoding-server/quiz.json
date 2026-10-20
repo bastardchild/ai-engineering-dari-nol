@@ -1,0 +1,90 @@
+{
+  "lesson": "14-speculative-decoding-server",
+  "title": "Capstone 14 — Server Inferensi Speculative Decoding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa mekanisme dua lapis di balik speculative decoding?",
+      "options": [
+        "Dua model target bergantian per token",
+        "Model embedding dan synthesizer",
+        "Cache retrieval dan reranker",
+        "Model draft mengusulkan k token kandidat; model target memverifikasinya dalam satu pass"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan EAGLE-3 yang tidak dilakukan draft ngram?",
+      "options": [
+        "Menghindari tokenisasi sepenuhnya",
+        "Hanya berjalan di CPU",
+        "Melatih draft head pada hidden state model target untuk acceptance rate lebih tinggi",
+        "Menggantikan model target"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa latensi ekor p99 dilaporkan pada ukuran batch 1, 8, dan 32?",
+      "options": [
+        "Token per detik steady-state dapat menyembunyikan bahwa pass verifikasi saat rejection lebih mahal daripada decoding vanilla",
+        "vLLM tidak bisa melayani batch di bawah 8",
+        "p99 hanya penting pada batch 32",
+        "Latensi ekor independen dari ukuran batch"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa acceptance rate bergeser saat distribusi trafik berubah?",
+      "options": [
+        "Keselarasan draft bergantung pada distribusi input: ShareGPT, kode, dan data domain melatih pola berbeda",
+        "Scheduler OS mengacak ulang memori GPU",
+        "Kuantisasi berubah saat runtime",
+        "vLLM merotasi model setiap jam"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Sinyal Kubernetes HPA mana yang dipakai deployment untuk scaling?",
+      "options": [
+        "IOPS disk",
+        "Utilisasi CPU",
+        "Queue-wait time pada permintaan inferensi",
+        "Node cluster autoscaler"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang ditambahkan P-EAGLE dibanding EAGLE-3 serial?",
+      "options": [
+        "Kuantisasi ke bobot FP4",
+        "Penghapusan model target",
+        "Spekulasi paralel di pohon cabang draft yang diverifikasi dalam satu pass target",
+        "Kurasi dataset otomatis"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Target throughput mana yang dituntut rubrik terhadap baseline non-spesulatif?",
+      "options": [
+        "Minimal 2.5x pada kualitas setara di dua model",
+        "Peningkatan apa pun di atas baseline",
+        "Sekitar 1.1x pada kualitas setara",
+        "Tepat 10x throughput pada kualitas apa pun"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

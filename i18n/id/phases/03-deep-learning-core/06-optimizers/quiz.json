@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Masalah apa yang diselesaikan momentum pada gradient descent?",
+      "options": ["Ia mencegah overfitting", "Ia menghapus kebutuhan akan learning rate", "Ia mengurangi pemakaian memori", "Ia meredam osilasi dengan mengakumulasi gradient masa lalu, mempercepat gerak ke arah yang konsisten"],
+      "correct": 3,
+      "explanation": "Di lembah sempit, gradient berosilasi melintasi lembah sambil bergerak lambat di sepanjangnya. Momentum mengakumulasi gradient masa lalu: arah yang konsisten saling menguatkan sementara arah yang berosilasi saling meniadakan, memberi konvergensi lebih halus dan cepat.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa perbedaan kunci Adam dan AdamW?",
+      "options": ["AdamW memakai learning rate lebih tinggi", "AdamW hanya bekerja dengan transformer", "AdamW menerapkan weight decay langsung ke bobot, bukan lewat gradient, sehingga regularisasinya tepat", "AdamW tidak memakai momentum"],
+      "correct": 2,
+      "explanation": "Pada Adam + L2, learning rate adaptif menskalakan suku regularisasi secara berbeda untuk tiap parameter. AdamW memisahkan weight decay dari update gradient sehingga penyusutannya seragam apa pun statistik gradient-nya.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa Adam memakai bias correction pada langkah-langkah awal training?",
+      "options": ["Untuk mencegah overfitting", "Estimasi momen diinisialisasi nol sehingga nilai awal bias ke nol; koreksi mengompensasi cold start ini", "Untuk memotong gradient besar", "Untuk mempercepat konvergensi"],
+      "correct": 1,
+      "explanation": "Pada langkah 1 dengan beta1=0.9, m_1 = 0.1 * gradient (10 kali terlalu kecil). Membaginya dengan (1 - 0.9^1) = 0.1 mengoreksinya menjadi gradient sebenarnya. Koreksi ini menjadi tak berarti setelah sekitar 50 langkah.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa hyperparameter default standar untuk Adam?",
+      "options": ["lr=0.0001, beta1=0.8, beta2=0.9", "lr=0.01, beta1=0.99, beta2=0.99", "lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8", "lr=0.1, beta1=0.5, beta2=0.5"],
+      "correct": 2,
+      "explanation": "Paper Adam yang asli (Kingma & Ba, 2014) merekomendasikan lr=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8. Default ini bekerja baik untuk sebagian besar masalah.",
+      "stage": "post"
+    },
+    {
+      "question": "Optimizer mana yang menjadi default modern untuk melatih transformer dan LLM?",
+      "options": ["SGD dengan momentum", "RMSProp", "AdamW", "SGD polos"],
+      "correct": 2,
+      "explanation": "AdamW (Adam dengan weight decay terpisah) dipakai untuk melatih BERT, GPT, LLaMA, dan hampir semua transformer modern. Ia menggabungkan learning rate adaptif dengan regularisasi weight decay yang tepat.",
+      "stage": "post"
+    }
+  ]
+}

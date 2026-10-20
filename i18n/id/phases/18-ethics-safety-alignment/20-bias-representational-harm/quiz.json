@@ -1,0 +1,78 @@
+{
+  "lesson": "20-bias-representational-harm",
+  "title": "Bias dan Representational Harm pada LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana pelajaran ini membedakan representational harm dari allocational harm?",
+      "options": [
+        "Representational bersifat komputasional; allocational bersifat statistik",
+        "Allocational harm hanya terjadi offline",
+        "Representational harm hanya penting untuk model vision",
+        "Representational harm adalah stereotip / penghapusan / penggambaran yang merendahkan; allocational harm adalah hasil material yang tidak setara bagi suatu kelompok"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang merupakan tiga kategori metrik evaluasi dari Gallegos et al. 2024?",
+      "options": [
+        "Vision, audio, teks",
+        "WEAT, BLEU, ROUGE",
+        "Berbasis embedding, berbasis probabilitas, berbasis teks yang dihasilkan",
+        "Pre-RLHF, mid-RLHF, post-RLHF"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa evaluasi fairness intersectional diperlukan selain evaluasi satu sumbu?",
+      "options": [
+        "Ukuran satu sumbu lebih murah secara komputasi",
+        "Intersectionality sama dengan cross-validation",
+        "Satu sumbu adalah satu-satunya pendekatan yang diizinkan hukum",
+        "Bias yang hanya muncul di persimpangan (misalnya gender x ras) terlewat oleh evaluasi yang melihat satu sumbu sekaligus"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diperkenalkan WinoIdentity (COLM 2025)?",
+      "options": [
+        "Evaluasi fairness intersectional berbasis ketidakpastian yang membandingkan ketidakpastian model atas hasil lintas tuple identitas intersectional, bukan hanya prediksi titik",
+        "Serangan adversarial pada classifier demografis",
+        "Pengganti WEAT di ruang embedding",
+        "Tokenizer baru untuk istilah identitas"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mana yang merupakan pendekatan interpretabilitas mekanistik terhadap bias?",
+      "options": [
+        "Melabel ulang set pelatihan",
+        "Mengidentifikasi neuron gender di layer MLP, memakai SAE untuk memunculkan fitur berkorelasi ras, atau memanipulasi attention head tertentu (UniBias)",
+        "Berpindah ke DPO dari PPO",
+        "Menambah regularisasi KL"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diargumentasikan meta-kritik 10 tahun (arXiv:2508.11067) tentang literatur bias?",
+      "options": [
+        "Itu terlalu fokus pada bias gender biner, mengabaikan sumbu lain (disabilitas, agama, status migrasi, identitas multi-bahasa) yang bisa merugikan kelompok terpinggirkan karena kelalaian",
+        "Itu seimbang di semua sumbu identitas",
+        "Itu menghindari metode kuantitatif",
+        "Itu terlalu menekankan intersectionality"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

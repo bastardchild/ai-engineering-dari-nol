@@ -1,0 +1,78 @@
+{
+  "lesson": "09-production-quantization",
+  "title": "Kuantisasi Produksi — AWQ, GPTQ, GGUF K-quants, FP8, MXFP4/NVFP4",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Format kuantisasi mana yang disebut pelajaran ini sebagai default produksi untuk serving CPU dan edge?",
+      "options": [
+        "GGUF Q4_K_M / Q5_K_M",
+        "NVFP4",
+        "FP8",
+        "AWQ INT4"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Format mana yang dipilih pelajaran ini untuk serving GPU datacenter saat multi-LoRA diwajibkan di vLLM?",
+      "options": [
+        "NVFP4",
+        "GGUF Q4_K_M",
+        "GPTQ dengan kernel Marlin",
+        "AWQ"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa jebakan \"model saya sekarang 4 GB\" pada AWQ?",
+      "options": [
+        "AWQ sebenarnya tidak mengecilkan bobot",
+        "AWQ tidak kompatibel dengan vLLM",
+        "AWQ hanya mengecilkan bobot; KV cache dan aktivasi terpisah dan bisa menambah 30-50 GB pada ukuran batch produksi",
+        "AWQ mewajibkan KV cache INT8"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mengkalibrasi AWQ pada teks web generik merugikan model domain?",
+      "options": [
+        "Itu menambah ukuran model",
+        "Itu hanya berjalan di GPU AMD",
+        "Algoritma membuat keputusan salah tentang bobot mana yang dilindungi, sehingga akurasi domain turun (misalnya beberapa poin Pass@1 pada HumanEval)",
+        "Itu menonaktifkan kernel Marlin"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Untuk beban kerja berat reasoning saat kualitas tidak bisa ditawar, presisi mana yang direkomendasikan pelajaran ini secara default?",
+      "options": [
+        "Bobot NVFP4",
+        "GPTQ INT4",
+        "Bobot FP8",
+        "INT2 GGUF"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Batasan kuantisasi 2026 mana yang disorot pelajaran ini untuk NVFP4 pada awal 2026?",
+      "options": [
+        "Tidak bisa dikombinasikan dengan KV cache FP8",
+        "Hanya berjalan di CPU",
+        "Belum ada dukungan LoRA",
+        "Tidak didukung di H100"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

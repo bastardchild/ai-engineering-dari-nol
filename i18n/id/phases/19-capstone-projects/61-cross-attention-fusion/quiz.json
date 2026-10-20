@@ -1,0 +1,78 @@
+{
+  "lesson": "61-cross-attention-fusion",
+  "title": "Fusion Cross-Attention",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan operasional antara early fusion dan late fusion dalam pemodelan vision-language?",
+      "options": [
+        "Late fusion memakai memori lebih banyak",
+        "Early fusion ilegal",
+        "Early fusion menggabungkan token gambar dan teks menjadi satu urutan; late fusion memisahkannya dan menjembatani lewat cross-attention di setiap blok",
+        "Early fusion berjalan lebih dulu dalam wall-clock"
+      ],
+      "correct": 2,
+      "explanation": "Chameleon dan Emu3 adalah early-fusion; Flamingo dan BLIP-2 adalah late-fusion. Pilihan arsitektur mengubah bentuk mask dan KV caching."
+    },
+    {
+      "stage": "pre",
+      "question": "Dalam decoder block dengan self-attention dan cross-attention, mana yang memakai causal mask?",
+      "options": [
+        "Tidak keduanya",
+        "Keduanya",
+        "Hanya cross-attention",
+        "Hanya self-attention; gambar diamati sepenuhnya dan cross-attention tidak punya urutan temporal"
+      ],
+      "correct": 3,
+      "explanation": "Generasi teks autoregresif, jadi self-attention teks causal. Token gambar semuanya terlihat sebelum teks apa pun di-decode."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa KV cache cross-attention dibangun sekali per gambar?",
+      "options": [
+        "Key dan value gambar tidak berubah saat teks di-decode, jadi memproyeksikan memori sekali dan memakai ulang K dan V di semua langkah decode adalah seluruh percepatan inferensinya",
+        "Itu menghindari pemakaian GPU",
+        "PyTorch mewajibkan caching",
+        "Caching menghemat disk"
+      ],
+      "correct": 0,
+      "explanation": "Encoder vision berjalan sekali. Proyeksi KV-nya dihitung sekali. Setiap token teks memakai ulang cache secara gratis."
+    },
+    {
+      "stage": "check",
+      "question": "Apa bentuk output cross-attention saat panjang teks Nt=10 dan panjang gambar Nv=197 dengan hidden=256?",
+      "options": [
+        "(B, 10, 256)",
+        "(B, 207, 256)",
+        "(B, 10, 197)",
+        "(B, 197, 256)"
+      ],
+      "correct": 0,
+      "explanation": "Bentuk output cross-attention mengikuti aliran query, jadi output adalah (B, Nt, hidden) tanpa peduli panjang key."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa tidak ada mask pada cross-attention?",
+      "options": [
+        "Mask selalu menyebabkan NaN",
+        "Mask terlalu mahal",
+        "Gambar diamati sepenuhnya sebelum generasi teks dimulai; setiap posisi teks boleh memperhatikan setiap patch",
+        "PyTorch tidak mendukung cross mask"
+      ],
+      "correct": 2,
+      "explanation": "Tidak ada urutan temporal pada patch gambar dan tidak ada kebocoran yang dicegah, jadi cross-attention melihat seluruh gambar."
+    },
+    {
+      "stage": "post",
+      "question": "Ekstensi apa yang kamu tambahkan untuk memulihkan stabilitas gaya Flamingo selama training?",
+      "options": [
+        "Hapus FFN",
+        "Sisipkan gate tanh terpelajari pada residual cross-attention agar model dapat mulai dari perilaku teks-saja dan tumbuh ke aliran gambar",
+        "Buang layer self-attention",
+        "Pakai hanya satu attention head"
+      ],
+      "correct": 1,
+      "explanation": "Gate tanh Flamingo mulai dari nol, memulihkan perilaku teks-saja saat init, dan memberi model ramp halus ke cross-attention."
+    }
+  ]
+}

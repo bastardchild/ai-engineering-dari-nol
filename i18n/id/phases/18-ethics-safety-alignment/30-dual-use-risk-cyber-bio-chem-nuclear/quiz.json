@@ -1,0 +1,78 @@
+{
+  "lesson": "30-dual-use-risk-cyber-bio-chem-nuclear",
+  "title": "Risiko Dual-Use - Uplift Cyber, Bio, Chem, Nuklir",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana narasi bio-uplift 2024-2025 berkembang?",
+      "options": [
+        "Itu tetap tidak berubah sepanjang 2024-2025",
+        "Dari 'uplift parah' ke 'tidak ada uplift terukur'",
+        "Dari 'uplift ringan' (2024) ke 'di ambang benar-benar membantu pemula membuat ancaman biologis yang sudah dikenal' (April 2025) ke 'uplift 2,53x tidak cukup untuk menyingkirkan ASL-3' (Anthropic 2025)",
+        "Dari 'tanpa uplift' ke 'uplift ringan'"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa temuan laporan ancaman siber Anthropic November 2025?",
+      "options": [
+        "Model frontier menolak semua tugas siber",
+        "Model open-source melampaui kapabilitas frontier",
+        "Aktor negara terkait Tiongkok memakai tool coding agentic Claude untuk mengotomatiskan 80-90% kampanye serangan siber, dengan intervensi manusia hanya pada 4-6 langkah",
+        "Serangan siber tetap sepenuhnya manual"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana model frontier dengan kemampuan vision mengikis kesenjangan eksekusi chem/bio?",
+      "options": [
+        "Dengan hanya meningkatkan panjang konteks",
+        "Dengan mengganti semua peralatan lab dengan simulator virtual",
+        "Dengan mengamati video wet-lab dan memberi koreksi protokol real-time; demonstrasi OpenAI Desember 2025 menunjukkan GPT-5 mengiterasi eksperimen wet-lab dengan peningkatan efisiensi 79x lewat optimasi protokol berbasis AI",
+        "Dengan menghasilkan protokol palsu"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa uplift domain nuklir tetap terbatas dibanding bio/chem/cyber?",
+      "options": [
+        "Model frontier menolak membahas fisika",
+        "Semua informasi nuklir telah dihapus dari data pelatihan",
+        "Nuklir adalah domain termudah untuk diserang dengan AI",
+        "Model ancamannya didominasi perolehan material fisil (bottleneck pengadaan dan peralatan yang non-informasional), sehingga uplift AI pada lapisan informasi memberi uplift pemula yang terbatas dalam praktik"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa implikasi asimetri novice-relative vs expert-absolute bagi safety case?",
+      "options": [
+        "Menangani hanya uplift pemula (filter input, penolakan, ketidakpastian) tidak cukup untuk kontrol expert-absolute; diperlukan langkah tambahan seperti elicitation-hardening, unlearning kapabilitas, dan protokol kontrol",
+        "Keduanya ditangani sempurna oleh RLHF",
+        "Kapabilitas expert-absolute otomatis nol",
+        "Hanya uplift pemula yang penting"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa pilot 'trusted access' OpenAI dalam konteks dual-use siber?",
+      "options": [
+        "Patch untuk CVE-2025-32711",
+        "Memberi organisasi keamanan yang telah divetting (firma respons insiden, pemerintah) akses kapabilitas untuk kerja dual-use defensif, menciptakan asimetri akses yang menguntungkan defender jika bisa diskalakan",
+        "Rilis open-source GPT-5",
+        "Menutup semua akses API"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

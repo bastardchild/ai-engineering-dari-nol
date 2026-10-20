@@ -1,0 +1,78 @@
+{
+  "lesson": "05-eagle3-speculative-decoding",
+  "title": "Speculative Decoding EAGLE-3 di Produksi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa speculative decoding memanfaatkan celah yang ada pada decode biasa?",
+      "options": [
+        "Decode tidak mendapat manfaat dari batching",
+        "Decode terbatas memori, jadi GPU sebagian besar menganggur menunggu pembacaan bobot dari HBM",
+        "Decode terbatas komputasi, jadi menambah komputasi itu gratis",
+        "Decode butuh bandwidth jaringan lebih besar daripada prefill"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur oleh acceptance rate alpha?",
+      "options": [
+        "Overhead latensi model draft",
+        "Fraksi token usulan draft yang diterima model target",
+        "Tingkat cache hit KV cache",
+        "Fraksi memori GPU yang dipakai saat decode"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang berubah di EAGLE-3 dibanding EAGLE-2 sehingga alpha naik ke sekitar 0.6-0.8 pada chat umum?",
+      "options": [
+        "Draft head dilatih pada beberapa layer target, bukan hanya layer terakhir",
+        "Itu memakai model draft berukuran penuh dari keluarga yang sama",
+        "Itu berjalan di CPU, bukan GPU",
+        "Itu menghapus langkah verifikasi sepenuhnya"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Di bawah alpha kira-kira berapa pelajaran ini menyatakan speculative decoding menjadi net negatif pada konkurensi tinggi di sebagian besar hardware 2026?",
+      "options": [
+        "0.85",
+        "0.95",
+        "0.05",
+        "0.55"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Metrik mana yang paling perlu kamu pantau setelah mengaktifkan EAGLE-3, bahkan jika ITL rata-rata turun?",
+      "options": [
+        "Utilisasi memori GPU",
+        "Waktu cold-start",
+        "Latensi E2E rata-rata",
+        "P99 ITL, karena dua lintasan saat draft ditolak bisa terserialisasi pada batch penuh"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa speculative decoding bersifat opt-in (bukan default) di vLLM 2026 menurut pelajaran ini?",
+      "options": [
+        "Itu tidak kompatibel dengan PagedAttention",
+        "Itu hanya berjalan di GPU Blackwell",
+        "Itu memerlukan lisensi terpisah",
+        "Acceptance rate bergantung pada beban kerja, dan mengaktifkannya tanpa mengukur alpha adalah anti-pattern produksi"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

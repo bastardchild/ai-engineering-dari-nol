@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Operasi matematis apa yang dilakukan perceptron pada inputnya sebelum menerapkan activation function?",
+      "options": ["Jumlah berbobot ditambah bias", "Dekomposisi nilai eigen", "Invers matriks", "Transformasi Fourier"],
+      "correct": 0,
+      "explanation": "Perceptron menghitung dot product antara input dan bobot, menambahkan bias, lalu melewatkan hasilnya melalui step function. Jumlah berbobot ditambah bias inilah komputasi intinya.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa arti 'linearly separable' untuk sebuah masalah klasifikasi?",
+      "options": ["Satu garis lurus (atau hyperplane) bisa memisahkan kelas dengan sempurna", "Data bisa diurutkan berdasarkan nilai", "Fitur punya hubungan linear dengan label", "Data hanya punya dua dimensi"],
+      "correct": 0,
+      "explanation": "Dataset bersifat linearly separable jika kamu bisa menggambar satu hyperplane yang membagi ruang input ke kelas yang benar dengan sempurna. AND dan OR linearly separable; XOR tidak.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa satu perceptron gagal mempelajari fungsi XOR?",
+      "options": ["Step function menghalangi aliran gradient", "XOR punya terlalu banyak input", "Learning rate-nya terlalu rendah", "XOR tidak linearly separable -- tidak ada satu garis yang bisa memisahkan kelasnya"],
+      "correct": 3,
+      "explanation": "XOR menempatkan [0,1] dan [1,0] di satu sisi serta [0,0] dan [1,1] di sisi lain. Tidak ada satu garis lurus yang bisa memisahkan kelompok ini, jadi perceptron tunggal yang hanya bisa menggambar satu batas linear tak bisa menyelesaikan XOR.",
+      "stage": "post"
+    },
+    {
+      "question": "Pada aturan belajar perceptron, apa yang terjadi jika prediksi sama dengan target?",
+      "options": ["Tidak ada yang berubah -- error nol berarti update nol", "Learning rate dibagi dua", "Bobot disetel ke nol", "Bobot dikalikan dua"],
+      "correct": 0,
+      "explanation": "Aturan update-nya adalah w_i = w_i + lr * error * x_i. Saat prediksi sama dengan target, error = 0 sehingga semua update bobot bernilai nol. Perceptron hanya menyesuaikan diri ketika membuat kesalahan.",
+      "stage": "post"
+    },
+    {
+      "question": "Bagaimana XOR diselesaikan memakai beberapa perceptron?",
+      "options": ["Dengan menambah input ke satu perceptron", "Dengan menghapus suku bias", "Dengan memakai learning rate lebih besar pada satu perceptron", "Dengan menggabungkan perceptron OR, NAND, dan AND dalam dua layer"],
+      "correct": 3,
+      "explanation": "XOR = (x1 OR x2) AND NOT(x1 AND x2). Hidden layer berisi neuron OR dan neuron NAND memberi masukan ke neuron AND di output, membentuk batas keputusan nonlinier dari komponen linear.",
+      "stage": "post"
+    }
+  ]
+}

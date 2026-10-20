@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Mengapa kamu tidak bisa membangun jaringan dalam yang berguna hanya dengan layer linear (tanpa activation function)?",
+      "options": ["Menumpuk layer linear menyusut menjadi satu transformasi linear sehingga kedalaman tak memberi manfaat", "Layer linear terlalu lambat", "Layer linear tidak bisa menangani data yang dibatch", "Layer linear tidak punya bias"],
+      "correct": 0,
+      "explanation": "y = W2(W1*x + b1) + b2 menyederhana menjadi y = Ax + c. Berapa pun layer linear yang kamu tumpuk, hasilnya setara dengan satu layer linear. Activation function memutus sifat komposabel ini.",
+      "stage": "pre"
+    },
+    {
+      "question": "Berapa rentang output activation function ReLU?",
+      "options": ["(-tak hingga, tak hingga)", "[0, tak hingga)", "(0, 1)", "(-1, 1)"],
+      "correct": 1,
+      "explanation": "ReLU(x) = max(0, x). Ia mengeluarkan 0 untuk semua input negatif dan meneruskan input positif apa adanya, memberi rentang [0, tak hingga).",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa masalah 'dead neuron' pada jaringan ReLU?",
+      "options": ["Neuron dengan bias nol", "Neuron yang menghitung terlalu lambat", "Neuron yang inputnya selalu negatif sehingga output dan gradient-nya selalu nol selamanya", "Neuron yang menghasilkan nilai NaN"],
+      "correct": 2,
+      "explanation": "Jika input berbobot sebuah neuron ReLU selalu negatif (akibat inisialisasi buruk atau bias negatif besar), ia mengeluarkan 0 dengan gradient 0. Ia tak bisa pulih karena gradient nol berarti update nol.",
+      "stage": "post"
+    },
+    {
+      "question": "Activation function mana yang menjadi default untuk hidden layer di transformer modern seperti GPT dan BERT?",
+      "options": ["Sigmoid", "Tanh", "GELU", "ReLU"],
+      "correct": 2,
+      "explanation": "GELU (Gaussian Error Linear Unit) adalah aktivasi default di transformer. Ia memberi aliran gradient yang halus, menghindari dead neuron, dan terbukti mengungguli ReLU pada model bahasa.",
+      "stage": "post"
+    },
+    {
+      "question": "Mengapa softmax hanya dipakai di output layer dan tidak pernah di hidden layer?",
+      "options": ["Ia hanya bekerja dengan dua kelas", "Ia menyebabkan exploding gradient", "Ia mengubah vektor menjadi distribusi probabilitas (jumlahnya 1), yang dibutuhkan untuk output klasifikasi tetapi tidak untuk representasi perantara", "Ia terlalu lambat untuk hidden layer"],
+      "correct": 2,
+      "explanation": "Softmax menormalkan vektor sehingga semua nilainya di (0,1) dan berjumlah 1, membentuk distribusi probabilitas. Hidden layer perlu mempertahankan dan mengubah informasi, bukan memadatkannya menjadi probabilitas.",
+      "stage": "post"
+    }
+  ]
+}

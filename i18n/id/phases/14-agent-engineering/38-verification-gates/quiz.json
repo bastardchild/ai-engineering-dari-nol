@@ -1,0 +1,90 @@
+{
+  "lesson": "38-verification-gates",
+  "title": "Gerbang Verifikasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Pertanyaan tunggal apa yang dijawab gerbang verifikasi?",
+      "options": [
+        "Apakah tugas ini benar-benar selesai? (membaca artefak scope, aturan, feedback, dan diff)",
+        "Apakah prompt-nya optimal?",
+        "Apakah modelnya cepat?",
+        "Apakah budget token sehat?"
+      ],
+      "correct": 0,
+      "explanation": "Gerbang adalah fungsi deterministik atas artefak workbench yang menghasilkan vonis lulus/gagal."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa gerbang harus deterministik?",
+      "options": [
+        "Set artefak yang sama harus menghasilkan vonis yang sama setiap kali; judge LLM masuk ke reviewer (kualitatif), bukan gerbang (status)",
+        "Penyedia mewajibkannya",
+        "Determinisme itu gratis",
+        "Itu menghemat biaya"
+      ],
+      "correct": 0,
+      "explanation": "Mencampur penilaian model ke dalam gerbang meruntuhkan pemisahan deterministik/kualitatif."
+    },
+    {
+      "stage": "check",
+      "question": "Apa disiplin override gerbang?",
+      "options": [
+        "Temuan tingkat block hanya dapat di-override oleh manusia dengan override_reason tercatat dan overridden_by user id di audit log bertanda tangan",
+        "Override dilarang",
+        "Siapa pun bisa override diam-diam",
+        "Override membutuhkan email manajer"
+      ],
+      "correct": 0,
+      "explanation": "Override bertanda tangan masuk ke outputs/verification/overrides.jsonl; agent tidak bisa meng-override dirinya sendiri."
+    },
+    {
+      "stage": "check",
+      "question": "Apa pasangan Hybrid Norm yang dikutip pelajaran?",
+      "options": [
+        "Pemisahan GPU dan CPU",
+        "Prompt hot/cold",
+        "Reward yang dapat diverifikasi (test, skema, exit code) menjawab 'apakah masalahnya terselesaikan?'; rubrik LLM menjawab 'apakah ia mudah dibaca, aman, sesuai gaya?'",
+        "Cache vs no-cache"
+      ],
+      "correct": 2,
+      "explanation": "Panduan Anthropic 2026: gerbang menjalankan kelas pertama; reviewer (Pelajaran 39) menjalankan kelas kedua."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana defense-in-depth melapisi gerbang?",
+      "options": [
+        "Hook pre-commit -> status check CI -> hook authz pra-tool -> gerbang pra-merge; setiap lapisan deterministik sehingga kegagalan di satu lapisan ditangkap lapisan berikutnya",
+        "Satu gerbang saat merge",
+        "Hanya pengingat di chat",
+        "Hanya peringatan IDE"
+      ],
+      "correct": 0,
+      "explanation": "Beberapa lapisan yang tidak dapat dilewati menangkap apa yang terlewat oleh satu lapisan."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilindungi pemeriksaan coverage_floor?",
+      "options": [
+        "Latency hot-path",
+        "Agent diam-diam menghapus test yang gagal; gerbang gagal jika cakupan terukur turun di bawah floor atau turun lebih dari 1 poin persen dari merge terakhir",
+        "Cold start",
+        "Lockfile usang"
+      ],
+      "correct": 1,
+      "explanation": "Tanpa floor, agent bisa menurunkan cakupan diam-diam agar vonis tetap hijau."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan mode --strict harus menaikkan setiap warn menjadi block?",
+      "options": [
+        "Selalu",
+        "Jangan pernah",
+        "Hanya pada hari Minggu",
+        "Branch rilis, PR yang memblokir rilis, triage pasca-insiden; bukan default harian karena strict untuk segalanya menggerus alur kerja"
+      ],
+      "correct": 3,
+      "explanation": "--strict bersifat opt-in per branch; simpan untuk momen berisiko tinggi."
+    }
+  ]
+}

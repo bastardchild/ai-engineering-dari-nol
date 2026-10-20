@@ -1,0 +1,66 @@
+{
+  "lesson": "08-fine-tuning-lora",
+  "title": "Fine-Tuning dengan LoRA & QLoRA",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa wawasan inti di balik LoRA (Low-Rank Adaptation)?",
+      "options": [
+        "Model lebih kecil selalu lebih baik",
+        "Update bobot selama fine-tuning memiliki rank intrinsik rendah, sehingga dapat didekati oleh dua matriks kecil alih-alih memperbarui matriks bobot penuh",
+        "Sebagian besar bobot tidak penting",
+        "Fine-tuning hanya membutuhkan layer terakhir"
+      ],
+      "correct": 1,
+      "explanation": "Aghajanyan et al. menunjukkan update fine-tuning menempati subspace berdimensi rendah. LoRA memanfaatkannya dengan merepresentasikan update sebagai W + BA di mana B (d x r) dan A (r x d) memiliki rank r kecil, biasanya 8-64."
+    },
+    {
+      "stage": "pre",
+      "question": "Berapa banyak memori yang dihemat LoRA dibanding fine-tuning penuh model 8B?",
+      "options": [
+        "Hanya menghemat ruang disk",
+        "Tidak ada penghematan",
+        "Dari ~56GB turun menjadi ~6GB dengan melatih <1% parameter sambil menjaga bobot dasar tetap beku",
+        "Pengurangan 50%"
+      ],
+      "correct": 2,
+      "explanation": "Fine-tuning penuh membutuhkan gradien dan state optimizer untuk semua 8B parameter (~56GB). LoRA membekukan bobot dasar dan hanya melatih matriks adapter (~80M parameter pada rank 16), membutuhkan ~6GB total."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu QLoRA?",
+      "options": [
+        "Algoritma fine-tuning berbeda",
+        "LoRA yang diterapkan pada aktivasi terkuantisasi",
+        "Quantized LoRA: model dasar dimuat dalam presisi 4-bit sementara adapter LoRA dilatih dalam 16-bit, menggabungkan penghematan memori dari kedua teknik",
+        "Versi LoRA yang lebih cepat"
+      ],
+      "correct": 2,
+      "explanation": "QLoRA (Dettmers et al.) memuat model dasar beku dalam 4-bit (kuantisasi NF4) sementara melatih adapter LoRA dalam FP16/BF16. Ini memungkinkan fine-tuning model 7B pada GPU konsumen tunggal dengan VRAM 6GB."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dikontrol parameter 'rank' (r) dalam LoRA?",
+      "options": [
+        "Learning rate",
+        "Jumlah epoch training",
+        "Kapasitas adapter: rank lebih tinggi menangkap adaptasi lebih kompleks tetapi memakai lebih banyak parameter dan memori",
+        "Jumlah layer yang di-fine-tune"
+      ],
+      "correct": 2,
+      "explanation": "Rank r menentukan ukuran matriks adapter A (r x d) dan B (d x r). Rank 4 melatih sangat sedikit parameter (cepat, murah). Rank 64 melatih lebih banyak parameter (lebih ekspresif). Sebagian besar tugas bekerja baik dengan rank 8-32."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang terjadi ketika kamu merge bobot LoRA kembali ke model dasar?",
+      "options": [
+        "Merge tidak mungkin dilakukan",
+        "Model menjadi lebih besar",
+        "Model perlu dilatih ulang",
+        "Matriks adapter ditambahkan ke bobot dasar (W_merged = W_base + B*A), menghasilkan model standar tanpa overhead inferensi"
+      ],
+      "correct": 3,
+      "explanation": "Karena LoRA menambahkan W_base + B*A, kamu dapat menghitung B*A sekali dan menambahkannya ke W_base secara permanen. Model hasil merge memiliki arsitektur dan kecepatan inferensi yang sama dengan aslinya, tanpa overhead adapter."
+    }
+  ]
+}

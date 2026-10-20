@@ -1,0 +1,90 @@
+{
+  "lesson": "16-openai-agents-sdk",
+  "title": "OpenAI Agents SDK: Handoff, Guardrail, Tracing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa lima primitif OpenAI Agents SDK?",
+      "options": [
+        "Plan, Worker, Solver, Evaluator, Reflector",
+        "Tool, Prompt, Model, Memory, Trace",
+        "Agent, Handoff, Guardrail, Session, Tracing",
+        "Node, Edge, Reducer, Checkpointer, Subgraph"
+      ],
+      "correct": 2,
+      "explanation": "SDK menyediakan kelima primitif ini."
+    },
+    {
+      "stage": "pre",
+      "question": "Bagaimana model melihat handoff?",
+      "options": [
+        "Sebagai token khusus",
+        "Sebagai system message",
+        "Sebagai endpoint HTTP kustom",
+        "Sebagai tool bernama transfer_to_<agent_name>"
+      ],
+      "correct": 3,
+      "explanation": "Handoff diekspos sebagai tool dengan bentuk nama transfer_to_<agent>."
+    },
+    {
+      "stage": "check",
+      "question": "Tiga jenis guardrail apa yang disediakan SDK?",
+      "options": [
+        "Guardrail hard, soft, dan best-effort",
+        "Guardrail pre, post, dan inline",
+        "Guardrail input, output, dan tool",
+        "Guardrail static, dynamic, dan federated"
+      ],
+      "correct": 2,
+      "explanation": "Guardrail input (agent pertama), output (agent terakhir), dan tool (per function tool)."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan guardrail paralel dan blocking?",
+      "options": [
+        "Paralel berjalan bersama LLM utama (latency lebih rendah, token terbuang saat trip); blocking berjalan lebih dulu (tidak ada token terbuang saat trip)",
+        "Blocking hanya bekerja pada output",
+        "Paralel selalu lebih mahal",
+        "Blocking asinkron; paralel sinkron"
+      ],
+      "correct": 0,
+      "explanation": "Paralel mengoptimalkan latency dengan risiko token terbuang saat trip; blocking menghemat token tetapi menambah latency."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana tracing diaktifkan di SDK?",
+      "options": [
+        "Hanya di dashboard terhosting",
+        "Mati secara default; aktifkan per agent",
+        "Hanya melalui kolektor OpenTelemetry",
+        "Nyala secara default; OPENAI_AGENTS_DISABLE_TRACING=1 untuk menonaktifkan"
+      ],
+      "correct": 3,
+      "explanation": "Span untuk LLM, tool, handoff, dan guardrail dikeluarkan secara default; variabel env menonaktifkannya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu handoff drift dan bagaimana pelajaran menyarankan mitigasinya?",
+      "options": [
+        "Agent A handoff ke B yang mengembalikannya ke A dalam loop; tambahkan penghitung hop",
+        "Session meluap; arsipkan yang lama",
+        "Tracing tertinggal; kurangi volume span",
+        "Guardrail tidak sinkron; latih ulang"
+      ],
+      "correct": 0,
+      "explanation": "Penghitung hop membatasi rantai transfer sebelum berulang tanpa henti."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa tool bawaan menjadi celah guardrail?",
+      "options": [
+        "Mereka tidak mendukung handoff",
+        "Guardrail tool hanya menyala pada function tool; tool bawaan (pembaca file, web fetch) butuh kebijakan terpisah",
+        "Mereka tidak bisa di-trace",
+        "Mereka lebih lambat daripada function tool"
+      ],
+      "correct": 1,
+      "explanation": "Guardrail per-tool mencakup function tool; tool bawaan memerlukan lapisan kebijakan terpisah."
+    }
+  ]
+}

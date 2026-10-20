@@ -1,0 +1,90 @@
+{
+  "lesson": "03-reflexion-verbal-rl",
+  "title": "Reflexion: Verbal Reinforcement Learning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang digantikan Reflexion dalam reinforcement learning standar?",
+      "options": [
+        "Episodic memory dengan parametric memory",
+        "Update gradient dengan refleksi berbahasa alami yang disimpan antar percobaan",
+        "Policy network dengan random search",
+        "Reward shaping dengan reward konstan"
+      ],
+      "correct": 1,
+      "explanation": "Reflexion memakai refleksi berbahasa alami di episodic memory alih-alih update bobot."
+    },
+    {
+      "stage": "pre",
+      "question": "Tiga komponen apa yang mendefinisikan sistem Reflexion?",
+      "options": [
+        "Planner, Worker, Solver",
+        "Selector, Expander, Backpropagator",
+        "Generator, Critic, Optimizer",
+        "Actor, Evaluator, Self-Reflector"
+      ],
+      "correct": 3,
+      "explanation": "Reflexion memfaktorkan agent menjadi Actor yang menjalankan trajektori, Evaluator yang menilainya, dan Self-Reflector yang menulis pelajaran."
+    },
+    {
+      "stage": "check",
+      "question": "Jenis evaluator mana yang memakai sinyal biner eksternal seperti unit test atau jawaban benar yang diketahui?",
+      "options": [
+        "Heuristic",
+        "Scalar",
+        "Self-evaluated",
+        "Vote-based"
+      ],
+      "correct": 1,
+      "explanation": "Evaluator scalar membaca sinyal lulus/gagal dari ground truth (keberhasilan ALFWorld, test HumanEval)."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa self-evaluation merupakan sinyal yang lebih lemah daripada feedback scalar?",
+      "options": [
+        "Model yang menilai dirinya sendiri tidak punya pijakan eksternal sehingga bisa meloloskan jawabannya sendiri begitu saja",
+        "Ia lebih lambat dihitung",
+        "Ia selalu membutuhkan model yang lebih besar",
+        "Ia tidak bisa berjalan di atas tool"
+      ],
+      "correct": 0,
+      "explanation": "Self-eval tidak memiliki pemeriksaan eksternal, sehingga halusinasi yang percaya diri mendapat skor bagus; pasangkan dengan verifikasi berbasis tool."
+    },
+    {
+      "stage": "check",
+      "question": "Kasus mana yang didaftar pelajaran sebagai tempat Reflexion TIDAK membantu?",
+      "options": [
+        "Kegagalan eksternal sementara seperti jaringan yang mati",
+        "Pertanyaan multi-hop HotpotQA",
+        "Pembuatan kode yang bisa dinilai test",
+        "Tugas navigasi ALFWorld"
+      ],
+      "correct": 0,
+      "explanation": "Merefleksikan gangguan eksternal sementara menghasilkan refleksi yang tidak membantu run berikutnya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu memory rot dalam pola Reflexion?",
+      "options": [
+        "Refleksi hilang saat proses restart",
+        "Prompt refleksi melebihi context window",
+        "Refleksi dienkripsi oleh penyedia",
+        "Episodic buffer terisi refleksi usang atau salah dan memperlambat atau membiaskan percobaan berikutnya"
+      ],
+      "correct": 3,
+      "explanation": "Refleksi basi atau salah yang terakumulasi menurunkan perilaku; mitigasi dengan compaction atau TTL."
+    },
+    {
+      "stage": "post",
+      "question": "Pola produksi mana yang paling jelas cocok dengan Reflexion menurut pelajaran?",
+      "options": [
+        "Pelajaran CLAUDE.md di Claude Code yang ditambahkan di awal sesi berikutnya",
+        "Prompt caching dari Anthropic",
+        "Alur apply-edits dari Cursor",
+        "Batch API dari OpenAI"
+      ],
+      "correct": 0,
+      "explanation": "Pelajaran CLAUDE.md, learn-rule di pro-workflow, dan sleep-time compute Letta semuanya mengeksternalisasi buffer refleksi episodik."
+    }
+  ]
+}

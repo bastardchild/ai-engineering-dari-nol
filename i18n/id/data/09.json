@@ -1,0 +1,70 @@
+{
+  "phase": {
+    "9": {
+      "name": "Reinforcement Learning",
+      "desc": "Fondasi RLHF dan AI pemain game."
+    }
+  },
+  "lessons": {
+    "phases/09-reinforcement-learning/01-mdps-states-actions-rewards": {
+      "name": "MDP, State, Action & Reward",
+      "summary": "Markov Decision Process adalah lima hal: state, action, transition, reward, diskon. Segala hal di RL — Q-learning, PPO, DPO, GRPO — mengoptimasi bentuk ini. Pelajari…",
+      "keywords": "Langkah 1: MDP deterministik kecil · Langkah 2: jalankan roll-out sebuah policy · Langkah 3: hitung `V^π` secara eksak via persamaan Bellman · Langkah 4: `γ` adalah hyperparameter dengan makna fisik"
+    },
+    "phases/09-reinforcement-learning/02-dynamic-programming": {
+      "name": "Dynamic Programming",
+      "summary": "Dynamic programming adalah RL dengan curang. Kamu sudah tahu fungsi transisi dan reward; kamu hanya mengiterasi persamaan Bellman sampai `V` atau `π` berhenti bergerak. Ini adalah dasar…",
+      "keywords": "Langkah 1: bangun model MDP GridWorld · Langkah 2: evaluasi policy · Langkah 3: perbaikan policy · Langkah 4: gabungkan keduanya · Langkah 5: value iteration (versi satu loop)"
+    },
+    "phases/09-reinforcement-learning/03-monte-carlo-methods": {
+      "name": "Metode Monte Carlo",
+      "summary": "Dynamic programming butuh model. Monte Carlo tidak butuh apa pun selain episode. Jalankan policy, amati return, rata-ratakan. Ide paling sederhana di RL — dan yang membuka…",
+      "keywords": "Langkah 1: roll-out → daftar (s, a, r) · Langkah 2: hitung return (sapuan terbalik) · Langkah 3: evaluasi MC first-visit · Langkah 4: kontrol MC ε-greedy (on-policy) · Langkah 5: bandingkan dengan standar emas DP"
+    },
+    "phases/09-reinforcement-learning/04-q-learning-sarsa": {
+      "name": "Q-Learning, SARSA",
+      "summary": "Monte Carlo menunggu sampai episode berakhir. TD memperbarui setelah setiap langkah dengan mem-bootstrap estimasi nilai berikutnya. Q-learning itu off-policy dan optimistis; SARSA on-policy dan c…",
+      "keywords": "Langkah 1: SARSA pada policy ε-greedy · Langkah 2: Q-learning · Langkah 3: kurva pembelajaran · Langkah 4: bandingkan dengan kebenaran DP"
+    },
+    "phases/09-reinforcement-learning/05-dqn": {
+      "name": "Deep Q-Network (DQN)",
+      "summary": "2013: Mnih melatih satu jaringan Q-learning pada piksel mentah, mengalahkan setiap agen RL klasik pada tujuh game Atari. 2015: diperluas ke 49 game, terbit di Nature, memicu…",
+      "keywords": "Langkah 1: replay buffer · Langkah 2: Q-network kecil (MLP manual) · Langkah 3: pembaruan DQN · Langkah 4: loop luar"
+    },
+    "phases/09-reinforcement-learning/06-policy-gradients-reinforce": {
+      "name": "Policy Gradient — REINFORCE",
+      "summary": "Berhenti mengestimasi nilai. Parameterisasi policy secara langsung, hitung gradien dari expected return, naik ke atas. Williams (1992) menuliskannya dalam satu teorema. Itu sebabnya PPO, GRPO, dan…",
+      "keywords": "Langkah 1: jaringan policy softmax · Langkah 2: sampling dan log-probabilitas · Langkah 3: roll-out dengan log-prob yang direkam · Langkah 4: pembaruan REINFORCE · Langkah 5: baseline"
+    },
+    "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c": {
+      "name": "Actor-Critic — A2C, A3C",
+      "summary": "REINFORCE itu berisik. Tambahkan critic yang mempelajari `V̂(s)`, kurangi dari return, dan kamu mendapat advantage dengan ekspektasi sama tetapi varians jauh lebih rendah. Itulah actor-c…",
+      "keywords": "Langkah 1: critic · Langkah 2: advantage n-step · Langkah 3: pembaruan gabungan · Langkah 4: paralelisasi (A3C vs A2C)"
+    },
+    "phases/09-reinforcement-learning/08-ppo": {
+      "name": "PPO",
+      "summary": "A2C membuang setiap roll-out setelah satu pembaruan. PPO membungkus policy gradient dalam rasio importance yang di-clip sehingga kamu bisa melakukan 10+ epoch pada data yang sama tanpa policy meledak…",
+      "keywords": "Langkah 1: rekam `log π_old(a | s)` saat roll-out · Langkah 2: hitung advantage GAE (Pelajaran 07) · Langkah 3: pembaruan surrogate yang di-clip · Langkah 4: value dan entropi · Langkah 5: diagnostik"
+    },
+    "phases/09-reinforcement-learning/09-reward-modeling-rlhf": {
+      "name": "Reward Modeling & RLHF",
+      "summary": "Manusia tidak bisa menulis fungsi reward untuk \"respons asisten yang bagus\", tetapi mereka bisa membandingkan dua respons dan memilih yang lebih baik. Fit reward model pada perbandingan itu, lalu RL…",
+      "keywords": "Langkah 1: data preferensi sintetis · Langkah 2: reward model Bradley-Terry · Langkah 3: policy ala PPO di atas RM · Langkah 4: pantau KL · Langkah 5: resep produksi dengan TRL"
+    },
+    "phases/09-reinforcement-learning/10-multi-agent-rl": {
+      "name": "Multi-Agent RL",
+      "summary": "RL single-agent mengasumsikan lingkungan stasioner. Taruh dua agen pembelajar di dunia yang sama dan asumsi itu runtuh: tiap agen adalah bagian dari lingkungan agen lain, dan b…",
+      "keywords": "Langkah 1: env multi-agent · Langkah 2: Q-learning independen · Langkah 3: Q terpusat dengan pembaruan decomposed-value · Langkah 4: self-play sederhana (2 agen adversarial)"
+    },
+    "phases/09-reinforcement-learning/11-sim-to-real-transfer": {
+      "name": "Transfer Sim-to-Real",
+      "summary": "Policy yang dilatih di simulator dan gagal di perangkat keras adalah policy yang menghafal simulator. Domain randomization, domain adaptation, dan system identification adalah tiga…",
+      "keywords": "Langkah 1: sim berparameter · Langkah 2: latih dengan DR · Langkah 3: evaluasi zero-shot pada \"nyata\" yang licin · Langkah 4: bandingkan dengan pelatihan sempit"
+    },
+    "phases/09-reinforcement-learning/12-rl-for-games": {
+      "name": "RL untuk Game",
+      "summary": "1992: TD-Gammon mengalahkan juara manusia di backgammon dengan TD murni. 2016: AlphaGo mengalahkan Lee Sedol. 2017: AlphaZero mendominasi catur, shogi, dan Go dari nol. 2024: DeepSeek-R1 mem…",
+      "keywords": "Langkah 1: lingkungan verifier kecil · Langkah 2: policy: softmax atas K token jawaban per prompt · Langkah 3: sampling grup dan advantage relatif-grup · Langkah 4: bandingkan dengan baseline REINFORCE (tanpa value) · Langkah 5: amati entropi dan KL"
+    }
+  }
+}

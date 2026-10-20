@@ -1,0 +1,48 @@
+{
+  "lesson": "09-mcp-transports",
+  "title": "Transport MCP: stdio dan Streamable HTTP Stateless",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Method HTTP mana yang membawa setiap pesan Streamable HTTP modern?",
+      "options": ["PATCH", "DELETE", "GET", "POST"],
+      "correct": 3,
+      "explanation": "Setiap request atau notifikasi JSON-RPC modern adalah POST baru ke satu endpoint MCP."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus dikembalikan endpoint MCP khusus modern untuk GET dan DELETE?",
+      "options": ["301", "200", "202", "405"],
+      "correct": 3,
+      "explanation": "GET dan DELETE mandiri bukan bagian dari Streamable HTTP 2026-07-28."
+    },
+    {
+      "stage": "check",
+      "question": "Header mana yang harus cocok dengan body pada setiap request modern?",
+      "options": ["Mcp-Session-Id dan Last-Event-ID", "ETag dan If-None-Match", "MCP-Protocol-Version dan Mcp-Method", "Cookie dan Host"],
+      "correct": 2,
+      "explanation": "Mcp-Name juga wajib untuk tools/call, resources/read, dan prompts/get."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana klien meminta notifikasi perubahan berdurasi panjang?",
+      "options": ["POST subscriptions/listen", "resources/subscribe", "Mcp-Session-Id", "GET /mcp"],
+      "correct": 0,
+      "explanation": "subscriptions/listen membuka stream respons. Ack, notifikasi, dan hasil akhirnya membawa id request listen sebagai metadata subscription."
+    },
+    {
+      "stage": "post",
+      "question": "Stream SSE modern yang terikat request terputus sebelum respons finalnya. Apa selanjutnya?",
+      "options": ["DELETE sesi", "Menggunakan ulang stream respons yang sama", "Melanjutkan dengan Last-Event-ID", "Mencoba ulang dengan aman memakai id JSON-RPC baru"],
+      "correct": 3,
+      "explanation": "SSE modern tidak dapat dilanjutkan. Percobaan ulang yang aman adalah request baru dengan id baru."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang harus dilakukan server terhadap Mcp-Session-Id pada request 2026-07-28?",
+      "options": ["Mengabaikannya dan tidak menggemakannya", "Menolak setiap request yang menyertakannya", "Menggunakannya untuk routing", "Merotasinya"],
+      "correct": 0,
+      "explanation": "Sesi protokol dan header sesi telah dihapus dari revisi modern."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu 'curse of dimensionality'?",
+      "options": ["Seiring dimensi bertambah, jarak menjadi tak bermakna, volume terkonsentrasi di sudut, dan kamu butuh data yang bertambah eksponensial", "Neural network tidak dapat memproses data dengan lebih dari 100 fitur", "Data berdimensi tinggi selalu mengandung noise", "Data berdimensi tinggi terlalu lama diunduh"],
+      "correct": 0,
+      "explanation": "Dalam dimensi tinggi, semua jarak berpasangan konvergen ke nilai serupa, titik data menyebar ke sudut, dan mempertahankan kepadatan sampel memerlukan data yang bertambah eksponensial. Reduksi dimensi melawan efek ini."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang ditemukan PCA?",
+      "options": ["Cluster titik data yang serupa", "Fitur paling penting berdasarkan namanya", "Arah ortogonal variansi maksimum dalam data", "Jumlah fitur optimal yang harus dipertahankan"],
+      "correct": 2,
+      "explanation": "PCA menghitung eigenvector matriks kovariansi, yaitu arah ortogonal yang diperingkat berdasarkan seberapa banyak variansi data yang ditangkapnya. Komponen utama pertama menunjuk sepanjang arah sebaran maksimum."
+    },
+    {
+      "stage": "post",
+      "question": "Setelah menjalankan PCA pada data MNIST 784 dimensi dengan k=50 komponen, kamu menemukan 95% variansi tertangkap. Apa artinya?",
+      "options": ["95% gambar termasuk kelas yang sama", "Data efektif hidup pada subruang ~50 dimensi; 734 dimensi sisanya sebagian besar noise atau redundansi", "Model akan mencapai akurasi 95%", "Hanya 50 piksel yang penting di setiap gambar"],
+      "correct": 1,
+      "explanation": "95% variansi terjelaskan dengan 50 komponen berarti struktur esensial data 784 dimensi ditangkap oleh hanya 50 arah. Sisanya membawa hanya 5% variasi -- sebagian besar noise."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu TIDAK boleh memakai t-SNE sebagai prapemrosesan sebelum melatih classifier?",
+      "options": ["t-SNE dirancang hanya untuk visualisasi: ia mendistorsi jarak global, bersifat stokastik, dan koordinat outputnya tidak memiliki makna konsisten antar eksekusi", "t-SNE mengharuskan label diketahui sebelumnya", "t-SNE terlalu lambat untuk dataset besar", "t-SNE mereduksi data menjadi tepat 2 dimensi yang terlalu sedikit"],
+      "correct": 0,
+      "explanation": "t-SNE mempertahankan lingkungan lokal tetapi mendistorsi struktur global. Jarak antar cluster tidak bermakna, dan eksekusi berbeda menghasilkan tata letak berbeda. Gunakan PCA untuk prapemrosesan dan t-SNE/UMAP hanya untuk visualisasi."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu memilih kernel PCA alih-alih PCA standar?",
+      "options": ["Saat kamu butuh komputasi secepat mungkin", "Saat kamu ingin komponen utama yang dapat diinterpretasikan", "Saat jumlah sampel lebih banyak daripada fitur", "Saat data terletak pada manifold non-linear yang tidak dapat dipisahkan PCA standar, seperti lingkaran konsentris"],
+      "correct": 3,
+      "explanation": "PCA standar menemukan subruang linear. Jika data memiliki struktur non-linear (misalnya dua cincin konsentris), PCA memproyeksikan keduanya ke garis yang sama. Kernel PCA memetakan data ke ruang berdimensi lebih tinggi tempat strukturnya menjadi linear."
+    }
+  ]
+}

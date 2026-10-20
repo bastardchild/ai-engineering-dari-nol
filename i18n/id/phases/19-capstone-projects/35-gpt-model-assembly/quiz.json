@@ -1,0 +1,78 @@
+{
+  "lesson": "35-gpt-model-assembly",
+  "title": "Perakitan Model GPT",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Konfigurasi GPT-2 small referensi apa yang direproduksi lesson ini?",
+      "options": [
+        "vocab 30000, context 512, d_model 512, 6 heads, 6 layers",
+        "vocab 50257, context 1024, d_model 768, 12 heads, 12 layers, parameter sekitar 124 juta",
+        "vocab 50000, context 4096, d_model 4096, 32 heads, 32 layers",
+        "vocab 100000, context 2048, d_model 1024, 16 heads, 24 layers"
+      ],
+      "correct": 1,
+      "explanation": "GPT-2 small adalah konfigurasi 124M parameter; mencocokkannya memastikan wiring benar."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arti weight tying dalam perakitan model?",
+      "options": [
+        "Token embedding dan LM head berbagi tensor parameter yang sama persis; optimizer memperbarui satu matriks yang melayani lookup dan proyeksi output",
+        "Dua tensor berbeda dengan bentuk sama yang disalin setiap langkah",
+        "Bias yang dibagi lintas layer",
+        "Kendala pada head attention"
+      ],
+      "correct": 0,
+      "explanation": "Menyetel lm_head.weight = tok_embed.weight berbagi penyimpanan; menyalin tidak. Menghemat vocab kali d_model parameter."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana generasi menggeser jendela konteksnya?",
+      "options": [
+        "Setiap langkah mengambil context_length token terakhir dari urutan berjalan (prompt plus yang dihasilkan) dan memberikannya ke model",
+        "Memotong menjadi setengah konteks setiap langkah",
+        "Padding ke konteks maksimum dengan nol",
+        "Memulai ulang dari prompt setiap langkah"
+      ],
+      "correct": 0,
+      "explanation": "Sliding window membuang token paling lama saat urutan berjalan meluap melewati panjang konteks."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menginisialisasi proyeksi output attention dan linear MLP kedua dengan std lebih kecil dari yang lain?",
+      "options": [
+        "Dataset mewajibkannya",
+        "Top-k sampling membutuhkan bobot lebih kecil",
+        "Keduanya langsung masuk ke residual add. Menskalakan std-nya dengan 1 per sqrt 2 kali num_layers menjaga aliran residual tetap berskala melalui dua belas layer",
+        "Itu menghemat memori"
+      ],
+      "correct": 2,
+      "explanation": "Tanpa penskalaan, aliran residual tumbuh seiring kedalaman dan mendorong LayerNorm akhir ke rezim panas."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan temperature saat sampling?",
+      "options": [
+        "Memilih learning rate optimizer",
+        "Membagi logit sebelum softmax. T kurang dari 1 menajamkan distribusi ke arah greedy, T sama dengan 1 mempertahankan distribusi model alami, T lebih dari 1 meratakan",
+        "Menskalakan embedding",
+        "Menambah dropout ke head"
+      ],
+      "correct": 1,
+      "explanation": "Temperature adalah knob paling sederhana; dikombinasikan dengan top-k ia mengontrol seberapa eksploratif generasinya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan filtering top-k sebelum sampling?",
+      "options": [
+        "Memilih k logit terendah",
+        "Mempertahankan k logit bernilai tertinggi, menutupi sisanya ke negatif tak hingga, lalu softmax atas yang bertahan agar sampling multinomial hanya melihat k token teratas",
+        "Menghapus semua logit di bawah nol",
+        "Membatasi logit pada k"
+      ],
+      "correct": 1,
+      "explanation": "Top-k memotong ekor panjang sebelum softmax; top_k=1 adalah greedy, k lebih besar mempertahankan keragaman lebih banyak."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/28-observability-otel-traces",
+  "title": "Observability: Span GenAI OTel dan Metrik Prometheus",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca lesson: apa manfaat praktis menulis span harness dalam bentuk atribut OTel GenAI?",
+      "options": [
+        "Setiap backend yang kompatibel OTel dapat membacanya tanpa parser kustom.",
+        "OTel adalah standar khusus Python, jadi harness mendapat type hint.",
+        "Itu diwajibkan HIPAA.",
+        "Span OTel lebih baik dikompresi di disk."
+      ],
+      "correct": 0,
+      "explanation": "Konvensi adalah kontrak dengan ekosistem yang lebih luas. Honeycomb, Grafana Tempo, Jaeger, dan Datadog semuanya mem-parse atribut gen_ai.* secara out of the box."
+    },
+    {
+      "stage": "check",
+      "question": "Exception dilempar di dalam konteks SpanBuilder.span(). Apa yang dicatat builder lesson?",
+      "options": [
+        "status tetap UNSET dan exception ditelan diam-diam.",
+        "Span dibuang agar tidak mengotori trace.",
+        "status=ERROR, status_message memuat tipe dan pesan exception, dan event 'exception' ditambahkan.",
+        "Span diganti nama menjadi 'error'."
+      ],
+      "correct": 2,
+      "explanation": "Status ERROR plus event exception sesuai spec OTel. Exception dilempar ulang agar kode pemanggil bisa bereaksi."
+    },
+    {
+      "stage": "check",
+      "question": "Eksposisi Prometheus untuk histogram memuat baris _bucket, _sum, dan _count. Mengapa hitungan bucket kumulatif (setiap bucket le mencakup semua bucket lebih kecil)?",
+      "options": [
+        "Hitungan kumulatif mengurangi error floating-point.",
+        "Hitungan kumulatif memungkinkan scraper menghitung hitungan per bucket via pengurangan tanpa menyimpan semua observasi.",
+        "Hitungan kumulatif satu-satunya format yang didukung Grafana.",
+        "Itu tidak kumulatif; eksposisi lesson non-standar."
+      ],
+      "correct": 1,
+      "explanation": "Pilihan desain Prometheus: backend membaca hitungan kumulatif dan menghitung selisih per bucket. Ini memungkinkan time series menjadi counter monoton sederhana per bucket."
+    },
+    {
+      "stage": "check",
+      "question": "Harness membungkus eksekusi tool dalam span. Key atribut mana yang mengidentifikasinya sebagai tool call di bawah konvensi GenAI?",
+      "options": [
+        "operation + tool.name.",
+        "agent.harness.tool + agent.harness.call.",
+        "gen_ai.system + gen_ai.request.model.",
+        "gen_ai.tool.name + gen_ai.tool.call.id."
+      ],
+      "correct": 3,
+      "explanation": "gen_ai.tool.name dan gen_ai.tool.call.id adalah key kanonis untuk eksekusi tool dalam konvensi GenAI."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu ingin query 'berapa latensi p95 panggilan read_file'. Artefak mana yang kamu query?",
+      "options": [
+        "Field status_message span.",
+        "Counter tools_called_total, dibagi jendela waktu.",
+        "Histogram Prometheus tool_latency_ms{tool=\"read_file\"} yang di-scrape selama jendela.",
+        "duration_ms setiap span di traces.jsonl, di-parse skrip."
+      ],
+      "correct": 2,
+      "explanation": "Histogram adalah alat yang tepat untuk persentil. Counter hanya menghitung; trace memuat span mentah tetapi tidak teragregasi sebelumnya."
+    },
+    {
+      "stage": "post",
+      "question": "Reviewer bertanya mengapa lesson menulis sendiri alih-alih mengimpor opentelemetry-sdk. Jawaban mana yang benar?",
+      "options": [
+        "Menulis sendiri mengajarkan format wire; SDK bisa dipasang nanti dengan key atribut yang sama.",
+        "Menulis sendiri lebih cepat saat runtime.",
+        "SDK membutuhkan koneksi jaringan saat import.",
+        "SDK tidak mendukung konvensi GenAI."
+      ],
+      "correct": 0,
+      "explanation": "Konvensi stabil lintas implementasi. Versi tulis-sendiri ada untuk kejelasan; produksi memasang SDK dan memakai ulang key gen_ai.* yang sama."
+    }
+  ]
+}

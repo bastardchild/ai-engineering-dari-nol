@@ -1,0 +1,90 @@
+{
+  "lesson": "09-hybrid-memory-mem0",
+  "title": "Hybrid Memory: Vector + Graph + KV",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Kelas query mana yang paling baik ditangani KV store?",
+      "options": [
+        "Keterjangkauan antar pelanggan yang berbagi entitas penagihan",
+        "Pencarian fakta langsung berdasarkan kunci (user, type, entity)",
+        "Query temporal valid-at-time",
+        "Kemiripan semantik atas percakapan panjang"
+      ],
+      "correct": 1,
+      "explanation": "KV bersifat O(1) pada kunci eksak; vector untuk kemiripan, graph untuk relasi."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tiga store yang ditulis Mem0 secara paralel pada setiap add()?",
+      "options": [
+        "Postgres, Redis, ClickHouse",
+        "Cache, queue, log",
+        "Embedding, attention, FFN",
+        "Vector, KV, graph"
+      ],
+      "correct": 3,
+      "explanation": "Mem0 menyebarkan setiap penulisan ke store vector, KV, dan graph."
+    },
+    {
+      "stage": "check",
+      "question": "Tiga dimensi apa yang menyusun skor fusion Mem0?",
+      "options": [
+        "Confidence, perplexity, BLEU",
+        "Precision, recall, F1",
+        "Relevance, importance, recency",
+        "Latency, throughput, cost"
+      ],
+      "correct": 2,
+      "explanation": "Skornya adalah jumlah berbobot dari relevance, importance, dan recency; bobotnya disetel per produk."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan Mem0g saat fakta baru bertentangan dengan edge yang ada?",
+      "options": [
+        "Melempar exception",
+        "Menulis ulang user_id",
+        "Menandai edge yang ada tidak valid tetapi tidak menghapusnya, sehingga query temporal masih bisa melintasinya",
+        "Menghapus edge"
+      ],
+      "correct": 2,
+      "explanation": "Invalidasi lunak mempertahankan riwayat untuk query temporal (valid-at-time)."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pelajaran menyarankan menyetel bobot fusion per produk?",
+      "options": [
+        "Itu diwajibkan Apache 2.0",
+        "Library vector menolak bobot yang sama",
+        "Recency mendominasi untuk chat agent, importance mendominasi untuk compliance agent, dan relevance mendominasi untuk retrieval agent",
+        "Penyedia mewajibkannya"
+      ],
+      "correct": 2,
+      "explanation": "Produk berbeda menginginkan bias berbeda pada relevance/importance/recency; satu set bobot tidak cocok untuk semua."
+    },
+    {
+      "stage": "post",
+      "question": "Apa taksonomi scope yang dipakai Mem0?",
+      "options": [
+        "User, session, agent",
+        "Local, regional, global",
+        "Public, private, secret",
+        "Read, write, admin"
+      ],
+      "correct": 0,
+      "explanation": "Scope-nya adalah user (antar sesi), session (satu thread), agent (state per instance)."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu embedding drift dalam pola ini, dan bagaimana pelajaran menyarankan mitigasinya?",
+      "options": [
+        "Vector dienkripsi; rotasi kunci",
+        "API embedding berubah URL; pin domain",
+        "Embedding meluap dari integer; pindah ke float64",
+        "Kualitas retrieval vector menurun seiring korpus tumbuh; re-embed secara berkala N catatan yang paling sering dipakai"
+      ],
+      "correct": 3,
+      "explanation": "Re-embedding berkala atas catatan panas menjaga kualitas retrieval tetap stabil seiring korpus tumbuh."
+    }
+  ]
+}

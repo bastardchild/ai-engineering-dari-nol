@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Masalah apa yang diselesaikan virtual environment?",
+      "options": ["Menyediakan antarmuka grafis untuk mengelola skrip Python", "Mengisolasi dependensi proyek sehingga proyek berbeda dapat memakai versi paket berbeda", "Memperbarui paket ke versi terbaru secara otomatis", "Membuat kode Python berjalan lebih cepat dengan mengoptimalkan interpreter"],
+      "correct": 1,
+      "explanation": "Virtual environment memberi setiap proyek kumpulan paketnya sendiri yang terisolasi. Tanpa itu, menginstal PyTorch 2.4 untuk satu proyek akan menimpa PyTorch 2.1 yang dibutuhkan proyek lain."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu lockfile dalam konteks manajemen dependensi Python?",
+      "options": ["File yang mengunci versi interpreter Python", "File yang mengenkripsi dependensi proyekmu", "File yang mencegah pengguna lain mengedit kode kamu", "File yang mematok setiap paket ke versi tepat agar instalasi dapat direproduksi"],
+      "correct": 3,
+      "explanation": "Lockfile mencatat versi tepat setiap paket (termasuk dependensi transitif) sehingga siapa pun yang menginstal darinya mendapat paket identik, menjamin reproduksibilitas."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu memverifikasi bahwa perintah pip dan python memakai virtual environment, bukan Python sistem?",
+      "options": ["Jalankan 'python --check-env' untuk memverifikasi", "Jalankan 'pip --version' dan periksa nomor versinya", "Jalankan 'which python' dan pastikan hasilnya .venv/bin/python, bukan /usr/bin/python", "Periksa apakah warna latar terminal berubah"],
+      "correct": 2,
+      "explanation": "'which python' (atau 'where python' di Windows) menunjukkan path lengkap interpreter. Jika mengarah ke .venv/bin/python, kamu berada di virtual environment."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mencampur pip dan conda dalam environment yang sama bermasalah?",
+      "options": ["Paket pip tidak kompatibel dengan interpreter Python milik conda", "Instalasi pip dapat merusak pelacakan dependensi conda, menimbulkan konflik yang sulit di-debug", "Itu menggandakan ruang disk yang dipakai setiap paket", "Conda tidak dapat menginstal paket yang sudah dipasang pip"],
+      "correct": 1,
+      "explanation": "Conda memelihara dependency solver sendiri. Instalasi pip melewati solver itu, sehingga conda tidak lagi mengetahui keadaan environment yang sebenarnya. Ini menyebabkan konflik dependensi yang menyakitkan untuk diselesaikan."
+    },
+    {
+      "stage": "post",
+      "question": "Kode PyTorch-mu melaporkan 'CUDA not available' padahal kamu punya GPU NVIDIA. Apa penyebab paling mungkin?",
+      "options": ["PyTorch diinstal dengan versi CUDA yang tidak kompatibel dengan driver GPU-mu", "GPU-mu tidak mendukung CUDA", "Kamu lupa mengimpor modul torch.cuda", "Virtual environment tidak dapat mengakses perangkat keras GPU"],
+      "correct": 0,
+      "explanation": "PyTorch menyertakan binding CUDA yang dikompilasi untuk versi CUDA tertentu. Jika versi CUDA PyTorch melebihi versi CUDA driver-mu, CUDA tidak akan tersedia. Periksa dengan nvidia-smi dan torch.version.cuda."
+    }
+  ]
+}

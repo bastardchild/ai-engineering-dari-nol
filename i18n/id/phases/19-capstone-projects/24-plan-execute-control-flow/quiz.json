@@ -1,0 +1,90 @@
+{
+  "lesson": "24-plan-execute-control-flow",
+  "title": "Alur Kontrol Plan-Execute",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tanggung jawab planner dalam agen plan-execute?",
+      "options": [
+        "Menangani transport JSON-RPC",
+        "Menghasilkan daftar terurut langkah bertipe yang akan dijalankan executor",
+        "Menegakkan timeout",
+        "Memanggil dispatcher pada setiap langkah"
+      ],
+      "correct": 1,
+      "explanation": "Planner mengeluarkan rencana terstruktur. Executor menjalankannya. Mencampur keduanya adalah jebakan chain-of-thought yang lesson ini hindari."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa expected_outcome bagian dari bentuk Step meski executor tidak memeriksanya?",
+      "options": [
+        "Karena itu memberi replanner dan tracer kondisi sukses tertulis untuk dibaca",
+        "Karena model dilatih dengannya",
+        "Karena dispatcher memakainya sebagai cache key",
+        "Karena registry mewajibkannya"
+      ],
+      "correct": 0,
+      "explanation": "Replanner membacanya saat merevisi. Tracer merendernya di timeline. Itu kontrak yang dapat dibaca manusia pada langkah."
+    },
+    {
+      "stage": "check",
+      "question": "Saat langkah gagal dan replanner mengembalikan rencana baru, apa yang dikeluarkan executor di event stream?",
+      "options": [
+        "session.complete dengan status=failed",
+        "tool.error diikuti session.start",
+        "plan.diff dengan step id yang dihapus/ditambah/direvisi",
+        "Tidak ada — replan senyap"
+      ],
+      "correct": 2,
+      "explanation": "plan.diff membuat revisi terlihat. Penulisan ulang senyap adalah bug yang kita hindari."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa ada max_steps dan max_replans sebagai anggaran terpisah?",
+      "options": [
+        "Karena dispatcher menolak rencana tak terbatas",
+        "Karena registry menghitung replan",
+        "Karena asyncio membutuhkan keduanya",
+        "Karena keduanya mengukur unit berbeda. Step membatasi total eksekusi; replan membatasi berapa kali planner dipanggil."
+      ],
+      "correct": 3,
+      "explanation": "max_replans menangkap planner yang terus mengembalikan rencana rusak yang sama. max_steps menangkap rencana liar yang terus tumbuh."
+    },
+    {
+      "stage": "check",
+      "question": "Alasan mana yang dikembalikan saat planner mengembalikan daftar kosong pada panggilan pertama?",
+      "options": [
+        "replan_budget",
+        "step_budget",
+        "no_plan",
+        "goal_met"
+      ],
+      "correct": 2,
+      "explanation": "Tanpa rencana, tanpa eksekusi. Sesi berakhir dengan reason=no_plan dan status=failed."
+    },
+    {
+      "stage": "post",
+      "question": "Apa isi PlanDiff.revised?",
+      "options": [
+        "Step id yang diminta planner untuk dilewati",
+        "Step id yang tool_name atau args-nya berubah antar revisi",
+        "Step id di rencana baru yang tidak ada di rencana lama",
+        "Step id di rencana lama yang tidak ada di rencana baru"
+      ],
+      "correct": 1,
+      "explanation": "revised adalah himpunan id yang tanda tangan (tool_name, args)-nya berubah sepanjang revisi."
+    },
+    {
+      "stage": "post",
+      "question": "Saat executor menghabiskan max_replans, apa SessionResult.reason yang dihasilkan?",
+      "options": [
+        "step_budget",
+        "replan_budget",
+        "no_plan",
+        "goal_met"
+      ],
+      "correct": 1,
+      "explanation": "replan_budget. Statusnya failed. History memuat setiap langkah yang berjalan, termasuk kegagalan yang memicu replan."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "54-paper-writer",
+  "title": "Penulis Paper",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa writer mendeklarasikan section, figure, dan citation sebagai data sebelum prosa apa pun ditulis?",
+      "options": [
+        "Karena BibTeX tidak bisa menyelesaikan forward reference",
+        "Karena LaTeX membutuhkan deklarasi awal",
+        "Karena model butuh system prompt",
+        "Karena struktur adalah kontraknya: harness dapat memvalidasi kelengkapan sebelum generasi prosa"
+      ],
+      "correct": 3,
+      "explanation": "Structure-first memungkinkan harness memvalidasi keunikan, cakupan sitasi, dan cakupan figure sebelum memanggil generator prosa. Kerangka adalah kontraknya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dihasilkan langkah figure-injection dari manifest eksperimen?",
+      "options": [
+        "Daftar record Figure dengan id stabil dan path dinormalisasi ke direktori paper",
+        "Stub bibliografi",
+        "PDF yang dikompilasi dari artefak",
+        "Prompt model dengan deskripsi figure"
+      ],
+      "correct": 0,
+      "explanation": "read_experiment_manifest mengembalikan record Figure. Id deterministik, path dinormalisasi, caption berasal dari manifest."
+    },
+    {
+      "stage": "check",
+      "question": "Kegagalan validasi mana yang melempar PaperValidationError sebelum file apa pun ditulis?",
+      "options": [
+        "Abstrak lebih dari 200 kata",
+        "Jumlah penulis ganjil",
+        "Section yang mengutip key yang tidak dideklarasikan di bibliografi",
+        "Path figure yang tidak ada di disk"
+      ],
+      "correct": 2,
+      "explanation": "Key bibliografi yang hilang, id figure duplikat, judul kosong, abstrak kosong, dan ref figure tak dikenal semuanya melempar PaperValidationError. Keberadaan di disk tidak ditegakkan karena compiler LaTeX yang menegakkannya nanti."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa generator prosa adalah callable yang diinjeksi ke PaperWriter alih-alih method padanya?",
+      "options": [
+        "Karena test dapat menukar MockProseGenerator deterministik untuk panggilan model tanpa menyentuh writer",
+        "Karena LaTeX membutuhkan callback",
+        "Karena dataclass tidak bisa menyimpan state",
+        "Karena Python tidak mengizinkan method menerima Paper sebagai argumen"
+      ],
+      "correct": 0,
+      "explanation": "Writer menerima generator prosa sebagai dependensi. Test menggantinya dengan MockProseGenerator. Produksi menggantinya dengan panggilan model. Writer tidak berubah."
+    },
+    {
+      "stage": "post",
+      "question": "Tiga file apa yang dikeluarkan PaperWriter.write saat sukses?",
+      "options": [
+        "paper.tex, references.bib, manifest.json",
+        "manifest.json, prose.txt, paper.pdf",
+        "paper.tex, paper.pdf, references.bib",
+        "outline.json, paper.tex, figures.tar"
+      ],
+      "correct": 0,
+      "explanation": "paper.tex adalah sumber LaTeX. references.bib adalah bibliografi. manifest.json adalah artefak terstruktur yang dibaca loop critic berikutnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa manifest bagian dari kontrak writer, bukan hanya file LaTeX?",
+      "options": [
+        "Karena tooling hilir (critic, dashboard) membaca manifest terstruktur, bukan LaTeX",
+        "Karena manifest.json satu-satunya file yang diterima BibTeX",
+        "Karena LaTeX terlalu besar untuk di-parse",
+        "Karena compiler LaTeX menolak section tanpa tipe"
+      ],
+      "correct": 0,
+      "explanation": "Manifest adalah antarmuka stabil untuk tahap hilir. Critic dan dashboard memeriksa manifest.json. LaTeX adalah artefak yang dapat dibaca manusia, bukan antarmuka mesin."
+    }
+  ]
+}

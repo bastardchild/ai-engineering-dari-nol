@@ -1,0 +1,120 @@
+{
+  "phase": {
+    "1": {
+      "name": "Fondasi Matematika",
+      "desc": "Intuisi di balik setiap algoritma AI, lewat kode."
+    }
+  },
+  "lessons": {
+    "phases/01-math-foundations/01-linear-algebra-intuition": {
+      "name": "Intuisi Aljabar Linear",
+      "summary": "Setiap model AI hanyalah matematika matriks yang memakai topi mewah.",
+      "keywords": "Vektor Adalah Titik (dan Arah) · Matriks Adalah Transformasi · Dot Product Mengukur Kemiripan · Independensi Linear · Basis dan Rank · Proyeksi · Proses Gram-Schmidt · Langkah 1: Vektor dari nol (Python) · Langkah 2: Matriks dari nol (Python) · Langkah 3: Mengapa ini penting untuk AI · Langkah 4: Versi Julia · Langkah 5: Independensi linear dan proyeksi dari nol (Python) · Rank, Proyeksi, dan QR dengan NumPy · PyTorch -- Tensor Adalah Vektor dengan Autodiff"
+    },
+    "phases/01-math-foundations/02-vectors-matrices-operations": {
+      "name": "Vektor, Matriks & Operasi",
+      "summary": "Setiap neural network hanyalah perkalian matriks dengan langkah tambahan.",
+      "keywords": "Vektor: daftar angka berurutan · Matriks: grid angka · Mengapa shape penting · Peta operasi · Perkalian element-wise vs matriks · Broadcasting · Langkah 1: Class Vector · Langkah 2: Class Matrix dengan operasi inti · Langkah 3: Lihat hasilnya · Langkah 4: Hubungkan ke neural network"
+    },
+    "phases/01-math-foundations/03-matrix-transformations": {
+      "name": "Transformasi Matriks & Eigenvalue",
+      "summary": "Matriks adalah mesin yang membentuk ulang ruang. Pelajari apa yang ia lakukan pada setiap titik, dan kamu memahami seluruh transformasinya.",
+      "keywords": "Transformasi sebagai matriks · Rotasi · Scaling · Shearing · Refleksi · Komposisi: merangkai transformasi · Eigenvalue dan eigenvector · Dekomposisi eigen · Mengapa eigenvalue penting · Determinan sebagai faktor skala volume · Langkah 1: Matriks transformasi dari nol (Python) · Langkah 2: Komposisi transformasi · Langkah 3: Eigenvalue dari nol (2x2) · Langkah 4: Determinan sebagai faktor skala volume · Rotasi 3D dengan NumPy"
+    },
+    "phases/01-math-foundations/04-calculus-for-ml": {
+      "name": "Kalkulus untuk ML: Turunan & Gradient",
+      "summary": "Turunan menunjukkan arah menurun. Hanya itu yang dibutuhkan neural network untuk belajar.",
+      "keywords": "Apa itu turunan? · Turunan parsial: satu variabel setiap kali · Gradient: vektor dari semua turunan parsial · Hubungan dengan optimasi · Turunan numerik vs analitik · Turunan manual untuk fungsi sederhana · Aturan rantai · Matriks Hessian · Aproksimasi Deret Taylor · Integral dalam ML · Aturan Rantai Multivariabel dalam Computation Graph · Matriks Jacobian · Mengapa ini penting untuk neural network · Langkah 1: Turunan numerik dari nol · Langkah 2: Turunan parsial dan gradient · Langkah 3: Gradient descent untuk mencari minimum f(x) = x^2 · Langkah 4: Gradient descent pada fungsi 2D · Langkah 5: Membandingkan turunan numerik dan analitik · Langkah 6: Menghitung Hessian secara numerik · Langkah 7: Aproksimasi Taylor dalam aksi · Langkah 8: Mengapa ini penting untuk neural network"
+    },
+    "phases/01-math-foundations/05-chain-rule-and-autodiff": {
+      "name": "Aturan Rantai & Diferensiasi Otomatis",
+      "summary": "Aturan rantai adalah mesin di balik setiap neural network yang belajar.",
+      "keywords": "Aturan Rantai · Computation Graph · Forward Mode vs Reverse Mode · Dual Number untuk Forward Mode · Membangun Autograd Engine · Cara Kerja PyTorch Autograd di Balik Layar · Langkah 1: Class Value · Langkah 2: Operasi aritmetika dengan pelacakan gradient · Langkah 3: Backward pass · Langkah 4: Operasi tambahan untuk engine lengkap · Langkah 5: MLP mini dari nol · Langkah 6: Pemeriksaan gradient · Langkah 7: Verifikasi dengan perhitungan manual · Verifikasi dengan PyTorch · Ekspresi yang lebih kompleks"
+    },
+    "phases/01-math-foundations/06-probability-and-distributions": {
+      "name": "Probabilitas & Distribusi",
+      "summary": "Probabilitas adalah bahasa AI untuk menyatakan ketidakpastian.",
+      "keywords": "Kejadian, Ruang Sampel, dan Probabilitas · Probabilitas Bersyarat dan Independensi · Probability Mass Function vs Probability Density Function · Distribusi Umum · Nilai Harapan dan Varians · Distribusi Bersama dan Marginal · Mengapa Distribusi Normal Muncul di Mana-mana · Probabilitas Log · Softmax sebagai Distribusi Probabilitas · Sampling · Langkah 1: Dasar-dasar probabilitas · Langkah 2: PMF dan PDF dari nol · Langkah 3: Nilai harapan dan varians · Langkah 4: Sampling dari distribusi · Langkah 5: Softmax dan probabilitas log · Langkah 6: Demonstrasi Central Limit Theorem · Langkah 7: Visualisasi"
+    },
+    "phases/01-math-foundations/07-bayes-theorem": {
+      "name": "Teorema Bayes & Berpikir Statistik",
+      "summary": "Probabilitas adalah tentang apa yang kamu harapkan. Teorema Bayes adalah tentang apa yang kamu pelajari.",
+      "keywords": "Dari probabilitas bersama ke Bayes · Empat bagiannya · Contoh tes medis · Contoh filter spam · Naive Bayes: asumsi independensi · Maximum likelihood estimation (MLE) · Maximum a posteriori (MAP) · Bayesian vs frequentist: perbedaan praktis · Mengapa berpikir Bayesian penting untuk ML · Langkah 1: Fungsi teorema Bayes · Langkah 2: Classifier Naive Bayes · Langkah 3: Latih pada data spam · Langkah 4: Periksa probabilitas yang dipelajari · Conjugate Prior · Pembaruan Bayesian Berurutan · Hubungan dengan A/B Testing"
+    },
+    "phases/01-math-foundations/08-optimization": {
+      "name": "Optimasi: Keluarga Gradient Descent",
+      "summary": "Melatih neural network tidak lebih dari mencari dasar sebuah lembah.",
+      "keywords": "Apa arti optimasi · Gradient descent (vanilla) · Learning rate: hyperparameter terpenting · SGD vs batch vs mini-batch · Momentum: bola yang menggelinding menurun · Adam: learning rate adaptif · Jadwal learning rate · Convex vs non-convex · Visualisasi loss landscape · Langkah 1: Definisikan fungsi uji · Langkah 2: Gradient descent vanilla · Langkah 3: SGD dengan momentum · Langkah 4: Adam · Langkah 5: Jalankan dan bandingkan"
+    },
+    "phases/01-math-foundations/09-information-theory": {
+      "name": "Teori Informasi: Entropy, KL Divergence",
+      "summary": "Teori informasi mengukur kejutan. Fungsi loss dibangun di atasnya.",
+      "keywords": "Kandungan Informasi (Kejutan) · Entropy (Kejutan Rata-rata) · Cross-Entropy (Fungsi Loss yang Kamu Pakai Setiap Hari) · KL Divergence (Jarak Antara Distribusi) · Mutual Information · Entropy Bersyarat · Entropy Bersama · Mutual Information (Pendalaman) · Label Smoothing dan Cross-Entropy · Mengapa Cross-Entropy ADALAH Loss Klasifikasi · Bit vs Nat · Perplexity · Langkah 1: Kandungan informasi dan entropy · Langkah 2: Cross-entropy dan KL divergence · Langkah 3: Cross-entropy sebagai loss klasifikasi · Langkah 4: Cross-entropy sama dengan negative log-likelihood · Langkah 5: Mutual information"
+    },
+    "phases/01-math-foundations/10-dimensionality-reduction": {
+      "name": "Reduksi Dimensi: PCA, t-SNE, UMAP",
+      "summary": "Data berdimensi tinggi punya struktur. Kamu menemukannya dengan melihat dari sudut yang tepat.",
+      "keywords": "Kutukan dimensionalitas · PCA: temukan arah yang penting · Rasio varians terjelaskan · Memilih jumlah komponen · t-SNE: pertahankan ketetanggaan · UMAP: lebih cepat, struktur global lebih baik · Kapan pakai yang mana · Kernel PCA · Reconstruction Error · Langkah 1: PCA dari nol · Langkah 2: Uji pada data sintetis · Langkah 3: Digit MNIST dalam 2D · Langkah 4: Bandingkan dengan sklearn · Langkah 5: Perbandingan UMAP"
+    },
+    "phases/01-math-foundations/11-singular-value-decomposition": {
+      "name": "Singular Value Decomposition",
+      "summary": "SVD adalah pisau Swiss Army aljabar linear. Setiap matriks punya satu. Setiap data scientist membutuhkannya.",
+      "keywords": "Apa yang SVD lakukan secara geometris · Dekomposisi penuh · Vektor singular kiri, nilai singular, vektor singular kanan · Bentuk outer product · Hubungan dengan dekomposisi eigen · Truncated SVD: aproksimasi low-rank · Kompresi gambar dengan SVD · SVD untuk sistem rekomendasi · SVD dalam NLP: Latent Semantic Analysis · SVD untuk reduksi noise · Pseudoinverse via SVD · Keunggulan stabilitas numerik · Hubungan dengan PCA · Langkah 1: SVD dari nol menggunakan power iteration · Langkah 2: Uji dan bandingkan dengan NumPy · Langkah 3: Demo kompresi gambar · Langkah 4: Reduksi noise · Langkah 5: Pseudoinverse"
+    },
+    "phases/01-math-foundations/12-tensor-operations": {
+      "name": "Operasi Tensor",
+      "summary": "Tensor adalah bahasa bersama antara data dan deep learning. Setiap gambar, setiap kalimat, setiap gradient mengalir melaluinya.",
+      "keywords": "Apa itu tensor · Shape tensor dalam deep learning · Cara kerja memory layout · Aturan broadcasting · Einsum: operasi tensor universal · Langkah 1: Penyimpanan tensor dan stride · Langkah 2: Reshape, squeeze, unsqueeze · Langkah 3: Transpose dan permute · Langkah 4: Operasi element-wise dan reduksi · Langkah 5: Broadcasting dengan NumPy · Langkah 6: Operasi Einsum · Langkah 7: Mekanisme attention via einsum · Dari nol vs NumPy · Dari nol vs PyTorch · Setiap layer neural network sebagai operasi tensor"
+    },
+    "phases/01-math-foundations/13-numerical-stability": {
+      "name": "Stabilitas Numerik",
+      "summary": "Floating point adalah abstraksi yang bocor. Ia akan menggigitmu saat training, dan kamu tidak akan melihatnya datang.",
+      "keywords": "IEEE 754: Cara Komputer Menyimpan Bilangan Real · Mengapa 0.1 + 0.2 != 0.3 · Pembatalan Katastrofik · Overflow dan Underflow · Trik Log-Sum-Exp · Mengapa Softmax Butuh Trik Pengurangan Nilai Maks · NaN dan Inf: Deteksi dan Pencegahan · Pemeriksaan Gradient Numerik · Training Mixed Precision · bfloat16 vs float16: Mengapa bfloat16 Menang untuk Training · Gradient Clipping · Layer Normalization sebagai Penstabil Numerik · Bug Numerik ML yang Umum · Langkah 1: Demonstrasikan batas presisi floating point · Langkah 2: Implementasikan softmax naif vs stabil · Langkah 3: Implementasikan log-sum-exp stabil · Langkah 4: Implementasikan cross-entropy stabil · Langkah 5: Pemeriksaan gradient · Simulasi mixed precision · Gradient clipping · Deteksi NaN/Inf"
+    },
+    "phases/01-math-foundations/14-norms-and-distances": {
+      "name": "Norma & Jarak",
+      "summary": "Fungsi jarakmu menentukan arti \"mirip\". Salah pilih dan semua yang bergantung padanya rusak.",
+      "keywords": "Norma: mengukur magnitudo vektor · Norma L1 (jarak Manhattan) · Norma L2 (jarak Euclidean) · Norma Lp: keluarga umum · Norma L-infinity (jarak Chebyshev) · Cosine Similarity dan Cosine Distance · Dot Product Similarity vs Cosine Similarity · Jarak Mahalanobis · Jaccard Similarity (untuk himpunan) · Edit Distance (Jarak Levenshtein) · KL Divergence (bukan jarak, tapi dipakai seperti jarak) · Jarak Wasserstein (Earth Mover's Distance) · Mengapa Tugas Berbeda Butuh Jarak Berbeda · Hubungan dengan Fungsi Loss · Hubungan dengan Regularisasi · Nearest Neighbor Search · Langkah 1: Semua fungsi norma dan jarak · Langkah 2: Data sama, jarak berbeda, tetangga berbeda · Langkah 3: Pencarian kemiripan embedding"
+    },
+    "phases/01-math-foundations/15-statistics-for-ml": {
+      "name": "Statistik untuk ML",
+      "summary": "Statistik adalah cara kamu tahu apakah modelmu benar-benar bekerja atau hanya beruntung.",
+      "keywords": "Statistik Deskriptif: Merangkum Data Kamu · Korelasi: Bagaimana Variabel Bergerak Bersama · Matriks Kovarians · Uji Hipotesis · Uji-t · Uji Chi-kuadrat · A/B Testing untuk Model ML · Signifikansi Statistik vs Signifikansi Praktis · Masalah Perbandingan Berganda · Metode Bootstrap · Uji Parametrik vs Non-parametrik · Central Limit Theorem: Implikasi Praktis · Kesalahan Statistik Umum dalam Paper ML"
+    },
+    "phases/01-math-foundations/16-sampling-methods": {
+      "name": "Metode Sampling",
+      "summary": "Sampling adalah cara AI menjelajahi ruang kemungkinan.",
+      "keywords": "Mengapa Sampling Penting · Uniform Random Sampling · Inverse CDF Method (Inverse Transform Sampling) · Rejection Sampling · Importance Sampling · Estimasi Monte Carlo · Markov Chain Monte Carlo (MCMC): Metropolis-Hastings · Gibbs Sampling · Temperature Sampling (Digunakan di LLM) · Top-k Sampling · Top-p (Nucleus) Sampling · Reparameterization Trick (Digunakan di VAE) · Gumbel-Softmax (Sampling Kategorikal yang Dapat Didiferensiasi) · Stratified Sampling · Hubungan dengan Model Difusi · Langkah 1: Sampling uniform dan inverse CDF · Langkah 2: Rejection sampling · Langkah 3: Importance sampling · Langkah 4: Estimasi Monte Carlo untuk pi · Langkah 5: MCMC Metropolis-Hastings · Langkah 6: Gibbs sampling · Langkah 7: Temperature sampling · Langkah 8: Top-k dan top-p sampling · Langkah 9: Reparameterization trick · Langkah 10: Gumbel-Softmax"
+    },
+    "phases/01-math-foundations/17-linear-systems": {
+      "name": "Sistem Linear",
+      "summary": "Menyelesaikan Ax = b adalah masalah tertua dalam matematika yang masih menjalankan neural network-mu.",
+      "keywords": "Apa arti Ax = b secara geometris · Gambaran kolom vs gambaran baris · Eliminasi Gaussian · Partial pivoting: mengapa penting · Dekomposisi LU · Dekomposisi QR · Dekomposisi Cholesky · Least squares: ketika Ax = b tidak punya solusi eksak · Persamaan normal = regresi linear · Pseudoinverse (Moore-Penrose) · Condition number · Metode iteratif: conjugate gradient · Gambaran lengkap: metode mana kapan · Hubungan dengan ML · Langkah 1: Eliminasi Gaussian dengan partial pivoting · Langkah 2: Dekomposisi LU · Langkah 3: Dekomposisi Cholesky · Langkah 4: Least squares via persamaan normal · Langkah 5: Condition number"
+    },
+    "phases/01-math-foundations/18-convex-optimization": {
+      "name": "Optimasi Convex",
+      "summary": "Masalah convex punya satu lembah. Neural network punya jutaan. Mengetahui bedanya itu penting.",
+      "keywords": "Himpunan convex · Fungsi convex · Menguji convexity · Mengapa convexity penting · Convex vs non-convex dalam ML · Matriks Hessian · Metode Newton · Optimasi dengan kendala · Pengali Lagrange · Kondisi KKT · Regularisasi sebagai optimasi dengan kendala · Dualitas · Mengapa deep learning bekerja meski non-convex · Metode orde kedua dalam praktik · Langkah 1: Pemeriksa convexity · Langkah 2: Metode Newton untuk 2D · Langkah 3: Solver pengali Lagrange · Langkah 4: Bandingkan orde pertama vs orde kedua"
+    },
+    "phases/01-math-foundations/19-complex-numbers": {
+      "name": "Bilangan Kompleks untuk AI",
+      "summary": "Akar kuadrat dari -1 bukan imajiner. Ia adalah kunci rotasi, frekuensi, dan separuh pemrosesan sinyal.",
+      "keywords": "Apa itu bilangan kompleks? · Aritmetika kompleks · Bidang kompleks · Bentuk polar · Rumus Euler · Mengapa rumus Euler penting untuk ML · Hubungan dengan rotasi 2D · Phasor dan sinyal berputar · Akar kesatuan · Hubungan dengan DFT · Mengapa i bukan imajiner · Eksponensial kompleks vs fungsi trigonometri · Hubungan dengan transformer · Langkah 1: Class Complex · Langkah 2: Konversi polar dan rumus Euler · Langkah 3: Rotasi · Langkah 4: DFT dari aritmetika kompleks · Langkah 5: DFT invers · Langkah 6: Akar kesatuan"
+    },
+    "phases/01-math-foundations/20-fourier-transform": {
+      "name": "Transformasi Fourier",
+      "summary": "Setiap sinyal adalah jumlah gelombang sinus. Transformasi Fourier memberi tahu yang mana.",
+      "keywords": "Definisi DFT · Arti setiap koefisien · DFT invers · FFT: membuatnya cepat · Analisis spektral · Resolusi frekuensi · Teorema konvolusi · Windowing · Properti DFT · Hubungan dengan positional encoding · Hubungan dengan CNN · Spektrogram dan Short-Time Fourier Transform · Aliasing · Zero-padding tidak meningkatkan resolusi · Langkah 1: DFT dari nol · Langkah 2: DFT invers · Langkah 3: FFT (Cooley-Tukey) · Langkah 4: Helper analisis spektral"
+    },
+    "phases/01-math-foundations/21-graph-theory": {
+      "name": "Teori Graf untuk ML",
+      "summary": "Graf adalah struktur data untuk relasi. Jika datamu punya koneksi, kamu butuh teori graf.",
+      "keywords": "Graf: Node dan Edge · Matriks Ketetanggaan · Derajat · BFS dan DFS · Laplacian Graf · Properti Spektral · Message Passing · Konsep dan Aplikasi ML · Langkah 1: Class Graph dari nol · Langkah 2: BFS dan DFS · Langkah 3: Komponen terhubung dan eigenvalue Laplacian · Langkah 4: Spectral clustering · Langkah 5: Message passing · Analisis spektral numpy"
+    },
+    "phases/01-math-foundations/22-stochastic-processes": {
+      "name": "Proses Stokastik",
+      "summary": "Keacakan dengan struktur. Matematika di balik random walk, Markov chain, dan model difusi.",
+      "keywords": "Random Walk · Markov Chain · Hubungan dengan Language Model · Gerak Brown · Dinamika Langevin · MCMC: Markov Chain Monte Carlo · Proses Stokastik dalam AI · Langkah 1: Simulator random walk · Langkah 2: Markov chain · Langkah 3: Dinamika Langevin · Langkah 4: Metropolis-Hastings · numpy untuk matriks transisi · Koneksi ke framework nyata · Memverifikasi konvergensi Markov chain"
+    }
+  }
+}

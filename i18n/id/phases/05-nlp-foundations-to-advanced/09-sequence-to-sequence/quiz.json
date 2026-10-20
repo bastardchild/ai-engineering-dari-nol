@@ -1,0 +1,102 @@
+{
+  "lesson": "09-sequence-to-sequence",
+  "title": "Model Sequence-to-Sequence",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa peran encoder dalam model seq2seq gaya 2014?",
+      "options": [
+        "Menghasilkan token target",
+        "Melakukan beam search",
+        "Menghitung bobot attention",
+        "Membaca sumber dan menghasilkan vektor konteks berukuran tetap yang merangkumnya"
+      ],
+      "correct": 3,
+      "explanation": "RNN encoder memampatkan sumber menjadi hidden state akhir yang dipakai decoder."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa itu teacher forcing selama training seq2seq?",
+      "options": [
+        "Memberi label manual setiap langkah decoder",
+        "Menambahkan jaringan guru selama inferensi",
+        "Menggandakan batch size",
+        "Memberikan token sebelumnya dari ground truth (bukan prediksi model) sebagai input decoder"
+      ],
+      "correct": 3,
+      "explanation": "Teacher forcing menstabilkan training dengan memakai token sebelumnya yang benar; tanpanya error awal berantai."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa akurasi seq2seq dengan vektor konteks tetap turun seiring panjang input bertambah?",
+      "options": [
+        "Cross-entropy divergen",
+        "Token padding terakumulasi",
+        "Kosakata menjadi terlalu besar",
+        "Semua informasi tentang sumber harus muat dalam satu hidden state encoder berukuran tetap, yang kehilangan detail pada input panjang"
+      ],
+      "correct": 3,
+      "explanation": "Bottleneck vektor konteks tetap berarti input panjang tidak dapat diringkas tanpa kehilangan informasi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu exposure bias?",
+      "options": [
+        "Bias dari ketidakseimbangan kelas",
+        "Bias pada embedding encoder",
+        "Ketidaksepakatan anotator",
+        "Jurang train/inferensi karena dilatih pada token ground truth tetapi menghasilkan dari prediksi model sendiri saat inferensi"
+      ],
+      "correct": 3,
+      "explanation": "Model tidak pernah berlatih pulih dari kesalahannya sendiri selama training, sehingga error berantai saat inferensi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa beam search sering mengungguli decoding greedy untuk generasi?",
+      "options": [
+        "Beam search lebih cepat",
+        "Beam search menjaga top-k urutan parsial tetap hidup di setiap langkah alih-alih berkomitmen tak dapat dibatalkan pada satu token",
+        "Beam search menghindari exposure bias",
+        "Beam search menurunkan loss"
+      ],
+      "correct": 1,
+      "explanation": "Greedy berkomitmen per langkah; beam search menjelajahi beberapa hipotesis, lalu memilih yang lengkap terbaik."
+    },
+    {
+      "stage": "post",
+      "question": "Keluarga arsitektur mana yang menggantikan seq2seq RNN untuk tugas generasi umum?",
+      "options": [
+        "Naive Bayes",
+        "Graph neural network",
+        "CNN 1D",
+        "Model encoder-decoder Transformer (BART, T5, mBART, NLLB)"
+      ],
+      "correct": 3,
+      "explanation": "Encoder-decoder Transformer meninggalkan rekurensi dan kini mendominasi tugas generasi."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan scheduled sampling?",
+      "options": [
+        "Menambahkan noise acak ke embedding",
+        "Menurunkan rasio teacher forcing secara bertahap selama training sehingga model belajar pulih dari prediksinya sendiri",
+        "Mengurutkan ulang training set",
+        "Menjadwalkan penurunan learning rate"
+      ],
+      "correct": 1,
+      "explanation": "Scheduled sampling secara bertahap mencampurkan prediksi model untuk menutup jurang train/inferensi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa decoding greedy saja sering gagal untuk generasi yang menghadap pengguna?",
+      "options": [
+        "Ia selalu memilih <EOS> lebih dulu",
+        "Ia tidak dapat memakai embedding",
+        "Greedy dapat berulang atau berputar dan tidak dapat mundur dari pilihan token yang baik secara lokal tetapi buruk secara global",
+        "Ia memerlukan lebih banyak memori"
+      ],
+      "correct": 2,
+      "explanation": "Pilihan per langkah yang tak dapat dibatalkan pada decoding greedy menyebabkan loop dan pengulangan tanpa beam search atau sampling."
+    }
+  ]
+}

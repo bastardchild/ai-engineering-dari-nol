@@ -1,0 +1,90 @@
+{
+  "lesson": "36-scope-contracts",
+  "title": "Kontrak Scope dan Batas Tugas",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa scope creep disebut mode kegagalan yang paling kurang dipantau?",
+      "options": [
+        "Ia terlalu langka untuk dipantau",
+        "Test menangkapnya otomatis",
+        "Ia membuat agent crash dengan berisik",
+        "Setiap sentuhan punya alasan masuk akal saat itu; bersama-sama mereka membentuk perubahan yang berbeda dari yang di-review"
+      ],
+      "correct": 3,
+      "explanation": "Agent menarasikan setiap langkah dengan itikad baik; total yang diam-diam itulah creep-nya."
+    },
+    {
+      "stage": "pre",
+      "question": "Field kontrak mana yang disebut pelajaran sebagai setengah dari kontrak?",
+      "options": [
+        "approvals_required",
+        "forbidden_files (ruang negatif)",
+        "goal",
+        "task_id"
+      ],
+      "correct": 1,
+      "explanation": "Kontrak tanpa forbidden_files tidak lengkap; ruang negatif adalah setengah dari kontrak."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mem-pin allowed/forbidden ke glob alih-alih path mentah?",
+      "options": [
+        "Glob lebih baik dalam enkripsi",
+        "Glob lebih cepat",
+        "Path mentah tidak dapat diserialisasi JSON",
+        "Repo nyata memindahkan file; glob bertahan melalui refactor antar sesi"
+      ],
+      "correct": 3,
+      "explanation": "Glob (app/**/*.py) menjaga kontrak tetap valid melalui refactor."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan pola 'violation budget'?",
+      "options": [
+        "Menagih per pelanggaran",
+        "Mengizinkan slip scope kecil sebagai peringatan dalam budget; hanya kelebihannya memicu penolakan merge — pembeda antara gate yang dipakai dan yang dinonaktifkan",
+        "Membatasi laju panggilan model",
+        "Menetapkan budget bulanan untuk agent"
+      ],
+      "correct": 1,
+      "explanation": "agent-guardrails memakai violationBudget agar gate dapat dipakai dalam alur sehari-hari."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilaporkan praktisi specsmaxxing?",
+      "options": [
+        "Latency turun 90%",
+        "Biaya naik 5x",
+        "Rabbit-hole rate turun dari 52% ke 21% dalam tiga minggu tanpa mengubah agent; kontraknya yang bekerja, bukan modelnya",
+        "Test melambat"
+      ],
+      "correct": 2,
+      "explanation": "Kontrak scope dalam YAML sebelum memanggil agent memangkas separuh rabbit-hole rate tanpa perubahan model."
+    },
+    {
+      "stage": "post",
+      "question": "Apa semantik merge multi-kontrak (least privilege)?",
+      "options": [
+        "Kontrak terakhir menang",
+        "Iris allowed_files; gabung forbidden_files; min time_budget; akumulasi approval; deny-all menempel; merge None diserahkan ke sisi lain",
+        "Tie-break acak",
+        "Kontrak pertama menang"
+      ],
+      "correct": 1,
+      "explanation": "Merge least-privilege: irisan pada allow, gabungan pada forbid, waktu paling ketat, akumulasi approval."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa budget waktu dan jaringan juga masuk kontrak?",
+      "options": [
+        "Penyedia mewajibkannya",
+        "Wall clock dan akses host eksternal adalah dimensi scope; glob file saja perlu tetapi tidak cukup",
+        "Mereka membuat JSON lebih kecil",
+        "Mereka diwajibkan Apache 2.0"
+      ],
+      "correct": 1,
+      "explanation": "time_budget_minutes dan allowlist network_egress adalah dimensi scope di atas glob file."
+    }
+  ]
+}

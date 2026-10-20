@@ -1,0 +1,78 @@
+{
+  "lesson": "28-alignment-research-ecosystem",
+  "title": "Ekosistem Riset Alignment - MATS, Redwood, Apollo, METR",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan MATS, dan seberapa besar skalanya?",
+      "options": [
+        "ML Alignment & Theory Scholars: program mentorship riset dengan 527+ scholar sejak 2021, 180+ makalah, dan sekitar 80% alumni pra-2025 bekerja di bidang keselamatan/keamanan",
+        "Layanan pelatihan reward model",
+        "Institut keselamatan frontier milik EU",
+        "Badan regulasi yang menerbitkan lisensi ekspor AI"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Agenda mana yang diperkenalkan Redwood Research?",
+      "options": [
+        "Differential privacy untuk LLM",
+        "Watermarking lewat SynthID",
+        "Constitutional AI",
+        "AI Control (Pelajaran 10): keselamatan meski ada subversi lewat protokol U / T / H"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Organisasi mana yang menulis makalah In-Context Scheming dan kerangka 'Towards Safety Cases for AI Scheming'?",
+      "options": [
+        "Eleos AI",
+        "METR",
+        "Apollo Research",
+        "MATS"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa gaya metodologis khas METR dalam ekosistem alignment?",
+      "options": [
+        "Adversarial training model dasar",
+        "Inferensi terverifikasi dengan atestasi hardware",
+        "Red-teaming closed-source saja",
+        "Evaluasi kapabilitas berbasis tugas, studi time-horizon tugas otonom, dan sintesis kerangka (misalnya 'Common Elements of Frontier AI Safety Policies')"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kepenulisan bersama multi-organisasi penting untuk klaim keselamatan?",
+      "options": [
+        "Lab yang mengevaluasi modelnya sendiri punya konflik kepentingan struktural; evaluator eksternal (Redwood, Apollo, METR, Eleos, UK AISI) dapat mengangkat dan memvalidasi mode kegagalan yang mungkin kurang dilaporkan lab",
+        "Itu meningkatkan jumlah sitasi",
+        "Itu diwajibkan EU AI Act",
+        "Itu mempercepat publikasi"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa kontribusi utama Eleos AI Research bagi ekosistem?",
+      "options": [
+        "Penyusunan hukum data pelatihan California",
+        "Standar watermarking",
+        "Evaluasi model welfare pra-deployment (Pelajaran 19), termasuk asesmen welfare eksternal di system card Claude Opus 4",
+        "Benchmark AI Control"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

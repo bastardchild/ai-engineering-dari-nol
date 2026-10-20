@@ -1,0 +1,66 @@
+{
+  "lesson": "06-instruction-tuning-sft",
+  "title": "Instruction Tuning (SFT)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan mendasar antara base language model dan model instruction-tuned?",
+      "options": [
+        "Model instruction-tuned lebih besar",
+        "Base model lebih cepat",
+        "Keduanya punya arsitektur berbeda",
+        "Base model melanjutkan pola teks; model instruction-tuned mengikuti instruksi dan menjawab pertanyaan"
+      ],
+      "correct": 3,
+      "explanation": "Base model yang dilatih dengan prediksi token berikutnya melanjutkan pola teks. Tanyai sebuah pertanyaan dan ia mungkin menghasilkan pertanyaan lain. SFT mengajarkannya menghasilkan jawaban dengan melatih pada pasangan (instruction, response)."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa tujuan masking loss pada token non-assistant selama SFT?",
+      "options": [
+        "Untuk mengurangi penggunaan memori",
+        "Untuk mempercepat training",
+        "Untuk mencegah overfitting",
+        "Untuk melatih model hanya menghasilkan respons, bukan menghafal format instruksi atau system prompt"
+      ],
+      "correct": 3,
+      "explanation": "Selama SFT, kamu ingin model belajar cara merespons, bukan cara mereproduksi instruksi. Loss masking mengatur loss ke 0 untuk token system/user sehingga gradien hanya berasal dari token respons assistant."
+    },
+    {
+      "stage": "post",
+      "question": "Format apa yang biasanya dipakai data training SFT?",
+      "options": [
+        "Pasangan key-value",
+        "Chat template dengan peran system, user, dan assistant yang ditandai special token",
+        "Dokumen teks mentah",
+        "Query dan hasil SQL"
+      ],
+      "correct": 1,
+      "explanation": "Data SFT memakai format chat terstruktur: system prompt yang mengatur perilaku, instruksi user, dan respons assistant. Special token menandai batas peran sehingga model mempelajari struktur percakapan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa model SFT bisa menghasilkan perplexity lebih rendah pada benchmark tetapi kualitas percakapan lebih buruk?",
+      "options": [
+        "Benchmark-nya salah",
+        "SFT mengoptimalkan pattern matching pada contoh training, bukan penilaian kualitas bernuansa yang dipedulikan manusia -- itu memerlukan RLHF/DPO",
+        "Learning rate-nya salah",
+        "Modelnya terlalu kecil"
+      ],
+      "correct": 1,
+      "explanation": "SFT mengajarkan model mengikuti format dan menghasilkan respons yang masuk akal. Ia tidak mengajarkan respons mana yang lebih baik ketika ada beberapa opsi valid. Penyelarasan preferensi manusia (RLHF/DPO) menjembatani celah ini."
+    },
+    {
+      "stage": "post",
+      "question": "Berapa banyak pasangan instruksi-respons berkualitas tinggi yang biasanya dibutuhkan untuk SFT yang efektif?",
+      "options": [
+        "10.000 hingga 100.000 contoh berkualitas tinggi",
+        "Kurang dari 100",
+        "Miliaran",
+        "Jutaan"
+      ],
+      "correct": 0,
+      "explanation": "SFT ternyata hemat data. Studi menunjukkan 10K-100K contoh berkualitas tinggi (seperti dataset Alpaca atau LIMA) dapat secara efektif mengajarkan instruction following. Kualitas jauh lebih penting daripada kuantitas."
+    }
+  ]
+}

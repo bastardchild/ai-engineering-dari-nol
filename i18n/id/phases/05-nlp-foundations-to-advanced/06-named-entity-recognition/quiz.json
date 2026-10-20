@@ -1,0 +1,102 @@
+{
+  "lesson": "06-named-entity-recognition",
+  "title": "Named Entity Recognition",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu BIO tagging?",
+      "options": [
+        "Representasi pohon dari entitas",
+        "Skema biner entitas vs bukan entitas",
+        "Label per token: B-TYPE untuk awal entitas, I-TYPE untuk bagian dalam, O untuk luar",
+        "Gaya tokenisasi"
+      ],
+      "correct": 2,
+      "explanation": "BIO mengubah ekstraksi span menjadi klasifikasi token dengan prefiks B/I/O."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa gazetteer berbasis aturan rapuh dalam NER produksi?",
+      "options": [
+        "Mereka lambat",
+        "Mereka tidak dapat menangani entitas multi-token",
+        "Mereka tidak memiliki cakupan pada entitas baru dan tidak dapat mendisambiguasi (misalnya Apple buah vs perusahaan)",
+        "Mereka memerlukan GPU"
+      ],
+      "correct": 2,
+      "explanation": "Gazetteer dapat mencocokkan string yang diketahui tetapi tidak dapat mendisambiguasi makna atau menggeneralisasi ke nama yang belum pernah dilihat."
+    },
+    {
+      "stage": "check",
+      "question": "Apa keunggulan utama CRF dibanding HMM untuk NER?",
+      "options": [
+        "CRF menghindari algoritma Viterbi",
+        "CRF bersifat diskriminatif dan dapat mencampur fitur arbitrer (bentuk, kapitalisasi, tetangga)",
+        "CRF lebih cepat",
+        "CRF tidak pernah membutuhkan data training"
+      ],
+      "correct": 1,
+      "explanation": "CRF bersifat diskriminatif dan memungkinkanmu mengondisikan fitur kaya yang tumpang tindih."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam arsitektur BiLSTM-CRF, apa peran layer CRF?",
+      "options": [
+        "Melakukan tokenization",
+        "Menggantikan embedding",
+        "Melakukan pretraining LSTM",
+        "Menegakkan urutan tag BIO yang valid dengan memodelkan transisi tag-ke-tag di atas emisi LSTM"
+      ],
+      "correct": 3,
+      "explanation": "CRF di atas fitur LSTM memodelkan dependensi antar label dan menyingkirkan urutan ilegal."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa NER harus dievaluasi dengan F1 tingkat entitas, bukan F1 tingkat token?",
+      "options": [
+        "Span prediksi harus cocok persis dengan span sebenarnya; F1 tingkat token melebih-lebihkan akurasi dengan menghitung kecocokan parsial",
+        "F1 tingkat entitas diwajibkan oleh HuggingFace",
+        "F1 tingkat token tidak dapat menangani BIO",
+        "F1 tingkat entitas lebih mudah dihitung"
+      ],
+      "correct": 0,
+      "explanation": "Exact-match span adalah metrik yang bermakna; F1 tingkat token menggelembungkan skor melalui tumpang tindih parsial."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan aggregation_strategy='simple' di pipeline NER HuggingFace?",
+      "options": [
+        "Mengembalikan hanya entitas paling yakin",
+        "Menggabungkan token B-X dan I-X yang berurutan menjadi satu span",
+        "Mengubah output menjadi huruf kecil",
+        "Melewati tokenization"
+      ],
+      "correct": 1,
+      "explanation": "Ia menggabungkan token BIO berurutan dari jenis yang sama menjadi entitas tingkat span."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa BIO standar gagal pada entitas bersarang?",
+      "options": [
+        "BIO adalah skema per token yang datar dan tidak dapat mengekspresikan dua span bertumpuk dari jenis berbeda",
+        "BIO memerlukan transformer",
+        "BIO tidak dapat merepresentasikan entitas multi-token",
+        "BIO membuang label jenis"
+      ],
+      "correct": 0,
+      "explanation": "BIO menetapkan satu label per token; span bersarang memerlukan model multi-pass atau berbasis span."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan NER klasik (CRF atau BiLSTM-CRF) masih mengalahkan LLM pada 2026?",
+      "options": [
+        "Pada narasi domain terbuka",
+        "Pada entitas bersarang",
+        "Setiap kali input dalam bahasa Inggris",
+        "Di bawah anggaran latensi ketat, label melimpah, ontologi stabil, atau batasan regulasi non-generatif"
+      ],
+      "correct": 3,
+      "explanation": "NER klasik menang pada latensi, rezim data berlabel, ontologi tetap, dan batasan on-prem."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan temperature < 1.0 pada distribusi output model bahasa?",
+      "options": [
+        "Menghapus semua token kecuali yang teratas",
+        "Tidak berpengaruh pada output",
+        "Membuat distribusi lebih seragam (lebih acak)",
+        "Mempertajam distribusi, membuat token dengan probabilitas tertinggi lebih mungkin"
+      ],
+      "correct": 3,
+      "explanation": "Temperature < 1.0 membagi logit dengan angka kurang dari 1, yang memperkuat perbedaan antar logit. Setelah softmax, token dengan probabilitas tertinggi mendapat porsi lebih besar. Temperature mendekati 0 memberi decoding greedy (argmax)."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan utama antara top-k dan top-p (nucleus) sampling?",
+      "options": [
+        "Top-k lebih cepat daripada top-p",
+        "Top-k mempertahankan jumlah token tetap; top-p mempertahankan jumlah variabel berdasarkan probabilitas kumulatif",
+        "Top-p hanya bekerja dengan temperature = 1.0",
+        "Top-k bekerja pada logit sedangkan top-p bekerja pada probabilitas"
+      ],
+      "correct": 1,
+      "explanation": "Top-k selalu mempertahankan tepat k token tanpa memandang distribusi probabilitas. Top-p secara adaptif mempertahankan himpunan token terkecil yang probabilitas kumulatifnya melebihi p. Saat model yakin, top-p mempertahankan sedikit token; saat tidak yakin, ia mempertahankan banyak."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu tidak dapat melakukan backpropagation melalui operasi sampling standar z ~ N(mu, sigma^2)?",
+      "options": [
+        "Operasi sampling bersifat non-deterministik dan tidak memiliki turunan yang terdefinisi baik terhadap mu dan sigma",
+        "PyTorch tidak mendukung distribusi normal",
+        "Distribusi normal tidak memiliki gradient",
+        "Gradient selalu tepat nol"
+      ],
+      "correct": 0,
+      "explanation": "Sampling memperkenalkan diskontinuitas stokastik -- kamu tidak dapat menghitung d(sample)/d(mu) untuk pengambilan acak. Reparameterization trick menyelesaikannya dengan menulis z = mu + sigma * epsilon (dengan epsilon ~ N(0,1)), membuat z fungsi deterministik dan terdiferensiasi dari mu dan sigma."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam Metropolis-Hastings MCMC, apa yang terjadi jika standar deviasi proposal diatur terlalu besar?",
+      "options": [
+        "Rantai konvergen lebih cepat karena mengambil langkah lebih besar",
+        "Sebagian besar proposal mendarat di wilayah berprobabilitas rendah dan ditolak, sehingga rantai hampir tidak bergerak",
+        "Periode burn-in menjadi nol",
+        "Distribusi stasioner berubah menjadi distribusi seragam"
+      ],
+      "correct": 1,
+      "explanation": "Dengan standar deviasi proposal besar, titik yang diusulkan jauh dari posisi saat ini dan cenderung mendarat di wilayah berprobabilitas rendah. Ini ditolak, membuat rantai tertahan di titik saat ini. Tingkat penerimaan optimal sekitar 23% untuk proposal Gaussian berdimensi tinggi."
+    },
+    {
+      "stage": "post",
+      "question": "Dalam rejection sampling, apa yang terjadi pada tingkat penerimaan saat dimensi distribusi target meningkat?",
+      "options": [
+        "Ia turun eksponensial karena sebagian besar volume proposal ditolak",
+        "Ia tetap konstan terlepas dari dimensi",
+        "Ia meningkat karena ada lebih banyak dimensi untuk menerima",
+        "Ia mendekati 50% dalam semua kasus"
+      ],
+      "correct": 0,
+      "explanation": "Dalam dimensi tinggi, volume distribusi proposal yang tumpang tindih dengan distribusi target menyusut secara eksponensial. Batas M tumbuh, dan tingkat penerimaan (1/M) turun eksponensial. Ini curse of dimensionality untuk rejection sampling."
+    }
+  ]
+}

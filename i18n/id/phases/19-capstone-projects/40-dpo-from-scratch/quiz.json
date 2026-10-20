@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/40-dpo-from-scratch",
+  "title": "Direct Preference Optimization dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca: di bawah model preferensi Bradley-Terry, probabilitas manusia lebih memilih completion y_w daripada y_l diberi prompt x adalah sigmoid(r(x, y_w) - r(x, y_l)). Apa implikasinya?",
+      "options": [
+        "Hanya selisih reward yang penting; fungsi apa pun yang ditambahkan ke r(x, y_w) dan r(x, y_l) saling meniadakan.",
+        "Kamu harus mencocokkan r sebelum melatih policy.",
+        "Bradley-Terry membutuhkan konstanta normalisasi Z(x) yang tidak hilang.",
+        "Sigmoid tidak kompatibel dengan maximum likelihood."
+      ],
+      "correct": 0,
+      "explanation": "Preferensi Bradley-Terry hanya bergantung pada selisih reward. Apa pun yang sama untuk kedua completion saling meniadakan. Ini alasan struktural DPO dapat menghindari reward model eksplisit: suku khusus prompt dalam formula policy optimal saling meniadakan."
+    },
+    {
+      "stage": "check",
+      "question": "Loss DPO untuk satu triple adalah -log sigmoid(beta * ((logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref))). Jika logp_w_pol = logp_w_ref dan logp_l_pol = logp_l_ref, loss sama dengan?",
+      "options": [
+        "beta.",
+        "-1.",
+        "log(2).",
+        "0."
+      ],
+      "correct": 2,
+      "explanation": "Kedua selisih nol, jadi argumen sigmoid nol, nilai sigmoid 0.5, dan -log(0.5) = log(2). Ini loss saat policy belum bergerak sama sekali dari referensi."
+    },
+    {
+      "stage": "check",
+      "question": "Selama training DPO, log-probability chosen di bawah model referensi berubah antar epoch karena policy menyimpang darinya. Benar atau salah?",
+      "options": [
+        "Benar hanya saat beta non-nol.",
+        "Salah kecuali gradien dinonaktifkan eksplisit dengan no_grad.",
+        "Benar: referensi ikut bergeser saat policy diperbarui.",
+        "Salah: referensi dibekukan; log-prob referensi dihitung sekali dan dipakai ulang."
+      ],
+      "correct": 3,
+      "explanation": "Referensi dibekukan selama seluruh run DPO. Parameternya tidak pernah diperbarui. Implementasi mengambil snapshot log-prob referensi sekali atau membungkus forward pass referensi dalam no_grad dengan requires_grad=False pada parameternya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengambil gradien L_DPO terhadap logp_w_pol (log-probability policy untuk completion terpilih), tandanya?",
+      "options": [
+        "Positif (loss naik saat log-prob chosen naik).",
+        "Nol (loss independen dari log-prob policy).",
+        "Tak tentu (bergantung pada referensi).",
+        "Negatif (loss turun saat log-prob chosen naik)."
+      ],
+      "correct": 3,
+      "explanation": "Gradiennya -beta * (1 - sigmoid(z)), yang non-positif. Menaikkan log-probability chosen menurunkan loss, persis sinyal training yang kita inginkan."
+    },
+    {
+      "stage": "post",
+      "question": "Pada fixture kamu loss DPO turun tetapi policy mulai lebih menyukai completion pendek secara menyeluruh, bahkan saat yang pendek lebih buruk. Penyebab paling mungkin?",
+      "options": [
+        "Length bias: urutan lebih panjang mengakumulasi lebih banyak suku log-probability (masing-masing negatif), jadi sum-of-log-probs menghukum panjang secara struktural.",
+        "Optimizer memakai learning rate salah.",
+        "Referensi tidak dibekukan dengan benar.",
+        "Beta terlalu rendah."
+      ],
+      "correct": 0,
+      "explanation": "Sum-of-log-probabilities bias ke urutan lebih pendek karena setiap token tambahan menambah suku log-probability negatif. Perbaikan standar adalah menormalisasi log-prob dengan panjang completion saat training dan evaluasi."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu ingin mengganti loss sigmoid + log dengan varian IPO (z - 1)^2. Apa efek praktisnya pada dinamika training?",
+      "options": [
+        "Itu menghapus kebutuhan model referensi sepenuhnya.",
+        "Itu tidak saturasi seperti loss sigmoid, yang lebih bertahan pada label preferensi berisik.",
+        "Itu tidak membutuhkan parameter beta.",
+        "Itu setara secara matematis di semua titik."
+      ],
+      "correct": 1,
+      "explanation": "Loss kuadrat IPO tidak saturasi seperti sigmoid, yang membantu saat label preferensi berisik atau sebagian triple salah label. Secara empiris ia mengurangi over-optimisation pada dataset preferensi kecil."
+    }
+  ]
+}

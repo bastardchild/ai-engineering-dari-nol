@@ -1,0 +1,78 @@
+{
+  "lesson": "14-prompt-semantic-caching",
+  "title": "Ekonomi Prompt Caching dan Semantic Caching",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan antara semantic caching L1 dan prompt/prefix caching L2?",
+      "options": [
+        "L2 menyimpan embedding; L1 menyimpan KV attention",
+        "L1 di sisi provider dan L2 di sisi klien",
+        "L1 dan L2 sama saja",
+        "L1 melewati LLM sepenuhnya saat ada hit kemiripan embedding; L2 memakai ulang KV attention di provider untuk prefix yang berulang"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mekanisme Anthropic mana yang menandai blok sebagai bisa di-cache untuk prompt caching L2?",
+      "options": [
+        "Atribut cache_control eksplisit pada blok permintaan",
+        "Sufiks nama file di definisi tool",
+        "Ambang panjang prompt implisit",
+        "Endpoint /caches terpisah"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana anti-pattern paralelisasi membengkakkan tagihan?",
+      "options": [
+        "Permintaan paralel melewati batching",
+        "Paralelisasi memicu biaya guardrail per permintaan",
+        "Semua permintaan paralel otomatis berbagi satu entri cache",
+        "N permintaan paralel dengan prefix sama tiba sebelum penulisan cache pertama selesai, jadi masing-masing membayar premi tulis dan tidak mendapat diskon"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa anti-pattern konten dinamis pada prefix yang bisa di-cache?",
+      "options": [
+        "Menyertakan konten yang berubah setiap permintaan (waktu saat ini sampai menit, ID permintaan, urutan contoh acak) di dalam prefix yang bisa di-cache, sehingga hit rate mati",
+        "Memakai system prompt terlalu pendek",
+        "Selalu streaming respons",
+        "Menaruh skema tool di prefix"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana batch + input ter-cache bisa ditumpuk untuk kerja semalam guna memangkas biaya?",
+      "options": [
+        "Batch tidak kompatibel dengan caching",
+        "Caching menonaktifkan kelayakan batch",
+        "Batch hanya menghemat biaya output",
+        "API batch memberi diskon 50%; input ter-cache menambah sekitar 10x lagi; digabung, pipeline semalam turun ke ~10% biaya sinkron tanpa cache"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa kata pelajaran ini tentang klaim \"akurasi 95%\" pada semantic cache?",
+      "options": [
+        "95% berarti kamu harus mengharapkan 95% cache hit",
+        "95% adalah hit rate cache default OpenAI",
+        "95% adalah baseline hit rate yang didokumentasikan vendor",
+        "95% merujuk pada kebenaran kecocokan, bukan hit rate; hit rate produksi yang dilaporkan berkisar dari ~10% (chat terbuka) sampai ~70% (FAQ terstruktur)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

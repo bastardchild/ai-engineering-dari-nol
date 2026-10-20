@@ -1,0 +1,90 @@
+{
+  "lesson": "01-managed-llm-platforms",
+  "title": "Platform LLM Terkelola — Bedrock, Vertex AI, Azure OpenAI",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum pelajaran ini, platform mana yang pertama kamu pilih jika pelanggan butuh Claude, Llama, dan Cohere di balik satu API?",
+      "options": [
+        "AWS Bedrock",
+        "Vertex AI",
+        "API Anthropic langsung",
+        "Azure OpenAI Service"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Taruhan hyperscaler mana yang digambarkan sebagai kemitraan eksklusif, bukan marketplace?",
+      "options": [
+        "Vertex AI",
+        "AWS Bedrock",
+        "OCI Generative AI",
+        "Azure OpenAI"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa selisih TTFT median terukur antara Azure OpenAI (dengan PTU) dan Bedrock on-demand pada setara Llama 3.1 405B?",
+      "options": [
+        "~250 ms",
+        "~5 ms",
+        "~100 ms",
+        "~25 ms"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Fitur Bedrock 2025 mana yang memberi atribusi biaya per produk paling bersih secara native di CloudWatch?",
+      "options": [
+        "Bedrock Agents",
+        "Bedrock Knowledge Bases",
+        "Application Inference Profiles",
+        "Bedrock Guardrails"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Pada kisaran utilisasi berkelanjutan berapa PTU Azure biasanya mencapai titik impas dibanding on-demand?",
+      "options": [
+        "40-60%",
+        "80-95%",
+        "5-10%",
+        "20-30%"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kebijakan 2026 yang direkomendasikan pelajaran ini adalah minimal dua provider untuk panggilan LLM yang kritis bagi produk?",
+      "options": [
+        "Hyperscaler menolak menandatangani BAA kecuali kamu juga memakai pesaing",
+        "Harga satu vendor selalu lebih mahal",
+        "Itu diwajibkan oleh SOC 2 Type II",
+        "Kepemimpinan model frontier berganti tiap bulan, jadi lock-in satu vendor menutup aksesmu ke dua pertiga frontier"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Pernyataan mana yang paling tepat menggambarkan permukaan FinOps di ketiga platform?",
+      "options": [
+        "Ketiganya menyediakan atribusi per permintaan yang identik",
+        "Bedrock paling bersih secara native, Vertex paling fleksibel lewat BigQuery, Azure paling buram tanpa instrumentasi",
+        "Vertex sama sekali tidak punya permukaan atribusi",
+        "Azure paling bersih secara native, Bedrock buram"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

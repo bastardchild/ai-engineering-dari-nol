@@ -1,0 +1,78 @@
+{
+  "lesson": "21-fairness-criteria-group-individual-counterfactual",
+  "title": "Kriteria Fairness - Grup, Individu, Counterfactual",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mana yang paling tepat untuk definisi demographic parity bagi grup A=a dan A=a'?",
+      "options": [
+        "Nilai prediktif yang setara antar grup",
+        "Tingkat true-positive dan false-positive yang setara antar grup",
+        "Tingkat penerimaan setara: P(Y=1 | A=a) = P(Y=1 | A=a')",
+        "Konstanta Lipschitz setara antar grup"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa kata hasil impossibility Chouldechova / Kleinberg-Mullainathan-Raghavan 2017?",
+      "options": [
+        "Pada base rate yang tidak setara, demographic parity, equalized odds, dan conditional use accuracy equality tidak bisa berlaku semua sekaligus",
+        "Individual fairness menyiratkan counterfactual fairness untuk DAG apa pun",
+        "Counterfactual fairness menyiratkan demographic parity",
+        "Group fairness selalu bisa dicapai dengan re-weighting"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dwork et al. 2012 mendefinisikan individual fairness lewat:",
+      "options": [
+        "DAG kausal dengan intervensi atribut sensitif",
+        "Akurasi setara antar grup terlindungi",
+        "Kondisi Lipschitz pada peta keputusan relatif terhadap metrik kemiripan spesifik tugas, sehingga individu serupa mendapat keputusan serupa",
+        "Demographic parity pada level individu"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Counterfactual fairness (Kusner et al. 2017) memerlukan:",
+      "options": [
+        "Konstanta Lipschitz setara untuk semua grup",
+        "Hanya statistik level grup",
+        "Tanpa asumsi kausal",
+        "DAG kausal; keputusan tidak berubah saat atribut sensitif individu diubah secara counterfactual"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa backtracking counterfactual (arXiv:2401.13935) penting untuk kepatuhan hukum?",
+      "options": [
+        "Itu menggantikan metrik bias berbasis embedding",
+        "Itu menghilangkan kebutuhan model kausal apa pun",
+        "Itu membuktikan teorema impossibility salah",
+        "Alih-alih mengintervensi atribut terlindungi (yang bermasalah secara hukum), itu bertanya kombinasi fitur aktual mana yang akan menghasilkan hasil counterfactual"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang diargumentasikan rekonsiliasi filosofis ICLR Blogposts 2024?",
+      "options": [
+        "Dengan graf kausal eksplisit, memenuhi ukuran group-fairness tertentu menyiratkan counterfactual fairness, jadi pertentangan yang tampak antar keluarga sebagian merupakan artefak dari membiarkan model kausal implisit",
+        "Group dan counterfactual fairness tidak berkaitan",
+        "Hanya individual fairness yang bisa dibenarkan",
+        "Teorema impossibility diselesaikan dengan re-weighting"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

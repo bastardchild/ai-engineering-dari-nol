@@ -1,0 +1,48 @@
+{
+  "lesson": "46-turn-feedback-into-system",
+  "title": "Ubah Umpan Balik Menjadi Sistem",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diungkap koreksi agent yang berulang?",
+      "options": ["Kontrol yang hilang atau lemah dalam sistem kerja", "Alasan untuk melewati test", "Kebutuhan akan riwayat chat lebih banyak", "Hanya model yang lemah"],
+      "correct": 0,
+      "explanation": "Koreksi adalah observasi tentang test, batas, contoh, tool, atau keputusan yang hilang."
+    },
+    {
+      "stage": "check",
+      "question": "Di mana koreksi regresi harus menjadi durable?",
+      "options": ["Prompt lebih panjang", "Test atau evaluasi", "Model baru", "Catatan rapat"],
+      "correct": 1,
+      "explanation": "Pembuktian yang dapat dieksekusi mencegah hasil salah yang sama kembali diam-diam."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa cari akar masalah sebelum menulis aturan?",
+      "options": ["Itu menghapus kebutuhan bukti", "Aturan membutuhkan kutipan", "Itu menghindari semua kompleksitas", "Gejala bisa muncul dari kontrol yang hilang berbeda"],
+      "correct": 3,
+      "explanation": "Aturan yang hanya berdasarkan gejala gagal saat penyebab sama muncul dalam bentuk lain."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan koreksi sekali jalan membenarkan kontrol permanen?",
+      "options": ["Selalu", "Jangan pernah", "Saat pengulangan atau konsekuensi membenarkan kompleksitas yang bertahan", "Hanya setelah rilis"],
+      "correct": 2,
+      "explanation": "Ratchet harus mempertahankan pertimbangan bermakna tanpa menumpuk setiap preferensi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa memberi fingerprint pada kontrol yang dipromosikan?",
+      "options": ["Untuk menyembunyikan kepemilikan", "Untuk desain visual", "Untuk menggantikan verifikasi", "Untuk meruntuhkan pelajaran berulang tanpa kehilangan penyebab yang berbeda"],
+      "correct": 3,
+      "explanation": "Identitas stabil mencegah kontrol yang sama ditambahkan berulang kali."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa setiap kontrol membutuhkan pemeriksaan pensiun?",
+      "options": ["Kontrol bisa menjadi basi, bertentangan, atau tergantikan", "Agent tidak menyukai instruksi", "Test tidak dapat bertahan", "Semua aturan kedaluwarsa setiap hari"],
+      "correct": 0,
+      "explanation": "Sistem kerja harus tetap minimal dan terkini, bukan sekadar menumpuk kebijakan."
+    }
+  ]
+}

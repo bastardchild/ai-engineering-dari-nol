@@ -1,0 +1,102 @@
+{
+  "lesson": "13-question-answering",
+  "title": "Sistem Question Answering",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diprediksi QA ekstraktif?",
+      "options": [
+        "Indeks token awal dan akhir span jawaban dalam sebuah passage",
+        "ID passage yang diambil",
+        "Jawaban bahasa alami yang dihasilkan",
+        "Hanya skor keyakinan"
+      ],
+      "correct": 0,
+      "explanation": "QA ekstraktif mengeluarkan span passage yang berisi jawaban."
+    },
+    {
+      "stage": "pre",
+      "question": "Dua komponen apa yang mendefinisikan pipeline RAG dasar?",
+      "options": [
+        "Tokenizer dan POS tagger",
+        "Encoder dan decoder yang dilatih bersama",
+        "Reranker dan penerjemah",
+        "Retriever (menemukan passage relevan) dan reader (mengekstrak atau menghasilkan jawaban)"
+      ],
+      "correct": 3,
+      "explanation": "RAG = retriever (menemukan konteks relevan) plus reader (menjawab darinya)."
+    },
+    {
+      "stage": "check",
+      "question": "Pada SQuAD, apa yang diukur Exact Match (EM)?",
+      "options": [
+        "F1 tingkat token",
+        "Apakah prediksi cocok persis dengan referensi setelah normalisasi (huruf kecil, buang tanda baca, hapus artikel)",
+        "Edit distance",
+        "Tumpang tindih per kata"
+      ],
+      "correct": 1,
+      "explanation": "EM adalah kesetaraan ketat setelah langkah normalisasi yang ditentukan; kecocokan parsial mendapat nol."
+    },
+    {
+      "stage": "check",
+      "question": "Apa tambahan deepset/roberta-base-squad2 dibanding model SQuAD 1.1?",
+      "options": [
+        "Context window lebih besar",
+        "Dukungan multibahasa",
+        "Retrieval lintas bahasa",
+        "Dilatih pada pertanyaan tak terjawab sehingga model dapat memprediksi jawaban null"
+      ],
+      "correct": 3,
+      "explanation": "SQuAD 2.0 menyertakan item tak terjawab; model yang dilatih padanya dapat memprediksi 'tidak ada jawaban'."
+    },
+    {
+      "stage": "check",
+      "question": "Dimensi RAGAS mana yang secara khusus menyasar halusinasi?",
+      "options": [
+        "Context precision",
+        "Answer relevance",
+        "Faithfulness, diukur dengan entailment NLI antara klaim jawaban dan konteks yang diambil",
+        "Context recall"
+      ],
+      "correct": 2,
+      "explanation": "Faithfulness memeriksa setiap klaim jawaban terhadap konteks yang diambil melalui entailment NLI."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa kamu harus mengukur retrieval recall sebelum mengevaluasi akurasi reader?",
+      "options": [
+        "Latensi reader bergantung padanya",
+        "Jika passage yang benar tidak ada di top-k, reader tidak dapat berhasil sebaik apa pun ia",
+        "Recall menentukan ROUGE",
+        "Diwajibkan oleh transformers"
+      ],
+      "correct": 1,
+      "explanation": "Reader tidak dapat menjawab ketika passage yang tepat hilang; retrieval recall membatasi kinerja reader."
+    },
+    {
+      "stage": "post",
+      "question": "Pola prompt mana yang mengurangi halusinasi dalam generasi RAG?",
+      "options": [
+        "Menghapus pertanyaan",
+        "Menyertakan lebih banyak passage",
+        "Meminta model menjadi kreatif",
+        "Memberi tahu model untuk menjawab hanya dari konteks yang disediakan dan membalas 'Saya tidak tahu' ketika konteks tidak memadai"
+      ],
+      "correct": 3,
+      "explanation": "Grounding + instruksi penolakan eksplisit memangkas tingkat halusinasi secara substansial."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan QA ekstraktif masih lebih disukai daripada RAG generatif pada 2026?",
+      "options": [
+        "Domain teregulasi (hukum, medis, audit) di mana kutipan literal dari sumber otoritatif diwajibkan",
+        "Trivia domain terbuka",
+        "QA percakapan",
+        "Dukungan multibahasa"
+      ],
+      "correct": 0,
+      "explanation": "QA ekstraktif memberikan kutipan kata demi kata dari korpus otoritatif, yang dituntut konteks kepatuhan."
+    }
+  ]
+}

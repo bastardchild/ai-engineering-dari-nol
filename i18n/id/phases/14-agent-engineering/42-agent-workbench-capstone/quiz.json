@@ -1,0 +1,90 @@
+{
+  "lesson": "42-agent-workbench-capstone",
+  "title": "Capstone: Kirim Paket Agent Workbench yang Dapat Dipakai Ulang",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dihasilkan capstone?",
+      "options": [
+        "Dashboard pemantauan",
+        "Direktori drop-in berversi (agent-workbench-pack/) dengan tujuh permukaan plus bin/install.sh yang memasangnya secara idempoten",
+        "Paper riset",
+        "LLM baru"
+      ],
+      "correct": 1,
+      "explanation": "Pack adalah resepnya; setiap instalasi adalah penyajiannya."
+    },
+    {
+      "stage": "pre",
+      "question": "Manakah yang BUKAN bagian dari tata letak pack?",
+      "options": [
+        "vendor_proprietary_weights/",
+        "schemas/",
+        "AGENTS.md + docs/",
+        "scripts/"
+      ],
+      "correct": 0,
+      "explanation": "Tata letak pack adalah AGENTS.md, docs/, schemas/, scripts/, bin/, README.md. Pack tidak terikat framework maupun vendor."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pack membawa file VERSION?",
+      "options": [
+        "Untuk melacak IQ agent",
+        "Untuk SEO",
+        "Untuk beriklan di Hacker News",
+        "Major bump untuk perubahan skema/skrip yang butuh migrasi; minor untuk penambahan; patch untuk dokumen saja; repo target mencatat versi yang dipasang"
+      ],
+      "correct": 3,
+      "explanation": "Bentuknya sama dengan npm, Cargo, pyproject.toml; VERSION adalah kontrak, bukan marketing."
+    },
+    {
+      "stage": "check",
+      "question": "Seperti apa distribusi lintas tool dalam pack ini?",
+      "options": [
+        "Satu file sumber dengan symlink (ln -s AGENTS.md CLAUDE.md, .cursor/rules/, .github/copilot-instructions.md) sehingga sumber yang sama menyebar ke setiap coding agent",
+        "Salin manual per tool",
+        "Hard-code path tiap tool",
+        "Lock vendor per tool"
+      ],
+      "correct": 0,
+      "explanation": "nx ai-setup dari Nx adalah referensinya; installer pack melakukan hal yang sama dengan symlink."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana pelajaran menyarankan uninstaller berperilaku?",
+      "options": [
+        "Hapus hanya dokumen",
+        "Menolak saat state non-trivial; jangan pernah menghapus agent_state.json, task_board.json, atau outputs/ milik pengguna; hanya hapus skema, skrip, dokumen, dan AGENTS.md (dengan opsi keluar)",
+        "Hapus semuanya termasuk state",
+        "Nonaktifkan git"
+      ],
+      "correct": 1,
+      "explanation": "State milik pengguna; pack tidak memilikinya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang TETAP di luar pack?",
+      "options": [
+        "Skrip",
+        "Skema",
+        "Tugas spesifik proyek, panggilan SDK vendor, prosa onboarding tim — pack tidak terikat framework dan hidup di samping onboarding, bukan di dalamnya",
+        "Installer"
+      ],
+      "correct": 2,
+      "explanation": "Tugas berada di board repo target, bukan di pack; panggilan SDK vendor akan mengunci pack ke satu framework."
+    },
+    {
+      "stage": "post",
+      "question": "Melalui channel apa pack dikirim ke banyak coding agent sekaligus?",
+      "options": [
+        "Distribusi gaya SkillKit (skillkit install agent-workbench-pack) memasangnya di 32 AI agent dari satu sumber",
+        "Lampiran email",
+        "Salin tangan",
+        "Catatan rilis GitHub saja"
+      ],
+      "correct": 0,
+      "explanation": "Repo pack adalah sumber kebenaran; SkillKit adalah channel distribusinya; vendor lock-in runtuh."
+    }
+  ]
+}

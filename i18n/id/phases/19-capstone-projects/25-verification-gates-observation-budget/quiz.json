@@ -1,0 +1,78 @@
+{
+  "lesson": "phase-19/25-verification-gates-observation-budget",
+  "title": "Gerbang Verifikasi dan Anggaran Observasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Sebelum membaca lesson: mana alasan terkuat harness membutuhkan rantai gate deterministik alih-alih model-as-judge?",
+      "options": [
+        "Model terlalu lambat untuk menjadi juri di produksi.",
+        "Rantai gate memungkinkan model menulis kebijakannya sendiri.",
+        "Model-as-judge selalu menghasilkan keputusan allow yang berhalusinasi.",
+        "Determinisme membuat alasan deny dapat diaudit dan rantainya dapat diputar ulang."
+      ],
+      "correct": 3,
+      "explanation": "Jejak audit dan reproducibility adalah keuntungan praktisnya. Model juri juga bisa dirangkai, tetapi gate struktural harus deterministik agar keputusan dapat direproduksi dan ditinjau."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa lesson menjalankan WhitelistGate sebelum BudgetGate dalam rantai?",
+      "options": [
+        "BudgetGate tidak bisa berjalan sampai setidaknya satu tool dipanggil.",
+        "Penolakan whitelist lebih murah, jadi short-circuit menghindari penjumlahan ledger yang mahal.",
+        "Whitelist harus selalu menjadi gate terakhir menurut konvensi.",
+        "Urutan tidak penting karena GateChain mengacak urutan evaluasi."
+      ],
+      "correct": 1,
+      "explanation": "Penolakan murah berjalan dulu. WhitelistGate adalah lookup hash O(1). BudgetGate harus menjumlahkan ledger. Short-circuit pada whitelist menghindari pekerjaan itu saat panggilan secara struktural ilegal."
+    },
+    {
+      "stage": "check",
+      "question": "ObservationLedger mencatat observasi 60 token dari read_file. Harness lalu menolak panggilan berikutnya. Apa yang dicatat ledger tentang penolakan itu?",
+      "options": [
+        "Tidak ada. Ledger hanya mencatat observasi yang berhasil.",
+        "Penolakan ditambahkan sebagai Observation sintetis dengan nama penolaknya.",
+        "Baris Observation nol-token bertag refused.",
+        "Baris Observation token negatif yang merepresentasikan biaya penolakan."
+      ],
+      "correct": 0,
+      "explanation": "Ledger mencatat observasi yang dilihat model. Penolakan menghasilkan GateDecision, bukan Observation. Hitungan penolakan berada di samping ledger, bukan di dalamnya."
+    },
+    {
+      "stage": "check",
+      "question": "RecencyGate.window diset 3. latest_turn ledger adalah 5. ToolCall baru datang pada giliran 10. Apa yang terjadi?",
+      "options": [
+        "Gate menolak: jarak 5 melebihi window 3.",
+        "Gate mengizinkan: panggilan ada di giliran terbaru.",
+        "Gate mengizinkan: window berlaku untuk ukuran ledger, bukan jarak giliran.",
+        "Gate melempar exception karena ledger basi."
+      ],
+      "correct": 0,
+      "explanation": "RecencyGate membandingkan (call.turn - ledger.latest_turn) dengan window. 10 - 5 = 5, lebih besar dari 3, jadi gate menolak."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu ingin menambah cap output per panggilan (tidak ada observasi tunggal melebihi 8000 token). Di mana gate ini secara logis berada dalam rantai?",
+      "options": [
+        "Itu tidak bisa menjadi gate karena ukuran baru diketahui setelah tool berjalan.",
+        "Sebelum WhitelistGate, karena ukuran adalah properti termurah untuk diperiksa.",
+        "Di dalam BudgetGate agar batasnya menyatu.",
+        "Setelah BudgetGate, karena anggaran kumulatif selalu mendominasi."
+      ],
+      "correct": 0,
+      "explanation": "Ukuran output tidak diketahui saat evaluasi gate. Harness menerapkan cap setelah tool berjalan, dengan memotong observasi sebelum model melihatnya. Gate mengevaluasi input, bukan output."
+    },
+    {
+      "stage": "post",
+      "question": "Reviewer meminta kamu membuktikan bahwa agen tidak pernah menembakkan tool call yang ditolak selama sesi. Artefak mana yang kamu tunjuk?",
+      "options": [
+        "Snapshot ObservationLedger, yang hanya berisi observasi berhasil.",
+        "Output pytest, yang mencatat pass/fail test.",
+        "Transkrip chat model, yang berisi laporan mandirinya.",
+        "Daftar record ChainOutcome, yang berisi setiap keputusan per panggilan dengan alasan deny."
+      ],
+      "correct": 3,
+      "explanation": "Record ChainOutcome membawa keputusan per panggilan dan alasan deny. Ledger dan transkrip dapat mendukung klaim, tetapi artefak yang dapat diaudit adalah keputusan rantai."
+    }
+  ]
+}

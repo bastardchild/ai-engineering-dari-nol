@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan algoritma Hungarian dalam tracking-by-detection?",
+      "options": ["Ia melatih detektor", "Ia memprediksi lintasan masa depan", "Ia menyaring deteksi berkeyakinan rendah", "Ia menyelesaikan penugasan satu-ke-satu berbiaya minimum antara track dan deteksi — biasanya memakai 1 - IoU sebagai biaya — untuk mencocokkan setiap track ke paling banyak satu deteksi dan sebaliknya"],
+      "correct": 3,
+      "explanation": "Setiap frame tracking-by-detection menyelesaikan masalah penugasan: M track, N deteksi, temukan kecocokan satu-ke-satu terbaik. Hungarian adalah algoritma polinomial optimal untuk ini. Biaya biasanya 1 - IoU (overlap lebih tinggi = biaya lebih rendah). scipy.optimize.linear_sum_assignment adalah implementasi standarnya. SORT, DeepSORT, ByteTrack, BoT-SORT semuanya memakainya."
+    },
+    {
+      "stage": "pre",
+      "question": "Kontribusi pembeda ByteTrack adalah apa?",
+      "options": ["Backbone baru", "Embedding tampilan", "Kalman filter baru", "Asosiasi tahap kedua yang mencoba mencocokkan track tersisa ke deteksi berkeyakinan rendah, memulihkan oklusi singkat dan ID yang akan hilang pada tracker standar karena membuang deteksi tersebut"],
+      "correct": 3,
+      "explanation": "Sebagian besar tracker membuang deteksi di bawah ambang keyakinan (~0.5). ByteTrack menyimpannya dan menjalankan pass Hungarian kedua untuk mencoba mencocokkannya ke track yang tidak cocok dengan deteksi berkeyakinan tinggi mana pun. Ini memulihkan oklusi singkat dan persilangan, menaikkan IDF1 secara signifikan pada MOT17 tanpa fitur tampilan yang dipelajari. Kesederhanaannya menjadikannya default di Ultralytics dan Roboflow Supervision."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana tracker berbasis memori SAM 2 menghindari asosiasi eksplisit gaya Hungarian?",
+      "options": ["Ia menyimpan fitur spatio-temporal per instance di bank memori; pada setiap frame baru, cross-attention antara memori dan fitur saat ini langsung menghasilkan mask instance yang sama, dengan asosiasi implisit dalam operasi attention", "Ia menjalankan SORT secara internal", "Ia memakai Kalman filter", "Ia memerlukan ID berlabel tangan per frame"],
+      "correct": 0,
+      "explanation": "SAM 2 menggantikan loop detect-then-associate dengan segmenter berkondisi memori. Bank memori menyimpan fitur instance dari frame sebelumnya. Pada setiap frame baru, decoder melakukan cross-attend fitur frame baru terhadap memori, dan mask yang dihasilkan adalah instance yang sama — tanpa langkah penugasan eksternal. Ini menangani oklusi panjang dengan baik karena memori tetap ada bahkan ketika instance menghilang selama banyak frame."
+    },
+    {
+      "stage": "post",
+      "question": "Untuk video pengawasan di mana menjaga ID setiap orang tetap konsisten adalah persyaratan utama, metrik mana yang harus kamu laporkan?",
+      "options": ["IDF1 — harmonic mean dari ID precision dan recall; mengukur pemeliharaan identitas sepanjang waktu alih-alih akurasi deteksi per frame", "Akurasi Top-1", "MOTA", "FID"],
+      "correct": 0,
+      "explanation": "MOTA mencampur error deteksi dan asosiasi, sehingga tracker dengan banyak false positive dapat menyembunyikan kegagalan ID-nya. IDF1 dirancang untuk pertanyaan 'siapa siapa sepanjang waktu': ia mencocokkan track prediksi ke track ground truth secara global di seluruh video dan menghitung F1 pada label identitas. Untuk pengawasan dan analitik kerumunan, IDF1 adalah metrik yang dilaporkan; HOTA adalah standar akademik yang lebih luas."
+    },
+    {
+      "stage": "post",
+      "question": "SAM 3.1 Object Multiplex (Maret 2026) memperkenalkan memori bersama di banyak instance yang dilacak. Apa yang memungkinkannya?",
+      "options": ["Tracking multi-objek efisien — satu bank memori bersama dengan token kueri per instance menggantikan N bank memori terpisah, sehingga biaya berskala sub-linear terhadap jumlah instance dan adegan seukuran kerumunan konser menjadi layak", "Objektif training baru", "Akurasi lebih rendah", "Inferensi hanya cloud"],
+      "correct": 0,
+      "explanation": "SAM 2 / SAM 3 pra-Multiplex melacak setiap objek dengan bank memorinya sendiri; biaya berskala linear dengan jumlah instance. Multiplex (Maret 2026) memperkenalkan satu memori bersama dengan token kueri per instance yang mengambil fitur spesifik instance. Tracking banyak objek — kerumunan, lalu lintas, pekerja gudang — menjadi efisien untuk pertama kalinya dengan tracker berbasis memori."
+    }
+  ]
+}

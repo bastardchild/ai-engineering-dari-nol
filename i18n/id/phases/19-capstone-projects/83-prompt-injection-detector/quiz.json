@@ -1,0 +1,78 @@
+{
+  "lesson": "83-prompt-injection-detector",
+  "title": "Capstone 83 — Detektor Prompt Injection",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dikembalikan detektor untuk sebuah prompt?",
+      "options": [
+        "Hanya keputusan blokir boolean",
+        "System prompt lengkap model",
+        "Daftar setiap aturan di rulebase",
+        "Kategori dan keyakinan di [0, 1]"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa normalize berjalan sebelum aturan substring dan regex?",
+      "options": [
+        "Karena regex lebih lambat dari substring",
+        "Karena standard library melarang menjalankan aturan pada teks asli",
+        "Karena normalize mengecilkan ukuran file di disk",
+        "Karena normalize mengekspos token tersembunyi seperti base64, rot13, dan sisipan zero-width ke aturan hilir"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Diberikan true positive = 6, false positive = 2 untuk kategori C, berapa precision?",
+      "options": [
+        "0.86",
+        "0.60",
+        "0.75",
+        "0.50"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa korpus prompt benign menjadi bagian evaluasi?",
+      "options": [
+        "Untuk menghitung recall pada serangan",
+        "Untuk menggelembungkan angka akurasi",
+        "Untuk pra-training aturan",
+        "Untuk mengukur tingkat false-positive pada teks aman dan menangkap aturan yang terlalu luas"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan metode analyze saat tidak ada aturan yang menyala?",
+      "options": [
+        "Mengembalikan kategori aturan terakhir yang dicoba",
+        "Mengembalikan kategori acak",
+        "Mengembalikan kategori benign dengan keyakinan 0.0",
+        "Memunculkan exception"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa lesson ini berargumen detektor bukan safety gate?",
+      "options": [
+        "Karena detektor diimplementasikan di Python",
+        "Karena aturan disimpan sebagai data",
+        "Karena detektor terlalu cepat untuk berguna",
+        "Karena detektor adalah satu sinyal di antara beberapa yang akan dikomposisi gate, dengan setiap sinyal memperdagangkan precision melawan recall secara berbeda"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

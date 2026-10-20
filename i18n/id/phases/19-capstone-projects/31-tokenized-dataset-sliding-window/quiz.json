@@ -1,0 +1,78 @@
+{
+  "lesson": "31-tokenized-dataset-sliding-window",
+  "title": "Dataset Ter-tokenisasi dengan Sliding Window",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa kontrak bentuk untuk batch training causal LM?",
+      "options": [
+        "(B, T) input id dan (B, T) target id di mana target adalah input yang digeser satu ke kiri",
+        "(B, V) vektor one-hot atas kosakata",
+        "(B, T, T) attention mask dengan input id di diagonal",
+        "(B, 2) pasangan input id dan label"
+      ],
+      "correct": 0,
+      "explanation": "Training causal LM membaca (B, T) input id dan memprediksi bentuk target id yang sama, di mana target[t] = input[t+1]."
+    },
+    {
+      "stage": "check",
+      "question": "Berapa jendela panjang T+1 yang muat dalam aliran id panjang N dengan stride S?",
+      "options": [
+        "max(0, 1 + (N - (T + 1)) // S)",
+        "N - T - S",
+        "(N - T) * S",
+        "N // (T + 1)"
+      ],
+      "correct": 0,
+      "explanation": "Jendela pertama mulai di 0. Jendela berikutnya mulai di kelipatan S. Jendela terakhir harus tetap mencakup T+1 id."
+    },
+    {
+      "stage": "check",
+      "question": "Apa efek memotong stride menjadi setengah pada dataset?",
+      "options": [
+        "Mengurangi separuh jumlah contoh training per epoch",
+        "Menghapus tumpang tindih antar jendela berurutan",
+        "Kira-kira menggandakan jumlah contoh training per epoch",
+        "Tidak berpengaruh karena jendela tidak pernah tumpang tindih"
+      ],
+      "correct": 2,
+      "explanation": "Stride lebih kecil menghasilkan lebih banyak jendela tumpang tindih, menambah jumlah contoh dan keragaman batas dengan biaya komputasi lebih per epoch."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa meneruskan torch.Generator eksplisit ke DataLoader?",
+      "options": [
+        "Itu membuat shuffle deterministik antar run dengan seed yang sama",
+        "Itu menghapus kebutuhan padding batch",
+        "Itu mengaktifkan training multi-GPU",
+        "Itu mempercepat pemuatan data"
+      ],
+      "correct": 0,
+      "explanation": "Generator ber-seed mereproduksi shuffle yang sama. Rerun dengan seed sama melihat batch dalam urutan yang sama, yang diperlukan untuk perbandingan hyperparameter yang adil."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa dataset mengembalikan (input[:-1], input[1:]) dari setiap jendela berukuran T+1?",
+      "options": [
+        "Itu membuang satu id untuk menghemat memori",
+        "Itu menghapus token khusus dari input",
+        "Itu keanehan indexing tensor PyTorch",
+        "Itu mengimplementasikan target shift-by-one agar loss mengukur prediksi token berikutnya"
+      ],
+      "correct": 3,
+      "explanation": "Target di posisi t adalah input di posisi t+1. Memotong jendela menjadi [:-1] dan [1:] mengekspresikan kontrak itu."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa lesson membuang jendela trailing yang tidak lengkap alih-alih padding?",
+      "options": [
+        "Membuang menjaga setiap contoh panjangnya sama sehingga tidak perlu loss mask",
+        "Data yang dibuang dipulihkan oleh epoch berikutnya",
+        "Padding akan mengubah ukuran kosakata",
+        "Token padding tidak didukung model"
+      ],
+      "correct": 0,
+      "explanation": "Semua contoh tepat T token panjangnya secara konstruksi, jadi batch adalah tensor persegi bersih dan loss berlaku seragam tanpa mask."
+    }
+  ]
+}

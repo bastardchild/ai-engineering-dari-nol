@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa artinya secara geometris ketika sistem Ax = b tidak memiliki solusi eksak?",
+      "options": [
+        "Vektor b tidak terletak di ruang kolom A",
+        "Matriks A memiliki semua entri nol",
+        "Sistem memiliki lebih banyak variabel tak diketahui daripada persamaan",
+        "Matriks A simetris"
+      ],
+      "correct": 0,
+      "explanation": "Dalam gambaran kolom, Ax = b bertanya: kombinasi linear kolom A mana yang menghasilkan b? Jika b tidak berada di ruang kolom (span kolom A), tidak ada solusi eksak. Ini terjadi saat sistem overdetermined (lebih banyak persamaan daripada variabel)."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa partial pivoting dipakai dalam eliminasi Gaussian?",
+      "options": [
+        "Ia memilih pivot terbesar yang tersedia untuk meminimalkan amplifikasi error dari pembagian dengan angka kecil",
+        "Ia menghilangkan kebutuhan substitusi balik",
+        "Ia mengurangi kompleksitas waktu dari O(n^3) menjadi O(n^2)",
+        "Ia memastikan hasilnya selalu bilangan bulat"
+      ],
+      "correct": 0,
+      "explanation": "Tanpa pivoting, membagi dengan pivot kecil memperkuat error pembulatan. Partial pivoting menukar baris untuk menempatkan nilai absolut terbesar di posisi pivot, menjaga pengali tetap kecil dan komputasi stabil secara numerik."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa dekomposisi Cholesky lebih disukai daripada LU untuk menyelesaikan (X^T X + lambda I) w = X^T y dalam ridge regression?",
+      "options": [
+        "Cholesky memberi jawaban lebih akurat daripada LU",
+        "Cholesky bekerja pada matriks apa pun sedangkan LU memerlukan matriks persegi",
+        "Dekomposisi LU tidak dapat menangani suku regularisasi",
+        "Matriks X^T X + lambda I simetris positive definite, jadi Cholesky dua kali lebih cepat daripada LU dan memerlukan setengah penyimpanan"
+      ],
+      "correct": 3,
+      "explanation": "Ketika lambda > 0, X^T X + lambda I selalu simetris positive definite. Cholesky memfaktorkan A = LL^T dalam O(n^3/3) operasi -- sekitar setengah dari O(2n^3/3) milik LU -- dan hanya perlu segitiga bawah. Ia memanfaatkan simetri yang tidak dipakai LU."
+    },
+    {
+      "stage": "post",
+      "question": "Sebuah matriks memiliki condition number kappa = 10^8. Kamu memakai float64 (~15 digit presisi). Berapa digit solusi yang dapat kamu percaya?",
+      "options": [
+        "Sekitar 15 digit",
+        "Sekitar 7 digit (15 - log10(10^8) = 15 - 8)",
+        "Nol digit -- solusinya tidak bermakna",
+        "Sekitar 8 digit"
+      ],
+      "correct": 1,
+      "explanation": "Kamu kehilangan sekitar log10(kappa) digit presisi. Dengan kappa = 10^8, kamu kehilangan sekitar 8 digit dari ~15 digit float64, menyisakan sekitar 7 digit yang dapat dipercaya. Jika kappa mendekati 10^16, solusinya menjadi tidak bermakna dalam float64."
+    },
+    {
+      "stage": "post",
+      "question": "Apa keunggulan utama dekomposisi LU dibanding eliminasi Gaussian saat kamu perlu menyelesaikan Ax = b untuk banyak vektor b berbeda?",
+      "options": [
+        "Faktorisasi O(n^3) dilakukan sekali; setiap penyelesaian berikutnya dengan b baru hanya memakan O(n^2)",
+        "Dekomposisi LU lebih stabil secara numerik",
+        "Dekomposisi LU bekerja pada matriks persegi panjang",
+        "LU selalu menghasilkan solusi unik"
+      ],
+      "correct": 0,
+      "explanation": "LU memfaktorkan A = LU sekali dalam O(n^3). Lalu untuk setiap b baru, kamu menyelesaikan Ly = b (substitusi maju) dan Ux = y (substitusi balik), masing-masing O(n^2). Eliminasi Gaussian akan mengulang O(n^3) penuh untuk setiap b baru."
+    }
+  ]
+}

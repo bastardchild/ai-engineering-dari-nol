@@ -1,0 +1,48 @@
+{
+  "lesson": "53-prototype-pilot-or-production",
+  "title": "Prototype, Pilot, atau Produksi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang terutama membedakan prototype, pilot, dan produksi?",
+      "options": ["Bahasa pemrograman", "Kerapian visual", "Ukuran model", "Pertanyaan pembelajaran, paparan nyata, konsekuensi, dan kepemilikan"],
+      "correct": 3,
+      "explanation": "Tahapan itu adalah lingkungan bukti dan tanggung jawab yang berbeda."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan tahap prototype tepat?",
+      "options": ["Hanya untuk UI", "Saat hal yang belum diketahui dapat dijawab tanpa pengguna atau data nyata", "Kapan pun produksi sulit", "Setelah peluncuran publik"],
+      "correct": 1,
+      "explanation": "Prototype harus menjawab pertanyaan mekanisme dengan konsekuensi minimal."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus disertakan pilot?",
+      "options": ["Tanpa stop rule", "Otoritas otomatis", "Audiens terbatas, owner, rollback, audit, metrik, dan kriteria keluar", "Audiens tak terbatas"],
+      "correct": 2,
+      "explanation": "Pilot memaparkan kondisi realistis di dalam batas eksplisit."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan build yang sudah di-deploy menjadi produksi dalam arti bermakna?",
+      "options": ["Saat organisasi menerima keandalan berkelanjutan, risiko, dan kepemilikan operasional", "Saat ia punya URL", "Saat prototype tampak rapi", "Pada commit pertama"],
+      "correct": 0,
+      "explanation": "Produksi adalah tanggung jawab berkelanjutan, bukan sekadar status hosting."
+    },
+    {
+      "stage": "post",
+      "question": "Apa arti stage drift?",
+      "options": ["Pilot berakhir", "Prototype mendapatkan pengguna, data, atau otoritas tanpa mendapatkan kontrol dan kepemilikan", "Metrik berubah", "Branch diganti nama"],
+      "correct": 1,
+      "explanation": "Paparan yang tidak terkendali mengubah artefak pembelajaran menjadi layanan yang tidak aman."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa batas tahap harus ditegakkan secara teknis?",
+      "options": ["Banner peringatan tidak dapat mencegah akses atau otoritas", "Dokumentasi itu ilegal", "Itu menggantikan kepemilikan", "Itu meningkatkan kontras warna"],
+      "correct": 0,
+      "explanation": "Konfigurasi, kontrol akses, dan telemetri membuat tahap dapat diamati dan ditegakkan."
+    }
+  ]
+}

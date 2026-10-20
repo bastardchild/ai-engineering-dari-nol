@@ -1,0 +1,66 @@
+{
+  "lesson": "06-rag",
+  "title": "RAG (Retrieval-Augmented Generation)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa kepanjangan RAG dan masalah apa yang diselesaikannya?",
+      "options": [
+        "Recurrent Attention Generation -- meningkatkan mekanisme attention",
+        "Retrieval-Augmented Generation -- memberi LLM akses ke pengetahuan eksternal yang tidak dilatih",
+        "Reduced Architecture Generation -- membuat model lebih kecil",
+        "Random Augmented Generation -- menghasilkan output acak"
+      ],
+      "correct": 1,
+      "explanation": "RAG mengambil dokumen relevan dari basis pengetahuan eksternal dan menambahkannya ke prompt. Ini memberi LLM akses ke informasi terkini dan khusus domain tanpa retraining."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa RAG lebih disukai daripada fine-tuning untuk sebagian besar aplikasi berbasis pengetahuan?",
+      "options": [
+        "RAG lebih murah, dapat diperbarui seketika saat dokumen berubah, dan memberi atribusi sumber -- fine-tuning mahal dan menjadi usang",
+        "RAG menghasilkan model lebih baik",
+        "Fine-tuning tidak berfungsi",
+        "RAG memakai lebih sedikit memori"
+      ],
+      "correct": 0,
+      "explanation": "Fine-tuning berbiaya ribuan dolar, menghasilkan model statis yang menjadi usang saat dokumen berubah, dan tidak menawarkan atribusi sumber. RAG diperbarui seketika (cukup perbarui penyimpanan dokumen), hanya berbiaya embedding + penyimpanan, dan dapat mengutip sumbernya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa urutan langkah yang benar dalam pipeline RAG dasar?",
+      "options": [
+        "Chunk dokumen, embed chunk, simpan di vector DB, embed query, ambil chunk serupa, hasilkan jawaban dengan konteks",
+        "Hasilkan, ambil, embed, chunk",
+        "Embed query, hasilkan jawaban, ambil dokumen",
+        "Simpan dokumen, query LLM, tambahkan dokumen ke respons"
+      ],
+      "correct": 0,
+      "explanation": "Ingesti: chunk dokumen -> embed chunk -> simpan di vector DB. Saat query: embed query pengguna -> ambil top-K chunk serupa -> tambahkan chunk ke prompt -> hasilkan jawaban yang berpijak pada konteks terambil."
+    },
+    {
+      "stage": "post",
+      "question": "Apa mode kegagalan umum dalam sistem RAG dasar?",
+      "options": [
+        "Embedding-nya terlalu besar",
+        "Vector database crash",
+        "Chunk yang terambil mirip secara semantik dengan query tetapi tidak memuat jawaban sebenarnya (misalnya mengembalikan 'strategi pendapatan' saat diminta 'angka pendapatan Q3')",
+        "LLM menolak menjawab"
+      ],
+      "correct": 2,
+      "explanation": "Pencarian semantik menemukan teks yang 'terdengar seperti' query, bukan selalu teks yang 'menjawabnya'. Query tentang pendapatan mungkin mengambil chunk yang membahas strategi pendapatan alih-alih chunk yang memuat angka sebenarnya."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana kamu mengevaluasi kualitas RAG?",
+      "options": [
+        "Dengan memeriksa apakah LLM menghasilkan output apa pun",
+        "Memakai metrik retrieval (apakah kita menemukan chunk yang tepat?) dan metrik generasi (apakah jawaban setia pada konteks terambil?)",
+        "Dengan mengukur waktu respons saja",
+        "Dengan menghitung jumlah dokumen yang terambil"
+      ],
+      "correct": 1,
+      "explanation": "Evaluasi RAG memiliki dua bagian: kualitas retrieval (precision/recall chunk terambil terhadap ground truth) dan kualitas generasi (kesetiaan pada konteks, relevansi dengan query, tidak berhalusinasi di luar informasi terambil)."
+    }
+  ]
+}

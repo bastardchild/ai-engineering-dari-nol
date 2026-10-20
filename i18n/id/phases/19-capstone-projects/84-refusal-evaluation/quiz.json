@@ -1,0 +1,78 @@
+{
+  "lesson": "84-refusal-evaluation",
+  "title": "Capstone 84 — Evaluasi Penolakan",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur under-refusal?",
+      "options": [
+        "Seberapa sering model menolak prompt berlabel aman",
+        "Biaya panggilan API per prompt",
+        "Seberapa sering model menjawab prompt berlabel tidak aman",
+        "Berapa token yang dikeluarkan model per respons"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa memakai mock LLM alih-alih model nyata untuk lesson ini?",
+      "options": [
+        "Karena model nyata tidak diizinkan di capstone",
+        "Karena mock LLM lebih akurat dari yang nyata",
+        "Agar input sama menghasilkan output sama lintas run, membuat perubahan kode dapat diatribusikan ke penyebab yang diketahui",
+        "Karena lesson membutuhkan hardware GPU"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Diberikan jumlah prompt aman = 30, jumlah aman yang ditolak = 5, berapa tingkat over-refusal?",
+      "options": [
+        "0.30",
+        "0.17",
+        "0.50",
+        "0.05"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang diukur Expected Calibration Error (ECE) di sini?",
+      "options": [
+        "Fraksi penolakan pada prompt tidak aman",
+        "Selisih antara keyakinan yang dinyatakan model dan akurasi teramati, dibinning lintas rentang keyakinan",
+        "Total jumlah token lintas semua respons",
+        "Jumlah aturan regex yang menyala"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa framework menggabungkan prompt tidak aman dengan taksonomi lesson 82?",
+      "options": [
+        "Untuk menjalankan ulang loader korpus lesson 82",
+        "Untuk menaikkan severity setiap prompt satu tingkat",
+        "Untuk melaporkan under-refusal per kategori serangan agar tim melihat batas mana yang bocor",
+        "Untuk menghapus duplikat"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa framework mengembalikan under-refusal dan over-refusal sekaligus alih-alih satu skor keamanan?",
+      "options": [
+        "Karena under-refusal hanya dipakai di CI",
+        "Karena keduanya dua error berlawanan dan satu angka menyembunyikan mana yang lebih buruk pada build tertentu",
+        "Karena over-refusal dihitung tim berbeda",
+        "Karena dataclass Python lebih suka banyak field"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

@@ -49,8 +49,8 @@ test('copy completion preserves keyboard focus without disabling the button', as
   state.finish();
   await pending;
   assert.equal(state.document.activeElement, state.button);
-  assert.equal(state.button.textContent, 'Copied');
-  assert.equal(state.status.textContent, 'Command copied.');
+  assert.equal(state.button.textContent, 'Tersalin');
+  assert.equal(state.status.textContent, 'Perintah tersalin.');
 });
 
 test('a delayed copy never takes focus back from another control', async () => {

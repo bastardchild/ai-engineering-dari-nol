@@ -1,0 +1,78 @@
+{
+  "lesson": "77-data-parallel-ddp",
+  "title": "Data Parallel DDP dari Nol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa DDP menyiarkan parameter saat konstruksi alih-alih mengandalkan seed sama lintas rank?",
+      "options": [
+        "Broadcast menghemat memori",
+        "Broadcast lebih cepat dari seeding",
+        "PyTorch melarang init seed sama",
+        "Init seed sama bergeser sebesar epsilon float lintas rank; broadcast menjamin bobot byte-equal sebelum training mulai"
+      ],
+      "correct": 3,
+      "explanation": "Operasi float di hardware berbeda (atau bahkan urutan proses berbeda) dapat berbeda di tingkat bit. Broadcast dari rank 0 satu-satunya cara mendapat bobot byte-equal di semua tempat."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan DDP setelah backward dan sebelum optimizer.step?",
+      "options": [
+        "Allreduce-SUM gradien setiap parameter dan membaginya dengan world_size untuk mendapat gradien mean",
+        "Tidak ada",
+        "Menyimpan checkpoint",
+        "Menyiarkan logits"
+      ],
+      "correct": 0,
+      "explanation": "Gradien mean invarian terhadap world_size sehingga learning rate yang disetel pada satu rank bekerja pada N rank."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa membagi dengan world_size setelah allreduce-SUM alih-alih memakai allreduce-MEAN?",
+      "options": [
+        "Allreduce-MEAN tidak ada di gloo",
+        "world_size tidak diketahui",
+        "Pembagian dengan world_size di setiap rank adalah operasi lokal; allreduce-MEAN akan diimplementasikan dengan cara sama di balik layar",
+        "Pembagian menghasilkan NaN"
+      ],
+      "correct": 2,
+      "explanation": "Kedua pendekatan menghasilkan aritmetika sama. NCCL menyediakan allreduce-AVG sejak 2.10; gloo tidak, jadi bagi secara lokal setelah SUM."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dicapai gradient bucketing di DDP produksi?",
+      "options": [
+        "Menggabungkan banyak allreduce kecil menjadi satu allreduce besar, mengamortisasi lantai latensi per panggilan",
+        "Membebaskan memori gradien",
+        "Mengkuantisasi gradien ke int8",
+        "Melewati backward"
+      ],
+      "correct": 0,
+      "explanation": "Model 1B parameter punya ribuan tensor gradien; satu allreduce per tensor membayar latensi gloo atau NCCL ribuan kali."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa no_sync() ada di PyTorch DDP?",
+      "options": [
+        "Untuk mengganti backend",
+        "Untuk mematikan DDP",
+        "Untuk debug",
+        "Gradient accumulation atas K microbatch perlu melewati allreduce pasca-backward untuk K-1 di antaranya; no_sync membungkus jeda itu"
+      ],
+      "correct": 3,
+      "explanation": "Tanpa no_sync allreduce menyala K kali per langkah akumulasi dan throughput jatuh ke lantai."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa implementasi referensi lesson ini menelusuri microbatch setiap rank secara sekuensial dalam satu proses?",
+      "options": [
+        "Itu satu-satunya cara memakai gloo",
+        "Satu proses lebih cepat",
+        "Itu menghemat memori",
+        "Itu memberi baseline byte-equal: gradien mean sekuensial harus sama dengan gradien mean allreduce DDP di setiap langkah"
+      ],
+      "correct": 3,
+      "explanation": "Ekuivalensi dengan loop referensi adalah uji kebenaran penopang; tanpa itu bug sinkronisasi gradien tersembunyi sampai langkah 10000."
+    }
+  ]
+}

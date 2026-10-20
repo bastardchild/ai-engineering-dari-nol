@@ -1,0 +1,90 @@
+{
+  "phase": {
+    "7": {
+      "name": "Menyelami Transformer",
+      "desc": "Arsitektur yang mengubah segalanya."
+    }
+  },
+  "lessons": {
+    "phases/07-transformers-deep-dive/01-why-transformers": {
+      "name": "Mengapa Transformer: Masalah dengan RNN",
+      "summary": "RNN memproses token satu per satu. Transformer memproses semua token sekaligus. Taruhan arsitektural tunggal itu mengubah setiap kurva scaling dalam deep learning setelah 2017.",
+      "keywords": "Langkah 1: ukur kedalaman serial · Langkah 2: hitung operasi teoretis · Langkah 3: scaling empiris pada sekuens panjang"
+    },
+    "phases/07-transformers-deep-dive/02-self-attention-from-scratch": {
+      "name": "Self-Attention dari Nol",
+      "summary": "Attention adalah tabel lookup tempat setiap kata bertanya \"siapa yang penting bagiku?\" — dan mempelajari jawabannya.",
+      "keywords": "Analogi Lookup Database · Perhitungan Q, K, V · Matriks Attention · Mengapa Perlu Scaling? · Softmax Mengubah Skor menjadi Bobot · Jumlah Berbobot dari Value · Pipeline Lengkap · Langkah 1: Softmax dari nol · Langkah 2: scaled dot-product attention · Langkah 3: kelas self-attention dengan proyeksi terlatih · Langkah 4: jalankan pada sebuah kalimat · Langkah 5: visualisasikan attention dengan heatmap ASCII"
+    },
+    "phases/07-transformers-deep-dive/03-multi-head-attention": {
+      "name": "Multi-Head Attention",
+      "summary": "Satu head attention mempelajari satu relasi dalam satu waktu. Delapan head mempelajari delapan. Head itu gratis. Ambil lebih banyak.",
+      "keywords": "Langkah 1: pecah head dari attention single-head yang sudah ada · Langkah 2: jalankan scaled-dot-product attention per head · Langkah 3: varian Grouped-Query Attention · Langkah 4: selidiki apa yang dipelajari tiap head"
+    },
+    "phases/07-transformers-deep-dive/04-positional-encoding": {
+      "name": "Positional Encoding: Sinusoidal, RoPE, ALiBi",
+      "summary": "Attention bersifat permutation-invariant. \"The cat sat on the mat\" dan \"mat the on sat cat the\" menghasilkan output yang sama tanpa sinyal posisi. Tiga algoritma memperbaikinya — masing-masing dengan …",
+      "keywords": "Sinusoidal absolut · RoPE · ALiBi · Apa yang dipilih pada 2026 · Langkah 1: encoding sinusoidal · Langkah 2: RoPE diterapkan ke Q, K · Langkah 3: slope dan bias ALiBi · Langkah 4: verifikasi sifat jarak relatif RoPE"
+    },
+    "phases/07-transformers-deep-dive/05-full-transformer": {
+      "name": "Transformer Lengkap: Encoder + Decoder",
+      "summary": "Attention adalah bintangnya. Sisanya — residual, normalisasi, feed-forward, cross-attention — adalah perancah yang memungkinkanmu menumpuknya dalam-dalam.",
+      "keywords": "Enam komponen · Blok encoder (dipakai BERT, encoder T5) · Blok decoder (dipakai GPT, decoder T5) · Pre-norm vs post-norm · Blok modern 2026 · Jumlah parameter · Langkah 1: blok penyusun · Langkah 2: rangkai encoder 2 lapis dan decoder 2 lapis · Langkah 3: jalankan forward pada contoh mainan · Langkah 4: ganti dengan RMSNorm + SwiGLU"
+    },
+    "phases/07-transformers-deep-dive/06-bert-masked-language-modeling": {
+      "name": "BERT — Masked Language Modeling",
+      "summary": "GPT memprediksi kata berikutnya. BERT memprediksi kata yang hilang. Selisih satu kalimat — dan setengah dekade segala hal yang berbentuk embedding.",
+      "keywords": "Sinyal pelatihan · Aturan mask BERT · Next Sentence Prediction (NSP) — dan mengapa dibuang · Apa yang berubah pada 2026: ModernBERT · Kasus pakai yang masih memilih encoder pada 2026 · Langkah 1: logika masking · Langkah 2: jalankan prediksi MLM pada korpus kecil · Langkah 3: bandingkan tipe mask · Langkah 4: fine-tune head"
+    },
+    "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling": {
+      "name": "GPT — Causal Language Modeling",
+      "summary": "BERT melihat kedua sisi. GPT hanya melihat masa lalu. Mask segitiga adalah satu baris kode paling berdampak dalam AI modern.",
+      "keywords": "Mask · Dari mana segitiga itu berasal · Pelatihan paralel, inferensi serial · Loss — shift-by-one · Strategi decoding · Apa yang membuat \"resep GPT\" berhasil · Langkah 1: causal mask · Langkah 2: model mirip GPT 2 lapis · Langkah 3: prediksi next-token, end-to-end · Langkah 4: sampling"
+    },
+    "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder": {
+      "name": "T5, BART — Model Encoder-Decoder",
+      "summary": "Encoder memahami. Decoder menghasilkan. Satukan kembali dan kamu mendapat model yang dibangun untuk tugas input → output: terjemahkan, ringkas, tulis ulang, transkripsi.",
+      "keywords": "Loop forward · Pretraining T5 — span corruption · Pretraining BART — denoising multi-noise · Inferensi · Kapan memilih tiap varian pada 2026 · Langkah 1: span corruption · Langkah 2: verifikasi round-trip · Langkah 3: noising BART"
+    },
+    "phases/07-transformers-deep-dive/09-vision-transformers": {
+      "name": "Vision Transformer (ViT)",
+      "summary": "Gambar adalah kisi patch. Kalimat adalah kisi token. Transformer yang sama memakan keduanya.",
+      "keywords": "Langkah 1 — patchify · Langkah 2 — linear embedding · Langkah 3 — tambahkan token `[CLS]` di depan, tambahkan positional embedding · Langkah 4 — encoder transformer standar · Langkah 5 — head · Varian yang penting · Mengapa butuh waktu · Langkah 1: gambar palsu · Langkah 2: patchify · Langkah 3: linear embed · Langkah 4: hitung parameter untuk ViT realistis"
+    },
+    "phases/07-transformers-deep-dive/10-audio-transformers-whisper": {
+      "name": "Audio Transformer — Arsitektur Whisper",
+      "summary": "Audio adalah gambar frekuensi terhadap waktu. Whisper adalah ViT yang memakan mel spectrogram dan berbicara kembali.",
+      "keywords": "Langkah 1 — resample + window · Langkah 2 — convolutional stem · Langkah 3 — encoder · Langkah 4 — decoder · Langkah 5 — task token · Langkah 6 — output · Ukuran Whisper · Apa yang tidak dilakukan Whisper · Lanskap 2026 · Langkah 1: sintesis audio · Langkah 2: log-mel spectrogram (disederhanakan) · Langkah 3: pad ke 30 dtk · Langkah 4: bangun prompt token"
+    },
+    "phases/07-transformers-deep-dive/11-mixture-of-experts": {
+      "name": "Mixture of Experts (MoE)",
+      "summary": "Transformer dense 70B mengaktifkan setiap parameter untuk setiap token. MoE 671B hanya mengaktifkan 37B per token dan mengalahkannya di setiap benchmark. Sparsity adalah teknik scaling paling penting…",
+      "keywords": "Penggantian FFN · Masalah load balancing · Shared expert · Expert fine-grained · Profil biaya · Jebakannya: memori · Langkah 1: router · Langkah 2: jalankan 100 token melalui router · Langkah 3: perbandingan jumlah parameter"
+    },
+    "phases/07-transformers-deep-dive/12-kv-cache-flash-attention": {
+      "name": "KV Cache, Flash Attention & Optimasi Inferensi",
+      "summary": "Pelatihan itu paralel dan terikat FLOP. Inferensi itu serial dan terikat memori. Bottleneck berbeda, trik berbeda.",
+      "keywords": "Matematika KV cache · Flash Attention — trik tiling · Speculative decoding — kemenangan latensi lainnya · Continuous batching · PagedAttention — KV cache sebagai virtual memory · Langkah 1: KV cache · Langkah 2: softmax bertiling · Langkah 3: bandingkan decoding naif vs cached pada generasi 100 token"
+    },
+    "phases/07-transformers-deep-dive/13-scaling-laws": {
+      "name": "Scaling Laws",
+      "summary": "Paper Kaplan 2020 berkata: model lebih besar, loss lebih rendah. Paper Hoffmann 2022 berkata: kamu kurang melatih. Compute masuk ke dua keranjang — parameter dan token — dan pembagiannya…",
+      "keywords": "Hukum Hoffmann · Mengapa tetap over-training · Emergence vs keseimbangan · Gambaran 2026 · Langkah 1: loss Chinchilla · Langkah 2: frontier compute-optimal · Langkah 3: biaya over-training · Langkah 4: bandingkan dengan model nyata"
+    },
+    "phases/07-transformers-deep-dive/14-build-a-transformer-capstone": {
+      "name": "Bangun Transformer dari Nol",
+      "summary": "Tiga belas pelajaran. Satu model. Tanpa jalan pintas.",
+      "keywords": "Apa yang kami kirim · Apa yang tidak kami kirim · Target metrik · Langkah 1: data · Langkah 2: model · Langkah 3: training loop · Langkah 4: sampling · Langkah 5: baca outputnya"
+    },
+    "phases/07-transformers-deep-dive/15-attention-variants": {
+      "name": "Varian Attention — Sliding Window, Sparse, Differential",
+      "summary": "Attention penuh adalah lingkaran. Setiap token melihat setiap token, dan memori menanggung harganya. Empat varian membengkokkan bentuk lingkaran itu dan memulihkan separuh biayanya.",
+      "keywords": "Sliding Window Attention (SWA) · Sparse / Block Attention · Differential Attention (DIFF Transformer, 2024) · Perbandingan Varian · Langkah 1: causal mask penuh (baseline) · Langkah 2: causal mask sliding window · Langkah 3: mask sparse lokal + strided · Langkah 4: differential attention · Langkah 5: ukuran KV cache"
+    },
+    "phases/07-transformers-deep-dive/16-speculative-decoding": {
+      "name": "Speculative Decoding — Draft, Verifikasi, Ulangi",
+      "summary": "Decoding autoregresif itu serial. Setiap token menunggu token sebelumnya. Speculative decoding memutus rantainya: model murah menyusun N token draft, model mahal memverifikasi semuanya…",
+      "keywords": "Algoritma inti · Apa yang menentukan speedup · Medusa — draft tanpa model draft · EAGLE — draft lebih baik dengan memakai ulang hidden state · Tarian KV cache · Langkah 1: langkah penolakan · Langkah 2: distribusi residual · Langkah 3: satu langkah spekulatif · Langkah 4: ukur acceptance rate · Langkah 5: verifikasi kesetaraan distribusi"
+    }
+  }
+}

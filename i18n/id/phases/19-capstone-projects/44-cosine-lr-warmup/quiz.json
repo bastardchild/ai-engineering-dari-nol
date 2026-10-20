@@ -1,0 +1,78 @@
+{
+  "lesson": "44-cosine-lr-warmup",
+  "title": "Cosine LR dengan Linear Warmup",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa jadwal cosine-with-warmup mulai dari nol alih-alih lr_max?",
+      "options": [
+        "Tradisi acak",
+        "Karena lr_max ilegal di langkah nol",
+        "Seribu update pertama berisik; ramp linear dari nol ke lr_max memberi optimizer ukuran langkah efektif kecil saat estimasi berjalan stabil",
+        "Karena Adam mewajibkannya"
+      ],
+      "correct": 2,
+      "explanation": "Warmup menjaga update awal yang rapuh tetap kecil; jika tidak, model bisa divergen atau plateau."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa jadwal diimplementasikan sebagai satu fungsi atas step alih-alih tiga segmen yang dilem?",
+      "options": [
+        "Jadwal yang dilem kehilangan satu batas pertama kali lr_max diubah; fungsi tunggal mengevaluasi ekspresi closed-form yang sama dan mempertahankan kontinuitas di warmup dan endpoint total",
+        "Linter mewajibkannya",
+        "Acak",
+        "Fungsi tunggal lebih kecil"
+      ],
+      "correct": 0,
+      "explanation": "Kontinuitas di lr(warmup_steps) dan lr(total_steps) mengikuti bentuk closed-form."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi untuk step > total_steps dalam jadwal?",
+      "options": [
+        "Mengembalikan nan",
+        "Melempar exception",
+        "Berputar kembali",
+        "Terpaku di lr_min; jadwal tidak mengekstrapolasi, dan trainer yang perlu memperpanjang training mengubah total_steps secara eksplisit"
+      ],
+      "correct": 3,
+      "explanation": "Lantai terpaku menjaga trainer yang overshoot dalam state terdokumentasi alih-alih crash."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mencatat norm L2 gradien di samping learning rate?",
+      "options": [
+        "Tradisi",
+        "Norm adalah separuh lain kesehatan training: run divergen melonjakkan norm sebelum loss; puncak terlalu agresif muncul sebagai norm yang tetap tinggi setelah warmup",
+        "Itu terlihat cantik",
+        "Adam mewajibkannya"
+      ],
+      "correct": 1,
+      "explanation": "Co-logging membuat jadwal patologis terlihat saat runtime, bukan setelah fakta."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mengonfigurasi warmup_steps sebagai fraksi total_steps di produksi?",
+      "options": [
+        "Fraksi lebih bersih",
+        "Hitungan warmup tetap yang cocok untuk run 20k langkah pada dasarnya bukan warmup dalam run 200M langkah; fraksi (biasanya 1-3 persen) diskalakan dengan durasi training",
+        "Kebutuhan hardware",
+        "Preferensi acak"
+      ],
+      "correct": 1,
+      "explanation": "Hitungan warmup absolut berperilaku buruk lintas skala durasi training."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa lr_min non-nol tipikal di produksi?",
+      "options": [
+        "Lantai sekitar 10 persen lr_max membuat optimizer tetap belajar selama ekor panjang; lr_min nol menghasilkan kurva yang terlihat bagus dan model yang belum selesai training",
+        "Stabilitas numerik",
+        "Kompatibilitas mundur",
+        "Adam membutuhkan non-nol"
+      ],
+      "correct": 0,
+      "explanation": "Ekor jadwal adalah tempat penyempurnaan fase akhir mendarat; menolkan-nya membuang sinyal itu."
+    }
+  ]
+}

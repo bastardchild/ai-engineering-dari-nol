@@ -1,0 +1,66 @@
+{
+  "lesson": "04-pre-training-mini-gpt",
+  "title": "Pre-Training Mini GPT (124M Parameter)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Tujuan training apa yang dipakai GPT selama pre-training?",
+      "options": [
+        "Klasifikasi kalimat",
+        "Prediksi token berikutnya: diberikan token sebelumnya, prediksi token berikutnya",
+        "Penyelarasan gambar-teks",
+        "Masked language modeling (memprediksi token yang dimask)"
+      ],
+      "correct": 1,
+      "explanation": "GPT adalah model bahasa kausal (autoregresif) yang dilatih dengan prediksi token berikutnya. Diberikan token [t1, t2, ..., tn], ia belajar memprediksi tn+1. Loss-nya adalah cross-entropy antara token berikutnya yang diprediksi dan yang sebenarnya."
+    },
+    {
+      "stage": "pre",
+      "question": "Berapa banyak layer transformer, attention head, dan dimensi embedding yang dimiliki GPT-2 Small (124M)?",
+      "options": [
+        "24 layer, 16 head, 1024 dimensi",
+        "6 layer, 6 head, 512 dimensi",
+        "48 layer, 25 head, 1600 dimensi",
+        "12 layer, 12 head, 768 dimensi"
+      ],
+      "correct": 3,
+      "explanation": "GPT-2 Small memiliki 12 layer transformer, 12 attention head per layer, dan embedding 768 dimensi. Arsitektur ini memiliki 124 juta parameter dan dapat dilatih pada satu GPU dalam beberapa jam."
+    },
+    {
+      "stage": "post",
+      "question": "Apa peran causal attention mask pada GPT?",
+      "options": [
+        "Ia mencegah setiap token memperhatikan token masa depan, memastikan model hanya dapat memakai konteks masa lalu untuk prediksi",
+        "Ia mengurangi penggunaan memori selama training",
+        "Ia memask skor attention dengan keyakinan rendah",
+        "Ia mencegah attention ke token padding"
+      ],
+      "correct": 0,
+      "explanation": "Causal mask adalah matriks segitiga yang mengatur posisi masa depan ke -infinity sebelum softmax. Token pada posisi 5 dapat memperhatikan posisi 1-5 tetapi tidak 6+. Ini memastikan model menghasilkan token dari kiri ke kanan."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dikontrol 'temperature' selama generasi teks?",
+      "options": [
+        "Keacakan pemilihan token: temperature lebih rendah membuat output lebih deterministik, lebih tinggi membuatnya lebih beragam",
+        "Kecepatan generasi",
+        "Jumlah token yang dihasilkan",
+        "Ambang keyakinan model"
+      ],
+      "correct": 0,
+      "explanation": "Temperature membagi logits sebelum softmax. Temperature=0.1 membuat distribusi sangat memuncak (hampir deterministik). Temperature=1.0 adalah distribusi training. Temperature>1.0 meratakannya, meningkatkan keacakan."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pre-training membutuhkan komputasi yang jauh lebih besar daripada fine-tuning?",
+      "options": [
+        "Pre-training memproses triliunan token dari nol untuk mempelajari pola bahasa umum, sementara fine-tuning menyesuaikan model yang sudah mampu pada ribuan contoh",
+        "Pre-training memakai arsitektur berbeda",
+        "Pre-training memakai ukuran batch lebih besar",
+        "Fine-tuning tidak memakai gradien"
+      ],
+      "correct": 0,
+      "explanation": "Pre-training membangun seluruh pengetahuan bahasa dari bobot acak atas triliunan token. Fine-tuning dimulai dari bobot yang sudah dipelajari ini dan menyesuaikannya pada dataset yang jauh lebih kecil (ribuan hingga jutaan contoh)."
+    }
+  ]
+}

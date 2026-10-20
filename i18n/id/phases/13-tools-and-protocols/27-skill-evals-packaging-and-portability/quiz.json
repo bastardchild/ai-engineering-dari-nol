@@ -1,0 +1,78 @@
+{
+  "lesson": "27-skill-evals-packaging-and-portability",
+  "title": "Eval Skill, Packaging, dan Portabilitas",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Set evaluasi mana yang paling baik mengungkap apakah deskripsi skill over-trigger pada model lesson?",
+      "options": [
+        "Prompt positif yang jelas plus prompt yang semantiknya dekat tetapi harus tetap negatif",
+        "Hanya satu demonstrasi end-to-end yang sukses",
+        "Daftar ekstensi file yang didukung",
+        "Hanya prompt yang disalin dari nama skill"
+      ],
+      "correct": 0,
+      "explanation": "Positif mudah mengukur apakah tugas yang dimaksud dapat memicu. Negatif near-miss mengukur apakah tugas yang berdekatan memicu secara keliru, yang diperlukan untuk menghitung false positive dan presisi."
+    },
+    {
+      "stage": "check",
+      "question": "Uji trigger memiliki 8 true positive dan 2 false positive. Berapa presisinya?",
+      "options": [
+        "Recall 0.8, tetapi presisi tidak dapat dihitung",
+        "0.8",
+        "0.2",
+        "1.0"
+      ],
+      "correct": 1,
+      "explanation": "Presisi adalah true positive dibagi seluruh prediksi positif: 8 / (8 + 2) = 0.8. Recall membutuhkan jumlah false negative, yang tidak diberikan skenario ini."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa membandingkan artefak baseline dan with-skill memakai asersi yang sama?",
+      "options": [
+        "Untuk menjamin skill bekerja di setiap host",
+        "Untuk menghapus kebutuhan uji trigger",
+        "Agar skill dapat mengubah hasil yang diharapkan selama evaluasi",
+        "Untuk mengukur apakah skill meningkatkan output tugas, bukan sekadar teraktivasi"
+      ],
+      "correct": 3,
+      "explanation": "Aktivasi bukan hasil akhir. Kontrak artefak bersama menguji apakah pemuatan skill mengubah heading, bukti, schema, atau konten terlarang yang diwajibkan sambil menjaga pengukuran tetap sebanding dengan baseline."
+    },
+    {
+      "stage": "check",
+      "question": "Host memuat SKILL.md tetapi menghilangkan `references/` dan `scripts/` saat instalasi. Bagaimana matriks portabilitas mengklasifikasikan bundle yang memerlukan keduanya?",
+      "options": [
+        "Native, karena frontmatter dimuat",
+        "Adapter required, dengan kemampuan companion-file dan skrip yang hilang dicantumkan",
+        "Unsupported, meskipun adapter dapat mempertahankan file",
+        "Dijamin portabel setelah mengganti nama direktori"
+      ],
+      "correct": 1,
+      "explanation": "Host memahami file inti, jadi tidak sepenuhnya unsupported. Host tetap tidak dapat memenuhi persyaratan paket secara native, dan matriks harus menyebut pekerjaan adapter yang tepat alih-alih meratakan portabilitas menjadi ya atau tidak."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang ditambahkan rate eksekusi berulang melampaui satu evaluasi trigger yang lulus?",
+      "options": [
+        "Pengganti lint struktur paket",
+        "Izin bagi skill untuk mengeksekusi skrip yang dibundel",
+        "Bukti tentang konsistensi lintas beberapa eksekusi setiap kasus",
+        "Perintah invocation host universal"
+      ],
+      "correct": 2,
+      "explanation": "Satu eksekusi dapat menyembunyikan nondeterminisme. Rate eksekusi berulang per kasus mengungkap aktivasi atau produksi artefak yang flaky, sedangkan lint struktur, izin runtime, dan adapter host tetap menjadi urusan terpisah."
+    },
+    {
+      "stage": "post",
+      "question": "Gerbang rilis mana yang paling lengkap untuk bundle Agent Skill?",
+      "options": [
+        "Bundle memiliki banyak file referensi dan deskripsi panjang",
+        "Skill bekerja di mesin penulis tanpa baseline",
+        "SKILL.md ada dan satu prompt positif mengaktifkannya",
+        "Keenam lapisan lulus, nilai captured-mode lokal memiliki digest terikat sumber yang cocok, dan atestasi tepercaya di luar bundle mengikat root bukti lengkap"
+      ],
+      "correct": 3,
+      "explanation": "Keenam lapisan itu adalah struktur paket; routing trigger dengan presisi, recall, dan stabilitas eksekusi berulang; perilaku instruksi dan artefak; kebenaran skrip; keamanan dan otoritas; serta packaging plus portabilitas, termasuk instalasi bersih yang diverifikasi manifest. Setiap lapisan harus lulus. Digest lokal terikat sumber mendeteksi ketidakcocokan tetapi dapat dihitung ulang dengan fixture yang dilabeli ulang, jadi kesiapan produksi juga memerlukan atestasi eksternal yang SHA-256 tepercayanya secara persis mengikat root bukti lengkap."
+    }
+  ]
+}

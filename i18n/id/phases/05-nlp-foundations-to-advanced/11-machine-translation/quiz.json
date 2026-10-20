@@ -1,0 +1,102 @@
+{
+  "lesson": "11-machine-translation",
+  "title": "Machine Translation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang diukur BLEU?",
+      "options": [
+        "Presisi n-gram (biasanya 1-4) antara hipotesis dan referensi, dengan penalti brevity",
+        "Kemiripan cosine embedding",
+        "Akurasi identifikasi bahasa",
+        "F-score tingkat karakter"
+      ],
+      "correct": 0,
+      "explanation": "BLEU adalah rata-rata geometris presisi 1-4-gram terhadap referensi, ditambah penalti brevity."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa memakai sacrebleu alih-alih membuat BLEU sendiri?",
+      "options": [
+        "Ia berjalan di GPU",
+        "Ia lebih akurat",
+        "Ia menormalisasi tokenisasi sehingga skor dapat dibandingkan antar makalah dan percobaan",
+        "Ia mendukung streaming"
+      ],
+      "correct": 2,
+      "explanation": "sacrebleu membekukan tokenisasi, menghilangkan sumber umum angka BLEU yang tidak dapat dibandingkan."
+    },
+    {
+      "stage": "check",
+      "question": "Pengaturan khusus NLLB mana yang mengontrol bahasa target selama decoding?",
+      "options": [
+        "src_lang",
+        "forced_bos_token_id yang diatur ke token id kode bahasa target",
+        "num_beams",
+        "length_penalty"
+      ],
+      "correct": 1,
+      "explanation": "NLLB memaksa token pertama yang didekode ke kode bahasa target melalui forced_bos_token_id."
+    },
+    {
+      "stage": "check",
+      "question": "Keluarga metrik mana yang menjadi default 2026 untuk kualitas MT produksi di mana data berlabel tersedia?",
+      "options": [
+        "Token edit distance",
+        "Latensi",
+        "BLEU saja",
+        "Metrik yang dipelajari seperti COMET (dan BERTScore/BLEURT) yang dilatih pada penilaian manusia"
+      ],
+      "correct": 3,
+      "explanation": "Metrik yang dipelajari seperti COMET berkorelasi lebih kuat dengan penilaian manusia daripada BLEU/chrF saja."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan chrF cenderung lebih informatif daripada BLEU?",
+      "options": [
+        "Untuk bahasa dengan morfologi kaya di mana kecocokan tingkat karakter menangkap varian infleksi yang dilewatkan BLEU",
+        "Saat memakai beam search",
+        "Pada kalimat sangat pendek",
+        "Setiap kali referensi tersedia"
+      ],
+      "correct": 0,
+      "explanation": "F-score karakter menangkap kecocokan morfologis parsial yang kurang dihitung BLEU tingkat kata."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu off-target generation dalam MT multibahasa?",
+      "options": [
+        "Output yang membuang entitas bernama",
+        "Model mendekode ke bahasa target yang salah (misalnya NLLB mengeluarkan bahasa Spanyol padahal yang diminta bahasa Prancis)",
+        "Output yang terlalu pendek",
+        "Output yang melewatkan tanda baca"
+      ],
+      "correct": 1,
+      "explanation": "Off-target generation umum pada pasangan bahasa langka; pemeriksaan ID bahasa pasca-terjemahan menangkapnya."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa fine-tuning pada beberapa ribu pasangan domain berkualitas tinggi sering mengalahkan data web berisik yang jauh lebih besar?",
+      "options": [
+        "Kualitas dan kecocokan domain mendominasi volume; data paralel berisik menimbulkan pergeseran dan halusinasi",
+        "Dataset lebih kecil berlatih lebih cepat",
+        "Data web ilegal dipakai",
+        "Data lebih besar meluap dari memori GPU"
+      ],
+      "correct": 0,
+      "explanation": "Pasangan bersih yang selaras domain adalah tuas produksi terbesar; data berisik menurunkan adaptasi."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan LLM (misalnya GPT-4) mungkin mengungguli model MT khusus pada 2026?",
+      "options": [
+        "Terjemahan browser yang kritis latensi",
+        "Konten idiomatis, konteks panjang, adaptasi gaya melalui prompting, atau konten yang memerlukan kontrol nada",
+        "Terjemahan batch dengan throughput tertinggi",
+        "Pasangan bahasa kecil dengan jutaan kalimat paralel"
+      ],
+      "correct": 1,
+      "explanation": "LLM menang pada terjemahan idiomatis, konteks panjang, atau gaya terkontrol; MT khusus menang pada throughput dan latensi."
+    }
+  ]
+}

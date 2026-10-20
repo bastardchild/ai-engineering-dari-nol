@@ -1,0 +1,78 @@
+{
+  "lesson": "15-batch-apis",
+  "title": "API Batch — Diskon 50% sebagai Standar Industri",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa penawaran API batch yang umum di OpenAI, Anthropic, dan Google pada 2026?",
+      "options": [
+        "Diskon 90% dengan turnaround 7 hari",
+        "Diskon 50% dengan turnaround 24 jam",
+        "Diskon 10% dengan turnaround 1 jam",
+        "Gratis jika di bawah 1k token"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang sebenarnya dijamin oleh \"turnaround 24 jam\" dalam kerangka pelajaran ini?",
+      "options": [
+        "24 jam adalah TTL cache",
+        "Provider berjanji mengembalikan dalam 24 jam, dengan P50 tipikal sekitar 2-6 jam",
+        "Batch selalu memakan waktu 24 jam",
+        "Hanya batch di bawah 1k permintaan yang memenuhi syarat"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana menumpuk batch dengan input ter-cache mengubah tagihan dibanding sinkron tanpa cache pada beban kerja dengan system prompt bersama?",
+      "options": [
+        "Itu hanya membantu jika model ada di Vertex",
+        "Itu bisa turun ke sekitar 10% dari baseline sinkron tanpa cache",
+        "Itu menaikkan biaya 50%",
+        "Itu tidak berpengaruh karena caching otomatis"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Jalur triase beban kerja mana yang salah dijadikan default pada 2026 untuk pipeline konten dan pelabelan offline?",
+      "options": [
+        "Hybrid batch-dan-cache",
+        "Interaktif, karena terdengar mendesak",
+        "Batch, karena pengguna tidak melihat keterlambatan 24 jam",
+        "Semi-interaktif dengan antrean async"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa jebakan skema output antar provider?",
+      "options": [
+        "Semua provider memakai format JSONL OpenAI yang sama",
+        "Format file batch berbeda per provider (OpenAI JSONL, Anthropic JSONL, Vertex BigQuery/GCS), jadi klien portabel butuh adapter per provider",
+        "Vertex hanya menerima Parquet",
+        "JSONL tidak didukung Anthropic"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Menurut pelajaran ini, apa aturan keputusan paling sederhana untuk mengarahkan beban kerja ke batch?",
+      "options": [
+        "Jika prompt di bawah 1k token, batch-kan",
+        "Jika pengguna tidak akan menyadari pengiriman 24 jam, selalu batch (dan tumpuk caching)",
+        "Batch hanya jika gateway mewajibkannya",
+        "Jika memakai tool, batch-kan"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

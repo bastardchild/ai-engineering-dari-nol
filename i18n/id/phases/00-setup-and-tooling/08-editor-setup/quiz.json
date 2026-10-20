@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa itu Language Server Protocol (LSP)?",
+      "options": ["Protokol untuk mentransfer file antar editor", "Format kompresi untuk file kode sumber", "Protokol jaringan untuk pair programming jarak jauh", "Standar bagi editor untuk menerima info tipe, completion, dan diagnostik dari server khusus bahasa"],
+      "correct": 3,
+      "explanation": "LSP adalah protokol terstandar yang memungkinkan editor berkomunikasi dengan language server untuk fitur seperti autocomplete, pemeriksaan tipe, dan diagnostik error, apa pun editor yang dipakai."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa format-on-save berguna untuk proyek tim?",
+      "options": ["Memastikan gaya kode konsisten di semua kontributor tanpa pemformatan manual", "Mengompresi kode agar operasi git lebih cepat", "Mengurangi ukuran file dengan menghapus spasi", "Menangkap bug runtime sebelum kode dieksekusi"],
+      "correct": 0,
+      "explanation": "Format-on-save menjalankan formatter (seperti Black atau Ruff) setiap kali kamu menyimpan, memastikan semua kode mengikuti konvensi gaya yang sama siapa pun penulisnya."
+    },
+    {
+      "stage": "post",
+      "question": "Ekstensi VS Code mana yang memungkinkan mengedit kode di mesin GPU jarak jauh seolah-olah lokal?",
+      "options": ["Pylance", "Debugpy", "GitLens", "Remote SSH"],
+      "correct": 3,
+      "explanation": "Remote SSH memasang server VS Code ringan di mesin jarak jauh dan menyalurkan UI ke editor lokalmu, sehingga kamu bisa mengedit file, menjalankan terminal, dan debug dari jarak jauh."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa 'notebook.output.scrolling' sebaiknya diaktifkan di pengaturan VS Code untuk pekerjaan AI?",
+      "options": ["Mengaktifkan animasi scroll halus di editor", "Memungkinkan scroll antar sel notebook dengan roda mouse", "Mengaktifkan scroll horizontal untuk dataframe lebar", "Mencegah output training loop (ribuan baris) membanjiri panel output"],
+      "correct": 3,
+      "explanation": "Training loop dapat mencetak ribuan baris output. Tanpa output scrolling, panel output notebook tumbuh tanpa batas dan membuat notebook tidak bisa dipakai."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dicapai dengan mengatur 'python.analysis.typeCheckingMode' ke 'basic' di VS Code?",
+      "options": ["Mengaktifkan penyorotan sintaks untuk file Python", "Memformat kode Python sesuai standar PEP 8", "Mengaktifkan fitur bahasa Python 3.12", "Menangkap tipe argumen salah dan ketidakcocokan bentuk tensor sebelum kode dijalankan"],
+      "correct": 3,
+      "explanation": "Pemeriksaan tipe basic dengan Pylance menandai ketidakcocokan tipe, tipe argumen salah, dan parameter API yang keliru saat mengedit, menangkap bug sebelum kamu menjalankan skrip pelatihan yang mungkin mahal."
+    }
+  ]
+}

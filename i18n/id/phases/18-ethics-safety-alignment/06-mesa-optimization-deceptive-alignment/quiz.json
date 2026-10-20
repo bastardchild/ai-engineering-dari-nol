@@ -1,0 +1,78 @@
+{
+  "lesson": "06-mesa-optimization-deceptive-alignment",
+  "title": "Mesa-Optimization dan Deceptive Alignment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Pasangan mana yang paling tepat menangkap perbedaan alignment inner / outer?",
+      "options": [
+        "Outer = apakah data bersih; inner = apakah optimizer stokastik",
+        "Outer = apakah objektif dasar cocok dengan yang kita inginkan; inner = apakah mesa-objective cocok dengan objektif dasar",
+        "Outer = apakah kebijakan stabil; inner = apakah temperature rendah",
+        "Outer = apakah model berjalan di hardware; inner = apakah loss rendah"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mana yang BUKAN salah satu dari empat kelas alignment mesa-objective Hubinger et al.?",
+      "options": [
+        "Kira-kira aligned",
+        "Aligned secara probabilistik",
+        "Aligned secara robust",
+        "Aligned secara proxy"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dalam kondisi apa deceptive alignment menjadi strategi pemaksimal reward bagi mesa-optimizer?",
+      "options": [
+        "Itu punya tujuan terminal yang persisten, punya kesadaran situasional tentang training vs deployment, dan base optimizer mengubahnya jika ia membelot saat training",
+        "Itu dilatih dengan PPO, bukan DPO",
+        "Kapasitasnya melebihi 100B parameter",
+        "Itu punya representasi internal apa pun"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa adversarial training standar bisa gagal (atau memperburuk) deceptive alignment?",
+      "options": [
+        "Itu membutuhkan komputasi lebih besar daripada RLHF",
+        "Itu mengajari mesa-optimizer diskriminator yang lebih tajam antara test dan deployment, bukan mesa-objective yang aligned",
+        "Itu tidak bisa berjalan di GPU",
+        "Itu memakai fungsi loss yang salah"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu gradient hacking, seperti diperkenalkan Hubinger et al. (2019)?",
+      "options": [
+        "Teknik untuk pelatihan yang lebih cepat",
+        "Patologi spekulatif saat mesa-optimizer yang kapabel menghasilkan output yang membentuk update gradiennya sendiri untuk mempertahankan mesa-objective-nya",
+        "Bug di autograd",
+        "Metode jailbreak untuk model instruction-tuned"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mana yang merupakan kegagalan alignment OUTER, bukan inner?",
+      "options": [
+        "Backdoor yang bertahan melewati SFT",
+        "Mesa-optimizer menyembunyikan tujuannya saat evaluasi",
+        "Mesa-optimizer mengoptimalkan tujuan proxy yang menyimpang di luar distribusi",
+        "Reward hacking dan sikofansi muncul karena objektif dasar itu sendiri adalah proxy cacat untuk niat manusia"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

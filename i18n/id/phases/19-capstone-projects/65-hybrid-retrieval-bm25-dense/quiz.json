@@ -1,0 +1,78 @@
+{
+  "lesson": "65-hybrid-retrieval-bm25-dense",
+  "title": "Hybrid Retrieval dengan BM25 dan Embedding Dense",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa endpoint RAG produksi membutuhkan retrieval leksikal dan semantik sekaligus?",
+      "options": [
+        "Pencarian leksikal diwajibkan hukum untuk kepatuhan",
+        "Retrieval semantik selalu lebih akurat",
+        "Itu memangkas separuh ukuran indeks",
+        "Distribusi query mencampur query identifier literal dan parafrase; satu modalitas gagal pada masing-masing kelas"
+      ],
+      "correct": 3,
+      "explanation": "BM25 mendominasi pada simbol literal; dense mendominasi pada parafrase. Endpoint nyata menerima kedua kelas dari pengguna yang sama."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa parameter b BM25 pada default 0.75?",
+      "options": [
+        "Jumlah field dalam dokumen",
+        "Eksponen waktu query pada cosine similarity",
+        "Pengali pada suku IDF",
+        "Knob normalisasi panjang: dokumen lebih panjang dihukum tetapi tidak linear"
+      ],
+      "correct": 3,
+      "explanation": "b berinterpolasi antara tanpa normalisasi panjang (0) dan normalisasi penuh (1); 0.75 adalah rekomendasi terbitan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dihitung Reciprocal Rank Fusion untuk setiap kandidat?",
+      "options": [
+        "Rata-rata skor BM25 dan dense setelah normalisasi min-max",
+        "Jumlah 1 / (k + rank) di setiap daftar berperingkat yang memuat kandidat",
+        "Produk cosine similarity lintas modalitas",
+        "Median peringkat lintas modalitas"
+      ],
+      "correct": 1,
+      "explanation": "RRF menjumlahkan kontribusi 1 / (k + rank) per daftar berperingkat; k = 60 adalah default terbitan."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa fusion berbasis peringkat lebih disukai daripada interpolasi linear skor BM25 dan cosine?",
+      "options": [
+        "Skor cosine tidak terbatas",
+        "Skor BM25 tidak terbatas dan bergantung korpus; cosine terbatas di -1 sampai 1; skala skor tidak dapat dibandingkan lintas korpus",
+        "Skor BM25 tidak bisa diurutkan",
+        "Interpolasi linear membutuhkan dukungan GPU"
+      ],
+      "correct": 1,
+      "explanation": "Interpolasi skor rusak setiap reindex karena distribusi skor bergeser; peringkat dapat dibandingkan lintas modalitas secara konstruksi."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang terjadi pada RRF saat konstanta k dibuat sangat kecil?",
+      "options": [
+        "Fusion menjadi setara dengan jumlah skor linear",
+        "Kontribusi top-1 mendominasi fusion; peringkat dalam hampir tidak berkontribusi",
+        "Term di luar korpus mendapat skor positif",
+        "Fusion mengabaikan modalitas kedua"
+      ],
+      "correct": 1,
+      "explanation": "k kecil memusatkan kontribusi peringkat-1; k besar meratakan kurva kontribusi dan membiarkan kandidat dalam ikut memilih."
+    },
+    {
+      "stage": "post",
+      "question": "Mode kegagalan mana yang secara khusus dihindari field weighting lewat pengulangan token?",
+      "options": [
+        "Menambah langkah agregasi skor kedua saat query; matematikanya tetap identik dan logika kombinasi skor per field tidak diperlukan",
+        "Embedding out-of-vocabulary",
+        "IDF BM25 runtuh ke nol",
+        "Cosine similarity menjadi negatif"
+      ],
+      "correct": 0,
+      "explanation": "Mengulang token saat index time mengalikan term frequency, yang memungkinkan matematika skor BM25 tetap satu penjumlahan alih-alih combinator skor field terpisah."
+    }
+  ]
+}

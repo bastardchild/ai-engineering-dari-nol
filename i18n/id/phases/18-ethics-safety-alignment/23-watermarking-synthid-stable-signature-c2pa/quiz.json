@@ -1,0 +1,78 @@
+{
+  "lesson": "23-watermarking-synthid-stable-signature-c2pa",
+  "title": "Watermarking - SynthID, Stable Signature, C2PA",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Bagaimana watermarking token gaya Kirchenbauer (SynthID-text) menyematkan sinyal?",
+      "options": [
+        "Dengan mengenkripsi output memakai public key",
+        "Pada setiap langkah decoding, hash K token sebelumnya untuk mempartisi kosakata menjadi set hijau/merah dan bias sampling ke hijau; deteksi menghitung token hijau lewat z-score",
+        "Dengan menyisipkan komentar HTML tersembunyi",
+        "Dengan mengubah template prompt"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa batasan utama watermark teks terhadap parafrase?",
+      "options": [
+        "Parafrase hanya memengaruhi watermark gambar",
+        "Itu sebenarnya bertahan terhadap parafrase",
+        "Parafrase memperkuat watermark",
+        "Menulis ulang atau memparafrase teks merusak sinyal statistik token hijau"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan Stable Signature (Fernandez et al., ICCV 2023)?",
+      "options": [
+        "Menambahkan watermark terlihat di sudut gambar",
+        "Menandatangani metadata dengan private key",
+        "Memakai C2PA untuk menandatangani gambar saat unggah",
+        "Fine-tune decoder latent diffusion agar setiap gambar yang dihasilkan membawa pesan tersemat tetap yang bisa dideteksi dari latent"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditunjukkan hasil 'Stable Signature is Unstable' Mei 2024?",
+      "options": [
+        "Watermark terbukti tidak bisa dipalsukan",
+        "Watermark memerlukan C2PA untuk berfungsi",
+        "Watermark hanya gagal pada kompresi JPEG",
+        "Fine-tuning decoder pasca-generasi bisa menghapus watermark sambil mempertahankan kualitas gambar, melemahkan ketahanan adversarial"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana metadata C2PA dan watermarking saling melengkapi?",
+      "options": [
+        "C2PA menggantikan watermark sepenuhnya",
+        "Metadata bisa dihapus tetapi membawa rantai provenance yang kaya; watermark bertahan melewati transcoding tetapi membawa sedikit bit; berlapis, keduanya memberi cerita provenance yang bisa dipakai",
+        "Watermark ditandatangani dengan kunci yang sama dengan C2PA",
+        "Keduanya bisa saling menggantikan"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa 'tidak ada sinyal SynthID' BUKAN bukti keaslian (berasal dari manusia)?",
+      "options": [
+        "Karena SynthID closed-source",
+        "Karena SynthID selalu menghasilkan false positive pada teks manusia",
+        "Karena SynthID hanya memberi watermark pada generasi dari model yang mengaktifkan SynthID; konten dari model apa pun tanpa SynthID tidak berwatermark secara default",
+        "Karena SynthID hanya berjalan pada output Gemini"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dalam pola VLM ViT-MLP-LLM, komponen mana yang paling umum dilatih sementara yang lain dibekukan selama alignment?",
+      "options": ["Semua komponen selalu dilatih bersama", "Encoder vision", "LLM", "Projector (MLP 2-4 layer antara ViT dan LLM) — ia memetakan token vision ke ruang embedding LLM dan membawa sebagian besar sinyal penyelarasan lintas modalitas"],
+      "correct": 3,
+      "explanation": "Resep VLM standar melatih projector terlebih dahulu dengan ViT dan LLM dibekukan (tahap alignment), lalu opsional membuka semua untuk pre-training dan instruction tuning. Projector berukuran kecil (puluhan hingga ratusan juta parameter) dan menanggung beban jembatan modalitas. Fine-tuning di produksi sering hanya melatih projector + LoRA pada attention — murah dan efektif."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan DeepStack (dipakai di Qwen3-VL)?",
+      "options": ["Menggandakan kedalaman LLM", "Hanya memakai fitur layer ViT terdalam", "Menumpuk fitur dari beberapa kedalaman ViT sebelum proyeksi, sehingga LLM melihat semantik tingkat tinggi (layer dalam) sekaligus detail spasial halus (layer dangkal)", "Skema kuantisasi khusus"],
+      "correct": 2,
+      "explanation": "VLM vanilla hanya memproyeksikan fitur ViT layer terakhir. DeepStack menyampel beberapa kedalaman, menggabungkannya, lalu memproyeksikan. Layer dalam memberi semantik ('ini grafik'); layer dangkal memberi posisi dan tekstur ('batang di x=120 berwarna merah'). Kombinasi ini menutup jurang grounding pada tugas yang memerlukan lokalisasi halus, seperti aksi agen GUI atau dense captioning."
+    },
+    {
+      "stage": "post",
+      "question": "VLM produksi menunjukkan keyakinan teks tinggi tetapi teks yang dihasilkan mendeskripsikan objek yang tidak ada dalam gambar. Metrik mana yang menangkap kegagalan ini?",
+      "options": ["Latensi pembangkitan token", "Akurasi pada MMMU", "Cross-Modal Error Rate (CMER) — fraksi output di mana keyakinan teks tinggi tetapi cosine similarity gambar-teks (melalui pemeriksa keluarga CLIP) rendah; ~12% tipikal pada data web tanpa kurasi", "Perplexity"],
+      "correct": 2,
+      "explanation": "CMER adalah KPI penyelarasan produksi. Ia menangkap pola halusinasi VLM klasik: model yakin dengan teksnya, tetapi teksnya tidak ter-grounding pada gambar. Pantau CMER per endpoint dan jenis prompt; perlakukan CMER yang naik sebagai sinyal bahwa model bergeser keluar distribusi atau menghadapi kategori prompt yang tidak dapat ditanganinya. Skywork.ai memangkas halusinasi ~35% dengan menjadikan CMER KPI kelas satu."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa VLM modern memakai SigLIP atau encoder vision kustom alih-alih ResNet ImageNet supervised sebagai backbone?",
+      "options": ["SigLIP memiliki lebih banyak parameter", "ResNet tidak dapat menghasilkan token", "SigLIP lebih cepat", "Encoder bergaya CLIP/SigLIP dilatih bersama teks, sehingga ruang outputnya sudah kira-kira selaras dengan bahasa; projector kemudian jauh lebih sedikit bekerja dan model menalar lebih baik tentang konsep visual-tekstual"],
+      "correct": 3,
+      "explanation": "Pretraining vision-language membentuk encoder agar hidup di ruang yang kompatibel dengan teks. ResNet ImageNet supervised dilatih tanpa sinyal teks apa pun, sehingga menjembatani ke LLM memerlukan projector jauh lebih besar dan lebih banyak data. Encoder CLIP/SigLIP/DINOv3 menghasilkan fitur yang dapat dikonsumsi LLM dengan beberapa layer linear. Hampir setiap VLM SOTA memakai encoder keluarga CLIP atau SigLIP karena alasan ini."
+    },
+    {
+      "stage": "post",
+      "question": "Qwen3-VL-235B-A22B meraih skor teratas pada OSWorld. Apa itu OSWorld, dan apa implikasinya?",
+      "options": ["Benchmark agen di mana model mengoperasikan GUI desktop — mengidentifikasi tombol, membaca status UI, mengeluarkan aksi; skor teratas Qwen3-VL menyiratkan VLM kini layak menjadi agen visual untuk otomasi GUI", "Benchmark estimasi pose", "Benchmark sintetis", "Benchmark video QA"],
+      "correct": 0,
+      "explanation": "OSWorld menguji apakah model dapat secara otonom mengoperasikan lingkungan desktop melalui tangkapan layar. Skor global teratas Qwen3-VL menunjukkan paradigma 'agen visual' — VLM membaca layar, memutuskan aksi, memanggil alat mouse/keyboard — telah masuk wilayah praktis. Inilah yang dijalankan demo AI PC 2026; ini juga jalur langsung ke QA otomatis, RPA, dan produk aksesibilitas."
+    }
+  ]
+}

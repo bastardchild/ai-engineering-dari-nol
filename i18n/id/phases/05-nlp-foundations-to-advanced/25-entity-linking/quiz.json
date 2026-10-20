@@ -1,0 +1,102 @@
+{
+  "lesson": "25-entity-linking",
+  "title": "Entity Linking & Disambiguasi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang ditambahkan entity linking di atas NER?",
+      "options": [
+        "Polaritas sentimen",
+        "POS tag",
+        "Ia memetakan setiap penyebutan terdeteksi ke entri unik dalam basis pengetahuan (Wikidata, Wikipedia, atau KB domain)",
+        "Terjemahan"
+      ],
+      "correct": 2,
+      "explanation": "EL mengubah penyebutan menjadi id KB kanonik, mendisambiguasi entitas bernama sama."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa dua subtugas utama dalam entity linking?",
+      "options": [
+        "Candidate generation (daftar pendek entri KB yang masuk akal) dan disambiguasi (pilih yang benar berdasarkan konteks)",
+        "Embedding dan clustering",
+        "POS tagging dan lemmatization",
+        "Tokenization dan parsing"
+      ],
+      "correct": 0,
+      "explanation": "EL terurai menjadi mengusulkan kandidat lalu memeringkatnya berdasarkan kecocokan kontekstual."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mention recall harus dilaporkan bersama akurasi disambiguasi?",
+      "options": [
+        "Disambiguasi tidak dapat pulih dari kandidat yang hilang; pipeline dibatasi oleh recall candidate-generation",
+        "Mention recall diwajibkan GDPR",
+        "Recall diwajibkan spaCy",
+        "Recall menggantikan precision"
+      ],
+      "correct": 0,
+      "explanation": "Jika kandidat melewatkan entitas emas, tidak ada disambiguator yang dapat memperbaikinya; recall membatasi kualitas pipeline."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana GENRE melakukan entity linking?",
+      "options": [
+        "Mendekode nama kanonik entitas token demi token di bawah constrained decoding atas trie id KB yang valid",
+        "Dengan menghitung TF-IDF",
+        "Dengan BM25",
+        "Dengan PageRank"
+      ],
+      "correct": 0,
+      "explanation": "GENRE menghasilkan nama KB kanonik dengan constrained decoding untuk menjamin id valid."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu penanganan NIL dalam entity linking?",
+      "options": [
+        "Melewati setiap penyebutan",
+        "Mengembalikan seluruh daftar kandidat",
+        "Mengubah input menjadi huruf kecil",
+        "Memprediksi label 'tidak ada di KB' ketika tidak ada kandidat yang benar-benar cocok (entitas baru, orang tak terkenal)"
+      ],
+      "correct": 3,
+      "explanation": "Prediksi NIL mencegah menebak id KB yang salah untuk entitas yang tidak dicakup KB."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa bias popularitas merugikan entity linking di domain khusus?",
+      "options": [
+        "Model yang dilatih pada data web terlalu sering memprediksi entitas frequent (misalnya Jordan pemain basket alih-alih peneliti ML Michael I. Jordan)",
+        "Popularitas membantu recall",
+        "Ia hanya membiaskan ke entitas lebih tua",
+        "Popularitas menghapus NIL"
+      ],
+      "correct": 0,
+      "explanation": "Prior popularitas memiringkan prediksi menjauh dari tabrakan nama spesifik domain yang kurang umum."
+    },
+    {
+      "stage": "post",
+      "question": "Apa pola LLM-EL yang aman pada 2026?",
+      "options": [
+        "Cukup prompt 'find the entity'",
+        "Melewati candidate generation",
+        "Generasi bebas",
+        "Menyediakan daftar kandidat dan memakai output JSON terbatas di mana LLM hanya dapat memilih dari id KB yang valid"
+      ],
+      "correct": 3,
+      "explanation": "Membatasi LLM ke daftar kandidat valid mencegah id KB karangan dan menjaga output dapat dikueri."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa batas penyebutan NER harus tepat agar entity linking bekerja?",
+      "options": [
+        "Error batas menjalar: 'Bank of America' yang terpotong menjadi 'Bank' memunculkan kandidat salah dan menjatuhkan recall EL",
+        "Batas merusak pencarian Wikipedia",
+        "Presisi batas hanya memengaruhi metrik NER, bukan kualitas kandidat entity-linking",
+        "Batas mengubah tokenization"
+      ],
+      "correct": 0,
+      "explanation": "Penyebutan dengan batas salah mengambil set alias yang salah, menjalarkan error ke disambiguasi."
+    }
+  ]
+}

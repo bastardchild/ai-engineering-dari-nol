@@ -1,0 +1,90 @@
+{
+  "lesson": "02-rag-over-codebase",
+  "title": "Capstone 02 — RAG atas Codebase (Pencarian Semantik Lintas Repo)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa pencarian cosine naif atas chunk mentah tidak cukup untuk pengambilan kode lintas repo?",
+      "options": [
+        "Vector index tidak dapat menyimpan payload lebih dari 1KB",
+        "Cosine similarity tidak terdefinisi pada embedding kode",
+        "Model embedding tidak melihat kode sebagai token",
+        "Hasilnya tercemar pada kode hasil generate, duplikasi monorepo, dan simbol yang jarang diimpor"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa arti chunking sadar-AST dalam pipeline ingestion?",
+      "options": [
+        "Memecah kode menjadi jendela tetap 256 token",
+        "Mengompresi chunk dengan gzip sebelum disimpan",
+        "Memotong pada batas node tree-sitter seperti rentang fungsi dan kelas",
+        "Membuang komentar dan whitespace sebelum embedding"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Tiga modalitas yang dapat diambil apa yang dimiliki setiap chunk dalam pipeline ini?",
+      "options": [
+        "Teks mentah, gzip, dan hash",
+        "Token ID, pohon sintaks, dan call graph",
+        "AST, IR, dan bytecode",
+        "Embedding dense, term BM25, dan ringkasan bahasa alami"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa peran reranker cross-encoder setelah langkah hybrid retrieval?",
+      "options": [
+        "Ia menilai setiap pasangan query-kandidat bersama untuk akurasi lebih tinggi daripada cosine saja",
+        "Ia menulis ulang chunk untuk menghapus kode hasil generate",
+        "Ia menyematkan ulang query dengan model berbeda",
+        "Ia mengompresi chunk sebelum dikirim ke synthesizer"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa synthesizer menolak jawaban tanpa anchor (repo/path:start-end)?",
+      "options": [
+        "Kesetiaan sitasi menjadi gerbang jawaban agar pengguna bisa memverifikasi setiap klaim",
+        "Anchor diwajibkan oleh skema database vektor",
+        "Anchor mengurangi biaya token pada panggilan sintesis",
+        "Anchor dibutuhkan untuk reranking BM25 hilir"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dibutuhkan re-index inkremental agar tetap di bawah 60 detik pada push 50 file?",
+      "options": [
+        "Membuang seluruh symbol graph",
+        "Membuang indeks BM25 dan membangunnya ulang dari nol",
+        "Menyematkan ulang seluruh korpus 2M LOC pada setiap commit",
+        "Menyematkan ulang hanya chunk yang teksnya berubah dan menghitung ulang edge simbol yang terdampak"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Metrik mana yang mengukur apakah klaim yang diambil dapat diverifikasi di sumber?",
+      "options": [
+        "Kesetiaan sitasi",
+        "Latensi query p95",
+        "nDCG@10",
+        "MRR@10"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

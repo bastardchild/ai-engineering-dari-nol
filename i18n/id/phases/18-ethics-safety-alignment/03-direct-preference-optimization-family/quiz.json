@@ -1,0 +1,78 @@
+{
+  "lesson": "03-direct-preference-optimization-family",
+  "title": "Keluarga Direct Preference Optimization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa DPO bisa melewati pelatihan reward model eksplisit?",
+      "options": [
+        "Data preferensi tidak memerlukan reward skalar",
+        "DPO melatih reward model sendiri secara implisit di loop optimisasi kedua",
+        "Optimum RLHF bentuk tertutup memungkinkanmu menyatakan reward sebagai log-rasio kebijakan, yang disubstitusikan ke loss Bradley-Terry",
+        "Preferensi Bradley-Terry kebetulan invarian terhadap fungsi reward"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mode kegagalan apa yang terutama ditangani IPO (Azar et al., 2024) pada DPO?",
+      "options": [
+        "Kewajiban data berpasangan",
+        "Ketergantungan pada reference policy",
+        "Bias panjang pada respons terpilih",
+        "Celah reward implisit tak terbatas dari probabilitas preferensi yang sangat kecil"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kapan kamu memilih KTO dibanding DPO?",
+      "options": [
+        "Saat kamu punya label tunggal tak berpasangan (diinginkan / tidak diinginkan) dan ingin memakai utilitas loss-aversion",
+        "Saat kamu hanya punya data berpasangan dengan margin kuat",
+        "Saat kamu harus menjamin nol drift reward implisit",
+        "Saat kamu ingin menghapus penalti KL sepenuhnya"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Properti apa yang unik pada SimPO dibanding DPO?",
+      "options": [
+        "Itu menghapus reference policy dan menormalisasi log-likelihood dengan panjang sekuens",
+        "Itu memakai loss rasio odds dengan NLL",
+        "Itu mengganti log-sigmoid Bradley-Terry dengan pemetaan identitas",
+        "Itu mempertahankan reference policy dan menambah margin"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa masalah 'Degraded Chosen Response' pada DPO yang disasar BPO?",
+      "options": [
+        "Respons terpilih disampling dengan probabilitas rendah saat inferensi",
+        "Respons terpilih menjadi lebih panjang daripada yang ditolak",
+        "DPO bisa menurunkan log-prob absolut respons terpilih selama log-prob yang ditolak turun lebih cepat",
+        "Respons terpilih tidak ada dalam support reference policy"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Rafailov et al. (NeurIPS 2024) tentang scaling law untuk algoritma direct alignment menunjukkan:",
+      "options": [
+        "DPO over-optimize tetapi IPO dan SimPO tidak",
+        "DAA menghilangkan Goodhart secara desain",
+        "Over-optimization hilang saat data berpasangan melebihi 100k contoh",
+        "DAA menunjukkan bentuk over-optimization peak-and-collapse Gao et al. yang sama pada gold reward"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

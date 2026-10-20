@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Mengapa learning rate konstan biasanya tidak optimal untuk melatih neural network?",
+      "options": ["Ia memakai memori terlalu banyak", "Ia terlalu tinggi untuk akhir training (menyebabkan osilasi) atau terlalu rendah untuk awal training (membuang komputasi)", "Learning rate konstan menyebabkan overfitting", "Ia hanya bekerja dengan SGD"],
+      "correct": 1,
+      "explanation": "Ukuran langkah optimal berubah selama training. Di awal, langkah besar cepat menjelajah. Di akhir, langkah kecil dibutuhkan agar menetap di minimum. Laju konstan tak bisa memenuhi keduanya.",
+      "stage": "pre"
+    },
+    {
+      "question": "Apa tujuan learning rate warmup?",
+      "options": ["Membiarkan statistik optimizer adaptif (momentum, variance) stabil sebelum mengambil langkah besar", "Untuk mencegah overfitting", "Untuk menaikkan batch size secara bertahap", "Untuk menginisialisasi bobot dengan benar"],
+      "correct": 0,
+      "explanation": "Estimasi momen Adam diinisialisasi nol. Update gradient awal berbasis statistik yang belum bisa diandalkan. Warmup mulai dengan LR sangat kecil lalu naik, memberi Adam waktu mengumpulkan estimasi yang bermakna.",
+      "stage": "pre"
+    },
+    {
+      "question": "Jadwal learning rate apa yang dipakai Llama 3, GPT-3, dan sebagian besar LLM modern?",
+      "options": ["Learning rate konstan", "Step decay tiap 30 epoch", "Exponential decay", "Linear warmup diikuti cosine decay"],
+      "correct": 3,
+      "explanation": "Linear warmup + cosine decay adalah standar untuk pelatihan transformer. Llama 3 memakai 2000 langkah warmup dengan cosine decay dari 3e-4 ke 3e-5. Jadwal ini tidak butuh penyetelan milestone.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa yang membuat kebijakan 1cycle berbeda dari jadwal lain?",
+      "options": ["Ia tidak butuh penyetelan hyperparameter", "Ia hanya bekerja dengan SGD", "Ia memakai learning rate konstan", "Ia menaikkan learning rate di paruh pertama training lalu menurunkannya kembali -- fase LR tinggi berperan sebagai regularisasi"],
+      "correct": 3,
+      "explanation": "1cycle dari Leslie Smith menaikkan LR dari rendah ke tinggi (paruh pertama) lalu dari tinggi ke sangat rendah (paruh kedua). Fase LR tinggi membantu model menjelajah lebih banyak bagian lanskap loss sebelum menetap di basin terbaik.",
+      "stage": "post"
+    },
+    {
+      "question": "Jika training loss tiba-tiba melonjak dan divergen, masalah learning rate apa yang paling mungkin?",
+      "options": ["Learning rate terlalu rendah", "Learning rate terlalu tinggi sehingga optimizer melampaui minimum", "Periode warmup terlalu panjang", "Jadwalnya meluruh terlalu lambat"],
+      "correct": 1,
+      "explanation": "Learning rate yang terlalu tinggi membuat optimizer mengambil langkah lebih besar daripada basin loss, melampaui minimum dan menyebabkan loss naik. Ini muncul sebagai divergensi mendadak.",
+      "stage": "post"
+    }
+  ]
+}

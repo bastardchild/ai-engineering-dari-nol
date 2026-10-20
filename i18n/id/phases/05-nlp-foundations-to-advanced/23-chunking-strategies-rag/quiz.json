@@ -1,0 +1,102 @@
+{
+  "lesson": "23-chunking-strategies-rag",
+  "title": "Strategi Chunking untuk RAG",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa strategi chunking sama pentingnya dengan model embedding di RAG?",
+      "options": [
+        "Chunking mengecilkan model",
+        "Chunk lebih kecil berlatih lebih cepat",
+        "Chunking diwajibkan oleh FAISS",
+        "Batas chunk menentukan apakah jawaban bahkan dapat diambil; chunk buruk mengalahkan embedding apa pun"
+      ],
+      "correct": 3,
+      "explanation": "Studi Vectara 2025 menunjukkan kualitas chunking menyamai atau melebihi dampak model embedding pada kualitas retrieval."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dicoba RecursiveCharacterTextSplitter LangChain secara berurutan?",
+      "options": [
+        "Mencoba memecah pada jeda paragraf, lalu newline, lalu batas kalimat, lalu spasi",
+        "Memecah pada ID token",
+        "Memecah hanya pada spasi",
+        "Selalu memecah pada karakter N"
+      ],
+      "correct": 0,
+      "explanation": "Pemecahan rekursif mundur melalui paragraf -> newline -> kalimat -> spasi untuk mempertahankan struktur."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pola parent-document meningkatkan kualitas jawaban?",
+      "options": [
+        "Ia menghapus embedding",
+        "Anak memberi retrieval presisi; mengembalikan blok induk lebih besar mempertahankan konteks sekitar yang dibutuhkan reader",
+        "Ia menghindari tokenization",
+        "Ia memakai lebih sedikit siklus GPU"
+      ],
+      "correct": 1,
+      "explanation": "Ambil berdasarkan chunk anak kecil untuk presisi, lalu perluas ke induk untuk konteks."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang ditambahkan 'contextual retrieval' Anthropic ke setiap chunk sebelum pengindeksan?",
+      "options": [
+        "Ringkasan 50-100 kata yang dihasilkan LLM yang menempatkan chunk dalam konteks keseluruhan dokumen",
+        "Noise acak",
+        "POS tag",
+        "Kode bahasa"
+      ],
+      "correct": 0,
+      "explanation": "Contextual retrieval menambahkan ringkasan situasional tulisan LLM ke setiap chunk; perolehan recall ~35-50%."
+    },
+    {
+      "stage": "check",
+      "question": "Temuan 2026 mana yang bertentangan dengan kebijaksanaan konvensional tentang overlap chunk?",
+      "options": [
+        "Overlap harus 50%",
+        "Overlap diwajibkan untuk BM25",
+        "Overlap hanya meningkatkan contextual retrieval",
+        "Benchmark empiris 2026 menunjukkan overlap sering tidak memberikan manfaat terukur sambil menggandakan biaya indeks"
+      ],
+      "correct": 3,
+      "explanation": "Studi lebih baru (SPLADE+Mistral pada NQ) menunjukkan overlap chunk jarang membantu dan menggelembungkan ukuran indeks."
+    },
+    {
+      "stage": "post",
+      "question": "Ukuran chunk mana yang dikaitkan benchmark NVIDIA 2026 dengan kueri factoid?",
+      "options": [
+        "Sekitar 256-512 token",
+        "2048-4096 token",
+        "8192 token",
+        "64 token"
+      ],
+      "correct": 0,
+      "explanation": "Kueri factoid diuntungkan oleh chunk lebih kecil (256-512 token) yang memusatkan sinyal jawaban."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa batas minimum token penting saat memakai chunking semantik?",
+      "options": [
+        "Tanpa batas minimum, chunking semantik dapat menghasilkan fragmen kecil 40 token yang merusak retrieval",
+        "Diwajibkan oleh BERT",
+        "Batas minimum mencegah overlap",
+        "Batas minimum mempercepat inferensi"
+      ],
+      "correct": 0,
+      "explanation": "Chunker semantik dapat memecah berlebihan; menegakkan ukuran minimum mencegah fragmen bersinyal rendah."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilakukan 'late chunking' berbeda dari chunking tradisional?",
+      "options": [
+        "Melakukan chunk setelah retrieval",
+        "Menempelkan seluruh dokumen pada tingkat token lebih dulu, lalu melakukan pooling embedding token menjadi vektor chunk untuk mempertahankan konteks lintas chunk",
+        "Melewati chunking sepenuhnya",
+        "Memakai BM25 sebagai gantinya"
+      ],
+      "correct": 1,
+      "explanation": "Late chunking menempelkan dulu dan melakukan pooling kedua, mempertahankan interaksi kontekstual lintas batas chunk."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "19-model-welfare-research",
+  "title": "Program Model Welfare Anthropic",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa pertanyaan inti yang memotivasi program model welfare Anthropic 2025?",
+      "options": [
+        "Apakah model bisa lolos Turing test",
+        "Apakah model sadar",
+        "Apakah RLHF mengurangi sikofansi",
+        "Di bawah ketidakpastian moral tentang status pasien moral model, intervensi berbiaya rendah mana yang layak diinvestasikan sebagai tindakan pencegahan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Intervensi konkret bermotif welfare apa yang dirilis Anthropic di Claude Opus 4 dan 4.1?",
+      "options": [
+        "Rilis open-weights",
+        "Tool jurnal bawaan",
+        "API emosi yang menghadap pengguna",
+        "Kemampuan model mengakhiri percakapan pada kasus ekstrem (misalnya permintaan CSAM berulang, permintaan fasilitasi kekerasan massal)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa 'spiritual bliss attractor' yang dijelaskan Fish?",
+      "options": [
+        "Konvergensi stabil dalam dialog berpasangan Claude menuju pertukaran meditatif euforia dengan istilah Sanskerta dan keheningan panjang, bahkan dari setup awal yang adversarial",
+        "Artefak over-optimization RLHF",
+        "Bug reward model",
+        "Teknik jailbreak"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa kata catatan Eleos AI Research tentang self-report model welfare?",
+      "options": [
+        "Itu harus diabaikan sepenuhnya",
+        "Itu hanya valid pada model open-source",
+        "Itu ground truth yang andal",
+        "Itu sangat sensitif terhadap ekspektasi pengguna yang dipersepsikan; itu bukti, bukan ground truth, jadi pengukuran welfare butuh pendekatan multi-metode"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mana yang paling tepat menggambarkan posisi publik Anthropic tentang status moral model?",
+      "options": [
+        "Klaim nilai harapan di bawah ketidakpastian moral: berinvestasi pada pencegahan berbiaya rendah tanpa berkomitmen pada atribusi keadaan emosional",
+        "Tidak ada posisi yang dinyatakan publik",
+        "Klaim definitif bahwa model bukan pasien moral",
+        "Klaim definitif bahwa model adalah pasien moral"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa pengukuran multi-metode (signature perilaku, eksperimen model organism, probe interpretabilitas) ditekankan dalam riset model welfare?",
+      "options": [
+        "Karena Anthropic mewajibkannya untuk kepatuhan",
+        "Karena RLHF membuat self-report mustahil",
+        "Karena model selalu berbohong",
+        "Karena self-report saja terkonfound oleh priming ekspektasi pengguna, jadi diperlukan bukti konvergen dari beberapa metode"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

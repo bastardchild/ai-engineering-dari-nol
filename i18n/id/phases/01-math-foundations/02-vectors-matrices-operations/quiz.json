@@ -1,0 +1,46 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Untuk perkalian matriks (m x n) @ (n x p), apa yang harus benar tentang dimensinya?",
+      "options": ["Baris matriks pertama harus sama dengan kolom matriks kedua", "Dimensi luar m dan p harus cocok", "Kolom matriks pertama harus sama dengan baris matriks kedua", "Setiap dimensi m, n, dan p harus sama"],
+      "correct": 2,
+      "explanation": "Perkalian matriks mengharuskan jumlah kolom matriks pertama (n) sama dengan jumlah baris matriks kedua (n). Hasilnya berbentuk (m x p)."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana matriks identitas didefinisikan?",
+      "options": ["Matriks persegi yang membuat matriks kompatibel tidak berubah saat dikalikan", "Matriks persegi yang semua entrinya sama dengan satu", "Matriks tertranspos yang baris dan kolomnya ditukar", "Matriks persegi yang entri diagonalnya semuanya berbeda"],
+      "correct": 0,
+      "explanation": "Matriks identitas I memiliki satu di diagonal dan nol di tempat lain. Mengalikan matriks apa pun dengan I mengembalikan matriks asli tanpa perubahan, seperti mengalikan angka dengan 1."
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan utama antara perkalian element-wise dan perkalian matriks?",
+      "options": ["Perkalian element-wise hanya berlaku untuk vektor; perkalian matriks hanya untuk matriks", "Perkalian element-wise memakai entri yang bersesuaian; perkalian matriks memakai dot product baris-kolom", "Perkalian element-wise memerlukan dimensi dalam; perkalian matriks memerlukan bentuk identik", "Perkalian element-wise mengubah bentuk; perkalian matriks selalu mempertahankannya"],
+      "correct": 1,
+      "explanation": "Perkalian element-wise (Hadamard) mengalikan elemen yang bersesuaian dan memerlukan bentuk identik. Perkalian matriks menghitung dot product antara baris dan kolom dengan aturan (m,n)@(n,p)=(m,p)."
+    },
+    {
+      "stage": "check",
+      "question": "Dalam ekspresi 'output = relu(W @ x + b)', apa peran broadcasting?",
+      "options": ["Ia mendistribusikan perhitungan ke perangkat komputasi yang tersedia", "Ia mengonversi W dan x agar memakai tipe data numerik yang sama", "Ia menerapkan ReLU secara terpisah ke setiap posisi pada output", "Ia memperluas b melintasi dimensi batch yang kompatibel sebelum penjumlahan"],
+      "correct": 3,
+      "explanation": "Untuk satu input, W @ x dan b harus memiliki bentuk output yang sama. Untuk batch berorientasi kolom berbentuk (features, batch), gunakan b[:, None] agar bias berbentuk (outputs, 1) dan menyebar melintasi kolom. b satu dimensi mengikuti penyelarasan dimensi terakhir dan tidak andal menyebar melintasi sumbu batch."
+    },
+    {
+      "stage": "post",
+      "question": "Sifat apa yang mengikuti determinan nol?",
+      "options": ["Matriks tersebut singular dan tidak dapat memiliki invers", "Matriks mempertahankan panjang sambil merotasi input", "Matriks adalah transformasi identitas tanpa penskalaan", "Matriks berisi nol di setiap baris dan kolom"],
+      "correct": 0,
+      "explanation": "Determinan nol berarti transformasi meruntuhkan ruang setidaknya satu dimensi (misalnya memetakan 2D ke garis). Matriks tidak punya invers, dan sistem linear yang memakainya tidak punya solusi atau punya tak terhingga solusi."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana operasi transpos mengubah sebuah matriks?",
+      "options": ["Ia mengganti setiap entri di luar diagonal dengan nol", "Ia menukar baris dan kolom matriks", "Ia menjamin matriks memiliki invers", "Ia mempertahankan sudut dan panjang untuk setiap vektor"],
+      "correct": 1,
+      "explanation": "Transpos menukar baris dan kolom, sehingga entri di baris i kolom j berpindah ke baris j kolom i."
+    }
+  ]
+}

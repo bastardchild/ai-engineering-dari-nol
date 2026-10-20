@@ -1,0 +1,90 @@
+{
+  "lesson": "30-eval-driven-agent-development",
+  "title": "Pengembangan Agent Berbasis Eval",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tiga lapisan evaluasi yang disebut pelajaran?",
+      "options": [
+        "Unit, integration, end-to-end",
+        "Smoke, regression, acceptance",
+        "Pre, check, post",
+        "Benchmark statis, eval offline kustom, eval produksi online"
+      ],
+      "correct": 3,
+      "explanation": "Statis (SWE-bench, GAIA), offline kustom (LLM-judge, exec, trajektori), online (replay, alert, biaya/latency)."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa titik awal yang disarankan Anthropic?",
+      "options": [
+        "Mulai dengan debat multi-agent",
+        "Mulai dengan prompt sederhana, optimalkan dengan evaluasi menyeluruh, dan tambahkan sistem agentic multi-langkah hanya saat perlu",
+        "Mulai hanya dengan model frontier",
+        "Mulai dengan orkestrasi hierarchical"
+      ],
+      "correct": 1,
+      "explanation": "Anthropic menyatakan tegas bahwa evaluasi adalah loop luar yang menggerakkan setiap pilihan lain."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu tight loop evaluator-optimizer?",
+      "options": [
+        "Proposer menghasilkan output, evaluator menilai, refine sampai evaluator lulus (generalisasi Self-Refine)",
+        "Sample, sort, deduplicate",
+        "Cache, retry, fail",
+        "Train, evaluate, deploy"
+      ],
+      "correct": 0,
+      "explanation": "Itu adalah Self-Refine yang digeneralisasi: alur apa pun bisa dibungkus propose-judge-refine."
+    },
+    {
+      "stage": "check",
+      "question": "Apa praktik terbaik 2026 tentang lokasi eval?",
+      "options": [
+        "Dimiliki eksklusif oleh tim QA",
+        "Hanya dijalankan tiap kuartal",
+        "Di samping kode, dijalankan di CI pada setiap PR, merge digerbangi skor eval",
+        "Hanya di dashboard vendor terpisah"
+      ],
+      "correct": 2,
+      "explanation": "Berlokasi bersama kode, digerbangi CI, dan dilacak regresinya adalah standarnya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pelajaran memperingatkan LLM-judge tanpa pijakan?",
+      "options": [
+        "Ia melanggar Apache 2.0",
+        "Judge juga berhalusinasi; pasangkan dengan pola CRITIC agar penilaian berpijak pada tool eksternal",
+        "Ia terlalu lambat",
+        "Ia hanya bekerja di GPU"
+      ],
+      "correct": 1,
+      "explanation": "CRITIC (Pelajaran 5) berlaku: verifikasi berbasis tool menjaga judge tetap jujur."
+    },
+    {
+      "stage": "post",
+      "question": "Apa bahaya over-fitting terhadap eval?",
+      "options": [
+        "Indeks vector terfragmentasi",
+        "Biaya komputasi naik",
+        "Latency turun terlalu jauh",
+        "Mengoptimalkan untuk set eval menyimpang dari kegunaan produksi; rotasi kasus"
+      ],
+      "correct": 3,
+      "explanation": "Rotasi set eval menjaga optimasi tetap selaras dengan realitas produksi."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa eval yang flaky menimbulkan masalah?",
+      "options": [
+        "Mereka melebihi context window",
+        "Mereka tidak bisa mencapai database",
+        "Mereka menggandakan biaya inferensi",
+        "Kasus nondeterministik menghasilkan alarm palsu; pin seed dan snapshot state"
+      ],
+      "correct": 3,
+      "explanation": "Flake membuat regresi tidak terbaca; determinisme (seed, snapshot state) diperlukan."
+    }
+  ]
+}

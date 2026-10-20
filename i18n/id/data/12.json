@@ -1,0 +1,135 @@
+{
+  "phase": {
+    "12": {
+      "name": "AI Multimodal",
+      "desc": "Melihat, mendengar, membaca, dan bernalar lintas modalitas — dari patch ViT hingga agent computer-use."
+    }
+  },
+  "lessons": {
+    "phases/12-multimodal-ai/01-vision-transformer-patch-tokens": {
+      "name": "Vision Transformer dan Primitif Patch-Token",
+      "summary": "Sebelum apa pun bisa multimodal, sebuah gambar harus menjadi urutan token yang bisa dicerna transformer. Paper ViT tahun 2020 menjawabnya dengan patch piksel 16x16, proyeksi linear, dan…",
+      "keywords": "Patch sebagai token · Positional embedding · Token CLS, pooled output, dan register token · Pretraining: supervised, contrastive, masked, self-distilled · Scaling law · Jumlah parameter untuk ViT · Konfigurasi produksi 2026"
+    },
+    "phases/12-multimodal-ai/02-clip-contrastive-pretraining": {
+      "name": "CLIP dan Pretraining Vision-Language Kontrastif",
+      "summary": "CLIP dari OpenAI (2021) membuktikan satu ide yang cukup besar untuk menggerakkan lima tahun berikutnya: sejajarkan encoder gambar dan encoder teks dalam ruang vektor yang sama hanya dengan pasangan gambar-teks web yang bising…",
+      "keywords": "Encoder ganda · Loss InfoNCE · Temperature · Kenapa sigmoid lebih baik di skala besar (SigLIP) · Klasifikasi zero-shot · Linear probe dan finetuning · SigLIP 2: NaFlex dan fitur dense · ALIGN, BASIC, OpenCLIP, EVA-CLIP · Batas atas zero-shot"
+    },
+    "phases/12-multimodal-ai/03-blip2-qformer-bridge": {
+      "name": "BLIP-2 Q-Former sebagai Jembatan Modalitas",
+      "summary": "CLIP menyelaraskan gambar dan teks tetapi tidak bisa menghasilkan caption, menjawab pertanyaan, atau mengobrol. BLIP-2 (Salesforce, 2023) mengatasinya dengan jembatan kecil yang dapat dilatih: 32 query yang dapat dipelajari…",
+      "keywords": "Learnable query · Arsitektur · Training dua tahap · Ekonomi parameter · InstructBLIP dan Q-Former yang sadar instruksi · MiniGPT-4 dan pendekatan projector-only · Kenapa LLaVA memilih yang lebih sederhana · Gated cross-attention: Flamingo, sang leluhur · Keturunan 2026"
+    },
+    "phases/12-multimodal-ai/04-flamingo-gated-cross-attention": {
+      "name": "Flamingo dan Gated Cross-Attention",
+      "summary": "Flamingo dari DeepMind (2022) melakukan dua hal sebelum siapa pun. Ia menunjukkan satu model bisa memproses urutan gambar, video, dan teks yang saling berselang-seling secara bebas. Dan ia menunjukkan…",
+      "keywords": "LLM yang dibekukan · Perceiver resampler · Gated cross-attention · Masked cross-attention untuk input berselang-seling · In-context few-shot learning · Data training · OpenFlamingo dan Otter · Keturunannya · Perbandingan dengan BLIP-2"
+    },
+    "phases/12-multimodal-ai/05-llava-visual-instruction-tuning": {
+      "name": "LLaVA dan Visual Instruction Tuning",
+      "summary": "LLaVA (April 2023) adalah arsitektur multimodal yang paling banyak ditiru di planet ini. Ia menggantikan Q-Former milik BLIP-2 dengan MLP 2 layer, menggantikan gated cross-attention Flamingo dengan yang naif…",
+      "keywords": "Arsitekturnya · Tahap 1: penyelarasan projector · Tahap 2: visual instruction tuning · Kenapa komunitas menirunya · LLaVA-1.5 dan LLaVA-NeXT · LLaVA-OneVision · Perbandingan dengan Q-Former · Format prompt · Ekonomi parameter"
+    },
+    "phases/12-multimodal-ai/06-any-resolution-patch-n-pack": {
+      "name": "Vision Resolusi Bebas — Patch-n'-Pack dan NaFlex",
+      "summary": "Gambar nyata bukan persegi 224x224. Struk berbentuk 9:16, grafik 16:9, hasil pemindaian medis bisa 4096x4096, tangkapan layar ponsel 9:19,5. Jawaban VLM sebelum 2024 — ubah ukuran setiap…",
+      "keywords": "NaViT dan patch-n'-pack · AnyRes (LLaVA-NeXT) · M-RoPE (Qwen2-VL) · NaFlex (SigLIP 2) · Mask packing · Anggaran token"
+    },
+    "phases/12-multimodal-ai/07-open-weight-vlm-recipes": {
+      "name": "Resep VLM Open-Weight: Apa yang Sebenarnya Penting",
+      "summary": "Literatur VLM open-weight 2024-2026 adalah hutan tabel ablasi. MM1 dari Apple menguji 13 kombinasi encoder gambar, connector, dan campuran data. Molmo dari Allen AI membuktikan de…",
+      "keywords": "Ruang desain lima sumbu · Sumbu 1: encoder > connector · Sumbu 2: desain connector tidak menentukan · Sumbu 3: ukuran LLM menetapkan batas atas · Sumbu 4: data — caption manusia yang detail mengalahkan distilasi · Sumbu 5: resolusi dan jadwalnya · Perbandingan terkontrol Prismatic · Panduan memilih untuk 2026"
+    },
+    "phases/12-multimodal-ai/08-llava-onevision-single-multi-video": {
+      "name": "LLaVA-OneVision: Tunggal, Multi, Video",
+      "summary": "Sebelum LLaVA-OneVision (Li et al., Agustus 2024), dunia VLM terbuka punya garis keturunan terpisah: LLaVA-1.5 untuk gambar tunggal, model multi-gambar seperti Mantis dan VILA, model video seperti…",
+      "keywords": "Anggaran token OneVision · Kurikulum tiga tahap · Kenapa kurikulum berhasil · Keterampilan lintas skenario yang muncul · Pooling token visual · LLaVA-OneVision-1.5 · Kontras dengan Qwen2.5-VL"
+    },
+    "phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps": {
+      "name": "Keluarga Qwen-VL dan Video Dynamic-FPS",
+      "summary": "Keluarga Qwen-VL — Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025) — adalah garis keturunan model vision-language terbuka paling berpengaruh pada 2026. Setiap generasi ma…",
+      "keywords": "Qwen-VL (Agustus 2023) · Qwen2-VL (September 2024) — M-RoPE dan resolusi native · Qwen2.5-VL (Februari 2025) — FPS dinamis + waktu absolut · Qwen3-VL (November 2025) · M-RoPE secara matematis · Logika sampling dynamic-FPS · Output agent terstruktur"
+    },
+    "phases/12-multimodal-ai/10-internvl3-native-multimodal": {
+      "name": "Pretraining Multimodal Native InternVL3",
+      "summary": "Setiap VLM terbuka sebelum InternVL3 mengikuti resep tiga langkah yang sama: ambil LLM teks yang dilatih pada triliunan token teks, pasang encoder visi, lalu fine-tune bagian sambungannya. Ini…",
+      "keywords": "Pretraining multimodal native · V2PE (variable visual position encoding) · Visual Resolution Router (ViR) · Deployment Vision-Language terpisah (DvD) · Kualitas satu tahap vs multi-tahap · InternVL3.5 dan InternVL-U · Trade-off pretraining native"
+    },
+    "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens": {
+      "name": "Chameleon Early-Fusion Berbasis Token",
+      "summary": "Setiap VLM yang kita lihat sejauh ini memisahkan gambar dan teks. Token visual berasal dari encoder visi, mengalir ke projector, lalu bertemu teks di dalam LLM. Visi dan teks…",
+      "keywords": "VQ-VAE sebagai tokenizer gambar · Kosakata bersama · Generasi modalitas campuran · Stabilitas training — QK-Norm, dropout, urutan LayerNorm · Batas rekonstruksi tokenizer · Chameleon vs BLIP-2 / LLaVA · Fuyu dan AnyGPT"
+    },
+    "phases/12-multimodal-ai/12-emu3-next-token-for-generation": {
+      "name": "Emu3 Next-Token Prediction untuk Generasi",
+      "summary": "Emu3 dari BAAI (Wang et al., September 2024) adalah hasil 2024 yang seharusnya mengakhiri debat diffusion versus autoregresif. Satu transformer decoder-only bergaya Llama, yang dilatih…",
+      "keywords": "Tokenizer Emu3 · Training loss tunggal · Classifier-free guidance dan temperature · Tiga peran, satu model · Benchmark · Biaya komputasi · Kenapa ini penting"
+    },
+    "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion": {
+      "name": "Transfusion Autoregresif + Diffusion",
+      "summary": "Chameleon dan Emu3 mempertaruhkan segalanya pada token diskret. Keduanya bekerja, tetapi bottleneck kuantisasi terlihat — kualitas gambar mendatar di bawah model diffusion ruang kontinu.…",
+      "keywords": "Arsitektur dua loss · Attention mask: teks kausal + gambar bidirectional · Diffusion loss di dalam transformer · MMDiT: varian Stable Diffusion 3 · Kenapa ini mengalahkan gaya Chameleon · Apa yang ada di hilir"
+    },
+    "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified": {
+      "name": "Show-o Discrete-Diffusion Terpadu",
+      "summary": "Transfusion mencampur representasi kontinu dan diskret. Show-o (Xie et al., Agustus 2024) mengambil arah sebaliknya: token teks memakai prediksi next-token kausal, token gambar memakai ma…",
+      "keywords": "Masked discrete diffusion (MaskGIT) · Show-o: satu transformer, mask hibrida · Sampling paralel · Tugas dalam satu checkpoint · Jadwal masking · Show-o2 · Posisi Show-o"
+    },
+    "phases/12-multimodal-ai/15-janus-pro-decoupled-encoders": {
+      "name": "Janus-Pro Encoder Terpisah",
+      "summary": "Model multimodal terpadu punya ketegangan yang tak terhindarkan. Pemahaman menginginkan fitur semantik — vektor keluaran SigLIP atau DINOv2 yang kaya informasi tingkat konsep. Generasi menginginkan…",
+      "keywords": "Encoding visual terpisah · Kenapa ini berhasil · Scaling data — Janus vs Janus-Pro · JanusFlow — varian rectified flow · Tugas body bersama · Dibandingkan dengan InternVL-U · Keterbatasan"
+    },
+    "phases/12-multimodal-ai/16-mio-any-to-any-streaming": {
+      "name": "MIO Any-to-Any Streaming",
+      "summary": "GPT-4o menghadirkan produk yang tidak bisa direplikasi kebanyakan model terbuka: agent yang mendengar suara, melihat video, dan berbicara balik secara real time. Jawaban ekosistem terbuka pada akhir 2024 adalah MIO (Wa…",
+      "keywords": "Empat tokenizer untuk empat modalitas · Decode streaming · Kurikulum empat tahap · Chain-of-visual-thought · Pesaing di any-to-any · Anggaran latency · Kenapa any-to-any tetap sulit"
+    },
+    "phases/12-multimodal-ai/17-video-language-temporal-grounding": {
+      "name": "Temporal Grounding Video-Language",
+      "summary": "Video bukan tumpukan foto. Klip 5 detik punya urutan kausal, kata kerja aksi, dan waktu kejadian yang tidak bisa direpresentasikan model gambar. Video-LLaMA (Zhang et al., Juni 2023) s…",
+      "keywords": "Video-LLaMA: Q-former per klip + cabang audio · VideoChat dan Video-LLaVA · Qwen2.5-VL dan TMRoPE · Strategi sampling frame · Pooling per frame · Empat benchmark video · Format output grounding · Praktik terbaik 2026"
+    },
+    "phases/12-multimodal-ai/18-long-video-million-token": {
+      "name": "Video Panjang pada Konteks Juta Token",
+      "summary": "Video 4K berdurasi 1 jam pada 24 FPS, setelah di-patch dan di-embed, menghasilkan sekitar 60 juta token. Episode podcast 2 jam yang ditranskripsikan adalah 30.000 token. Film fitur Blu-ray utuh…",
+      "keywords": "Jalur 1: konteks brute (Gemini 1.5, Claude Opus) · Jalur 2: ring attention (LWM, LongVILA) · Jalur 3: kompresi token (Video-XL, LongVA) · Jalur 4: retrieval agentic (VideoAgent) · Benchmark needle-in-a-haystack · Jalur mana yang dipilih · Pola produksi 2026"
+    },
+    "phases/12-multimodal-ai/19-audio-language-whisper-to-af3": {
+      "name": "Model Audio-Language: Whisper hingga AF3",
+      "summary": "Whisper (Radford et al., Desember 2022) menuntaskan pengenalan suara — 680 ribu jam ucapan multibahasa dengan pengawasan lemah, transformer encoder-decoder sederhana, tolok ukur yang …",
+      "keywords": "Spektrogram Log-Mel: fitur input · Encoder Whisper · BEATs dan encoder khusus audio · Audio Q-former · Busurnya — SALMONN, Qwen-Audio, AF3 · Cascaded vs end-to-end · Resep produksi 2026 · MMAU — benchmark penalaran audio"
+    },
+    "phases/12-multimodal-ai/20-omni-models-thinker-talker": {
+      "name": "Model Omni: Thinker-Talker Streaming",
+      "summary": "Demo produk GPT-4o pada Mei 2024 bersifat disruptif bukan karena model di baliknya, melainkan karena bentuk produknya — antarmuka suara di mana kamu berbicara, model melihat apa yang…",
+      "keywords": "Thinker dan Talker · TMRoPE — posisi multimodal selaras waktu · Sintesis suara streaming · VAD dan turn-taking · Qwen3-Omni (November 2025) · Anggaran latency produksi · Matematika token rate"
+    },
+    "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot": {
+      "name": "VLA Embodied: RT-2, OpenVLA, π0, GR00T",
+      "summary": "Pertama kali sebuah model membaca resep dari situs web dan mengeksekusinya di robot dapur adalah RT-2 (Google DeepMind, Juli 2023). RT-2 mendiskretkan aksi sebagai token teks, melakukan co-fine-tun…",
+      "keywords": "Tokenisasi aksi (RT-2) · OpenVLA — referensi 7B terbuka · Tokenizer FAST — decode aksi lebih cepat · π0 dan aksi flow-matching · GR00T N1 — sistem ganda untuk humanoid · Open X-Embodiment · Co-fine-tuning vs khusus robot · Keamanan dan batas aksi"
+    },
+    "phases/12-multimodal-ai/22-document-diagram-understanding": {
+      "name": "Pemahaman Dokumen dan Diagram",
+      "summary": "Dokumen bukan foto. PDF, makalah ilmiah, invoice, atau formulir tulisan tangan punya layout, tabel, diagram, catatan kaki, header, dan struktur semantik yang tidak ditangkap pemahaman gambar biasa…",
+      "keywords": "Era 1 — pipeline OCR (pra-2021) · TrOCR (2021) · Era 2 — tanpa OCR (2022-2023) · LayoutLMv3 (2022) · DocLLM (2023) · Era 3 — VLM-native (2024+) · Frontier Claude 4.7 / GPT-5 · Persamaan matematika dan output LaTeX · Tulisan tangan · Resep 2026"
+    },
+    "phases/12-multimodal-ai/23-colpali-vision-native-rag": {
+      "name": "ColPali RAG Dokumen Vision-Native",
+      "summary": "RAG tradisional mem-parsing PDF menjadi teks, memecahnya menjadi chunk, meng-embed chunk, dan menyimpan vektor. Setiap langkah kehilangan sinyal: OCR membuang data grafik, chunking merusak baris tabel, embedding teks…",
+      "keywords": "ColBERT (2020) · ColPali · ColQwen2 dan ColSmol · VisRAG · M3DocRAG · ViDoRe — benchmark · Pipeline RAG end-to-end · Matematika penyimpanan · Kapan text-RAG masih menang"
+    },
+    "phases/12-multimodal-ai/24-multimodal-rag-cross-modal": {
+      "name": "RAG Multimodal dan Retrieval Lintas Modalitas",
+      "summary": "RAG dokumen vision-native hanyalah satu irisan. RAG multimodal produksi lebih luas — melakukan retrieval lintas teks, gambar, audio, dan video untuk alur kerja seperti perencanaan perjalanan (\"carikan aku yang…\")",
+      "keywords": "Retrieval lintas modalitas · Strategi fusi · Grounding generasi · Survei 2025 · MuRAG — paper fondasional · Contoh trip-planner produksi · RAG multimodal agentic · Evaluasi"
+    },
+    "phases/12-multimodal-ai/25-multimodal-agents-computer-use": {
+      "name": "Agent Multimodal dan Computer-Use (Capstone)",
+      "summary": "Produk frontier 2026 adalah agent multimodal yang membaca screenshot, mengklik tombol, menavigasi UI web, mengisi formulir, dan menyelesaikan alur kerja secara end-to-end. SeeClick dan CogAgent…",
+      "keywords": "GUI grounding — primitifnya · Skema aksi · Screenshot-only vs accessibility-tree · Memori long-horizon · Penggunaan tool visual · Benchmark 2026 · Kenapa masih sulit · Build-it capstone"
+    }
+  }
+}

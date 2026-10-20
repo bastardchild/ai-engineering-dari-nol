@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "featsel-pre-1",
+      "stage": "pre",
+      "question": "Mengapa menambah fitur bisa justru membuat performa model memburuk?",
+      "options": [
+        "Model punya batas keras untuk jumlah fitur yang bisa diterima",
+        "Semakin banyak fitur selalu meningkatkan akurasi model",
+        "Semakin banyak fitur membuat model kehabisan memori",
+        "Fitur tak relevan menambah noise, menaikkan risiko overfitting, dan mengencerkan sinyal dari fitur yang berguna"
+      ],
+      "correct": 3,
+      "explanation": "Fitur tak relevan memberi model kesempatan overfitting pada noise di data training. Fitur itu juga menaikkan dimensionalitas sehingga data makin renggang dan jarak makin tak bermakna (curse of dimensionality)."
+    },
+    {
+      "id": "featsel-pre-2",
+      "stage": "pre",
+      "question": "Apa perbedaan kunci metode feature selection filter dan wrapper?",
+      "options": [
+        "Filter menilai fitur dengan statistik tanpa model; wrapper melatih model untuk mengevaluasi subset fitur",
+        "Filter selalu lebih akurat daripada wrapper",
+        "Wrapper hanya bisa memilih satu fitur dalam satu waktu",
+        "Filter memakai model untuk menilai fitur; wrapper memakai statistik"
+      ],
+      "correct": 0,
+      "explanation": "Metode filter (variance threshold, mutual information, korelasi) menilai fitur dengan ukuran statistik. Metode wrapper (RFE, forward selection) berulang kali melatih model untuk mengevaluasi subset fitur yang berbeda."
+    },
+    {
+      "id": "featsel-post-1",
+      "stage": "post",
+      "question": "Mutual information bisa mendeteksi hubungan yang tidak bisa ditangkap korelasi Pearson. Hubungan seperti apa?",
+      "options": [
+        "Hubungan yang butuh lebih dari 1000 titik data",
+        "Hubungan nonlinier seperti ketergantungan kuadratik atau periodik",
+        "Hubungan linear antara fitur kontinu",
+        "Hubungan antar fitur kategorikal saja"
+      ],
+      "correct": 1,
+      "explanation": "Korelasi Pearson hanya mengukur asosiasi linear. Hubungan kuadratik (y = x^2) punya korelasi nol tetapi mutual information tinggi. MI menangkap ketergantungan statistik apa pun antar variabel."
+    },
+    {
+      "id": "featsel-post-2",
+      "stage": "post",
+      "question": "Regularisasi L1 (Lasso) melakukan feature selection sebagai bagian dari training. Bagaimana caranya?",
+      "options": [
+        "Ia menghapus fitur dengan variance rendah sebelum training dimulai",
+        "Ia memeringkat fitur berdasarkan korelasi dengan target",
+        "Ia mendorong bobot fitur tak relevan menjadi tepat nol, sehingga efektif menghapusnya dari model",
+        "Ia melatih model terpisah untuk setiap fitur"
+      ],
+      "correct": 2,
+      "explanation": "Regularisasi L1 menambahkan penalti |w| pada loss. Geometri batasan L1 (berbentuk belah ketupat) membuat sebagian solusi bobot jatuh tepat di nol, menghasilkan model sparse yang otomatis memilih fitur."
+    },
+    {
+      "id": "featsel-post-3",
+      "stage": "post",
+      "question": "RFE menghapus fitur paling tidak penting lalu melatih ulang. Mengapa ini lebih baik daripada langsung menghapus semua fitur ber-importance rendah sekaligus?",
+      "options": [
+        "Tidak lebih baik -- menghapus sekaligus selalu lebih disukai",
+        "Feature importance berubah saat fitur dihapus, jadi penghapusan iteratif memperhitungkan interaksi antar fitur",
+        "Menghapus satu per satu hanya perlu untuk neural network",
+        "RFE memakai metrik importance berbeda dari penghapusan sekali jalan"
+      ],
+      "correct": 1,
+      "explanation": "Feature importance bersifat relatif. Saat fitur yang berkorelasi dihapus, importance pasangannya bisa naik. Penghapusan iteratif membiarkan model menilai ulang importance di tiap langkah sehingga menangkap interaksi ini."
+    }
+  ]
+}

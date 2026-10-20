@@ -1,0 +1,66 @@
+{
+  "lesson": "phase-11/17-agent-framework-tradeoffs",
+  "title": "Tradeoff Framework Agent: Orkestrasi Graph, Role, dan Actor",
+  "questions": [
+    {
+      "stage": "post",
+      "question": "Framework mana yang menjadi pilihan pertama tepat untuk workflow yang harus melanjutkan setelah crash, menerima persetujuan manusia di tengah proses, dan fan-out ke tiga retriever secara paralel?",
+      "options": [
+        "LangGraph",
+        "Agno",
+        "AutoGen",
+        "CrewAI"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa routing yang dipilih LLM memakan lebih banyak token per giliran daripada routing eksplisit?",
+      "options": [
+        "Panggilan LLM planner memilih langkah berikutnya setiap giliran, menambahkan token prompt dan completion untuk setiap keputusan.",
+        "Ia menduplikasi daftar tool untuk setiap agent di crew.",
+        "Ia mengirim seluruh riwayat percakapan ke model verifier.",
+        "Ia mengambil node berikutnya secara paralel untuk mengimbangi latensi."
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Dialog proposer-critic dalam code review secara alami memetakan ke abstraksi inti framework mana?",
+      "options": [
+        "StateGraph LangGraph",
+        "Pasangan GroupChat / ConversableAgent AutoGen",
+        "Crew berurutan CrewAI",
+        "Agent tunggal Agno dengan tool"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Framework mana yang memiliki driver penyimpanan bawaan (SQLite, Postgres, Redis, Mongo, DynamoDB) yang terpasang langsung ke class Agent untuk persistensi sesi dan memori?",
+      "options": [
+        "Agno",
+        "CrewAI",
+        "AutoGen",
+        "LangGraph"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Kamu punya summarizer dua panggilan: ambil teks, rangkum. Pilihan framework mana yang tepat?",
+      "options": [
+        "AutoGen GroupChat -- dua agent bisa berdebat tentang ringkasan terbaik.",
+        "Python biasa dengan SDK penyedia -- tanpa framework adalah framework tercepat untuk pipeline kecil.",
+        "CrewAI dengan peran peneliti + perangkum -- peran membuatnya lebih jelas.",
+        "LangGraph StateGraph -- selalu pakai framework untuk keandalan."
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

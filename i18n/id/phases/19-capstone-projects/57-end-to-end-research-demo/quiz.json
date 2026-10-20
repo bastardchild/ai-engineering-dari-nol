@@ -1,0 +1,78 @@
+{
+  "lesson": "57-end-to-end-research-demo",
+  "title": "Demo Riset End-to-End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa tugas demo dalam lesson ini?",
+      "options": [
+        "Membenchmark scheduler terhadap baseline",
+        "Memanggil language model nyata di setiap branch",
+        "Menggantikan lesson sebelumnya dengan satu framework baru",
+        "Menyusun primitif dari lesson sebelumnya lewat import Python biasa"
+      ],
+      "correct": 3,
+      "explanation": "Demo adalah composition test. Setiap tahap ada di lesson sendiri. Demo mengimpornya dan merangkai laporan. Tidak ada framework baru, tidak ada abstraksi baru."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa lesson memuat lesson sebelumnya lewat importlib alih-alih import paket normal?",
+      "options": [
+        "Karena importlib lebih cepat",
+        "Karena setiap lesson sebelumnya adalah folder code/ mandiri, bukan paket terinstal; importlib memuatnya berdasarkan path file",
+        "Karena asyncio membutuhkan importlib",
+        "Karena lesson berbagi nama modul dan akan bertabrakan"
+      ],
+      "correct": 1,
+      "explanation": "Lesson bukan paket terinstal. Masing-masing mengirim main.py di folder code/ sendiri. importlib.util.spec_from_file_location memuatnya berdasarkan path tanpa mengotori namespace modul global."
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana picker hasil terbaik memutuskan antar branch saat lebih dari satu memicu paper?",
+      "options": [
+        "Memilih branch dengan mean reward tertinggi, memecah tie secara alfabetis berdasarkan branch id",
+        "Memilih branch dengan eksperimen terbanyak",
+        "Memilih acak demi keadilan",
+        "Memilih branch pertama yang terpicu"
+      ],
+      "correct": 0,
+      "explanation": "Mean tertinggi menang. Tie dipecah berdasarkan branch id agar demo deterministik. Acak akan mengalahkan test determinisme."
+    },
+    {
+      "stage": "check",
+      "question": "Error apa yang dilempar picker saat scheduler melaporkan nol paper trigger?",
+      "options": [
+        "ValueError",
+        "Mengembalikan None",
+        "PaperValidationError",
+        "NoTriggerError, yang short-circuit demo sebelum writer berjalan"
+      ],
+      "correct": 3,
+      "explanation": "NoTriggerError adalah mode kegagalan bertipe. Mengembalikan None akan membiarkan writer berjalan pada input cacat dan rusak nanti dengan error yang kurang dapat ditindaklanjuti."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa demo berjalan dua kali dengan seed sama dalam test determinisme?",
+      "options": [
+        "Untuk menangkap memory leak",
+        "Untuk menegaskan branch yang dipilih, reward, dan id section paper identik antar run",
+        "Untuk menjalankan asyncio dua kali",
+        "Untuk membuktikan scheduler adil"
+      ],
+      "correct": 1,
+      "explanation": "Determinisme adalah bagian kontrak. Dua run dengan seed sama harus menghasilkan artefak sama. Test memakunya."
+    },
+    {
+      "stage": "post",
+      "question": "Apa isi laporan demo setelah run sukses?",
+      "options": [
+        "Hanya file LaTeX final",
+        "Hanya jumlah eksperimen dan string status",
+        "Prompt model dan log completion",
+        "scheduler_report, best_branch, best_reward, critic_result, paper_manifest, dan stop_reason"
+      ],
+      "correct": 3,
+      "explanation": "Output setiap tahap dipertahankan. Laporan adalah komposisi output hulu, bukan ringkasan yang ditransformasi. Tooling hilir membaca manifest; debugger membaca trace di dalam scheduler_report."
+    }
+  ]
+}

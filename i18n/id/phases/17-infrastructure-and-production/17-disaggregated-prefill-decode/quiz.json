@@ -1,0 +1,78 @@
+{
+  "lesson": "17-disaggregated-prefill-decode",
+  "title": "Prefill/Decode Terdisagregasi — NVIDIA Dynamo dan llm-d",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa prefill dan decode menginginkan konfigurasi GPU optimal yang berbeda?",
+      "options": [
+        "Prefill harus berjalan di AMD dan decode di NVIDIA",
+        "Keduanya memakai bobot model yang berbeda",
+        "Prefill terbatas komputasi pada throughput matmul; decode terbatas memori pada bandwidth HBM, jadi menempatkan keduanya bersama membuang salah satu sumber daya",
+        "Decode butuh bandwidth jaringan lebih besar"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Transport apa yang dipakai NVIDIA Dynamo untuk memindahkan KV cache antara pool prefill dan decode?",
+      "options": [
+        "Hanya gRPC bidi",
+        "NIXL (RDMA/InfiniBand bila tersedia, fallback TCP)",
+        "HTTP biasa",
+        "Filesystem bersama di NFS"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kapan disagregasi TIDAK menguntungkan menurut pelajaran ini?",
+      "options": [
+        "RAG dengan prefix 8K+",
+        "Beban kerja MoE di Blackwell",
+        "Serving multi-tenant dengan system prompt bersama",
+        "Prompt di bawah 512 token dan output di bawah 200 token, saat pajak transfer KV mendominasi keuntungan"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa perbedaan arsitektural inti antara Dynamo dan llm-d?",
+      "options": [
+        "Dynamo open source; llm-d tertutup",
+        "Dynamo berjalan di CPU; llm-d di GPU",
+        "Dynamo adalah orkestrator di atas vLLM/SGLang/TRT-LLM; llm-d native Kubernetes dengan prefill/decode/router sebagai Service independen",
+        "Dynamo mewajibkan AMD; llm-d mewajibkan NVIDIA"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Komponen Dynamo mana yang otomatis menyetel rasio prefill:decode untuk sebuah SLO?",
+      "options": [
+        "Kernel Marlin",
+        "Planner Profiler dan SLA Planner",
+        "Cluster Autoscaler",
+        "Sidecar proxy dan filter Envoy"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana disagregasi berinteraksi dengan routing cache-aware dari Fase 17 · 11?",
+      "options": [
+        "Disagregasi menonaktifkan penggunaan ulang KV cache sepenuhnya",
+        "Router cache-aware bisa mendaratkan permintaan di pool decode yang sudah memegang prefix-nya; saat miss, alurnya prefill -> decode, jadi keduanya saling memperkuat",
+        "Keduanya saling eksklusif",
+        "Routing cache-aware hanya untuk serving colocated"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

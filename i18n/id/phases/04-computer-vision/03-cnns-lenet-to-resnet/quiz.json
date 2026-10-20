@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Ide arsitektural tunggal apa yang diperkenalkan AlexNet (2012) yang membuat pelatihan CNN dalam menjadi praktis di GPU?",
+      "options": ["Residual connection", "Depthwise separable convolution", "Mengganti tanh dengan ReLU, yang tidak saturasi dan mempercepat konvergensi sekitar 6x", "Batch normalization"],
+      "correct": 2,
+      "explanation": "Percepatan training terbesar AlexNet berasal dari ReLU. Tanh saturasi untuk input positif atau negatif yang besar, yang mematikan gradien dan membatasi kedalaman yang dapat kamu latih. ReLU bersifat piecewise linear, tidak saturasi untuk input positif, dan merupakan satu-satunya perubahan yang memangkas training dari berminggu-minggu menjadi beberapa hari. Dropout dan paralelisme GPU juga penting, tetapi ReLU-lah yang membuka jalan bagi kedalaman."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa VGG lebih memilih tumpukan convolution 3x3 daripada satu kernel yang lebih besar?",
+      "options": ["Dua conv 3x3 mencakup receptive field 5x5 yang sama dengan parameter lebih sedikit (18C^2 vs 25C^2) dan satu ReLU tambahan di antaranya", "Conv 3x3 bersifat rotation-invariant; 5x5 tidak", "Kernel lebih kecil berjalan lebih cepat di CPU", "Kernel lebih besar tidak dapat dilatih dengan SGD"],
+      "correct": 0,
+      "explanation": "Dua conv 3x3 bertumpuk melihat patch 5x5 yang sama dengan satu conv 5x5, tetapi memakai parameter lebih sedikit (2 * 3 * 3 * C^2 = 18C^2 dibandingkan 25C^2) dan menyertakan non-linearitas tambahan. ReLU ekstra itu meningkatkan daya ekspresif. VGG mengubah pengamatan ini menjadi seluruh arsitektur dengan tepat satu jenis blok yang diulang."
+    },
+    {
+      "stage": "post",
+      "question": "ResNet memperkenalkan residual connection sebagai y = F(x) + x. Masalah apa yang diselesaikannya?",
+      "options": ["Aktivasi yang menghilang pada layer dengan ReLU", "Konsumsi memori selama backprop", "Masalah degradasi — setelah sekitar 20 layer conv biasa, training loss mulai memburuk karena optimizer kesulitan mempelajari pemetaan identitas melalui banyak layer non-linear", "Overfitting di classifier head"],
+      "correct": 2,
+      "explanation": "Sebelum ResNet, training loss mulai meningkat setelah sekitar 20 layer meskipun jaringan memiliki kapasitas lebih besar — masalah degradasi. Blok residual dapat dengan mudah merepresentasikan identitas dengan mendorong F ke nol, memberikan optimizer default yang aman. Dengan jalan keluar itu, setiap blok tambahan dapat membuat jaringan sedikit lebih baik, dan itulah cara jaringan 100+ layer menjadi dapat dilatih."
+    },
+    {
+      "stage": "post",
+      "question": "Pada ResNet BasicBlock dengan in_channels=64, out_channels=128, stride=2, apa peran cabang shortcut?",
+      "options": ["Ia adalah placeholder yang dihapus saat inferensi", "Ia adalah max-pool yang membagi dua dimensi spasial", "Ia selalu identitas; cabang utama menangani perubahan shape", "Ia adalah conv 1x1 dengan stride 2 yang mencocokkan channel output dan ukuran spasial cabang utama agar keduanya dapat dijumlahkan"],
+      "correct": 3,
+      "explanation": "Ketika sebuah blok mengubah jumlah channel atau stride spasial, jalur identitas tidak dapat langsung dijumlahkan ke cabang utama karena shape-nya berbeda. Shortcut menjadi conv 1x1 dengan stride=2 dan channel output C_out, opsional diikuti batch norm. Identitas pass-through hanya dipakai ketika in_c == out_c dan stride == 1."
+    },
+    {
+      "stage": "post",
+      "question": "ResNet-18 memiliki sekitar 11,7 juta parameter dan menyamai atau mengalahkan VGG-16 (138 juta parameter) pada ImageNet. Apa implikasinya tentang VGG?",
+      "options": ["Kernel VGG terlalu kecil untuk mempelajari fitur yang baik", "VGG dilatih dengan optimizer yang lebih buruk", "Sebagian besar parameter VGG terbuang di fully connected head dan kedalaman redundan setelah titik di mana residual connection akan membuat setiap layer berkontribusi", "Akurasi VGG pada ImageNet diukur secara keliru"],
+      "correct": 2,
+      "explanation": "Jumlah parameter VGG-16 didominasi oleh classifier fully connected raksasanya (tiga dense layer pada 25088 aktivasi), dan tumpukan dalam biasa tidak dapat menambah layer seefisien tumpukan residual. ResNet-18 mengganti FC head dengan global average pool plus satu layer linear dan memakai blok residual, yang bersama-sama memberikan efisiensi parameter sekitar 12x pada akurasi serupa."
+    }
+  ]
+}

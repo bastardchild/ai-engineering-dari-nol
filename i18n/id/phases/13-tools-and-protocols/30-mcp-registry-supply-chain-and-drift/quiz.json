@@ -1,0 +1,78 @@
+{
+  "lesson": "30-mcp-registry-supply-chain-and-drift",
+  "title": "Supply Chain Registry MCP: Admission, Drift, dan Rollback",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang ditetapkan oleh publikasi sukses di Registry MCP bagi gateway produksi?",
+      "options": [
+        "Record lulus kontrol publikasi Registry, sementara admission runtime lokal masih diperlukan",
+        "Endpoint live persis cocok dengan paket yang dipublikasikan",
+        "Versi terbaru harus segera menggantikan setiap rute lama",
+        "Server aman untuk setiap principal"
+      ],
+      "correct": 0,
+      "explanation": "Publikasi Registry menetapkan fakta publikasi. Pemeriksaan artefak, runtime, otorisasi, dan persetujuan lokal tetap terpisah."
+    },
+    {
+      "stage": "check",
+      "question": "Perbandingan namespace mana yang menolak com.exampleevil/tool ketika namespace terverifikasi adalah com.example?",
+      "options": [
+        "Memeriksa apakah seluruh nama dimulai dengan com.example",
+        "Mencari substring example",
+        "Memecah pada slash dan membandingkan segmen namespace secara persis",
+        "Mempercayai namespace yang tertulis di dalam server.json"
+      ],
+      "correct": 2,
+      "explanation": "Perbandingan segmen persis mempertahankan batas namespace dan memakai otoritas yang diberikan verifier tepercaya."
+    },
+    {
+      "stage": "check",
+      "question": "Server live menambahkan tool baru sementara record Registry dan koordinat paketnya tidak berubah. Bukti mana yang mendeteksinya?",
+      "options": [
+        "Digest deskriptor ternormalisasi yang baru dibandingkan dengan pin toolset yang telah diadmit",
+        "Timestamp publikasi Registry",
+        "Metode autentikasi namespace",
+        "String versi semantik saja"
+      ],
+      "correct": 0,
+      "explanation": "Pinning deskriptor live mendeteksi drift perilaku yang tidak dapat ditunjukkan metadata publikasi dan koordinat paket."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang harus terjadi ketika versi Registry yang telah diadmit berubah dari active menjadi deprecated?",
+      "options": [
+        "Mengarantinanya dari routing baru dan mempertahankan bukti admission historis",
+        "Menulis ulang record yang dipublikasikan kembali ke active",
+        "Menghapus semua bukti agar klien tidak dapat menemukannya",
+        "Mengabaikan status karena kepemilikan paket sudah terverifikasi"
+      ],
+      "correct": 0,
+      "explanation": "Status adalah input operasional. Karantina menghentikan penggunaan baru sementara bukti yang dipertahankan mendukung audit dan analisis rollback."
+    },
+    {
+      "stage": "post",
+      "question": "Target mana yang memenuhi syarat untuk rollback otomatis?",
+      "options": [
+        "Versi apa pun yang namanya berurutan sebelum kandidat",
+        "Pin yang sebelumnya diadmit, aktif menurut kebijakan, sehat, dan tidak dikarantina",
+        "Versi yang ditandai latest, meskipun belum pernah ditinjau",
+        "Versi Registry yang dihapus dengan nama paket yang familier"
+      ],
+      "correct": 1,
+      "explanation": "Rollback memulihkan rute yang diketahui dapat diadmit. Itu tidak melewati pemeriksaan status, kesehatan, atau karantina saat ini."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa head ledger admission harus dijadikan anchor di domain kepercayaan terpisah?",
+      "options": [
+        "Itu membuat digest artefak tidak diperlukan",
+        "Itu memungkinkan publisher menetapkan status yang dikelola Registry",
+        "Itu mengubah rentang versi yang dapat berubah menjadi pin persis",
+        "Rantai hash lokal mendeteksi penyuntingan, sedangkan anchor terpisah membuat penulisan ulang lokal menyeluruh dapat terdeteksi"
+      ],
+      "correct": 3,
+      "explanation": "Penyerang yang dapat menulis ulang seluruh ledger lokal dapat menghitung ulang rantainya. Anchor eksternal yang ditandatangani atau write-once mengekspos penulisan ulang itu."
+    }
+  ]
+}

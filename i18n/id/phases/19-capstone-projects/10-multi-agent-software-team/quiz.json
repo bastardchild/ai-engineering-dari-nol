@@ -1,0 +1,90 @@
+{
+  "lesson": "10-multi-agent-software-team",
+  "title": "Capstone 10 — Tim Rekayasa Perangkat Lunak Multi-Agen",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa harness satu agen mencapai plafon pada tugas besar bahkan dengan konteks 200k token?",
+      "options": [
+        "Model tidak mendukung git",
+        "Agen tunggal tidak bisa melakukan tool call",
+        "Konteks tidak dapat menampung rencana arsitektur, empat irisan codebase paralel, komentar reviewer, dan output test sekaligus",
+        "Sandbox menolak menjalankan lebih dari satu proses"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dimiliki peran arsitek dalam bentuk factory ini?",
+      "options": [
+        "Menjalankan test suite di sandbox bersih",
+        "Membaca issue dan menghasilkan rencana dengan subtask yang punya antarmuka eksplisit",
+        "Meninjau diff hasil merge untuk halusinasi",
+        "Force-merge branch saat coder tidak sepakat"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa setiap coder bekerja di git worktree sendiri plus sandbox Daytona?",
+      "options": [
+        "Arsitek membutuhkan ID worktree",
+        "Daytona satu-satunya sandbox yang mendukung SSH",
+        "Working tree terisolasi memungkinkan N coder mengimplementasikan subtask secara paralel tanpa bertabrakan di file bersama",
+        "Worktree lebih cepat dikloning daripada branch"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Batasan apa yang diberikan pada reviewer agar tetap jujur?",
+      "options": [
+        "Ia tidak boleh menyetujui diff yang ia tulis atau usulkan",
+        "Ia hanya bisa berjalan setelah tester memberi persetujuan",
+        "Ia harus menyetujui setiap diff yang dibacanya",
+        "Ia harus model yang sama dengan arsitek"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa rubrik menimbang efisiensi token terhadap baseline satu agen?",
+      "options": [
+        "Agen tunggal tidak punya cerita observability",
+        "Batas peran menambah konteks ringkasan dan handoff, jadi pertanyaan sebenarnya adalah apakah factory menang per dolar",
+        "Multi-agen selalu lebih murah",
+        "Biaya token tidak terkait dengan performa"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Artefak apa yang dihasilkan dari setiap issue gagal saat post-mortem?",
+      "options": [
+        "Template rencana arsitek baru",
+        "Spesifikasi protokol A2A yang diperbarui",
+        "Histogram handoff-failure yang mengidentifikasi batas peran mana yang rusak (plan, merge, review, test)",
+        "Log force-push"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Set evaluasi mana yang dipakai capstone untuk menilai pass@1 lintas peran?",
+      "options": [
+        "HumanEval-Java",
+        "MigrationBench",
+        "MT-Bench-v2",
+        "Subset 50 issue SWE-bench Pro"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

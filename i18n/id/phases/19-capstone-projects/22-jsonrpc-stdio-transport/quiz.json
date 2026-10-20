@@ -1,0 +1,90 @@
+{
+  "lesson": "22-jsonrpc-stdio-transport",
+  "title": "JSON-RPC 2.0 di Atas Stdio Berbatas Newline",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang membedakan notifikasi JSON-RPC dari request di wire?",
+      "options": [
+        "Notifikasi menghilangkan field id; server tidak boleh meresponsnya",
+        "Field versi jsonrpc berbeda",
+        "Notifikasi memakai namespace method berbeda",
+        "Notifikasi dibungkus dalam array"
+      ],
+      "correct": 0,
+      "explanation": "Tidak adanya id adalah satu-satunya penanda. Server tidak merespons, karena tidak ada id untuk dikorelasikan."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa JSON berbatas newline cukup untuk framing stdio?",
+      "options": [
+        "Karena UTF-8 tidak punya byte newline",
+        "Karena spesifikasi mewajibkannya",
+        "Karena pipe menjamin atomisitas newline",
+        "Karena JSON tidak mengizinkan newline literal di dalam string tanpa escape, jadi setiap objek bisa satu baris"
+      ],
+      "correct": 3,
+      "explanation": "json.dumps menghasilkan satu baris per objek; newline literal di dalam string di-escape. Itu membuat \\n pemisah record yang aman."
+    },
+    {
+      "stage": "check",
+      "question": "Kode error mana yang dikembalikan transport saat parsing JSON gagal?",
+      "options": [
+        "-32600",
+        "-32700",
+        "-32603",
+        "-32601"
+      ],
+      "correct": 1,
+      "explanation": "-32700 adalah Parse error. Id respons adalah null karena tidak ada id yang bisa diekstrak."
+    },
+    {
+      "stage": "check",
+      "question": "Jika handler melempar ValueError biasa, apa yang dikembalikan transport?",
+      "options": [
+        "Tidak mengembalikan; koneksi putus",
+        "Invalid params (-32602)",
+        "Method not found (-32601)",
+        "Internal error (-32603) dengan nama kelas exception di data"
+      ],
+      "correct": 3,
+      "explanation": "Exception yang tidak dipetakan muncul sebagai -32603. data.exception mempertahankan nama kelas untuk klien."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dikembalikan server saat batch hanya berisi notifikasi?",
+      "options": [
+        "Tidak ada — tidak ada byte yang ditulis",
+        "Satu null per notifikasi",
+        "Array kosong",
+        "Satu respons null"
+      ],
+      "correct": 0,
+      "explanation": "Aturan spec: jika setiap entri adalah notifikasi, server tetap diam."
+    },
+    {
+      "stage": "post",
+      "question": "Baris dengan JSON rusak datang di tengah sesi. Apa yang terjadi pada baris berikutnya?",
+      "options": [
+        "Baris ditampung sampai baris rusak dicoba ulang",
+        "Transport menulis respons -32700 dan melanjutkan membaca baris berikutnya sebagai baru",
+        "Transport menutup stream",
+        "Semua ditolak dengan -32600"
+      ],
+      "correct": 1,
+      "explanation": "Lapisan framing tidak boleh meracuni stream. Satu parse error berarti satu respons error dan loop berlanjut."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa transport tidak mengonsultasikan registry tool secara langsung?",
+      "options": [
+        "Untuk menjaga lapisan transport tetap berbentuk JSON-RPC saja; handler menjahit transport ke registry",
+        "Karena registry bersifat async",
+        "Karena registry menyimpan secret",
+        "Karena transport berjalan di proses berbeda"
+      ],
+      "correct": 0,
+      "explanation": "Transport berbicara di wire. Dispatcher (lesson berikutnya) adalah tempat transport bertemu registry dan timeout."
+    }
+  ]
+}

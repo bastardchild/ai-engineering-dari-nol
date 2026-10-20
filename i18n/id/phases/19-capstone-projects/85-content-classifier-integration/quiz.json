@@ -1,0 +1,78 @@
+{
+  "lesson": "85-content-classifier-integration",
+  "title": "Capstone 85 — Integrasi Classifier Konten",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa menjalankan classifier sisi output jika input sudah diperiksa?",
+      "options": [
+        "Karena bypass input apa pun menghasilkan output yang akan dilihat pengguna, dan output adalah tempat terakhir untuk menangkapnya",
+        "Karena classifier input sudah usang",
+        "Karena standard library mewajibkan keduanya",
+        "Untuk membuat sistem sengaja lebih lambat"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Tiga classifier mana yang dipasang di lesson ini?",
+      "options": [
+        "OCR, ASR, TTS",
+        "Quality, factuality, citation",
+        "Toxicity, PII, instruction-leakage",
+        "Sentiment, language, length"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan router saat satu verdict tinggi dan yang lain medium?",
+      "options": [
+        "Menjalankan kedua aksi secara berurutan",
+        "Mengambil severity maksimum dan menerapkan aksi itu; block mendominasi redact",
+        "Membuang kedua verdict dan mengirim yang asli",
+        "Hanya menjalankan aksi medium"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pemeriksaan Luhn dipakai di dalam classifier PII?",
+      "options": [
+        "Untuk mengompres regex",
+        "Untuk menghitung SSN",
+        "Untuk membedakan deret digit berbentuk kartu kredit dari urutan digit arbitrer dengan false positive rendah",
+        "Untuk menerjemahkan digit menjadi huruf"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Bagaimana classifier instruction-leakage memutuskan?",
+      "options": [
+        "Dengan mendeteksi kurung kurawal di output",
+        "Dengan menghitung cosine trigram antara output dan system prompt yang diketahui, dengan ambang",
+        "Dengan memanggil model lain",
+        "Dengan menghitung token"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa classifier toxicity memeriksa negasi di jendela kiri kecil?",
+      "options": [
+        "Untuk menaikkan tingkat false-positive",
+        "Untuk memperlambat regex",
+        "Untuk melewati kecocokan seperti 'you are not stupid' agar classifier tidak over-redact penenangan umum",
+        "Karena negasi diwajibkan Unicode"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

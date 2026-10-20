@@ -1,0 +1,78 @@
+{
+  "lesson": "12-edge-inference",
+  "title": "Inferensi Edge — Apple Neural Engine, Qualcomm Hexagon, WebGPU/WebLLM, Jetson",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa batasan inti yang membuat inferensi LLM mobile lebih lambat daripada datacenter, menurut pelajaran ini?",
+      "options": [
+        "Kapasitas penyimpanan",
+        "Latensi Wi-Fi",
+        "Throughput komputasi",
+        "Bandwidth memori (DRAM mobile 50-90 GB/s vs HBM3 2-3 TB/s)"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa Neural Engine Apple menghindari overhead salin CPU-NPU?",
+      "options": [
+        "Apple Silicon memakai unified memory — CPU dan ANE berbagi pool yang sama",
+        "Itu memakai PCIe 5.0",
+        "Core ML menonaktifkan KV cache",
+        "Itu transcode bobot ke FP4 sebelum menyalin"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Format kuantisasi mana yang direkomendasikan pelajaran ini untuk WebGPU + WebLLM di browser?",
+      "options": [
+        "GGUF Q4_K_M",
+        "NVFP4",
+        "FP8",
+        "Q4 MLC (q4f16_1) yang dikompilasi lewat mlc_llm convert_weight"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa cakupan WebGPU mobile yang dilaporkan pelajaran ini untuk 2026?",
+      "options": [
+        "Di bawah 10%",
+        "Hanya iOS Safari",
+        "Sekitar 70-75%, dengan Firefox Android masih mengejar",
+        "100% di semua browser"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa mempertahankan konteks 128K tidak praktis di ponsel biasa?",
+      "options": [
+        "Tokenizer gagal di atas 8K",
+        "Bobot model plus KV cache untuk 32K token plus overhead OS mudah melewati anggaran RAM 8 GB",
+        "WebGPU membatasi konteks di 4K",
+        "iOS melarang konteks panjang"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa suara disorot sebagai killer app untuk inferensi edge?",
+      "options": [
+        "Model suara tidak butuh KV cache",
+        "Model suara selalu muat dalam 50 MB",
+        "Agent suara sensitif latensi (token pertama < 500 ms) dan inferensi lokal menghilangkan latensi jaringan sepenuhnya",
+        "Suara hanya berjalan di WebAssembly"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

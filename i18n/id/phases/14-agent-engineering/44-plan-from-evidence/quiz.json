@@ -1,0 +1,48 @@
+{
+  "lesson": "44-plan-from-evidence",
+  "title": "Rencana dari Bukti",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang membedakan rencana eksekusi dari daftar tugas?",
+      "options": ["Rekomendasi model", "Jumlah langkah tetap", "Prosa lebih banyak", "Graph dependensi dengan bukti dan pembuktian"],
+      "correct": 3,
+      "explanation": "Dependensi, bukti, dan pembuktian penyelesaian membuat rencana dapat dieksekusi dan dilanjutkan."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa mendefinisikan kontrak bersama sebelum implementasinya?",
+      "options": ["Untuk menghindari dokumentasi", "Untuk menunda semua pekerjaan", "Agar permukaan yang bergantung tidak menciptakan perilaku yang bertentangan", "Agar hanya satu agent yang bisa bekerja"],
+      "correct": 2,
+      "explanation": "Kontrak yang dipatok membuka jalan aman untuk pekerjaan paralel pada permukaan yang bergantung."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang biasanya diungkap siklus dependensi?",
+      "options": ["Paralelisme yang baik", "Keputusan tersembunyi yang belum terselesaikan atau dekomposisi buruk", "Eksekusi cepat", "Bukti kuat"],
+      "correct": 1,
+      "explanation": "Item kerja siklus tidak dapat menetapkan titik awal yang valid."
+    },
+    {
+      "stage": "check",
+      "question": "Kapan dua item kerja bisa berbagi satu gelombang eksekusi?",
+      "options": ["Saat dependensinya selesai dan keduanya independen", "Saat keduanya menyentuh file yang sama", "Saat keduanya tidak punya bukti", "Saat keduanya penting"],
+      "correct": 0,
+      "explanation": "Satu gelombang berisi semua pekerjaan independen yang saat ini tidak terblokir."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa melampirkan bukti pada setiap item kerja?",
+      "options": ["Untuk menunjukkan mengapa perubahan itu perlu dan memungkinkan bukti baru merevisinya", "Untuk menggantikan test", "Untuk menghias rencana", "Untuk memenuhi target token"],
+      "correct": 0,
+      "explanation": "Bukti harus membenarkan dan mampu mengubah rencana."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang membuat rencana dapat dilanjutkan?",
+      "options": ["Satu worker untuk semuanya", "Prompt awal yang panjang", "Item kecil dengan status, artefak, dependensi, dan pembuktian", "Riwayat chat"],
+      "correct": 2,
+      "explanation": "State item yang durable memungkinkan sesi lain melanjutkan tanpa penemuan ulang."
+    }
+  ]
+}

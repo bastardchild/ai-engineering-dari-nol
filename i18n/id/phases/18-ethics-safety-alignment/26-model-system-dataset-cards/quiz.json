@@ -1,0 +1,78 @@
+{
+  "lesson": "26-model-system-dataset-cards",
+  "title": "Model, System, dan Dataset Card",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mana yang paling tepat menggambarkan Model Card asli Mitchell et al. (2019)?",
+      "options": [
+        "Manifest checkpoint model saja",
+        "Kontrak hukum regulatif",
+        "'Label nutrisi' untuk model ML: data pelatihan, penggunaan yang dimaksudkan, faktor, metrik, data evaluasi, analisis terdisagregasi kuantitatif, pertimbangan etis, catatan",
+        "Spesifikasi OpenAPI"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa temuan Oreamuno et al. (2023) tentang adopsi pertimbangan etis di model card Hugging Face?",
+      "options": [
+        "Tidak ada model card yang punya teks sama sekali",
+        "Sekitar 0,3% mendokumentasikan pertimbangan etis",
+        "Sekitar 80% mendokumentasikan pertimbangan etis",
+        "Semua model card mendokumentasikannya"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang disediakan pelapisan telescopic / periscopic / microscopic Data Cards Pushkarna et al. (Google 2022)?",
+      "options": [
+        "Checklist audit pra-RLHF",
+        "Library visualisasi bertema teleskop",
+        "Framing boundary object di mana dokumen yang sama melayani pembaca berbeda (non-ahli, praktisi ML, auditor) lewat tiga tingkat detail",
+        "Antarmuka query yang menjaga privasi"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Cakupan apa yang dicakup System Card tetapi tidak oleh Model Card?",
+      "options": [
+        "Hanya tokenizer",
+        "Sistem AI end-to-end: model + safety stack + konteks deployment, termasuk kapabilitas keamanan, perlindungan prompt injection, deteksi eksfiltrasi data, alignment, dan respons insiden",
+        "Hanya template prompt",
+        "Hanya dataset"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dilaporkan Liang et al. (2024) tentang detail model card dan tingkat unduhan Hugging Face?",
+      "options": [
+        "Hanya bagian pertimbangan etis yang memengaruhi unduhan",
+        "Detail menurunkan tingkat unduhan",
+        "Model card yang detail mendorong kenaikan unduhan mingguan +29,0% di HF untuk grup treatment vs kontrol (diff-in-diff); tekanan adopsi kini digerakkan pasar, bukan hanya kepatuhan",
+        "Detail tidak berpengaruh pada unduhan"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa kontribusi Laminator (Duddu et al. 2024) pada dokumentasi?",
+      "options": [
+        "Harness benchmarking otomatis",
+        "Atestasi yang bisa diverifikasi lewat TEE hardware / signature kriptografis, sehingga card bisa membawa bukti-klaim, bukan sekadar klaim",
+        "Generator ringkasan berbasis LLM",
+        "Pengganti standar Datasheets"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

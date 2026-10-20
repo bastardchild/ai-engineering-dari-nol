@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "unsupervised-pre-1",
+      "stage": "pre",
+      "question": "Apa yang membedakan unsupervised learning dari supervised learning?",
+      "options": [
+        "Unsupervised learning tidak punya output berlabel -- algoritma menemukan strukturnya sendiri",
+        "Unsupervised learning selalu menghasilkan hasil yang lebih baik",
+        "Unsupervised learning memakai data lebih banyak",
+        "Unsupervised learning hanya bekerja dengan data teks"
+      ],
+      "correct": 0,
+      "explanation": "Dalam unsupervised learning tidak ada label. Algoritma menemukan pola, pengelompokan, atau struktur dalam data tanpa diberi tahu output yang benar."
+    },
+    {
+      "id": "unsupervised-pre-2",
+      "stage": "pre",
+      "question": "Apa yang wajib kamu tentukan sebelum melatih K-Means?",
+      "options": [
+        "Jumlah cluster K",
+        "Pusat cluster yang tepat",
+        "Metrik jarak yang dipakai",
+        "Label untuk setiap titik data"
+      ],
+      "correct": 0,
+      "explanation": "K-Means butuh jumlah cluster K sebagai input. Setelah itu ia berulang kali menugaskan titik ke centroid terdekat dan menghitung ulang centroid sampai konvergen."
+    },
+    {
+      "id": "unsupervised-post-1",
+      "stage": "post",
+      "question": "K-Means gagal pada dua bentuk bulan sabit yang saling mengunci, tetapi DBSCAN berhasil. Mengapa?",
+      "options": [
+        "DBSCAN selalu mengalahkan K-Means pada setiap dataset",
+        "DBSCAN memakai data lebih banyak daripada K-Means",
+        "DBSCAN menemukan cluster berdasarkan kepadatan sehingga bisa menemukan bentuk apa pun, sedangkan K-Means mengasumsikan cluster berbentuk bola",
+        "K-Means tidak bisa menangani data 2D"
+      ],
+      "correct": 2,
+      "explanation": "K-Means menugaskan titik ke centroid terdekat sehingga menghasilkan cluster berbentuk bola (konveks). DBSCAN menumbuhkan cluster dari wilayah padat sehingga bisa menemukan bentuk apa pun asalkan cluster itu terhubung oleh kepadatan."
+    },
+    {
+      "id": "unsupervised-post-2",
+      "stage": "post",
+      "question": "Apa yang diukur silhouette score?",
+      "options": [
+        "Jumlah total cluster yang ditemukan",
+        "Seberapa mirip tiap titik dengan cluster-nya sendiri dibandingkan dengan cluster lain terdekat",
+        "Kecepatan algoritma clustering",
+        "Persentase outlier di dalam data"
+      ],
+      "correct": 1,
+      "explanation": "Silhouette score = (b - a) / max(a, b), dengan a adalah jarak rata-rata intra-cluster dan b adalah jarak rata-rata ke cluster terdekat. Nilainya berkisar dari -1 (cluster salah) sampai +1 (terkelompok dengan baik)."
+    },
+    {
+      "id": "unsupervised-post-3",
+      "stage": "post",
+      "question": "Apa bedanya penetapan cluster pada Gaussian Mixture Model dibanding K-Means?",
+      "options": [
+        "GMM memakai penetapan keras di mana tiap titik hanya milik satu cluster",
+        "GMM memberi penetapan lunak (probabilistik) di mana tiap titik punya peluang menjadi anggota tiap cluster",
+        "GMM hanya bekerja dengan data satu dimensi",
+        "GMM sama sekali tidak memakai centroid"
+      ],
+      "correct": 1,
+      "explanation": "K-Means menetapkan tiap titik ke tepat satu cluster (keras). GMM menghitung peluang tiap titik menjadi anggota tiap komponen Gaussian (lunak), dan bisa memodelkan cluster elips yang saling tumpang tindih."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "62-vision-language-pretraining",
+  "title": "Pretraining Vision-Language",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Dua kemampuan berbeda apa yang dilatih oleh kombinasi InfoNCE dan LM loss ke dalam satu model?",
+      "options": [
+        "Ranking (temukan gambar yang tepat untuk caption) dan generasi (tulis caption untuk gambar)",
+        "Kompresi dan dekompresi",
+        "Kecepatan dan akurasi",
+        "Tokenisasi dan detokenisasi"
+      ],
+      "correct": 0,
+      "explanation": "InfoNCE menangani ranking; LM loss menangani generasi. CoCa, BLIP, dan kawan-kawan menggabungkan keduanya dalam satu pass training."
+    },
+    {
+      "stage": "pre",
+      "question": "Dalam InfoNCE untuk batch N pasangan, berapa pasangan positif dan negatif yang terbentuk?",
+      "options": [
+        "N positif di diagonal matriks similarity dan N*(N-1) negatif di luar diagonal",
+        "N positif dan N negatif",
+        "1 positif dan N negatif",
+        "N^2 positif"
+      ],
+      "correct": 0,
+      "explanation": "N pasangan yang cocok berada di diagonal; semua di luar diagonal adalah negatif."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa temperature kontrastif biasanya parameter yang dipelajari?",
+      "options": [
+        "Itu menghindari pemakaian Adam",
+        "PyTorch mewajibkannya",
+        "Tau terpelajari lebih cepat di GPU",
+        "Hand-tuning rapuh; membiarkan tau belajar memungkinkan model menemukan peakedness softmax yang tepat saat skala embedding berevolusi selama training"
+      ],
+      "correct": 3,
+      "explanation": "CLIP memperkenalkan log-tau terpelajari agar softmax kontrastif tetap di rezim berguna saat norm embedding tumbuh."
+    },
+    {
+      "stage": "check",
+      "question": "Sub-modul mana yang menerima gradien dari LM loss tetapi tidak dari loss kontrastif?",
+      "options": [
+        "Proyektor MLP",
+        "Encoder vision",
+        "Encoder sisi teks",
+        "Decoder cross-attention"
+      ],
+      "correct": 3,
+      "explanation": "Loss kontrastif tidak menyentuh decoder; LM loss tidak menyentuh encoder mean-pool sisi teks."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dicapai ignore_index=PAD_ID dalam cross-entropy LM?",
+      "options": [
+        "Mempercepat loss",
+        "Mengenkripsi token pad",
+        "Menutupi posisi padding dari loss agar model tidak dihukum karena memprediksi token setelah caption berakhir",
+        "Mengurutkan ulang token"
+      ],
+      "correct": 2,
+      "explanation": "Posisi padding tidak membawa sinyal; mengabaikannya menghentikan loss belajar memprediksi pad."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa demo 50 langkah pada data sintetis cukup untuk menyebut lesson selesai?",
+      "options": [
+        "Model mencapai state of the art pada 50 langkah",
+        "50 langkah adalah maksimum yang didukung",
+        "Demo membuktikan plumbing gradien bekerja end to end; bentuk training produksi identik tetapi berjalan jutaan langkah pada data nyata",
+        "Data nyata akan mengubah arsitektur"
+      ],
+      "correct": 2,
+      "explanation": "Dinamika yang didemonstrasikan (kedua loss turun, tanpa NaN, tau stabil) adalah dinamika yang sama yang akan ditunjukkan run miliaran gambar; hanya diskalakan."
+    }
+  ]
+}

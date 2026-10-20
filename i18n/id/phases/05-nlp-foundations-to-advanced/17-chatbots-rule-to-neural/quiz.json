@@ -1,0 +1,102 @@
+{
+  "lesson": "17-chatbots-rule-to-neural",
+  "title": "Chatbot — Dari Berbasis Aturan ke Neural ke Agen LLM",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan state machine slot-filling dalam chatbot berbasis aturan?",
+      "options": [
+        "Memilih balasan paling lancar",
+        "Menempelkan pesan pengguna",
+        "Melacak parameter wajib mana (tanggal, tujuan, jumlah) yang masih hilang dan menanyakannya secara berurutan",
+        "Mendeteksi sarkasme"
+      ],
+      "correct": 2,
+      "explanation": "Slot filling secara iteratif mengumpulkan parameter terstruktur yang dibutuhkan handler tugas."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa chatbot berbasis retrieval tahan terhadap halusinasi?",
+      "options": [
+        "Ia memakai BM25",
+        "Ia memakai embedding",
+        "Ia menolak semua kueri",
+        "Ia mengembalikan respons siap pakai dari set terkurasi alih-alih menghasilkan teks baru"
+      ],
+      "correct": 3,
+      "explanation": "Retrieval memunculkan jawaban yang sudah ditulis; tanpa generasi tidak ada konten yang dikarang."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang mendefinisikan loop agen LLM dibanding panggilan LLM sekali jalan?",
+      "options": [
+        "Controller yang menyelang-seling panggilan LLM dengan pemanggilan alat sampai model mengembalikan jawaban akhir atau anggaran langkah habis",
+        "Penggunaan softmax",
+        "Penggunaan decoding greedy",
+        "Context window lebih besar"
+      ],
+      "correct": 0,
+      "explanation": "Agen menambahkan loop plan-act-observe dengan pemanggilan alat dan kondisi terminasi."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa routing hybrid (aturan + retrieval + agen LLM) menjadi default produksi 2026?",
+      "options": [
+        "Ia menghindari embedding",
+        "Tidak ada satu arsitektur yang menangani setiap permintaan dengan baik; aturan mencakup aksi destruktif, retrieval mencakup FAQ, agen menangani kueri terbuka yang ambigu",
+        "Ia lebih murah dirawat",
+        "Ia menghilangkan kebutuhan evaluasi"
+      ],
+      "correct": 1,
+      "explanation": "Sistem hybrid memakai aturan deterministik untuk aksi berisiko dan menyisakan agen LLM untuk kueri terbuka."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu prompt injection?",
+      "options": [
+        "Jenis serangan tokenizer",
+        "Teks yang dipasok pengguna (langsung) atau dokumen (tidak langsung) yang mencoba menimpa system prompt atau membajak perilaku agen",
+        "Varian SQL injection saja",
+        "Menyuntikkan token ke embedding"
+      ],
+      "correct": 1,
+      "explanation": "Prompt injection menulis ulang perilaku agen melalui teks tak tepercaya di input pengguna atau output alat."
+    },
+    {
+      "stage": "post",
+      "question": "Risiko OWASP Top 10 (LLM Apps 2025) mana yang berada di peringkat LLM01?",
+      "options": [
+        "SQL injection",
+        "Broken access control",
+        "Insecure deserialization",
+        "Prompt injection (langsung dan tidak langsung)"
+      ],
+      "correct": 3,
+      "explanation": "Prompt injection adalah LLM01 dalam OWASP LLM Apps Top 10 (2025)."
+    },
+    {
+      "stage": "post",
+      "question": "Pola mitigasi apa yang mengurangi prompt injection tidak langsung dengan memisahkan perencanaan dari eksekusi?",
+      "options": [
+        "Plan-Verify-Execute: agen merencanakan dulu, memverifikasi setiap aksi terhadap rencana, lalu mengeksekusi — mencegah output alat menyuntikkan aksi baru yang tidak direncanakan",
+        "Konteks lebih pendek",
+        "Temperature lebih rendah",
+        "Model lebih besar"
+      ],
+      "correct": 0,
+      "explanation": "PVE memeriksa setiap langkah terhadap rencana yang disepakati, sehingga instruksi yang disuntikkan dari output alat ditolak."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa aksi destruktif (pembayaran, penghapusan) harus melewati alur terstruktur bahkan dalam sistem agen LLM?",
+      "options": [
+        "Alat tidak dapat dipanggil",
+        "Beam search tidak aman",
+        "Fabrikasi yang yakin, prompt injection, dan scope creep berarti LLM tidak dapat menjadi satu-satunya otoritas untuk efek samping yang tidak dapat dibatalkan",
+        "LLM lambat"
+      ],
+      "correct": 2,
+      "explanation": "Halusinasi dan injection membuat aksi tak dapat dibatalkan melalui agen LLM murni tidak aman; perlukan alur konfirmasi deterministik."
+    }
+  ]
+}

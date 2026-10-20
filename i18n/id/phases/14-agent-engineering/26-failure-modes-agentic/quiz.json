@@ -1,0 +1,90 @@
+{
+  "lesson": "26-failure-modes-agentic",
+  "title": "Mode Kegagalan: Mengapa Agent Rusak",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa klaim utama MASFT?",
+      "options": [
+        "Kegagalan adalah noise acak",
+        "Kegagalan disebabkan gangguan jaringan",
+        "Kegagalan hilang dengan model lebih besar",
+        "Kegagalan multi-agent adalah cacat desain fundamental, bukan keterbatasan LLM yang bisa diperbaiki dengan model dasar lebih baik"
+      ],
+      "correct": 3,
+      "explanation": "MASFT dari Berkeley mengategorikan kegagalan sebagai cacat desain; kegagalan tidak hilang dengan memperbesar model dasar."
+    },
+    {
+      "stage": "pre",
+      "question": "Manakah yang BUKAN salah satu dari lima mode kegagalan industri berulang yang didaftar pelajaran?",
+      "options": [
+        "Aksi yang dihalusinasikan",
+        "Error berantai",
+        "Scope creep",
+        "Versioning embedding"
+      ],
+      "correct": 3,
+      "explanation": "Kelima mode itu adalah aksi yang dihalusinasikan, scope creep, error berantai, kehilangan konteks, dan penyalahgunaan tool."
+    },
+    {
+      "stage": "check",
+      "question": "Apa itu error berantai dalam pelajaran ini?",
+      "options": [
+        "Error parser YAML",
+        "Satu panggilan salah memicu efek hilir di berbagai sistem (SKU palsu memicu empat panggilan API hilir)",
+        "Kegagalan cron",
+        "Rantai rate limit LLM"
+      ],
+      "correct": 1,
+      "explanation": "Rantai memperbesar satu panggilan buruk menjadi insiden multi-sistem; sangat parah saat agent memalsukan keberhasilan."
+    },
+    {
+      "stage": "check",
+      "question": "Dua manifestasi apa yang didaftar LLM Agent Hallucinations Survey?",
+      "options": [
+        "Token hot dan cold",
+        "Instruction-following Deviation dan Long-range Contextual Misuse",
+        "Greedy dan beam search",
+        "Prompt soft dan hard"
+      ],
+      "correct": 1,
+      "explanation": "Halusinasi muncul sebagai mengabaikan system prompt atau melupakan/menyalahgunakan konteks giliran sebelumnya."
+    },
+    {
+      "stage": "check",
+      "question": "Apa arti success hallucination?",
+      "options": [
+        "Unit test lulus",
+        "Agent mengembalikan pesan sukses padahal state target tidak berubah (sering saat tool mengembalikan 400)",
+        "Pengguna mengira sukses padahal tidak terjadi",
+        "Model terlalu percaya diri pada benchmark"
+      ],
+      "correct": 1,
+      "explanation": "Periksa ulang state lingkungan; agent sering memalsukan penyelesaian saat tidak bisa membedakan 'aku gagal' dari 'mustahil'."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa menandai crash saja tidak cukup?",
+      "options": [
+        "Logging berbayar",
+        "Sebagian besar kegagalan agent menghasilkan output yang tampak valid dan tidak crash; pemeriksaan tingkat konten diperlukan",
+        "Crash membocorkan PII",
+        "Crash lambat"
+      ],
+      "correct": 1,
+      "explanation": "Pemantauan berbasis crash melewatkan sebagian besar kegagalan agent yang berbentuk konten."
+    },
+    {
+      "stage": "post",
+      "question": "Mitigasi apa yang disarankan pelajaran di setiap langkah rantai penalaran?",
+      "options": [
+        "Tambahkan sleep()",
+        "Nonaktifkan retry",
+        "Gerbang verifikasi otomatis yang memeriksa pijakan faktual terhadap state lingkungan",
+        "Hanya turunkan temperature"
+      ],
+      "correct": 2,
+      "explanation": "Gerbang per langkah (classifier keamanan, validasi argumen, CRITIC, re-probe state) menangkap kegagalan sebelum berantai."
+    }
+  ]
+}

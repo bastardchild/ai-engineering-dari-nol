@@ -1,0 +1,78 @@
+{
+  "lesson": "11-multi-region-kv-locality",
+  "title": "Serving LLM Multi-Region dan Lokalitas KV Cache",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa load balancing round-robin justru berbahaya untuk inferensi LLM yang di-cache?",
+      "options": [
+        "Round-robin merusak TLS",
+        "Round-robin hanya valid untuk database stateful",
+        "Round-robin mewajibkan sticky session",
+        "Permintaan yang tidak mendarat di node pemegang prefix-nya membayar biaya prefill penuh alih-alih cache hit"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Dua input apa yang dikonsumsi router cache-aware?",
+      "options": [
+        "Hanya user_id dan tenant_id",
+        "Penghitung round-robin dan kunci TLS",
+        "Event KV-cache dari replika dan hash prefix pada permintaan masuk",
+        "Shuffle acak dan ukuran permintaan"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Kira-kira berapa selisih TTFT antara cache hit dan prefill dingin pada prompt 2K token untuk Llama 3.3 70B FP8?",
+      "options": [
+        "Sekitar 1000x",
+        "Sekitar 10x (~80 ms vs ~800 ms)",
+        "Sekitar 1.1x",
+        "Identik"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa routing lintas region tidak selalu mengalahkan routing regional untuk cache hit?",
+      "options": [
+        "Routing cache-aware mustahil lintas region",
+        "Routing antar-region dilarang semua hyperscaler",
+        "Riset GORGO menemukan cache hit tidak membantu latensi",
+        "Prefill yang dihemat bisa kalah oleh RTT jaringan, misalnya round-trip 440 ms bisa membuyarkan penghematan prefill dari 800 ke 80 ms"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang dikutip pelajaran ini sebagai pemicu 32% kegagalan DR LLM?",
+      "options": [
+        "Backup yang menyertakan bobot tetapi melewatkan file tokenizer atau konfigurasi kuantisasi",
+        "Kuota region habis",
+        "Load balancer salah konfigurasi",
+        "Backup tidak terenkripsi"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Apa kata pelajaran ini tentang penawaran inferensi lintas region komersial seperti Bedrock CRI?",
+      "options": [
+        "Itu mengoptimalkan ketersediaan, bukan TTFT, dan memperlakukan inferensi sebagai buram — kamu tetap butuh router cache-aware di lapisan aplikasi",
+        "Itu dilarang menurut GDPR",
+        "Itu sadar KV cache dan menggantikan routing lapisan aplikasi",
+        "Itu hanya berjalan di us-east-1"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

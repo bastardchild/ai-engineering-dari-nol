@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "question": "Tiga tanggung jawab apa yang dimiliki abstraksi Module dalam framework deep learning?",
+      "options": ["Memuat data, mempraproses data, mengaugmentasi data", "forward() untuk komputasi, backward() untuk gradient, parameters() untuk bobot yang bisa dilatih", "Kompilasi, optimasi, deployment", "Tokenisasi, embedding, decoding"],
+      "correct": 1,
+      "explanation": "Setiap Module mengimplementasikan forward() untuk menghitung output, backward() untuk meneruskan gradient, dan parameters() untuk mengekspos bobot yang bisa dilatih. Antarmuka seragam ini membuat modul apa pun bisa dikomposisikan dengan modul lain.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa Sequential memproses modul dalam urutan terbalik saat backward pass?",
+      "options": ["Urutan terbalik memakai memori lebih sedikit", "Gradient mengalir dari loss mundur melewati jaringan, jadi layer terakhir menghitung gradient lebih dulu", "Ini mencegah gradient meledak", "Ini sembarang -- kedua arah sama saja"],
+      "correct": 1,
+      "explanation": "Backward pass dimulai dari loss dan meneruskan gradient menuju input. Layer terakhir menerima gradient loss lebih dulu, menghitung gradient lokalnya, lalu meneruskannya ke layer sebelumnya.",
+      "stage": "pre"
+    },
+    {
+      "question": "Mengapa optimizer.zero_grad() dipanggil terpisah, bukan dilakukan otomatis?",
+      "options": ["Agar bisa mengakumulasi gradient dari beberapa batch sebelum mengambil satu langkah optimizer", "Agar debugging lebih mudah", "Untuk menghemat memori", "Karena itu kesalahan desain PyTorch"],
+      "correct": 0,
+      "explanation": "Memisahkan zero_grad dari step memungkinkan gradient accumulation: kamu bisa menjalankan backward() beberapa kali (lintas mini-batch) dan menjumlahkan gradient-nya sebelum memanggil step(). Ini menyimulasikan batch size lebih besar.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa urutan operasi yang benar dalam training loop?",
+      "options": ["backward, forward, zero_grad, step", "forward, loss, zero_grad, backward, step", "forward, zero_grad, backward, loss, step", "zero_grad, forward, loss, backward, step"],
+      "correct": 3,
+      "explanation": "Pola standarnya: zero_grad (hapus gradient lama), forward (hitung prediksi), loss (hitung loss skalar), backward (hitung gradient), step (perbarui parameter). Salah urutan menyebabkan bug yang halus.",
+      "stage": "post"
+    },
+    {
+      "question": "Apa peran DataLoader dalam framework?",
+      "options": ["Ia membagi data menjadi batch dan opsional mengocoknya antar epoch untuk mini-batch gradient descent", "Ia menghitung fungsi loss", "Ia menginisialisasi bobot", "Ia melatih model"],
+      "correct": 0,
+      "explanation": "DataLoader menangani dua kebutuhan praktis: batching (semua data tak muat di memori) dan pengocokan (urutan acak mencegah model menghafal urutan data).",
+      "stage": "post"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa training diffusion dapat memilih timestep t mana pun secara langsung alih-alih menyimulasikan rantai Markov maju langkah demi langkah?",
+      "options": ["Itu adalah aproksimasi yang mengabaikan langkah perantara", "Itu diwajibkan oleh autograd PyTorch", "Karena komposisi banyak penambahan Gaussian tetap menghasilkan Gaussian, memberikan bentuk tertutup q(x_t|x_0) = N(sqrt(alpha_bar_t) x_0, (1 - alpha_bar_t) I) yang dapat kamu sampel dalam satu langkah", "Karena x_t independen dari x_0"],
+      "correct": 2,
+      "explanation": "Penambahan Gaussian berulang menutup secara analitis. Produk kumulatif alpha_bar_t menyandikan 'berapa banyak sinyal yang tersisa setelah t langkah', dan kamu dapat menyampel x_t secara langsung tanpa menjalankan rantainya. Itulah sebabnya training diffusion O(1) per langkah, bukan O(T)."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang sebenarnya diprediksi oleh jaringan neural DDPM?",
+      "options": ["Gambar berikutnya x_{t-1} secara langsung", "Label kelas dari input", "Noise epsilon yang ditambahkan pada langkah t, dari mana mean x_{t-1} diturunkan secara analitis", "Signal-to-noise ratio"],
+      "correct": 2,
+      "explanation": "DDPM memparameterisasi model untuk memprediksi epsilon. Dengan prediksi noise dan jadwal noise, mean dan varians Gaussian x_{t-1} berbentuk tertutup. Memprediksi epsilon alih-alih x_0 atau x_{t-1} menyederhanakan loss menjadi MSE biasa dan memberikan gradien yang lebih baik secara numerik."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa DDIM mencapai kualitas sampel serupa dengan DDPM dengan langkah sekitar 20x lebih sedikit?",
+      "options": ["DDIM menghasilkan gambar lebih kecil", "DDIM merumuskan ulang sampling sebagai ODE deterministik yang lintasannya dapat didiskretisasi dengan jauh lebih sedikit langkah sambil mencapai titik akhir yang hampir sama; tidak perlu pelatihan ulang", "DDIM memakai arsitektur model yang lebih cepat", "DDIM mengubah objektif training"],
+      "correct": 1,
+      "explanation": "Pengamatan kunci DDIM adalah bahwa proses balik, ketika diparameterisasi ulang secara deterministik, menjadi ODE yang dapat didekati dengan baik oleh beberapa langkah. Model (bobot dan loss) tidak berubah dari DDPM; hanya sampler-nya yang berbeda. Checkpoint DDPM dapat dipakai dengan sampler DDIM, DPM-Solver, atau Euler secara bergantian."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu memplot `alpha_bar_t` untuk jadwal beta linear dengan T=1000 dan melihatnya turun mendekati nol pada t=600. Mengapa ini penting?",
+      "options": ["Ini tidak penting", "alpha_bar_t harus nol di akhir", "PyTorch mewajibkan jadwal linear", "40% timestep terakhir hampir tidak menambahkan sinyal; melatih timestep itu mengajari jaringan men-denoise noise yang sudah kira-kira N(0, I), yang membuang kapasitas. Jadwal cosine atau sigmoid memperbaikinya dengan menyebarkan injeksi noise lebih merata"],
+      "correct": 3,
+      "explanation": "Jadwal beta linear menyelesaikan proses diffusion terlalu dini. Pada t=600 sinyal sudah hancur; training dan sampling melalui t=600-1000 tidak menambahkan apa pun. Jadwal cosine (Nichol & Dhariwal) mempertahankan sinyal lebih lama, itulah sebabnya model modern memakainya, terutama pada resolusi lebih rendah."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa time conditioning ditambahkan ke U-Net melalui sinusoidal embedding alih-alih timestep one-hot?",
+      "options": ["One-hot akan melanggar aturan rantai", "Vektor one-hot terlalu besar", "Sinusoidal embedding mulus terhadap t, yang memungkinkan jaringan melakukan interpolasi antar timestep yang belum pernah dilihat persis dan menyandikan informasi skala yang dapat dipakai arsitektur secara aditif di berbagai kedalaman", "Sinusoidal diwajibkan oleh BatchNorm"],
+      "correct": 2,
+      "explanation": "Sinusoidal embedding memberikan representasi kontinu t pada berbagai frekuensi. Setiap timestep adalah titik unik dalam ruang embedding itu, dan timestep yang berdekatan adalah embedding yang berdekatan. Itu memungkinkan model menggeneralisasi di seluruh nilai T dengan parameter jauh lebih sedikit daripada embedding per timestep yang dipelajari. Ide yang sama dengan positional encoding transformer."
+    }
+  ]
+}

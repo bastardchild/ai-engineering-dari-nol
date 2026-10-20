@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa Stable Diffusion menjalankan DDPM-nya di ruang latent 4x64x64 alih-alih langsung pada gambar piksel 3x512x512?",
+      "options": ["Untuk membuat inferensi deterministik", "Latent lebih mudah divisualisasikan", "Latent adalah output native GPU", "Training dan sampling pada 16.384 nilai latent alih-alih 786.432 piksel kira-kira 48x lebih murah; VAE pretrained menangani konversi gambar <-> latent, dan model diffusion hanya perlu memodelkan manifold latent yang terstruktur"],
+      "correct": 3,
+      "explanation": "Latent diffusion adalah inovasi tunggal yang membuat text-to-image praktis di GPU konsumen. VAE mengompresi informasi spasial dan channel sebesar 48x. Model diffusion dapat menghabiskan seluruh anggaran parameter dan komputasinya untuk memodelkan manifold latent, bagian yang dilihat pengguna setelah decoding."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan classifier-free guidance (CFG) saat inferensi?",
+      "options": ["Menjalankan dua model terpisah dan merata-ratakannya", "Menambahkan classifier head ke model saat pengujian", "Memakai satu model yang dilatih memprediksi noise kondisional eps_cond dan tak-kondisional eps_uncond, lalu menggabungkannya sebagai eps = eps_uncond + w*(eps_cond - eps_uncond) untuk memperkuat kepatuhan pada prompt", "Memakai scheduler lebih besar"],
+      "correct": 2,
+      "explanation": "CFG melatih satu model dengan conditioning dihapus 10% dari waktu agar bobot yang sama menghasilkan prediksi cond dan uncond. Saat inferensi, rumus di atas memperkuat arah kondisional. Guidance scale w adalah tombol standar untuk menyetel kepatuhan prompt vs keragaman; default SD adalah 7.5."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu mengganti scheduler default SD dengan DPM-Solver++ 2M Karras dan mengurangi num_inference_steps dari 50 menjadi 20. Hasil yang diharapkan?",
+      "options": ["Kamu juga harus melatih ulang model", "Kualitas sebanding dalam waktu kira-kira setengahnya; DPM-Solver++ adalah integrator ODE orde dua yang konvergen dalam lebih sedikit langkah daripada DDIM untuk kualitas sampel yang sama", "Kualitas lebih buruk dan runtime lebih lama", "Ketidakstabilan numerik"],
+      "correct": 1,
+      "explanation": "Scheduler dipisahkan dari bobot model. DPM-Solver++ adalah solver orde lebih tinggi yang mencapai kualitas DDIM-50 dalam sekitar 20 langkah. Tidak perlu pelatihan ulang, dan itu adalah default produksi pada 2026. Turun di bawah 8 langkah biasanya memerlukan varian distilled/consistency-model seperti LCM atau Turbo."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa fine-tuning LoRA populer untuk Stable Diffusion dibandingkan fine-tuning penuh?",
+      "options": ["LoRA menghasilkan gambar lebih baik secara default", "LoRA menjaga U-Net dasar 860M tetap beku dan menyisipkan matriks dekomposisi rank kecil ke layer attention, sehingga fine-tune selesai dalam hitungan menit di perangkat konsumen, menghasilkan adapter 10-50 MB, dan dapat ditukar atau dicampur saat inferensi", "LoRA diwajibkan oleh diffusers", "LoRA sepenuhnya mencegah overfitting"],
+      "correct": 1,
+      "explanation": "Nilai LoRA adalah biaya training dan distribusinya. Fine-tuning SD penuh memperbarui 860M+ parameter dan membutuhkan 20+ GB VRAM. LoRA memperbarui sekitar 1-10M parameter dan muat dalam 6-8 GB. Model dasar tidak berubah, sehingga LoRA yang sama dapat dimuat ke checkpoint kompatibel mana pun, dan beberapa LoRA dapat digabungkan. Ekosistem CivitAI sepenuhnya berupa LoRA."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu menghasilkan prompt yang sama dengan guidance_scale=15 dan melihat warna terlalu jenuh serta artefak yang terbakar. Apa yang terjadi?",
+      "options": ["CFG memperkuat arah kondisional; melewati ambang sekitar 9-12, penguatan mendorong prediksi keluar dari manifold yang dapat didekode VAE dengan bersih, menghasilkan artefak visual. Turunkan guidance ke 7-9 untuk hasil seimbang", "Seed-nya salah", "Modelnya rusak", "VAE perlu dilatih ulang"],
+      "correct": 0,
+      "explanation": "Rumus CFG tidak terbatas: w yang lebih tinggi menggerakkan prediksi lebih jauh sepanjang (eps_cond - eps_uncond). Melewati suatu titik, kamu meninggalkan distribusi training dan decoder VAE menghasilkan gambar yang terlalu jenuh dan terposterisasi. Default produksi adalah 7-8. Beberapa scheduler baru mendukung CFG scheduling (w lebih rendah pada timestep akhir) untuk menghindari ini."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa arti p-value 0.03 dalam uji hipotesis?",
+      "options": [
+        "Ada probabilitas 3% melihat data seekstrem ini jika hipotesis nol benar",
+        "Model meningkat 3%",
+        "Ada probabilitas 3% bahwa hipotesis nol benar",
+        "97% data mendukung hipotesis alternatif"
+      ],
+      "correct": 0,
+      "explanation": "P-value adalah probabilitas mengamati data seekstrem yang kamu dapat, dengan asumsi hipotesis nol benar. Ini BUKAN probabilitas bahwa H0 benar -- ini kesalahpahaman paling umum dalam statistik."
+    },
+    {
+      "stage": "pre",
+      "question": "Mengapa kamu membagi dengan (n-1) alih-alih n saat menghitung variansi sampel?",
+      "options": [
+        "Ia mengonversi variansi menjadi standar deviasi",
+        "Ia hanya berlaku saat ukuran sampel ganjil",
+        "Ia membuat komputasi lebih cepat",
+        "Ia memperhitungkan fakta bahwa mean sampel bukan mean populasi sebenarnya (koreksi Bessel)"
+      ],
+      "correct": 3,
+      "explanation": "Koreksi Bessel (membagi dengan n-1) mengompensasi bias yang muncul akibat memakai mean sampel alih-alih mean populasi sebenarnya. Tanpa itu, variansi sampel secara sistematis meremehkan variansi populasi sebenarnya."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu menguji 20 konfigurasi model berbeda pada alpha = 0.05. Berapa kira-kira probabilitas setidaknya satu false positive?",
+      "options": [
+        "5%",
+        "25%",
+        "95%",
+        "64%"
+      ],
+      "correct": 3,
+      "explanation": "P(setidaknya satu false positive) = 1 - (1 - 0.05)^20 = 1 - 0.95^20 ≈ 0.64 (64%). Ini masalah perbandingan berganda. Koreksi Bonferroni mengatasinya dengan menguji masing-masing pada alpha/20 = 0.0025."
+    },
+    {
+      "stage": "post",
+      "question": "Model A mendapat skor 0.9234 dan Model B 0.9237 pada 1 juta sampel uji dengan p-value = 0.001. Apa kesimpulanmu?",
+      "options": [
+        "Model A lebih baik karena diuji lebih dulu",
+        "Model B secara signifikan lebih baik dan harus segera di-deploy",
+        "Perbedaannya signifikan secara statistik tetapi peningkatan 0.03% mungkin tidak signifikan secara praktis",
+        "Uji tersebut tidak valid karena ukuran sampelnya terlalu besar"
+      ],
+      "correct": 2,
+      "explanation": "Dengan 1 juta sampel, bahkan perbedaan yang sangat kecil menjadi signifikan secara statistik. P-value mengonfirmasi perbedaannya nyata, tetapi effect size (kenaikan akurasi 0.03%) mungkin tidak membenarkan biaya engineering untuk deploy. Selalu laporkan p-value dan effect size."
+    },
+    {
+      "stage": "post",
+      "question": "Apa keunggulan bootstrap dibanding paired t-test untuk membandingkan dua model ML?",
+      "options": [
+        "Bootstrap hanya dapat dipakai dengan neural network",
+        "Bootstrap selalu menghasilkan p-value lebih kecil",
+        "Bootstrap tidak memerlukan asumsi distribusi dan bekerja untuk metrik apa pun (AUC, F1, median)",
+        "Bootstrap membutuhkan lebih sedikit sampel untuk mencapai signifikansi"
+      ],
+      "correct": 2,
+      "explanation": "Resampling bootstrap mengestimasi distribusi sampling statistik apa pun dengan melakukan resampling with replacement. Berbeda dari t-test, ia tidak mengasumsikan normalitas. Ia bekerja untuk metrik apa pun -- AUC, F1, precision@k, median -- tanpa memerlukan rumus closed-form."
+    }
+  ]
+}

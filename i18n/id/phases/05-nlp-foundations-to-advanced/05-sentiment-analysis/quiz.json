@@ -1,0 +1,102 @@
+{
+  "lesson": "05-sentiment-analysis",
+  "title": "Analisis Sentimen",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa 'The food was not great' menjadi kasus sulit bagi classifier BoW naif?",
+      "options": [
+        "Tidak ada tanda baca",
+        "Mencampur bahasa Inggris dan Prancis",
+        "Terlalu sedikit token",
+        "Negasi membalik makna, tetapi bag of words membuang hubungan antara 'not' dan 'great'"
+      ],
+      "correct": 3,
+      "explanation": "BoW tidak dapat mengikat 'not' ke kata yang dinegasikannya, sehingga classifier melewatkan pembalikan polaritas."
+    },
+    {
+      "stage": "pre",
+      "question": "Dua langkah apa yang membentuk analisis sentimen klasik?",
+      "options": [
+        "Terjemahkan, lalu klasifikasikan",
+        "Representasikan (vektorisasi teks) dan klasifikasikan (model linear pada vektor)",
+        "Cari, lalu peringkatkan",
+        "Embed, lalu klaster"
+      ],
+      "correct": 1,
+      "explanation": "Sentimen klasik adalah ekstraksi fitur diikuti classifier linear."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa Naive Bayes tetap bekerja meskipun ada asumsi independensi yang 'naif'?",
+      "options": [
+        "Laplace smoothing memperbaiki dependensi",
+        "Asumsinya sebenarnya benar untuk teks",
+        "Naive Bayes diam-diam mempelajari interaksi",
+        "Dengan fitur teks sparse dan data moderat, classifier terutama peduli ke arah mana setiap kata condong, bukan probabilitas gabungan yang tepat"
+      ],
+      "correct": 3,
+      "explanation": "Bahkan dengan independensi yang salah, informasi arah kecenderungan per kata cukup untuk mengklasifikasi dengan baik."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menyertakan token berprefiks 'NOT_' selama preprocessing?",
+      "options": [
+        "Untuk melakukan stemming kata",
+        "Untuk mengecilkan kosakata",
+        "Untuk menormalisasi kapitalisasi",
+        "Untuk mengubah 'good' versus 'NOT_good' menjadi fitur terpisah yang dapat diberi bobot berlawanan oleh classifier"
+      ],
+      "correct": 3,
+      "explanation": "Cakupan negasi memecah bentuk ternegasi menjadi fitur berbeda sehingga classifier BoW dapat memodelkan pembalikannya."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa menghapus stopword berisiko untuk analisis sentimen?",
+      "options": [
+        "Penghapusan stopword merusak tokenisasi",
+        "Ini meningkatkan sparsitas",
+        "Daftar stopword terlalu panjang",
+        "Kata negasi ('not', 'no', 'never') biasanya diperlakukan sebagai stopword tetapi membawa sinyal sentimen"
+      ],
+      "correct": 3,
+      "explanation": "Daftar stopword default membuang negasi dan pembawa sentimen serupa."
+    },
+    {
+      "stage": "post",
+      "question": "Metrik mana yang harus kamu laporkan ketika kelas sentimen tidak seimbang?",
+      "options": [
+        "Akurasi saja",
+        "Macro-F1 (rata-rata F1 per kelas, berbobot sama)",
+        "Mean squared error",
+        "Hanya Micro-F1"
+      ],
+      "correct": 1,
+      "explanation": "Macro-F1 memaksa kelas minoritas diperhitungkan; akurasi atau micro-F1 menyembunyikannya."
+    },
+    {
+      "stage": "post",
+      "question": "Kapan kamu harus melewati model klasik dan memakai transformer untuk sentimen?",
+      "options": [
+        "Ketika kamu memiliki di bawah 100 contoh",
+        "Deteksi sarkasme, dokumen panjang yang bergeser, sentimen berbasis aspek, atau bahasa sumber daya rendah",
+        "Ketika latensi kritis",
+        "Ketika kamu memerlukan kemampuan jelaskan"
+      ],
+      "correct": 1,
+      "explanation": "Sentimen sarkasme, berbasis aspek, dan lintas bahasa melampaui jangkauan model BoW klasik."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa regularisasi L2 penting untuk logistic regression pada teks?",
+      "options": [
+        "Mempercepat inversi matriks",
+        "Menghindari unit mati ReLU",
+        "Fitur teks sparse berdimensi tinggi jika tidak membuat model menghafal contoh training",
+        "Diperlukan untuk menghitung gradien"
+      ],
+      "correct": 2,
+      "explanation": "L2 mencegah overfitting pada rezim teks berfitur sparse dan berdimensi tinggi."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa 3D Gaussian Splatting sebagian besar menggantikan NeRF sebagai default produksi untuk rekonstruksi adegan fotorealistik pada 2026?",
+      "options": ["NeRF ditarik dari catatan penelitian", "3DGS bersifat eksplisit (tanpa MLP per piksel): rendering adalah rasterisasi GPU pada 100+ fps, training memakan menit bukan jam, adegan dapat diedit, dan Khronos + OpenUSD keduanya menstandarkannya pada 2026", "Gaussian Splatting menghasilkan kualitas gambar lebih tinggi daripada NeRF dalam semua kasus", "PyTorch berhenti mendukung operator NeRF"],
+      "correct": 1,
+      "explanation": "3DGS menukar MLP implisit dengan jutaan Gaussian 3D eksplisit. Rendering menjadi alpha compositing terurut yang dijalankan GPU pada 100+ fps di perangkat konsumen. Training berjalan dalam hitungan menit. Setiap Gaussian dapat diedit. Pada 2026 Khronos meratifikasi ekstensi glTF untuk 3DGS dan OpenUSD 26.03 mengirim skema native, mengubah 3DGS menjadi format produksi portabel."
+    },
+    {
+      "stage": "pre",
+      "question": "Gaussian 3D dalam sebuah adegan membawa posisi, rotasi, skala, opacity, dan representasi tambahan apa untuk menangani warna bergantung sudut pandang (seperti kilau specular)?",
+      "options": ["Tekstur RGB kedua", "MLP kecil per Gaussian", "Koefisien spherical harmonics: hingga derajat 3 memberikan 16 koefisien per channel warna, dievaluasi terhadap arah pandang saat render", "Cubemap light probe"],
+      "correct": 2,
+      "explanation": "Spherical harmonics adalah basis Fourier pada bola. Setiap Gaussian menyimpan koefisien SH yang dipelajari dan menyandikan bagaimana warnanya bervariasi dengan arah pandang. Saat render kamu mengevaluasi koefisien terhadap vektor satuan dari piksel ke pusat Gaussian, memberikan kilau specular, pantulan ringan, dan shading bergantung sudut pandang tanpa tekstur atau MLP."
+    },
+    {
+      "stage": "post",
+      "question": "Selama training 3DGS, densifikasi mencakup operasi 'clone' dan 'split'. Apa yang memicu masing-masing?",
+      "options": ["Tidak ada — Gaussian tetap setelah inisialisasi", "Magnitudo gradien tinggi dengan skala kecil memicu clone (perlu detail lokal lebih banyak); gradien tinggi dengan skala besar memicu split (satu Gaussian terlalu mulus untuk mencocokkan wilayah). Opacity di bawah ambang memicu pruning", "Waktu sejak checkpoint terakhir", "Sampling acak selama setiap epoch"],
+      "correct": 1,
+      "explanation": "Densifikasi adaptif inilah yang memungkinkan 3DGS tumbuh dari ~100k Gaussian awal SfM menjadi 1-5M saat konvergen. Clone menduplikasi Gaussian kecil yang kurang teresolusi; split memecah Gaussian terlalu besar menjadi dua yang lebih kecil; prune membuang Gaussian yang opacity sigmoid-nya telah turun di bawah ambang. Ketiga operasi ini plus gradient descent pada parameter adalah seluruh dinamika training."
+    },
+    {
+      "stage": "post",
+      "question": "Persamaan warna untuk satu piksel pada NeRF dan 3DGS adalah `C = sum_i alpha_i * T_i * c_i` dengan `T_i = prod_{j<i}(1 - alpha_j)`. Apa yang dikatakan persamaan bersama ini tentang kedua metode?",
+      "options": ["NeRF secara tegas lebih baik", "Keduanya mengintegralkan persamaan volume rendering yang sama; perbedaannya hanya pada representasi (sampel MLP implisit vs Gaussian sparse eksplisit) dan prosedur rendering (ray marching vs rasterisasi) — itulah sebabnya kualitas gambar keduanya sebanding", "Keduanya identik secara matematis dalam segala hal", "3DGS secara tegas lebih baik"],
+      "correct": 1,
+      "explanation": "Persamaan bersama itu adalah render volumetrik klasik. NeRF mengevaluasinya dengan menyampel sepanjang ray dan menanyakan MLP. 3DGS mengevaluasinya dengan memproyeksikan Gaussian ke 2D dan mengomposit alpha primitif terurut per piksel. Fisika sama, loss sama, struktur data dan algoritma rendering berbeda. Identitas itulah sebabnya keduanya mencapai PSNR / LPIPS akhir yang serupa; jurang praktisnya adalah kecepatan dan kemampuan edit."
+    },
+    {
+      "stage": "post",
+      "question": "Kamu ingin mengirim adegan 3DGS lintas Unreal Engine, Vision Pro, Blender, dan penampil web Three.js pada 2026. Format ekspor mana yang paling aman?",
+      "options": ["Blob biner kustom per penampil", "Strip PNG dari Gaussian 3D", "`.ply` mentah saja", "glTF dengan ekstensi `KHR_gaussian_splatting` (Khronos RC Feb 2026) dan/atau OpenUSD 26.03 dengan `UsdVolParticleField3DGaussianSplat`; keduanya adalah format teratifikasi/terstandardisasi pada 2026"],
+      "correct": 3,
+      "explanation": "Sampai 2024, setiap penampil memiliki formatnya sendiri. Khronos meratifikasi KHR_gaussian_splatting untuk glTF pada Feb 2026 dan OpenUSD 26.03 menambahkan skema 3DGS native pada April 2026. Mengekspor ke salah satunya memberi portabilitas lintas engine, penampil, dan pipeline. `.ply` tetap menjadi lingua franca pertukaran untuk penelitian tetapi kurang terstruktur. Untuk produksi lintas alat, glTF + USD adalah jawaban 2026."
+    }
+  ]
+}

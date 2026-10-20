@@ -1100,13 +1100,13 @@ test('optional MCP capstone keeps its prerequisite gate in every lesson reader s
 
   const lessonHtml = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
   assert.match(lessonHtml, /var focusedEntry = flatLessons\.find\(function \(item\) \{ return item\.path === lessonPath; \}\) \|\| null/);
-  assert.match(lessonHtml, /learningPathPrerequisiteCallout\(focusedEntry, 'Required before this lesson'\)/);
+  assert.match(lessonHtml, /learningPathPrerequisiteCallout\(focusedEntry, 'Wajib sebelum pelajaran ini'\)/);
   assert.match(lessonHtml, /var focusedOptionalLocked = learningPathEntryLocked\(focusedOptionalLesson\)/);
   assert.match(
     lessonHtml,
     /class="path-completion-link' \+ learningPathGateClass\(focusedOptionalLesson\)[\s\S]{0,300}learningPathGateAttributes\(focusedOptionalLesson\)/
   );
-  assert.match(lessonHtml, /focusedOptionalLocked \? 'Locked optional capstone: ' : 'Optional capstone: '/);
+  assert.match(lessonHtml, /focusedOptionalLocked \? 'Capstone opsional terkunci: ' : 'Capstone opsional: '/);
 });
 
 test('Agent Skills knowledge preflight persists per path and gates Lesson 26 deterministically', () => {
@@ -1378,8 +1378,8 @@ test('public curriculum counts match the canonical lesson and artifact inventory
     banner,
     new RegExp(`${phaseCount} PHASES\\s+·\\s+${lessons} LESSONS\\s+·\\s+${skills} SKILLS\\s+·\\s+${prompts} PROMPTS`)
   );
-  assert.match(homepage, new RegExp(`${lessons} lessons\\. ${phaseCount} phases\\.`));
-  assert.match(lessonPage, new RegExp(`${lessons} lessons across ${phaseCount} phases`));
+  assert.match(homepage, new RegExp(`${lessons} pelajaran\\. ${phaseCount} fase\\.`));
+  assert.match(lessonPage, new RegExp(`${lessons} pelajaran di ${phaseCount} fase`));
   assert.equal(
     ogImage.includes(Buffer.from(`AIFS_COUNTS: lessons=${lessons} phases=${phaseCount} skills=${skills} prompts=${prompts}`)),
     true,
@@ -1429,13 +1429,19 @@ test('repository exposes the four core AI engineering learning paths', () => {
     ['using-coding-agents', 'Agent-Assisted Engineering', 16],
     ['shaping-the-build', 'Product Judgment and Delivery', 8],
   ];
+  const displayTitles = new Map([
+    ['building-and-deploying-ai-applications', 'Membangun dan Menerapkan Aplikasi AI'],
+    ['software-engineering-fundamentals', 'Dasar-Dasar Software Engineering'],
+    ['using-coding-agents', 'Engineering Berbantuan Agent'],
+    ['shaping-the-build', 'Penilaian Produk dan Pengiriman'],
+  ]);
 
   for (const [id, title, lessonCount] of domains) {
     const learningPath = learningPaths.find(entry => entry.id === id);
     assert.ok(learningPath, `${id} manifest is missing`);
     assert.equal(learningPath.title, title);
     assert.equal(learningPath.lessons.length, lessonCount);
-    assert.match(homepage, new RegExp(`>${title}<`, 'i'));
+    assert.match(homepage, new RegExp(`>${displayTitles.get(id)}<`, 'i'));
     assert.match(homepage, new RegExp(`learningPath=${id}`));
     assert.match(homepage, new RegExp(`learning-paths/${id}\\.json`));
   }
@@ -1464,10 +1470,10 @@ test('repository exposes the four core AI engineering learning paths', () => {
     ['shaping-the-build', ['Product Judgment and Delivery', 'shaping-the-build']],
   ]);
   for (const [id] of domains) {
-    const [title, anchor] = homepageTargets.get(id);
+    const [, anchor] = homepageTargets.get(id);
     assert.match(
       homepage,
-      new RegExp(`class="learning-paths-node [^"]+"[^>]+href="learning-paths\\.html#${anchor}"[^>]+aria-label="Explore the competencies for ${title}"`)
+      new RegExp(`class="learning-paths-node [^"]+"[^>]+href="learning-paths\\.html#${anchor}"[^>]+aria-label="Jelajahi kompetensi untuk ${displayTitles.get(id)}"`)
     );
   }
   assert.match(readme, /<!-- STATS:START[\s\S]*?<p align="center"><sub><b>[^<]+<\/b> readers[\s\S]*?<!-- STATS:END -->/);
@@ -1485,16 +1491,16 @@ test('homepage preserves live GitHub CTAs and the motion-aware learner marquee',
   const learnerStyles = homepage.match(/\/\* Learner organization index \*\/([\s\S]*?)\.masthead-install-caption/);
 
   assert.ok(mastheadCta, 'prominent masthead CTA row is missing');
-  assert.match(mastheadCta[0], /<span>Start the Course<\/span>/);
-  assert.match(mastheadCta[0], /href="learning-paths\.html"[\s\S]*?<span>Explore Learning Paths<\/span>/);
-  assert.doesNotMatch(mastheadCta[0], /Start (?:MCP Engineering|Agent Skills)/i);
+  assert.match(mastheadCta[0], /<span>Mulai Kursus<\/span>/);
+  assert.match(mastheadCta[0], /href="learning-paths\.html"[\s\S]*?<span>Jelajahi Jalur Belajar<\/span>/);
+  assert.doesNotMatch(mastheadCta[0], /Mulai (?:MCP Engineering|Agent Skills)/i);
   assert.match(
     mastheadCta[0],
-    /<a class="masthead-btn" href="https:\/\/github\.com\/rohitg00\/ai-engineering-from-scratch"[^>]*aria-label="Star ai-engineering-from-scratch on GitHub"[^>]*>[\s\S]*?<span>Star on GitHub<\/span>[\s\S]*?<span class="masthead-btn-count" data-gh-stars="rohitg00\/ai-engineering-from-scratch" data-loading="true">/
+    /<a class="masthead-btn" href="https:\/\/github\.com\/rohitg00\/ai-engineering-from-scratch"[^>]*aria-label="Beri bintang ai-engineering-from-scratch di GitHub"[^>]*>[\s\S]*?<span>Beri bintang di GitHub<\/span>[\s\S]*?<span class="masthead-btn-count" data-gh-stars="rohitg00\/ai-engineering-from-scratch" data-loading="true">/
   );
   assert.match(
     mastheadCta[0],
-    /<a class="masthead-btn" href="https:\/\/github\.com\/rohitg00"[^>]*aria-label="Follow Rohit Ghumare on GitHub"[^>]*>[\s\S]*?<span>Follow @rohitg00<\/span>/
+    /<a class="masthead-btn" href="https:\/\/github\.com\/rohitg00"[^>]*aria-label="Ikuti Rohit Ghumare di GitHub"[^>]*>[\s\S]*?<span>Ikuti @rohitg00<\/span>/
   );
   assert.match(homepage, /<script src="header\.js\?v=[^"]+" defer><\/script>/);
   assert.match(headerSource, /\[data-gh-stars="' \+ REPO \+ '"\]/);
@@ -1584,7 +1590,7 @@ test('shared header keeps its menu at desktop widths without hiding GitHub stars
   assert.match(headerSource, /var NARROW_HEADER_QUERY = '\(max-width: 820px\)'/);
   assert.match(headerSource, /priorityNav\.className = 'header-priority-nav'/);
   assert.match(headerSource, /label !== 'contents' && label !== 'catalog' && label !== 'learning paths'/);
-  assert.match(headerSource, /ensureNavigationLink\(nav, 'learning-paths\.html', 'Learning Paths', ''\)/);
+  assert.match(headerSource, /ensureNavigationLink\(nav, 'learning-paths\.html', 'Jalur Belajar', ''\)/);
   assert.match(headerSource, /if \(isNarrow\) restorePriorityLinks\(\);[\s\S]*?else movePriorityLinksOut\(\)/);
 
   assert.match(
@@ -1701,7 +1707,7 @@ test('career lessons return to their exact learning paths guide without a fake c
   assert.match(lessonHtml, /var pathReturnHref = 'catalog\.html';/);
   assert.match(lessonHtml, /if \(learningPath\.kind === 'career-route'\)/);
   assert.match(lessonHtml, /pathReturnHref = 'learning-paths\.html#career-route-' \+ encodeURIComponent\(learningPath\.id\);/);
-  assert.match(lessonHtml, /pathReturnLabel = 'Back to career route';/);
+  assert.match(lessonHtml, /pathReturnLabel = 'Kembali ke rute karier';/);
   assert.match(lessonHtml, /href="' \+ pathReturnHref \+ '">&larr; ' \+ pathReturnLabel/);
   assert.doesNotMatch(lessonHtml, /catalog\.html\?q=' \+ encodeURIComponent\(learningPath\.title/);
 });
@@ -1742,7 +1748,7 @@ test('lesson reader keeps learning-path context and renders a copyable full-dept
   assert.match(lessonHtml, /'mcp-engineering': 'model-context-protocol'/);
   assert.match(lessonHtml, /requestedLearningPathId = LEARNING_PATH_ID_ALIASES\[incomingLearningPathId\]/);
   assert.match(lessonHtml, /searchParams\.set\('learningPath', pathId\)/);
-  assert.match(lessonHtml, /Lesson ' \+ \(focusedIndex \+ 1\) \+ ' of ' \+ focusedLessons\.length/);
+  assert.match(lessonHtml, /Pelajaran ' \+ \(focusedIndex \+ 1\) \+ ' dari ' \+ focusedLessons\.length/);
   assert.match(lessonHtml, /prerequisitePaths: pathEntry/);
   assert.match(lessonHtml, /prerequisiteChecks: pathEntry/);
   assert.match(lessonHtml, /data-prerequisite-paths/);
@@ -1757,7 +1763,7 @@ test('lesson reader keeps learning-path context and renders a copyable full-dept
   assert.match(lessonHtml, /var nextLocked = learningPathMode && learningPathEntryLocked\(next\)/);
   assert.match(
     lessonHtml,
-    /data-learning-path-gate-label>'\s*\+\s*\(nextLocked\s*\?\s*'Locked'\s*:\s*'Next &rarr;'\)/
+    /data-learning-path-gate-label>'\s*\+\s*\(nextLocked\s*\?\s*'Terkunci'\s*:\s*'Berikutnya &rarr;'\)/
   );
   assert.doesNotMatch(lessonHtml, /\|\| \{ id: checkId, title: checkId, description: '' \}/);
   assert.match(lessonHtml, /learningPathPrerequisiteCallout\(nextRequired/);
@@ -1767,13 +1773,13 @@ test('lesson reader keeps learning-path context and renders a copyable full-dept
   assert.match(lessonHtml, /btn\.setAttribute\('aria-expanded', expanded \? 'true' : 'false'\)/);
   assert.match(lessonHtml, /currentLessonIndex - 1/);
   assert.doesNotMatch(lessonHtml, /currentLessonIndex - 2/);
-  assert.match(lessonHtml, /Requires a local clone/);
+  assert.match(lessonHtml, /Memerlukan clone lokal/);
   assert.doesNotMatch(lessonHtml, /git rev-parse --show-toplevel/);
   assert.match(lessonHtml, /lessonQuizCorrectAnswers\[qid\] = q\.correct/);
   assert.doesNotMatch(lessonHtml, /data-correct=/);
-  assert.match(lessonHtml, /In Codex use <code>check-understanding /);
+  assert.match(lessonHtml, /Di Codex gunakan <code>check-understanding /);
   assert.match(lessonHtml, /\/check-understanding/);
-  assert.match(lessonHtml, /Act on this lesson/);
+  assert.match(lessonHtml, /Tindak lanjuti pelajaran ini/);
   assert.match(lessonHtml, /data-checkpoint="read"/);
   assert.match(lessonHtml, /data-checkpoint="built"/);
   assert.match(lessonHtml, /data-checkpoint="ran"/);
@@ -1808,12 +1814,12 @@ test('lesson reader keeps learning-path context and renders a copyable full-dept
   assert.doesNotMatch(lessonHtml, /id="desc-/);
   assert.match(lessonHtml, /@media \(max-width: 768px\) \{[\s\S]*?\.output-cards,[\s\S]*?\.code-cards \{ grid-template-columns: 1fr; \}/);
   assert.match(lessonHtml, /@media \(max-width: 480px\) \{[\s\S]*?\.code-card-actions,[\s\S]*?\.output-actions \{[\s\S]*?grid-template-columns: 1fr;/);
-  assert.match(lessonHtml, /Run from the repository root, the folder containing README\.md/);
-  assert.match(lessonHtml, /Run copied commands from the repository root, the directory containing README\.md and phases\//);
+  assert.match(lessonHtml, /Jalankan dari root repositori, folder yang berisi README\.md/);
+  assert.match(lessonHtml, /Jalankan perintah yang disalin dari root repositori, direktori yang berisi README\.md dan phases\//);
   assert.doesNotMatch(lessonHtml, /shell is anywhere inside the repository/);
   assert.match(lessonHtml, /inferLearningPath\(lessonPath\)/);
   assert.match(lessonHtml, /preferredIds = \['agent-skills', 'model-context-protocol'\]/);
-  assert.match(lessonHtml, /A code fence is not automatically a runnable program/);
+  assert.match(lessonHtml, /Blok kode belum tentu program yang dapat dijalankan/);
   assert.match(lessonHtml, /var fetchOptions = localPreview \? \{ cache: 'no-store' \} : undefined/);
   assert.match(lessonHtml, /fetch\(primary, fetchOptions\)/);
   assert.doesNotMatch(lessonHtml, /<script src="figures(?:\.js|-)/);
@@ -2320,9 +2326,9 @@ test('lesson page includes completion panel and button contract', () => {
   assert.match(lessonHtml, /function mountLessonCompletionPanel/);
   assert.match(lessonHtml, /function renderLessonCompletionPanel/);
   assert.match(lessonHtml, /function syncLessonCompletionUi/);
-  assert.match(lessonHtml, /Complete Lesson/);
-  assert.match(lessonHtml, /Completed ✓/);
-  assert.match(lessonHtml, /Mark as incomplete/);
+  assert.match(lessonHtml, /Selesaikan Pelajaran/);
+  assert.match(lessonHtml, /Selesai ✓/);
+  assert.match(lessonHtml, /Tandai belum selesai/);
   assert.match(lessonHtml, /\.ai-panel--complete/);
   assert.match(lessonHtml, /\.lesson-complete-btn/);
   assert.match(lessonHtml, /\.lesson-complete-btn\.is-completed/);

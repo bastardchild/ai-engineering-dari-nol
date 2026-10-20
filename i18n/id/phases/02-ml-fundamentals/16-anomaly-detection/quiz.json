@@ -1,0 +1,69 @@
+{
+  "questions": [
+    {
+      "id": "anomaly-pre-1",
+      "stage": "pre",
+      "question": "Mengapa anomaly detection biasanya dirumuskan sebagai masalah unsupervised, bukan klasifikasi?",
+      "options": [
+        "Klasifikasi supervised selalu kurang akurat",
+        "Anomali berlabel sangat langka, dan jenis anomali baru berbeda dari yang pernah dilihat sebelumnya",
+        "Anomaly detection hanya bekerja pada data time series",
+        "Anomaly detection tidak membutuhkan data apa pun"
+      ],
+      "correct": 1,
+      "explanation": "Anomali itu langka (sering <0.1% dari data), jadi contoh berlabelnya terlalu sedikit untuk melatih classifier. Selain itu, anomali di masa depan bisa bertipe yang belum pernah terlihat. Memodelkan 'normal' lalu menandai penyimpangan menangani kedua masalah itu."
+    },
+    {
+      "id": "anomaly-pre-2",
+      "stage": "pre",
+      "question": "Suhu 90F itu normal di musim panas tetapi anomali di musim dingin. Ini jenis anomali apa?",
+      "options": [
+        "Point anomaly",
+        "Contextual anomaly",
+        "Statistical anomaly",
+        "Collective anomaly"
+      ],
+      "correct": 1,
+      "explanation": "Contextual anomaly adalah nilai yang tak biasa mengingat konteksnya (waktu, lokasi). Nilainya sendiri mungkin normal di konteks lain. Titik data sama, tafsirnya berbeda bergantung kondisi sekitarnya."
+    },
+    {
+      "id": "anomaly-post-1",
+      "stage": "post",
+      "question": "Metode Z-score menandai titik yang lebih dari 3 standar deviasi dari mean. Kapan pendekatan ini gagal?",
+      "options": [
+        "Saat ada tepat 3 anomali di dataset",
+        "Saat data berdistribusi normal dengan sempurna",
+        "Saat fitur sudah distandarkan",
+        "Saat data multimodal, miring, atau saat outlier di data training menggelembungkan mean dan std"
+      ],
+      "correct": 3,
+      "explanation": "Z-score mengasumsikan satu distribusi Gaussian. Ia gagal pada data multimodal (banyak cluster), distribusi miring, dan saat outlier di data training menggeser mean/std sehingga anomali nyata makin sulit dideteksi."
+    },
+    {
+      "id": "anomaly-post-2",
+      "stage": "post",
+      "question": "Bagaimana Isolation Forest mendeteksi anomali berbeda dari metode berbasis jarak?",
+      "options": [
+        "Ia mengisolasi titik memakai split acak; anomali butuh lebih sedikit split untuk terisolasi karena jumlahnya sedikit dan berbeda",
+        "Ia hanya bekerja pada data teks",
+        "Ia memakai neural network alih-alih pohon",
+        "Ia menghitung jarak ke setiap titik lain di dataset"
+      ],
+      "correct": 0,
+      "explanation": "Isolation Forest mempartisi data secara acak dengan split pada pohon. Anomali, karena langka dan berbeda, terisolasi di leaf sendiri dengan lebih sedikit split. Panjang path rata-rata yang pendek = makin anomali."
+    },
+    {
+      "id": "anomaly-post-3",
+      "stage": "post",
+      "question": "Kamu membangun detector anomali unsupervised sekaligus classifier fraud supervised. Kapan sebaiknya memilih pendekatan unsupervised?",
+      "options": [
+        "Saat kamu perlu mendeteksi pola fraud baru yang berbeda dari contoh berlabel historis",
+        "Saat kamu punya jutaan contoh fraud berlabel",
+        "Saat kamu hanya peduli precision, bukan recall",
+        "Selalu -- unsupervised selalu lebih baik untuk anomaly detection"
+      ],
+      "correct": 0,
+      "explanation": "Classifier supervised hanya menangkap jenis fraud yang ada di data training. Detector unsupervised menandai penyimpangan apa pun dari normal sehingga menangkap skema fraud baru. Konsekuensinya, false positive rate lebih tinggi."
+    }
+  ]
+}

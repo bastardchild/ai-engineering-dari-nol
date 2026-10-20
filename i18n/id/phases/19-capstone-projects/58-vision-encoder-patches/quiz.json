@@ -1,0 +1,78 @@
+{
+  "lesson": "58-vision-encoder-patches",
+  "title": "Patch Encoder Vision",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa Vision Transformer memakai patch alih-alih memberi satu piksel per token?",
+      "options": [
+        "Patch diwajibkan PyTorch",
+        "Urutan piksel-per-token meledakkan komputasi attention secara kuadratik dan kehilangan tractability pada resolusi tipikal",
+        "Patch meningkatkan kualitas gambar",
+        "Itu menghindari pemakaian tokenizer"
+      ],
+      "correct": 1,
+      "explanation": "Gambar 224x224 adalah 150528 token piksel. Attention kuadratik dalam panjang, jadi patch 16x16 mengecilkan urutan menjadi 196 token dan membuat model tractable."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa hubungan Conv2d dengan kernel = stride = patch_size dan flatten-lalu-linear?",
+      "options": [
+        "Conv2d menambah non-linearitas",
+        "Keduanya menghasilkan output berbeda",
+        "Conv2d adalah cara lebih cepat untuk menulis proyeksi linear yang sama atas setiap patch",
+        "Flatten-lalu-linear mustahil"
+      ],
+      "correct": 2,
+      "explanation": "Setiap lokasi output Conv2d melakukan dot-product piksel patch dengan satu filter, identik dengan flatten-lalu-linear."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa embedding posisi sinusoidal 2D deterministik alih-alih dipelajari?",
+      "options": [
+        "Sinyal sin/cos tetap berinterpolasi bersih ke grid yang belum pernah dilihat model, yang berguna saat resolusi berubah",
+        "Inisialisasi acak diwajibkan",
+        "Menghemat disk",
+        "Posisi yang dipelajari ilegal"
+      ],
+      "correct": 0,
+      "explanation": "Posisi sinusoidal tetap deterministik lintas resolusi dan memungkinkan encoder yang sama berjalan pada input yang tidak dilatihnya."
+    },
+    {
+      "stage": "check",
+      "question": "Berapa panjang urutan output gambar 224x224 dengan patch_size=16 dan satu token CLS?",
+      "options": [
+        "224",
+        "256",
+        "196",
+        "197"
+      ],
+      "correct": 3,
+      "explanation": "224/16 = 14, jadi 14x14 = 196 patch, plus satu token CLS menjadi 197 token total."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa rekonstruksi (unfold lalu unflatten) adalah sanity check berguna pada front end patch?",
+      "options": [
+        "Mempercepat inferensi",
+        "Round-trip piksel melalui patch-flatten tanpa proyeksi harus sama dengan input; kegagalan berarti matematika unfold salah",
+        "Meningkatkan akurasi",
+        "Diwajibkan ONNX"
+      ],
+      "correct": 1,
+      "explanation": "Langkah patch invertibel tanpa proyeksi. Jika round-trip menyimpang, logika unfold bermasalah dan sisa encoder tidak aman."
+    },
+    {
+      "stage": "post",
+      "question": "Apa yang berubah saat menukar embedding posisi yang dipelajari dengan sinusoidal 2D dalam lesson ini?",
+      "options": [
+        "Tidak ada yang berubah",
+        "Posisi sinusoidal acak per langkah",
+        "Posisi yang dipelajari dapat mencocokkan resolusi tetap sedikit lebih baik; posisi sinusoidal bertransfer ke resolusi baru tanpa pelatihan ulang",
+        "Posisi sinusoidal memakan lebih banyak parameter"
+      ],
+      "correct": 2,
+      "explanation": "Posisi yang dipelajari fleksibel pada satu resolusi. Posisi sinusoidal nol parameter dan bertahan pada pergeseran resolusi."
+    }
+  ]
+}

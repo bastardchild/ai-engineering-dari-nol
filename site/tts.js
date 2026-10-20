@@ -606,7 +606,7 @@
     els.voice.innerHTML = '';
     var def = document.createElement('option');
     def.value = '';
-    def.textContent = 'Auto — ' + (best ? best.name : locale.toUpperCase());
+    def.textContent = 'Otomatis — ' + (best ? best.name : locale.toUpperCase());
     els.voice.appendChild(def);
     for (var i = 0; i < list.length; i++) {
       var o = document.createElement('option');
@@ -867,13 +867,13 @@
 
   function start(silentIfEmpty, fromEl, scopeEl) {
     if (!supported) {
-      if (!silentIfEmpty) flash('Read aloud is unavailable in this browser');
+      if (!silentIfEmpty) flash('Baca nyaring tidak tersedia di browser ini');
       return false;
     }
     state.scope = scopeEl && document.contains(scopeEl) ? scopeEl : null;
     state.chunks = collect(state.scope);
     if (!state.chunks.length) {
-      if (!silentIfEmpty) flash('Nothing to read on this page');
+      if (!silentIfEmpty) flash('Tidak ada yang bisa dibaca di halaman ini');
       state.scope = null;
       return false;
     }
@@ -1016,7 +1016,7 @@
     document.addEventListener('keydown', retry, true);
     setTimeout(function () {
       if (isPlaying() && !synth.speaking) {
-        flash('Press play or click the page to continue reading');
+        flash('Tekan putar atau klik halaman untuk melanjutkan membaca');
       }
     }, 1200);
   }
@@ -1098,7 +1098,7 @@
     state.stalls++;
     // Give up on the fourth ignored attempt; a fifth only skips one more chunk.
     if (state.stalls >= 4) {
-      fail('Speech engine stopped responding');
+      fail('Mesin suara berhenti merespons');
       return;
     }
     var local = state.stalls >= 2 && !state.forcedLocal ? localVoice() : null;
@@ -1106,7 +1106,7 @@
       // A cloud voice that keeps dropping will not recover on its own; move to
       // an offline voice, which is plainer but does not cut out.
       state.forcedLocal = local;
-      flash('Switched to ' + local.name + ' — the previous voice kept cutting out');
+      flash('Beralih ke ' + local.name + ' — suara sebelumnya terus terputus');
     } else if (state.stalls >= 3) {
       // Still stalling after the fallback: skip the chunk rather than retry it
       // forever, so the rest of the article is still read.
@@ -1169,12 +1169,12 @@
       els.toggle.setAttribute(
         'aria-label',
         isPaused()
-          ? 'Resume reading aloud'
+          ? 'Lanjutkan baca nyaring'
           : state.mode === 'error'
-            ? 'Dismiss read aloud error'
+            ? 'Tutup galat baca nyaring'
             : active
-              ? 'Stop reading aloud'
-              : 'Read this page aloud'
+              ? 'Hentikan baca nyaring'
+              : 'Bacakan halaman ini'
       );
       els.toggle.title = els.toggle.getAttribute('aria-label');
     }
@@ -1188,25 +1188,25 @@
     els.bar.classList.toggle('is-reading', isPlaying() || isWaiting());
     if (!active) return;
     els.playPause.textContent = isPaused() ? '▶' : '⏸';
-    els.playPause.setAttribute('aria-label', isPaused() ? 'Resume' : 'Pause');
+    els.playPause.setAttribute('aria-label', isPaused() ? 'Lanjut' : 'Jeda');
     els.playPause.disabled = isWaiting() || state.mode === 'error';
     if (isWaiting()) {
-      els.status.textContent = 'Loading the next lesson…';
+      els.status.textContent = 'Memuat pelajaran berikutnya…';
       els.progress.removeAttribute('value');
       return;
     }
     if (state.mode === 'error') {
-      els.status.textContent = state.message || 'Read aloud stopped';
+      els.status.textContent = state.message || 'Baca nyaring berhenti';
       els.progress.value = 0;
       return;
     }
     var current = state.chunks[state.index] || {};
-    var section = current.section ? current.section.slice(0, 52) : 'Page';
+    var section = current.section ? current.section.slice(0, 52) : 'Halaman';
     var minutes = remainingMinutes();
     els.status.textContent =
-      (isPaused() ? 'Paused' : 'Reading') + ' · ' + section + ' · ' +
+      (isPaused() ? 'Dijeda' : 'Membaca') + ' · ' + section + ' · ' +
       Math.min(state.index + 1, state.chunks.length) + '/' + state.chunks.length +
-      (minutes ? ' · ' + minutes + ' min left' : '');
+      (minutes ? ' · ' + minutes + ' menit tersisa' : '');
     els.progress.max = Math.max(1, state.chunks.length);
     els.progress.value = Math.min(state.index + 1, state.chunks.length);
   }
@@ -1258,8 +1258,8 @@
     btn.id = 'ttsToggle';
     btn.setAttribute('data-header-persistent', 'true');
     btn.innerHTML = icon();
-    btn.setAttribute('aria-label', 'Read this page aloud');
-    btn.title = 'Read this page aloud';
+    btn.setAttribute('aria-label', 'Bacakan halaman ini');
+    btn.title = 'Bacakan halaman ini';
     btn.setAttribute('aria-pressed', 'false');
     placeToggle(btn);
     var compact = window.matchMedia && window.matchMedia('(max-width: 1100px)');
@@ -1270,8 +1270,8 @@
     }
     if (!supported) {
       btn.disabled = true;
-      btn.setAttribute('aria-label', 'Read aloud unavailable in this browser');
-      btn.title = 'Read aloud unavailable in this browser';
+      btn.setAttribute('aria-label', 'Baca nyaring tidak tersedia di browser ini');
+      btn.title = 'Baca nyaring tidak tersedia di browser ini';
       return btn;
     }
     btn.addEventListener('click', function () {
@@ -1322,9 +1322,9 @@
     if (els.collapse) {
       els.collapse.innerHTML = state.collapsed ? icon() : '▾';
       els.collapse.setAttribute('aria-expanded', state.collapsed ? 'false' : 'true');
-      var label = state.collapsed ? 'Expand read aloud controls' : 'Collapse controls';
+      var label = state.collapsed ? 'Buka kontrol baca nyaring' : 'Ciutkan kontrol';
       els.collapse.setAttribute('aria-label', label);
-      els.collapse.title = label + ' (drag to move)';
+      els.collapse.title = label + ' (seret untuk memindahkan)';
     }
     schedulePlacementBoundsRefresh();
   }
@@ -1607,24 +1607,24 @@
     bar.id = 'ttsBar';
     bar.hidden = true;
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Read aloud controls');
+    bar.setAttribute('aria-label', 'Kontrol baca nyaring');
     bar.innerHTML =
-      '<button type="button" class="tts-btn" data-tts="prev" aria-label="Previous passage">⏪</button>' +
-      '<button type="button" class="tts-btn tts-btn-main" data-tts="playpause" aria-label="Pause">⏸</button>' +
-      '<button type="button" class="tts-btn" data-tts="next" aria-label="Next passage">⏩</button>' +
-      '<span class="tts-status" id="ttsStatus" aria-live="polite">Reading</span>' +
-      '<progress class="tts-progress" id="ttsProgress" max="1" value="0" aria-label="Narration progress"></progress>' +
-      '<label class="tts-field"><span>Speed</span>' +
-      '<select class="tts-select" id="ttsRate" aria-label="Reading speed">' +
+      '<button type="button" class="tts-btn" data-tts="prev" aria-label="Bagian sebelumnya">⏪</button>' +
+      '<button type="button" class="tts-btn tts-btn-main" data-tts="playpause" aria-label="Jeda">⏸</button>' +
+      '<button type="button" class="tts-btn" data-tts="next" aria-label="Bagian berikutnya">⏩</button>' +
+      '<span class="tts-status" id="ttsStatus" aria-live="polite">Membaca</span>' +
+      '<progress class="tts-progress" id="ttsProgress" max="1" value="0" aria-label="Progres narasi"></progress>' +
+      '<label class="tts-field"><span>Kecepatan</span>' +
+      '<select class="tts-select" id="ttsRate" aria-label="Kecepatan baca">' +
       '<option value="0.75">0.75x</option><option value="1">1x</option>' +
       '<option value="1.25">1.25x</option><option value="1.5">1.5x</option>' +
       '<option value="1.75">1.75x</option><option value="2">2x</option></select></label>' +
-      '<label class="tts-field tts-field-voice"><span>Voice</span>' +
-      '<select class="tts-select" id="ttsVoice" aria-label="Voice"></select></label>' +
-      '<button type="button" class="tts-btn tts-btn-reset" data-tts="reset" aria-label="Reset player position" hidden>Dock</button>' +
-      '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="Stop reading">Stop</button>' +
+      '<label class="tts-field tts-field-voice"><span>Suara</span>' +
+      '<select class="tts-select" id="ttsVoice" aria-label="Suara"></select></label>' +
+      '<button type="button" class="tts-btn tts-btn-reset" data-tts="reset" aria-label="Atur ulang posisi pemutar" hidden>Dok</button>' +
+      '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="Hentikan pembacaan">Berhenti</button>' +
       '<button type="button" class="tts-btn tts-btn-collapse" data-tts="collapse" ' +
-      'aria-label="Collapse controls" aria-expanded="true" title="Collapse (drag to move)">▾</button>';
+      'aria-label="Ciutkan kontrol" aria-expanded="true" title="Ciutkan (seret untuk memindahkan)">▾</button>';
     document.body.appendChild(bar);
 
     els.bar = bar;
@@ -1698,8 +1698,8 @@
     btn.className = 'tts-from-here';
     btn.id = 'ttsFromHere';
     btn.hidden = true;
-    btn.innerHTML = '<span aria-hidden="true">▶</span> Read from here';
-    btn.title = 'Read from here (Alt+R)';
+    btn.innerHTML = '<span aria-hidden="true">▶</span> Bacakan dari sini';
+    btn.title = 'Bacakan dari sini (Alt+R)';
     // mousedown would clear the selection before the click lands.
     btn.addEventListener('mousedown', function (e) {
       e.preventDefault();

@@ -1,0 +1,90 @@
+{
+  "lesson": "33-instructions-as-executable-constraints",
+  "title": "Instruksi Agent sebagai Batasan yang Dapat Dieksekusi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Apa perbedaan aturan aspirasional dan aturan operasional?",
+      "options": [
+        "Aturan aspirasional membutuhkan manajer",
+        "Aturan aspirasional tidak punya pemeriksaan ('hati-hati'); aturan operasional membawa fungsi yang dapat diperiksa mesin dan dijalankan workbench",
+        "Aturan aspirasional berbayar; aturan operasional gratis",
+        "Aturan operasional lebih panjang"
+      ],
+      "correct": 1,
+      "explanation": "Aturan operasional dapat diuji; aturan aspirasional hanyalah keinginan."
+    },
+    {
+      "stage": "pre",
+      "question": "Lima kategori apa yang mencakup sebagian besar aturan menurut pelajaran?",
+      "options": [
+        "Plan, act, reflect, refine, ship",
+        "Read, write, exec, fork, exit",
+        "Low, medium, high, critical, fatal",
+        "Startup, forbidden, definition of done, uncertainty, approval"
+      ],
+      "correct": 3,
+      "explanation": "Startup, forbidden, definition of done, penanganan ketidakpastian, dan batas approval adalah kelimanya."
+    },
+    {
+      "stage": "check",
+      "question": "Tag severity mana yang menghentikan eksekusi dan membutuhkan override operator?",
+      "options": [
+        "soft",
+        "warn",
+        "block",
+        "info"
+      ],
+      "correct": 2,
+      "explanation": "block adalah kegagalan keras; warn memberi anotasi; info melapor."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa pelajaran menyarankan menandai severity saat menulis?",
+      "options": [
+        "Linter mewajibkannya",
+        "Tim melebih-lebihkan severity di awal dan melemahkannya saat tenggat; menulis severity di depan memaksa kalibrasi",
+        "Itu lebih cantik di markdown",
+        "Itu menghemat token"
+      ],
+      "correct": 1,
+      "explanation": "Kalibrasi severity harus disengaja, bukan ditambal saat tekanan."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dilakukan pola markdown-as-source, JSON-as-cache?",
+      "options": [
+        "Menggantikan markdown",
+        "Mengenkripsi aturan",
+        "Menonaktifkan review",
+        "agent-rules.md adalah file yang ditulis; agent-rules.lock.json adalah cache hot-path yang diregenerasi hook pre-commit (bentuk sama dengan package.json + lock)"
+      ],
+      "correct": 3,
+      "explanation": "Markdown tetap dapat di-review; parsing JSON keluar dari hot path."
+    },
+    {
+      "stage": "post",
+      "question": "Apa itu rule expiry sebagai forcing function?",
+      "options": [
+        "Aturan berusia lebih dari 24 jam gagal tertutup",
+        "Setiap aturan membawa expires_at (default 90 hari); aturan yang tidak pernah menyala memicu review kuartalan untuk membenarkan, melemahkan, atau menghapusnya",
+        "Aturan kedaluwarsa otomatis; tanpa review",
+        "Aturan kedaluwarsa saat cache penuh"
+      ],
+      "correct": 1,
+      "explanation": "Data Cloudflare menunjukkan set dengan expiry tetap di bawah 30 aturan; tanpa expiry tumbuh ke 80+ yang tak terpakai."
+    },
+    {
+      "stage": "post",
+      "question": "Bagaimana aturan berhubungan dengan guardrail framework?",
+      "options": [
+        "Aturan menggantikan guardrail",
+        "Hanya salah satunya yang diperlukan",
+        "Guardrail menegakkan aturan saat runtime; set aturan adalah kontrak yang dapat dibaca manusia yang diimplementasikan guardrail tersebut",
+        "Guardrail adalah alternatif aturan"
+      ],
+      "correct": 2,
+      "explanation": "Keduanya dibutuhkan: runtime menangkap pelanggaran; set aturan membuktikan runtime melakukan hal yang benar."
+    }
+  ]
+}

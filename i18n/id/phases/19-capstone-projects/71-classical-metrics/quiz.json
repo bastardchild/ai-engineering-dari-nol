@@ -1,0 +1,78 @@
+{
+  "lesson": "71-classical-metrics",
+  "title": "Metrik Klasik",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Mengapa tokenizer dipilih di lapisan metrik alih-alih lapisan runner?",
+      "options": [
+        "Tokenizer spesifik model dan runner tidak dapat melihat model",
+        "Tokenizer mendefinisikan apa yang dihitung sebagai kecocokan token; menggantinya mengubah benchmark",
+        "Implementasi metrik O(n) terlepas dari pilihan tokenizer",
+        "Numpy membutuhkan tokenizer saat import"
+      ],
+      "correct": 1,
+      "explanation": "BLEU dan F1 sensitif terhadap tokenisasi. Mengikat tokenizer ke metrik membuat skor reproducible dan memungkinkan menunjuk aturannya."
+    },
+    {
+      "stage": "pre",
+      "question": "Apa yang dilakukan modified n-gram precision yang tidak dilakukan plain n-gram precision?",
+      "options": [
+        "Itu memotong setiap hitungan n-gram kandidat dengan hitungan maksimum yang terlihat di referensi mana pun",
+        "Itu berjalan lebih cepat dari plain precision",
+        "Itu memakai basis log berbeda",
+        "Itu mengembalikan nilai 0 sampai 100 alih-alih 0 sampai 1"
+      ],
+      "correct": 0,
+      "explanation": "Pemotongan oleh batas referensi mencegah kandidat menggelembungkan skor dengan mengulang kata presisi tinggi terus-menerus."
+    },
+    {
+      "stage": "check",
+      "question": "Mengapa BLEU memakai brevity penalty?",
+      "options": [
+        "Kandidat panjang membuat rata-rata geometrik tidak stabil secara numerik",
+        "Brevity penalty menggantikan batas hitungan n-gram",
+        "Itu mengompensasi smoothing tambah-satu",
+        "Tanpa itu, kandidat sangat pendek yang cocok beberapa kata mendapat presisi tinggi dan BLEU terlalu tinggi"
+      ],
+      "correct": 3,
+      "explanation": "Presisi saja memberi hadiah output pendek. BP menurunkan bobot kandidat lebih pendek dari referensi memakai exp(1 - r/c)."
+    },
+    {
+      "stage": "check",
+      "question": "Apa yang dibandingkan ROUGE-L?",
+      "options": [
+        "Jarak Levenshtein antara string kandidat dan referensi",
+        "Presisi 4-gram terhadap 4-gram referensi mana pun",
+        "Longest common subsequence dari urutan token kandidat dan referensi",
+        "Indeks Jaccard tingkat karakter"
+      ],
+      "correct": 2,
+      "explanation": "ROUGE-L memakai panjang LCS, lalu menghitung precision (LCS/panjang kandidat) dan recall (LCS/panjang referensi) yang digabung dengan F-beta."
+    },
+    {
+      "stage": "check",
+      "question": "Token-level F1 mengembalikan 1.0 untuk kasus mana?",
+      "options": [
+        "Saat prediksi dan target berbagi tepat satu token",
+        "Saat prediksi superset target dengan noise ekstra",
+        "Saat prediksi kosong dan target tidak kosong",
+        "Saat prediksi dan target keduanya kosong"
+      ],
+      "correct": 3,
+      "explanation": "Berdasarkan konvensi, kosong-kosong adalah kecocokan sempurna. Target tidak kosong dengan prediksi kosong bernilai 0.0."
+    },
+    {
+      "stage": "post",
+      "question": "Mengapa dispatch pada metric_name alih-alih category di fungsi score?",
+      "options": [
+        "Runner tidak punya akses ke field category",
+        "Itu memungkinkan kategori sama memakai metrik berbeda lintas task dan menjaga dispatcher agnostik metrik",
+        "Category lebih sulit divalidasi daripada metric_name",
+        "metric_name lebih pendek dari category"
+      ],
+      "correct": 1,
+      "explanation": "metric_name adalah kontrak. Task summary dapat memakai rouge_l pada satu record dan bleu_4 pada record lain; dispatcher tidak perlu peduli."
+    }
+  ]
+}
