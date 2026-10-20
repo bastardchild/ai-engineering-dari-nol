@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var REPO = 'rohitg00/ai-engineering-from-scratch';
+  var REPO = 'bastardchild/ai-engineering-dari-nol';
   var CACHE_KEY = 'gh:stars:' + REPO;
   var CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
   var NARROW_HEADER_QUERY = '(max-width: 820px)';
@@ -100,7 +100,7 @@
     }
     var links = document.querySelectorAll('.header-github');
     for (var j = 0; j < links.length; j++) {
-      links[j].setAttribute('aria-label', 'Lihat ai-engineering-from-scratch di GitHub, ' + format(n) + ' bintang');
+      links[j].setAttribute('aria-label', 'Lihat ai-engineering-dari-nol di GitHub, ' + format(n) + ' bintang');
     }
   }
 

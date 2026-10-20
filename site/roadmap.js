@@ -1155,7 +1155,7 @@
   }
 
   function phaseGithubUrl(phase) {
-    return 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/' + extractPhaseSlug(phase);
+    return 'https://github.com/bastardchild/ai-engineering-dari-nol/tree/main/phases/' + extractPhaseSlug(phase);
   }
 
   function extractPhaseSlug(phase) {

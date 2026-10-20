@@ -31,7 +31,7 @@ function makeAssets() {
             next: { path: 'phases/01-math/02-calculus', title: 'Calculus' },
             learningPathIds: ['math', 'model-context-protocol'],
             fromTrackIds: ['claude-example'],
-            sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math/01-vectors',
+            sourceUrl: 'https://github.com/bastardchild/ai-engineering-dari-nol/tree/main/phases/01-math/01-vectors',
             canonicalUrl: 'https://aiengineeringfromscratch.com/lesson?path=phases%2F01-math%2F01-vectors',
           },
           'phases/07-transformers/09-vectors': {
@@ -68,7 +68,7 @@ function makeAssets() {
             },
             learningPathIds: [],
             fromTrackIds: [],
-            sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/certifications/claude/lessons/01-models',
+            sourceUrl: 'https://github.com/bastardchild/ai-engineering-dari-nol/tree/main/certifications/claude/lessons/01-models',
             canonicalUrl: 'https://aiengineeringfromscratch.com/lesson?path=certifications%2Fclaude%2Flessons%2F01-models',
           },
         },
@@ -129,7 +129,7 @@ function withSecondProgram(assets) {
     },
     learningPathIds: [],
     fromTrackIds: [],
-    sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/certifications/mcpa/lessons/01-discovery',
+    sourceUrl: 'https://github.com/bastardchild/ai-engineering-dari-nol/tree/main/certifications/mcpa/lessons/01-discovery',
     canonicalUrl: 'https://aiengineeringfromscratch.com/lesson?path=certifications%2Fmcpa%2Flessons%2F01-discovery',
   };
   assets.certification.manifest.tracks['mcpa-example'] = {

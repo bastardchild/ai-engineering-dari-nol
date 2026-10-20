@@ -1,6 +1,6 @@
 # Sponsorship
 
-`ai-engineering-from-scratch` adalah kurikulum gratis berlisensi MIT. 523 pelajaran di 20
+`ai-engineering-dari-nol` adalah kurikulum gratis berlisensi MIT. 523 pelajaran di 20
 fase. Karya ini dibangun dan dirawat oleh [Rohit Ghumare](https://github.com/rohitg00).
 
 Sponsor tunai mendanai waktu untuk merilis pelajaran, menjaga situs tetap berjalan, dan

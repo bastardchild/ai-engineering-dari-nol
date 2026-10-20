@@ -79,7 +79,7 @@ Tanpa output dan exit code 0 berarti file itu ada.
 Tetap di `agent-skills-first-run` dan jalankan:
 
 ```bash
-npx skills add rohitg00/ai-engineering-from-scratch --skill skill-contract-reviewer --full-depth
+npx skills add bastardchild/ai-engineering-dari-nol --skill skill-contract-reviewer --full-depth
 ```
 
 Pilih agent host dan scope yang kamu pakai. Installer harus mencantumkan `skill-contract-reviewer` dan tujuan tempat ia menulis. `--full-depth` diperlukan karena skill pelajaran ini adalah bundle bersarang dengan referensi, sebuah script, dan sebuah asset.

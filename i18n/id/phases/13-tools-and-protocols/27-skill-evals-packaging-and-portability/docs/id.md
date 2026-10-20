@@ -472,7 +472,7 @@ Laporan seharusnya menunjukkan `checksPassed` dan `fixturePassed` sebagai true s
 Dari direktori yang sama, jalankan:
 
 ```bash
-npx skills add rohitg00/ai-engineering-from-scratch --skill skill-release-gate --full-depth
+npx skills add bastardchild/ai-engineering-dari-nol --skill skill-release-gate --full-depth
 ```
 
 Catat host, versi host jika terlihat, scope, path terpasang, dan tanggal. Mulai sesi baru atau pindai ulang katalog sebelum menelusuri perilaku.

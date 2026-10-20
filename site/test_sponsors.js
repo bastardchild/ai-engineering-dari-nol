@@ -134,7 +134,7 @@ test('sponsors page is rendered from the Indonesian SPONSORS source at build tim
     assert.ok(generated.includes(`href="#${anchor}"`), anchor);
   }
   assert.ok(generated.includes(`<a href="${sponsorUrl}" target="_blank" rel="noopener"><picture><source media="(prefers-color-scheme: dark)" srcset="https://serpapi.com/assets/media_kit/logo-with-wordmark-white.svg">`));
-  assert.ok(generated.includes('href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/BACKERS.md" target="_blank" rel="noopener"'));
+  assert.ok(generated.includes('href="https://github.com/bastardchild/ai-engineering-dari-nol/blob/main/BACKERS.md" target="_blank" rel="noopener"'));
   assert.ok(generated.includes('<td class="align-right">114.584 (+4%)</td>'));
   assert.ok(generated.includes('<li><strong>Dasar open-source</strong>'));
   assert.doesNotMatch(generated, /\n\s*\[Babel\]/);

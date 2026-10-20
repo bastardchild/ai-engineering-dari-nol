@@ -24,11 +24,11 @@
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
   <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
+  <a href="https://github.com/bastardchild/ai-engineering-dari-nol/stargazers"><img src="https://img.shields.io/github/stars/bastardchild/ai-engineering-dari-nol?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
   <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Star History Rank" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="GitHub Trending Repository of the Day" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
+ <a href="https://www.star-history.com/bastardchild/ai-engineering-dari-nol">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=bastardchild/ai-engineering-dari-nol&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=bastardchild/ai-engineering-dari-nol&type=rank" /><img alt="Star History Rank" src="https://api.star-history.com/badge?repo=bastardchild/ai-engineering-dari-nol&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=bastardchild/ai-engineering-dari-nol&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=bastardchild/ai-engineering-dari-nol&type=trending" /><img alt="GitHub Trending Repository of the Day" src="https://api.star-history.com/badge?repo=bastardchild/ai-engineering-dari-nol&type=trending" /></picture>
  </a>
 </p>
 </p>
@@ -92,7 +92,7 @@ Os comandos nas páginas das lições usam caminhos a partir da raiz do reposit�
 ### Clone o repositório e produza sua primeira evidência
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+git clone https://github.com/bastardchild/ai-engineering-dari-nol.git
 cd ai-engineering-from-scratch
 python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
@@ -120,7 +120,7 @@ Then install the curriculum skills and choose the host and scope you intend to
 use when the installer asks:
 
 ```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+npx skills add bastardchild/ai-engineering-dari-nol
 ```
 
 Invocation syntax belongs to the host, not to the portable `SKILL.md` format:
@@ -249,7 +249,7 @@ Três formas de começar. Escolha uma.
 compatible agent and let the course drive itself:
 
 ```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+npx skills add bastardchild/ai-engineering-dari-nol
 ```
 
 Use the host-specific invocation table above. The installed skills provide
@@ -267,7 +267,7 @@ Progress lives in `LEARNING.md`, `MCP-LEARNING.md`, or
 **Option C — clone and run.**
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+git clone https://github.com/bastardchild/ai-engineering-dari-nol.git
 cd ai-engineering-from-scratch
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
@@ -343,7 +343,7 @@ live exam questions, and cannot guarantee a passing score.
 
 ## Read the core curriculum as a book
 
-The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/bastardchild/ai-engineering-dari-nol/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
 
 Certification curricula are intentionally not converted into the books. Their
 AI tutor state, runnable labs, interactive figures, diagnostics, and timed mocks
@@ -351,12 +351,12 @@ remain first-class on GitHub and the website.
 
 | Vol | Title | Phases | Download |
 |-----|-------|--------|----------|
-| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/bastardchild/ai-engineering-dari-nol/releases/latest/download/aiefs-vol6-production.pdf) |
 
 The book is the snapshot; this repository is the living edition. Every chapter ends with links back to the lesson's animated figures, quiz, and runnable code. Build locally with `python3 scripts/build_book.py` (pandoc required); pipeline details in [book/README.md](../../book/README.md).
 
@@ -1204,7 +1204,7 @@ install into a supported skill-capable host with one command. Installation needs
 Node.js and `npx`, but not a repository clone or Python:
 
 ```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+npx skills add bastardchild/ai-engineering-dari-nol
 ```
 
 `skills` writes to the host and scope selected during installation, such as
@@ -1413,5 +1413,5 @@ Mantido por [Rohit Ghumare](https://github.com/rohitg00) e pela comunidade.
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
   <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
+  <a href="https://github.com/bastardchild/ai-engineering-dari-nol/issues/new/choose">Report / Suggest</a>
 </sub>
